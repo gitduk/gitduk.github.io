@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+    <title>Linux 搭建 ftp 服务器 | Wukaige&#39;s Blog</title>
+
+    <meta name="description" content="&lt;p&gt;&lt;strong&gt;安装&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;sudo apt-fast install vsftpd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;添加用户&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;sudo useradd ftpuser -m
+sudo passwd ftpuser
+&lt;/code&gt;&lt;/pre&gt;">
+    <meta name="keywords" content="">
+
+    
+
+    <meta property="og:locale" content="zh-CN" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content= "Linux 搭建 ftp 服务器 | Wukaige&#39;s Blog"  />
+    <meta property="og:description" content= "&lt;p&gt;&lt;strong&gt;安装&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;sudo apt-fast install vsftpd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;添加用户&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;sudo useradd ftpuser -m
+sudo passwd ftpuser
+&lt;/code&gt;&lt;/pre&gt;" />
+    <meta property="og:url" content="https://gitduk.github.io/2023/01/10/ftp/index.html" />
+    <meta property="og:site_name" content="" />
+    <meta property="article:author" content="wukaige" />
+    <meta property="article:publisher" content="" />
+    <meta property="og:description" content="&lt;p&gt;&lt;strong&gt;安装&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;sudo apt-fast install vsftpd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;添加用户&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;sudo useradd ftpuser -m
+sudo passwd ftpuser
+&lt;/code&gt;&lt;/pre&gt;" />
+    <meta name="twitter:title" content="Linux 搭建 ftp 服务器 | Wukaige&#39;s Blog"/>
+    <meta name="twitter:description" content="&lt;p&gt;&lt;strong&gt;安装&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;sudo apt-fast install vsftpd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;添加用户&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;sudo useradd ftpuser -m
+sudo passwd ftpuser
+&lt;/code&gt;&lt;/pre&gt;"/>
+    <script type="application/ld+json">
+        {
+            "description": "&lt;p&gt;&lt;strong&gt;安装&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;sudo apt-fast install vsftpd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;添加用户&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;sudo useradd ftpuser -m
+sudo passwd ftpuser
+&lt;/code&gt;&lt;/pre&gt;",
+            "author": { "@type": "Person", "name": "wukaige" },
+            "@type": "BlogPosting",
+            "url": "https://gitduk.github.io/2023/01/10/ftp/index.html",
+            "publisher": {
+            "@type": "Organization",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://gitduk.github.ioundefined"
+            },
+            "name": "wukaige"
+            },
+            "headline": "Linux 搭建 ftp 服务器 | Wukaige&#39;s Blog",
+            "datePublished": "2023-01-10T08:03:35.000Z",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://gitduk.github.io/2023/01/10/ftp/index.html"
+            },
+            "@context": "http://schema.org"
+        }
+    </script>
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<link rel="stylesheet" href="/dist/build.css?v=1654266144177.css">
+
+
+    
+<link rel="stylesheet" href="/dist/custom.css?v=1654266144177.css">
+
+
+    <script>
+        window.isPost = true
+        window.aomori = {
+            
+            
+            
+        }
+        window.aomori_logo_typed_animated = false
+        window.aomori_search_algolia = false
+
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div class="container">
+    <header class="header">
+        <div class="header-type">
+            
+            <div class="header-type-inner">
+                
+                    <a class="header-type-title" href="/">Wukaige&#39;s Blog</a>
+                
+    
+                
+            </div>
+        </div>
+        <div class="header-menu">
+            <div class="header-menu-inner">
+                
+            </div>
+            <div class="header-menu-social">
+                
+            </div>
+        </div>
+
+        <div class="header-menu-mobile">
+            <div class="header-menu-mobile-inner" id="mobile-menu-open">
+                <i class="icon icon-menu"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="header-menu-mobile-menu">
+        <div class="header-menu-mobile-menu-bg"></div>
+        <div class="header-menu-mobile-menu-wrap">
+            <div class="header-menu-mobile-menu-inner">
+                <div class="header-menu-mobile-menu-close" id="mobile-menu-close">
+                    <i class="icon icon-cross"></i>
+                </div>
+                <div class="header-menu-mobile-menu-list">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <div class="container">
+        <div class="main">
+            <section class="inner">
+                <section class="inner-main">
+                    <div class="post">
+    <article id="post-clcq16tvw00030befax6140kd" class="article article-type-post" itemscope
+    itemprop="blogPost">
+
+    <div class="article-inner">
+
+        
+          
+        
+        
+        
+
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      Linux 搭建 ftp 服务器
+    </h1>
+  
+
+        </header>
+        
+
+        <div class="article-more-info article-more-info-post hairline">
+
+            <div class="article-date">
+  <time datetime="2023-01-10T08:03:35.000Z" itemprop="datePublished">2023-01-10</time>
+</div>
+
+            
+            <div class="article-category">
+                <a class="article-category-link" href="/categories/linux/">linux</a>
+            </div>
+            
+
+            
+            <div class="article-tag">
+                <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ftp/" rel="tag">ftp</a></li></ul>
+            </div>
+            
+
+            
+
+        </div>
+
+        <div class="article-entry post-inner-html hairline" itemprop="articleBody">
+            <p><strong>安装</strong></p>
+<pre><code class="bash">sudo apt-fast install vsftpd
+</code></pre>
+<p><strong>添加用户</strong></p>
+<pre><code class="bash">sudo useradd ftpuser -m
+sudo passwd ftpuser
+</code></pre>
+<span id="more"></span>
+
+<p><strong>配置</strong></p>
+<p><u>&#x2F;etc&#x2F;vsftpd.chroot_list</u></p>
+<pre><code class="conf">ftpuser
+</code></pre>
+<p><u>&#x2F;etc&#x2F;vsftpd.conf</u></p>
+<pre><code class="conf"># Example config file /etc/vsftpd.conf
+#
+# The default compiled in settings are fairly paranoid. This sample file
+# loosens things up a bit, to make the ftp daemon more usable.
+# Please see vsftpd.conf.5 for all compiled in defaults.
+#
+# READ THIS: This example file is NOT an exhaustive list of vsftpd options.
+# Please read the vsftpd.conf.5 manual page to get a full idea of vsftpd&#39;s
+# capabilities.
+#
+#
+# Run standalone?  vsftpd can run either from an inetd or as a standalone
+# daemon started from an initscript.
+listen=NO
+#
+# This directive enables listening on IPv6 sockets. By default, listening
+# on the IPv6 &quot;any&quot; address (::) will accept connections from both IPv6
+# and IPv4 clients. It is not necessary to listen on *both* IPv4 and IPv6
+# sockets. If you want that (perhaps because you want to listen on specific
+# addresses) then you must run two copies of vsftpd with two configuration
+# files.
+listen_ipv6=YES
+#
+# Allow anonymous FTP? (Disabled by default).
+anonymous_enable=NO
+#
+# Uncomment this to allow local users to log in.
+local_enable=YES
+#
+# Uncomment this to enable any form of FTP write command.
+write_enable=YES
+
+# Default umask for local users is 077. You may wish to change this to 022,
+# if your users expect that (022 is used by most other ftpd&#39;s)
+local_umask=022
+#
+# Uncomment this to allow the anonymous FTP user to upload files. This only
+# has an effect if the above global write enable is activated. Also, you will
+# obviously need to create a directory writable by the FTP user.
+anon_upload_enable=YES
+#
+# Uncomment this if you want the anonymous FTP user to be able to create
+# new directories.
+#anon_mkdir_write_enable=YES
+#
+# Activate directory messages - messages given to remote users when they
+# go into a certain directory.
+dirmessage_enable=YES
+#
+# If enabled, vsftpd will display directory listings with the time
+# in  your  local  time  zone.  The default is to display GMT. The
+# times returned by the MDTM FTP command are also affected by this
+# option.
+use_localtime=YES
+#
+# Activate logging of uploads/downloads.
+xferlog_enable=YES
+#
+# Make sure PORT transfer connections originate from port 20 (ftp-data).
+connect_from_port_20=YES
+#
+# If you want, you can arrange for uploaded anonymous files to be owned by
+# a different user. Note! Using &quot;root&quot; for uploaded files is not
+# recommended!
+# chown_uploads=YES
+# chown_username=ftpuser
+#
+# You may override where the log file goes if you like. The default is shown
+# below.
+#xferlog_file=/var/log/vsftpd.log
+#
+# If you want, you can have your log file in standard ftpd xferlog format.
+# Note that the default log file location is /var/log/xferlog in this case.
+#xferlog_std_format=YES
+#
+# You may change the default value for timing out an idle session.
+#idle_session_timeout=600
+#
+# You may change the default value for timing out a data connection.
+#data_connection_timeout=120
+#
+# It is recommended that you define on your system a unique user which the
+# ftp server can use as a totally isolated and unprivileged user.
+#nopriv_user=ftpsecure
+#
+# Enable this and the server will recognise asynchronous ABOR requests. Not
+# recommended for security (the code is non-trivial). Not enabling it,
+# however, may confuse older FTP clients.
+#async_abor_enable=YES
+#
+# By default the server will pretend to allow ASCII mode but in fact ignore
+# the request. Turn on the below options to have the server actually do ASCII
+# mangling on files when in ASCII mode.
+# Beware that on some FTP servers, ASCII support allows a denial of service
+# attack (DoS) via the command &quot;SIZE /big/file&quot; in ASCII mode. vsftpd
+# predicted this attack and has always been safe, reporting the size of the
+# raw file.
+# ASCII mangling is a horrible feature of the protocol.
+#ascii_upload_enable=YES
+#ascii_download_enable=YES
+#
+# You may fully customise the login banner string:
+#ftpd_banner=Welcome to blah FTP service.
+#
+# You may specify a file of disallowed anonymous e-mail addresses. Apparently
+# useful for combatting certain DoS attacks.
+#deny_email_enable=YES
+# (default follows)
+#banned_email_file=/etc/vsftpd.banned_emails
+#
+# You may restrict local users to their home directories.  See the FAQ for
+# the possible risks in this before using chroot_local_user or
+# chroot_list_enable below.
+# chroot_local_user=YES
+#
+# You may specify an explicit list of local users to chroot() to their home
+# directory. If chroot_local_user is YES, then this list becomes a list of
+# users to NOT chroot().
+# (Warning! chroot&#39;ing can be very dangerous. If using chroot, make sure that
+# the user does not have write access to the top level directory within the
+# chroot)
+chroot_local_user=YES
+chroot_list_enable=YES
+
+# (default follows)
+chroot_list_file=/etc/vsftpd.chroot_list
+#
+# You may activate the &quot;-R&quot; option to the builtin ls. This is disabled by
+# default to avoid remote users being able to cause excessive I/O on large
+# sites. However, some broken FTP clients such as &quot;ncftp&quot; and &quot;mirror&quot; assume
+# the presence of the &quot;-R&quot; option, so there is a strong case for enabling it.
+#ls_recurse_enable=YES
+#
+# Customization
+#
+# Some of vsftpd&#39;s settings don&#39;t fit the filesystem layout by
+# default.
+#
+# This option should be the name of a directory which is empty.  Also, the
+# directory should not be writable by the ftp user. This directory is used
+# as a secure chroot() jail at times vsftpd does not require filesystem
+# access.
+secure_chroot_dir=/var/run/vsftpd/empty
+#
+# This string is the name of the PAM service vsftpd will use.
+pam_service_name=vsftpd
+#
+# This option specifies the location of the RSA certificate to use for SSL
+# encrypted connections.
+rsa_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+rsa_private_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+ssl_enable=NO
+
+#
+# Uncomment this to indicate that vsftpd use a utf8 filesystem.
+#utf8_filesystem=YES
+</code></pre>
+<p><strong>启动服务</strong></p>
+<pre><code class="bash">sudo systemctl start vsftpd.service
+</code></pre>
+<h4 id="端口连接超时"><a href="#端口连接超时" class="headerlink" title="端口连接超时"></a>端口连接超时</h4><p>启用被动模式</p>
+<p><u>&#x2F;etc&#x2F;vsftpd.conf</u></p>
+<pre><code class="text">pasv_enable=YES
+pasv_min_port=50000
+pasv_max_port=60000
+</code></pre>
+<pre><code class="shell">sudo ufw allow 50000:60000/tcp
+sudo ufw reload
+</code></pre>
+
+        </div>
+
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<nav class="article-nav">
+  
+    <a href="/2023/01/10/Hexo/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-caption">下一篇</div>
+      <div class="article-nav-title">
+        
+          Hexo 使用笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/01/10/git/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-title">git submodule 使用</div>
+    </a>
+  
+</nav>
+
+
+    <section class="share">
+        <div class="share-title">分享</div>
+        <a class="share-item" target="_blank"
+            href="https://twitter.com/share?text=Linux 搭建 ftp 服务器 - Wukaige's Blog&url=https%3A%2F%2Fgitduk.github.io%2F2023%2F01%2F10%2Fftp%2F">
+            <ion-icon name="logo-twitter"></ion-icon>
+        </a>
+        <a class="share-item" target="_blank"
+            href="https://www.facebook.com/sharer.php?title=Linux 搭建 ftp 服务器 - Wukaige's Blog&u=https%3A%2F%2Fgitduk.github.io%2F2023%2F01%2F10%2Fftp%2F">
+            <ion-icon name="logo-facebook"></ion-icon>
+        </a>
+        <!-- <a class="share-item" target="_blank"
+            href="https://service.weibo.com/share/share.php?title=Linux 搭建 ftp 服务器 - Wukaige's Blog&url=https://gitduk.github.io/2023/01/10/ftp/&pic=">
+            <div class="n-icon n-icon-weibo"></div>
+        </a> -->
+    </section>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </section>
+            </section>
+
+            
+            <aside class="sidebar ">
+                
+
+
+<div class="widget" id="widget">
+    
+      
+  <div class="widget-wrap">
+    <div class="widget-inner">
+      <div class="toc post-toc-html"></div>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget-wrap widget-cate">
+    <div class="widget-title"><span>Categories</span></div>
+    <div class="widget-inner">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap widget-tags">
+    <div class="widget-title"><span>Tags</span></div>
+    <div class="widget-inner">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ftp/" rel="tag">ftp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/" rel="tag">ssh</a></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap widget-recent-posts">
+    <div class="widget-title"><span>Recent Posts</span></div>
+    <div class="widget-inner">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/10/Hexo/">Hexo 使用笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/ftp/">Linux 搭建 ftp 服务器</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/git/">git submodule 使用</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/ssh-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/">ssh 反向代理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget-wrap widget-archive">
+    <div class="widget-title"><span>Archive</span></div>
+    <div class="widget-inner">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a></li></ul>
+    </div>
+  </div>
+
+
+    
+</div>
+
+<div id="backtop"><i class="icon icon-arrow-up"></i></div>
+            </aside>
+            
+        </div>
+    </div>
+
+    <footer class="footer">
+    <div class="footer-wave">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#3c4859" fill-opacity="1" d="M0,160L60,181.3C120,203,240,245,360,240C480,235,600,181,720,186.7C840,192,960,256,1080,261.3C1200,267,1320,213,1380,186.7L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+    </div>
+
+    <!-- Please do not remove this -->
+    <!-- 开源不易，请勿删除 -->
+    <div class="footer-wrap">
+        <div class="footer-inner"> 
+            Wukaige&#39;s Blog &copy; 2023<br>
+            Powered By Hexo · Theme By <a href="https://linhong.me/" target="_blank">Aomori</a> · <a href="https://github.com/lh1me/hexo-theme-aomori" target="_blank">Github</a>
+        </div>
+    </div>
+
+</footer>
+
+<script type="module" src="https://unpkg.com/ionicons@6.0.2/dist/ionicons/ionicons.esm.js"></script>
+
+
+
+
+
+
+<script src="/dist/build.js?1654266144177.js"></script>
+
+
+<script src="/dist/custom.js?1654266144177.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
