@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+    <title>Hexo</title>
+
+    <meta name="description" content="Hexo">
+    <meta name="keywords" content="">
+
+    
+
+    <meta property="og:locale" content="en" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content= "Hexo"  />
+    <meta property="og:description" content= "Hexo" />
+    <meta property="og:url" content="http://example.com/2023/01/10/linux/index.html" />
+    <meta property="og:site_name" content="" />
+    <meta property="article:author" content="John Doe" />
+    <meta property="article:publisher" content="" />
+    <meta property="og:description" content="Hexo" />
+    <meta name="twitter:title" content="Hexo"/>
+    <meta name="twitter:description" content="Hexo"/>
+    <script type="application/ld+json">
+        {
+            "description": "Hexo",
+            "author": { "@type": "Person", "name": "John Doe" },
+            "@type": "BlogPosting",
+            "url": "http://example.com/2023/01/10/linux/index.html",
+            "publisher": {
+            "@type": "Organization",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http://example.comundefined"
+            },
+            "name": "John Doe"
+            },
+            "headline": "Hexo",
+            "datePublished": "2023-01-10T06:36:42.112Z",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "http://example.com/2023/01/10/linux/index.html"
+            },
+            "@context": "http://schema.org"
+        }
+    </script>
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<link rel="stylesheet" href="/dist/build.css?v=1654266144177.css">
+
+
+    
+<link rel="stylesheet" href="/dist/custom.css?v=1654266144177.css">
+
+
+    <script>
+        window.isPost = true
+        window.aomori = {
+            
+            
+            
+        }
+        window.aomori_logo_typed_animated = false
+        window.aomori_search_algolia = false
+
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div class="container">
+    <header class="header">
+        <div class="header-type">
+            
+            <div class="header-type-inner">
+                
+                    <a class="header-type-title" href="/">Hexo</a>
+                
+    
+                
+            </div>
+        </div>
+        <div class="header-menu">
+            <div class="header-menu-inner">
+                
+            </div>
+            <div class="header-menu-social">
+                
+            </div>
+        </div>
+
+        <div class="header-menu-mobile">
+            <div class="header-menu-mobile-inner" id="mobile-menu-open">
+                <i class="icon icon-menu"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="header-menu-mobile-menu">
+        <div class="header-menu-mobile-menu-bg"></div>
+        <div class="header-menu-mobile-menu-wrap">
+            <div class="header-menu-mobile-menu-inner">
+                <div class="header-menu-mobile-menu-close" id="mobile-menu-close">
+                    <i class="icon icon-cross"></i>
+                </div>
+                <div class="header-menu-mobile-menu-list">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <div class="container">
+        <div class="main">
+            <section class="inner">
+                <section class="inner-main">
+                    <div class="post">
+    <article id="post-clcpv2vg20007fuefacv8dbd7" class="article article-type-post" itemscope
+    itemprop="blogPost">
+
+    <div class="article-inner">
+
+        
+          
+        
+        
+        
+
+        
+
+        <div class="article-more-info article-more-info-post hairline">
+
+            <div class="article-date">
+  <time datetime="2023-01-10T06:36:42.112Z" itemprop="datePublished">2023-01-10</time>
+</div>
+
+            
+
+            
+
+            
+
+        </div>
+
+        <div class="article-entry post-inner-html hairline" itemprop="articleBody">
+            <h2 id="Ubuntu-下安装-windows-双系统"><a href="#Ubuntu-下安装-windows-双系统" class="headerlink" title="Ubuntu 下安装 windows 双系统"></a>Ubuntu 下安装 windows 双系统</h2><p><a target="_blank" rel="noopener" href="https://github.com/ventoy/Ventoy">GitHub - ventoy&#x2F;Ventoy: A new bootable USB<br>solution.</a></p>
+<h2 id="Linux-系统安装适合的-NVIDIA-显卡驱动"><a href="#Linux-系统安装适合的-NVIDIA-显卡驱动" class="headerlink" title="Linux 系统安装适合的 NVIDIA 显卡驱动"></a>Linux 系统安装适合的 NVIDIA 显卡驱动</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">lshw -numeric -C display</span><br><span class="line">sudo add-apt-repository ppa:graphics-drivers</span><br><span class="line">ubuntu-drivers devices</span><br><span class="line">sudo ubuntu-drivers autoinstall</span><br><span class="line"></span><br><span class="line">lsmod | grep nouveau <span class="comment"># 无输出</span></span><br><span class="line">lsmod | grep nvidia <span class="comment"># 有输出</span></span><br><span class="line"></span><br><span class="line">sudo prime-select query</span><br><span class="line">sudo prime-select nvidia</span><br><span class="line">sudo prime-select intel</span><br></pre></td></tr></table></figure>
+
+<h2 id="Bash-条件判断"><a href="#Bash-条件判断" class="headerlink" title="Bash 条件判断"></a>Bash 条件判断</h2><p>一、文件&#x2F;目录判断</p>
+<ul>
+<li>[ -a FILE ] 如果 FILE 存在则为真。</li>
+<li>[ -b FILE ] 如果 FILE 存在且是一个块文件则返回为真。</li>
+<li>[ -c FILE ] 如果 FILE 存在且是一个字符文件则返回为真。</li>
+<li>[ -d FILE ] 如果 FILE 存在且是一个目录则返回为真。</li>
+<li>xxxxxxxxxx td {     border-width: 0 1px 1px 0;     border-style: dashed;    border-color: #666; }css </li>
+<li>[ -f FILE ] 如果 FILE 存在且是一个普通文件则返回为真。</li>
+<li>[ -g FILE ] 如果 FILE 存在且设置了SGID则返回为真。</li>
+<li>[ -h FILE ] 如果 FILE 存在且是一个符号符号链接文件则返回为真。（该选项在一些老系统上无效）</li>
+<li>[-k FILE ] 如果 FILE 存在且已经设置了冒险位则返回为真。</li>
+<li>[ -p FILE ] 如果 FILE 存并且是命令管道时返回为真。</li>
+<li>[ -r FILE ] 如果 FILE 存在且是可读的则返回为真。</li>
+<li>[ -s FILE ] 如果 FILE 存在且大小非0时为真则返回为真。</li>
+<li>[ -u FILE ] 如果 FILE 存在且设置了SUID位时返回为真。</li>
+<li>[ -w FILE ] 如果 FILE 存在且是可写的则返回为真。（一个目录为了它的内容被访问必然是可执行的）</li>
+<li>[ -x FILE ] 如果 FILE 存在且是可执行的则返回为真。</li>
+<li>[ -O FILE ] 如果 FILE 存在且属有效用户ID则返回为真。</li>
+<li>[ -G FILE ] 如果 FILE 存在且默认组为当前组则返回为真。（只检查系统默认组）</li>
+<li>[ -L FILE ] 如果 FILE 存在且是一个符号连接则返回为真。</li>
+<li>[ -N FILE ] 如果 FILE 存在 and has been mod如果ied since it was last read则返回为真。</li>
+<li>[ -S FILE ] 如果 FILE 存在且是一个套接字则返回为真。</li>
+<li>[ FILE1 -nt FILE2 ] 如果 FILE1 比 FILE2 新, 或者 FILE1 存在但是 FILE2 不存在则返回为真。</li>
+<li>[ FILE1 -ot FILE2 ] 如果 FILE1 比 FILE2 老, 或者 FILE2 存在但是 FILE1 不存在则返回为真。</li>
+<li>[ FILE1 -ef FILE2 ] 如果 FILE1 和 FILE2 指向相同的设备和节点号则返回为真。</li>
+</ul>
+<p>二、字符串判断</p>
+<ul>
+<li>[ -z STRING ] 如果STRING的长度为零则返回为真，即空是真</li>
+<li>[ -n STRING ] 如果STRING的长度非零则返回为真，即非空是真</li>
+<li>[ STRING1 ] 如果字符串不为空则返回为真,与-n类似</li>
+<li>[ STRING1 &#x3D;&#x3D; STRING2 ] 如果两个字符串相同则返回为真</li>
+<li>[ STRING1 !&#x3D; STRING2 ] 如果字符串不相同则返回为真</li>
+<li>[ STRING1 &lt; STRING2 ] 如果 STRING1 字典排序在 STRING2 前面则返回为真。</li>
+<li>[ STRING1 &gt; STRING2 ] 如果 “STRING1”字典排序在”STRING2”后面则返回为真。</li>
+</ul>
+<p>三、数值判断</p>
+<ul>
+<li>[ INT1 -eq INT2 ] INT1和INT2两数相等返回为真 , &#x3D;</li>
+<li>[ INT1 -ne INT2 ] INT1和INT2两数不等返回为真 , &lt;&gt;</li>
+<li>[ INT1 -gt INT2 ] INT1大于INT2返回为真 , &gt;</li>
+<li>[ INT1 -ge INT2 ] INT1大于等于INT2返回为真, &gt;&#x3D;</li>
+<li>[ INT1 -lt INT2 ] INT1小于INT2返回为真 , &lt;</li>
+<li>[ INT1 -le INT2 ] INT1小于等于INT2返回为真, &lt;&#x3D;</li>
+</ul>
+<p>四、逻辑判断</p>
+<ul>
+<li>[ ! EXPR ] 逻辑非，如果 EXPR 是false则返回为真。</li>
+<li>[ EXPR1 -a EXPR2 ] 逻辑与，如果 EXPR1 and EXPR2 全真则返回为真。</li>
+<li>[ EXPR1 -o EXPR2 ] 逻辑或，如果 EXPR1 或者 EXPR2 为真则返回为真。</li>
+<li>[ ] || [ ] 用OR来合并两个条件</li>
+<li>[ ] &amp;&amp; [ ] 用AND来合并两个条件</li>
+</ul>
+<p>五、其他判断 [ -t FD ] 如果文件描述符 FD<br>（默认值为1）打开且指向一个终端则返回为真 [ -o optionname ]<br>如果shell选项optionname开启则返回为真</p>
+<h2 id="找到键盘对应快捷键的名字"><a href="#找到键盘对应快捷键的名字" class="headerlink" title="找到键盘对应快捷键的名字"></a>找到键盘对应快捷键的名字</h2><p>安装 xen</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install xen-hypervisor-amd64</span><br></pre></td></tr></table></figure>
+
+<p>运行 xen : <code>xev</code> 随便按下键盘中的一个键（-）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">KeyPress event, serial 35, synthetic NO, window 0x4000001,</span><br><span class="line">    root 0x75a, subw 0x0, time 85296120, (-231,550), root:(1071,618),</span><br><span class="line">    state 0x0, keycode 64 (keysym 0xffe9, Alt_L), same_screen YES,</span><br><span class="line">    XLookupString gives 0 bytes:</span><br><span class="line">    XmbLookupString gives 0 bytes:</span><br><span class="line">    XFilterEvent returns: False</span><br></pre></td></tr></table></figure>
+
+<p><code>state 0x0, keycode 64 (keysym 0xffe9, Alt_L), same_screen YES,</code><br>括号中的就是该键的名字 0x2d 或者 minus</p>
+<h2 id="crontab-使用用户环境"><a href="#crontab-使用用户环境" class="headerlink" title="crontab 使用用户环境"></a>crontab 使用用户环境</h2><p>在执行 crontab -e 后, 编辑界面最上面写入以下配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DISPLAY=&quot;:0.0&quot; </span><br><span class="line">XAUTHORITY=&quot;$HOME/.Xauthority&quot;</span><br><span class="line">XDG_RUNTIME_DIR=&quot;/run/user/1000&quot;</span><br></pre></td></tr></table></figure>
+
+<p>DISPLAY 的值可由 <code>echo $DISPLAY</code> 查看</p>
+<h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p>docker run 参数</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d</td>
+<td>让 Docker 在后台运行</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>交互模式</td>
+</tr>
+<tr>
+<td>-p&#x2F;P</td>
+<td>映射端口</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>分配一个伪装的 tty</td>
+</tr>
+<tr>
+<td>–name</td>
+<td>命名 container</td>
+</tr>
+<tr>
+<td>–network</td>
+<td>为 container 分配网络</td>
+</tr>
+<tr>
+<td>–dns</td>
+<td>为 container 分配 DNS 服务器</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>为 container 绑定数据卷</td>
+</tr>
+<tr>
+<td>–rm</td>
+<td>镜像存在时先移除，再创建</td>
+</tr>
+</tbody></table>
+<p>导出容器 <code>docker export 7691a814370e &gt; ubuntu.tar</code> </p>
+<p>导入容器 <code>cat ubuntu.tar | docker import - test/ubuntu:v1.0</code></p>
+<p>创建网络 <code>docker network create -d bridge my-net</code></p>
+<p>配置 DNS 全局配置，修改 <code>/etc/docker/daemon.json</code> 文件，加入以下配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span> <span class="attr">&quot;dns&quot;</span> <span class="punctuation">:</span> <span class="punctuation">[</span> <span class="string">&quot;114.114.114.114&quot;</span><span class="punctuation">,</span> <span class="string">&quot;8.8.8.8&quot;</span> <span class="punctuation">]</span> <span class="punctuation">&#125;</span> </span><br></pre></td></tr></table></figure>
+
+
+
+<p>单个 container 修改，创建容器使用参数 <code>--dns=IP_ADDRESS</code></p>
+<p>验证 DNS 服务器 <code>docker run -it --rm ubuntu:18.04 cat /etc/resolv.conf</code></p>
+<p>Docker 容器的 DNS 配置通过 &#x2F;etc&#x2F;resolv.conf 文件立刻得到更新</p>
+<h4 id="dockerfile-编译"><a href="#dockerfile-编译" class="headerlink" title="dockerfile 编译"></a>dockerfile 编译</h4><blockquote>
+<p>编译 smartdns</p>
+<p>Dockerfile: <a target="_blank" rel="noopener" href="https://github.com/pymumu/smartdns/blob/master/Dockerfile">https://github.com/pymumu/smartdns/blob/master/Dockerfile</a></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> Dockerfile</span><br><span class="line">docker build -t smartdns/smartdns .</span><br><span class="line">docker run -d --name smartdns -p 53:53/udp -v /path/to/smartdns/config/:/etc/smartdns/ --restart=always smartdns/smartdns</span><br></pre></td></tr></table></figure>
+
+<h2 id="SSH-反向代理"><a href="#SSH-反向代理" class="headerlink" title="SSH 反向代理"></a>SSH 反向代理</h2><blockquote>
+<p>端口映射 2222 -&gt; 22 为例</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">client side</span></span><br><span class="line">ssh-keygen -t rsa -C &#x27;wdkany@qq.com&#x27;</span><br><span class="line">ssh-copy-id user@JumpHost</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">server side</span></span><br><span class="line">sudo ufw allow 22 </span><br><span class="line">sudo ufw reload</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">client side</span></span><br><span class="line">ssh -NR 2222:localhost:22 user@JumpHost</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开放 2222 端口</span></span><br><span class="line">sudo ufw allow 2222 </span><br><span class="line">sudo ufw reload</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>连接内网主机 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &#x27;wdkany@qq.com&#x27; </span><br><span class="line">ssh-copy-id user@JumpHost</span><br><span class="line">ssh user@JumpHost -p 2222</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="配置-openssh-服务"><a href="#配置-openssh-服务" class="headerlink" title="配置 openssh 服务"></a>配置 openssh 服务</h2><ol>
+<li>安装 openssh-server</li>
+<li>编辑 <u>&#x2F;etc&#x2F;ssh&#x2F;sshd_config</u></li>
+<li>重启 sshd 服务</li>
+<li>检测：netstat -nltp|grep 22</li>
+</ol>
+<p><u>&#x2F;etc&#x2F;ssh&#x2F;sshd_config</u></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Port 22 </span><br><span class="line">ListenAddress 0.0.0.0 </span><br><span class="line">ListenAddress :: </span><br><span class="line">PermitRootLogin yes</span><br><span class="line">PasswordAuthentication yes </span><br></pre></td></tr></table></figure>
+
+<h4 id="解决-timeout-问题"><a href="#解决-timeout-问题" class="headerlink" title="解决 timeout 问题"></a>解决 timeout 问题</h4><p>服务端 <u>~&#x2F;.ssh&#x2F;config</u></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host *</span><br><span class="line">  TCPKeepAlive yes               </span><br><span class="line">  ClientAliveInterval 120</span><br><span class="line">  ClientAliveCountMax 2</span><br></pre></td></tr></table></figure>
+
+<p>或者终端 <u>~&#x2F;.ssh&#x2F;config</u></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Host *</span><br><span class="line">  ServerAliveInterval 120</span><br><span class="line">  ServerAliveCountMax 2</span><br></pre></td></tr></table></figure>
+
+<p><strong>然后重启 ssh 服务</strong></p>
+<h2 id="output-重定向"><a href="#output-重定向" class="headerlink" title="output 重定向"></a>output 重定向</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">command &gt; file</td>
+<td>将输出重定向到 file</td>
+</tr>
+<tr>
+<td align="left">command &lt; file</td>
+<td>将输入重定向到 file</td>
+</tr>
+<tr>
+<td align="left">command &gt;&gt; file</td>
+<td>将输出以追加的方式重定向到 file</td>
+</tr>
+<tr>
+<td align="left">&lt;&lt; tag</td>
+<td>将开始标记 tag 和结束标记 tag 之间的内容作为输入</td>
+</tr>
+</tbody></table>
+<h2 id="修改-Ubuntu-默认启动的内核"><a href="#修改-Ubuntu-默认启动的内核" class="headerlink" title="修改 Ubuntu 默认启动的内核"></a>修改 Ubuntu 默认启动的内核</h2><p><u>&#x2F;etc&#x2F;default&#x2F;grub</u> </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_DEFAULT=0</span><br></pre></td></tr></table></figure>
+
+<p>Referer: <a target="_blank" rel="noopener" href="https://blog.csdn.net/violet_echo_0908/article/details/103766027">Ubuntu 修改启动时默认内核版本_在努力！-CSDN博客<del>ubuntu修改默认启动内核</del></a></p>
+<h2 id="更新系统和系统内核"><a href="#更新系统和系统内核" class="headerlink" title="更新系统和系统内核"></a>更新系统和系统内核</h2><p>准备阶段： </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update </span><br><span class="line">sudo apt upgrade </span><br><span class="line">sudo apt install update-manager-core </span><br></pre></td></tr></table></figure>
+
+<p>更新系统： </p>
+<ol>
+<li><code>sudo apt-get dist-upgrade</code> </li>
+<li><code>sudo do-release-upgrade</code></li>
+<li>修改 <code>/etc/apt/sources.list</code></li>
+</ol>
+<p>文件中的源列表到你想更新到的系统版本，<a target="_blank" rel="noopener" href="https://wiki.ubuntu.org.cn/%E6%BA%90%E5%88%97%E8%A1%A8">源列表</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 更新系统</span></span> </span><br><span class="line">sudo apt-get update </span><br><span class="line">sudo apt-get upgrade </span><br><span class="line">sudo apt-get dist-upgrade</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 如果出错，运行</span></span> </span><br><span class="line">sudo apt-get update </span><br><span class="line">sudo apt-get dist-upgrade</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 清理系统</span></span> </span><br><span class="line">sudo apt-get autoremove </span><br><span class="line">sudo apt-get clean </span><br></pre></td></tr></table></figure>
+
+<p><strong>重启系统</strong></p>
+<p>Referer: <a target="_blank" rel="noopener" href="https://sypalo.com/how-to-upgrade-ubuntu">How to upgrade Ubuntu to 21.10 and kernel to 5.15</a></p>
+<h2 id="更新内核"><a href="#更新内核" class="headerlink" title="更新内核"></a>更新内核</h2><p>Referer: <a target="_blank" rel="noopener" href="https://leanote.zzzmh.cn/blog/post/admin/Linux-Ubuntu-20.04-LTS-%E6%9B%B4%E6%96%B0%E5%88%B0%E6%9C%80%E6%96%B0%E9%95%BF%E6%9C%9F%E6%94%AF%E6%8C%81%E5%86%85%E6%A0%B8-v5.10.9">Linux Ubuntu 20.04 LTS 更新到最新长期支持内核<br>v5.10.9</a></p>
+<p>检查更新结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># Check the OS distro</span></span> </span><br><span class="line">lsb_release -a</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># Check kernel version</span></span> </span><br><span class="line">uname -r</span><br></pre></td></tr></table></figure>
+
+
+<p>bash 文件类型判断</p>
+<ul>
+<li>-b 特殊块文件为真</li>
+<li>-c 字符文件为真</li>
+<li>-d 目录为真</li>
+<li>-f 常规文件为真</li>
+<li>-L 符号链接为真</li>
+<li>-e 文件存在为真</li>
+<li>-s 文件长度不为空为真</li>
+<li>-r&#x2F;w&#x2F;x 文件可读、写、执行为真</li>
+<li>-O 文件存在且为该用户所有为真</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/56f92ac2fea4">Shell中判断文件,目录是否存在</a></p>
+<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><p><a target="_blank" rel="noopener" href="https://learngitbranching.js.org/">Learn Git Branching</a></p>
+<h2 id="硬件信息查询"><a href="#硬件信息查询" class="headerlink" title="硬件信息查询"></a>硬件信息查询</h2><p>查看CPU 信息: <code>cat /proc/cpuinfo</code></p>
+<p>查看内存信息: <code>dmidecode -t memory</code></p>
+<p>查看显卡信息</p>
+<ul>
+<li><code>lspci -vnn | grep -i vga -A 10</code></li>
+<li><code>lshw -c display</code></li>
+<li><code>modinfo [驱动名称</code> 显示显卡驱动详情</li>
+</ul>
+<p>查看显示器连接信息: <code>xrandr</code></p>
+<p>查看网卡信息</p>
+<ul>
+<li><code>ifconfig</code></li>
+<li><code>lspci -vnn - grep -i eth -A 10</code></li>
+<li><code>ethtool &lt;网卡名&gt;</code></li>
+</ul>
+<p>查看声卡信息</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Desc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cat &#x2F;proc&#x2F;asound&#x2F;cards</td>
+<td>查看音频设备</td>
+</tr>
+<tr>
+<td>arecord -l</td>
+<td>查看音频设备音频输入功能</td>
+</tr>
+<tr>
+<td>aplay -l</td>
+<td>查看音频设备音频输出功能</td>
+</tr>
+</tbody></table>
+<p>查看 PCI 设备信息</p>
+<ul>
+<li><code>lspci</code></li>
+</ul>
+<p>查看 USB 设备信息</p>
+<ul>
+<li><code>lsusb</code></li>
+</ul>
+<p>查看所有硬件信息</p>
+<ul>
+<li><code>dmide</code></li>
+</ul>
+<h2 id="系统监控"><a href="#系统监控" class="headerlink" title="系统监控"></a>系统监控</h2><p>系统基础信息</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Desc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>uname -n</code> or <code>hostname</code></td>
+<td>主机名</td>
+</tr>
+<tr>
+<td><code>uname -o</code></td>
+<td>操作系统类型</td>
+</tr>
+<tr>
+<td>&#96;cat &#x2F;etc&#x2F;issue</td>
+<td>awk -F ‘ ‘ ‘{print $1$2}’&#96;</td>
+</tr>
+<tr>
+<td><code>uname -r</code></td>
+<td>系统内核版本</td>
+</tr>
+<tr>
+<td><code>lsmod</code></td>
+<td>列出加载的内核模块</td>
+</tr>
+<tr>
+<td><code>uptime -s</code></td>
+<td>系统开机时间</td>
+</tr>
+<tr>
+<td><code>uptime -p</code></td>
+<td>系统运行时间</td>
+</tr>
+<tr>
+<td>&#96;uptime</td>
+<td>awk -F ‘, ‘ ‘{print $3}’&#96;</td>
+</tr>
+<tr>
+<td><code>cat /etc/crontab</code></td>
+<td>系统计划任务</td>
+</tr>
+<tr>
+<td><code>crontab -l</code></td>
+<td>当前用户计划任务</td>
+</tr>
+<tr>
+<td><code>cat /proc/stat</code></td>
+<td>系统进程整体的统计信息</td>
+</tr>
+<tr>
+<td><code>cat /proc/meminfo</code></td>
+<td>系统整体内存信息</td>
+</tr>
+<tr>
+<td><code>cat /proc/filesystems</code></td>
+<td>系统支持的文件系统</td>
+</tr>
+<tr>
+<td><code>cat /var/log/syslog</code></td>
+<td>系统日志</td>
+</tr>
+<tr>
+<td><code>cat /var/log/dmesg</code></td>
+<td>系统开机日志</td>
+</tr>
+<tr>
+<td><code>cat /etc/shells</code></td>
+<td>列出当前系统所有的 shell 种类</td>
+</tr>
+<tr>
+<td><code>echo $SHELL</code></td>
+<td>显示当前使用的 shell</td>
+</tr>
+<tr>
+<td><code>env</code></td>
+<td>显示当前 shell 的环境变量</td>
+</tr>
+<tr>
+<td><code>cat /proc/bus/input/devices</code></td>
+<td>显示所有的输入设备</td>
+</tr>
+<tr>
+<td><code>ls /dev/bus/usb/*</code></td>
+<td>显示所有的 USB 设备</td>
+</tr>
+<tr>
+<td><code>lsusb -D [设备编号]</code></td>
+<td>查看设备具体信息</td>
+</tr>
+</tbody></table>
+<p><strong>CPU 状态监控</strong></p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Desc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#96;uptime</td>
+<td>awk -F ‘: ‘ ‘{print $NF}’</td>
+</tr>
+<tr>
+<td><code>cat /proc/loadavg</code></td>
+<td>CPU 平均负载</td>
+</tr>
+<tr>
+<td><code>sensors</code></td>
+<td>CPU 温度</td>
+</tr>
+</tbody></table>
+<p><strong>磁盘监控</strong></p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Desc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>df</code></td>
+<td>查看各分区使用情况</td>
+</tr>
+<tr>
+<td><code>du</code></td>
+<td>查看目录的磁盘占用情况</td>
+</tr>
+<tr>
+<td><code>free</code></td>
+<td>查看内存使用量和交换区使用量</td>
+</tr>
+<tr>
+<td>&#96;mount</td>
+<td>column -t&#96;</td>
+</tr>
+<tr>
+<td><code>fdisk -l</code></td>
+<td>查看所有分区</td>
+</tr>
+<tr>
+<td><code>swapon</code></td>
+<td>查看交换分区</td>
+</tr>
+<tr>
+<td><code>hdparm -i [设备路径]</code></td>
+<td>查看磁盘参数(仅适用于IDE设备)</td>
+</tr>
+<tr>
+<td>&#96;dmesg</td>
+<td>grep IDE&#96;</td>
+</tr>
+</tbody></table>
+<p><strong>网络相关</strong></p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Desc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ifconfig</code></td>
+<td>网卡信息</td>
+</tr>
+<tr>
+<td><code>iptables -L</code></td>
+<td>查看防火墙设置</td>
+</tr>
+<tr>
+<td><code>route -n</code></td>
+<td>查看路由表</td>
+</tr>
+<tr>
+<td><code>netstat</code>、<code>ss</code>、<code>lsof</code></td>
+<td>查看端口，网络连接等信息</td>
+</tr>
+</tbody></table>
+<p><strong>进程信息</strong></p>
+<ul>
+<li><code>lsof</code></li>
+<li><code>ps</code></li>
+<li><code>top、htop</code></li>
+</ul>
+<p><strong>用户信息</strong></p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Desc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>w</code></td>
+<td>查看活动用户</td>
+</tr>
+<tr>
+<td><code>id [用户名]</code></td>
+<td>查看指定用户信息</td>
+</tr>
+<tr>
+<td><code>last</code></td>
+<td>查看用户登录日志</td>
+</tr>
+<tr>
+<td><code>cut -d: -f1 /etc/passwd</code></td>
+<td>查看系统所有用户</td>
+</tr>
+<tr>
+<td><code>cut -d: -f1 /etc/group</code></td>
+<td>查看系统所有用户组</td>
+</tr>
+<tr>
+<td><code>crontab -l</code></td>
+<td>查看当前用户的计划任务</td>
+</tr>
+</tbody></table>
+<h2 id="字体管理"><a href="#字体管理" class="headerlink" title="字体管理"></a>字体管理</h2><p>Linux 字体安装和卸载很简单。</p>
+<p>安装字体：直接把字体放到指定的目录，然后刷新字体缓存即可。<br>删除字体：只需从指定目录删除对应的字体文件，再刷新字体缓存。<br>Linux 字体放置目录有三个： 系统字体目录 <u>&#x2F;usr&#x2F;share&#x2F;fonts</u> 用户字体目录</p>
+<ul>
+<li><u>~&#x2F;.fonts</u></li>
+<li><u>~&#x2F;.local&#x2F;share&#x2F;fonts</u></li>
+</ul>
+<p>刷新字体缓存 <code>fc-cache -fv</code><br>查看所有字体 <code>fc-list | cut -d &#39;:&#39; -f2</code></p>
+<h2 id="IP-管理"><a href="#IP-管理" class="headerlink" title="IP 管理"></a>IP 管理</h2><p>显示网卡信息</p>
+<p><code>ip addr show eth0</code></p>
+<p>添加 ip 地址</p>
+<p><code>ip addr add 192.168.1.2/24 dev eth0</code></p>
+<p>显示路由信息 <code>ip route</code><br>添加默认路由 <code>ip route add default via 192.168.1.1</code><br>添加路由 <code>ip route add 192.168.171.0/25 via 192.168.170.5</code><br>删除路由 <code>ip route del 192.168.171.0/25 via 192.168.170.5</code><br>清空路由 <code>ip route flush table main</code><br>清空 arp 缓存 <code>ip -s -s neigh flush all</code><br>开启路由器转发功能 <code>echo 1 &gt; /proc/sys/net/ipv4/ip_forward</code></p>
+<p>清空路由后，再添加路由提示错误: Error: Nexthop has invalid gateway.<br>添加默认路由 <code>ip route add default via 192.168.1.1 dev eth0 onlink</code></p>
+<h2 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h2><h3 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dongwuming/article/details/50605911">linux shell 字符串操作详解 （长度，读取，替换，截取，连接，对比，删除，位置 ）</a></p>
+<h2 id="zsh-and-oh-my-zsh-in-termux-on-android"><a href="#zsh-and-oh-my-zsh-in-termux-on-android" class="headerlink" title="zsh and oh my zsh in termux on android"></a>zsh and oh my zsh in termux on android</h2><p>在 termux 里运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">pkg install curl</span><br><span class="line">pkg install zsh</span><br><span class="line">pkg install git</span><br><span class="line">sh -c &quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;</span><br><span class="line"></span><br><span class="line">chsh # 选择 zsh</span><br><span class="line"></span><br><span class="line">cd $HOME</span><br><span class="line">git clone https://github.com/adi1090x/termux-style</span><br><span class="line">cd termux-style</span><br><span class="line">./install </span><br></pre></td></tr></table></figure>
+
+
+
+<img src="https://s2.loli.net/2022/05/24/fWv2Y9OdkJPKAng.jpg" alt="img" style="zoom:50%;" />
+
+<h2 id="PASS-密码管理"><a href="#PASS-密码管理" class="headerlink" title="PASS 密码管理"></a>PASS 密码管理</h2><h4 id="gpg-配置"><a href="#gpg-配置" class="headerlink" title="gpg 配置"></a>gpg 配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成密钥对</span></span><br><span class="line">gpg --gen-key</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看</span></span><br><span class="line">gpg --list-key</span><br><span class="line"></span><br><span class="line"><span class="comment"># /home/wukaige/.gnupg/pubring.kbx</span></span><br><span class="line"><span class="comment"># --------------------------------</span></span><br><span class="line"><span class="comment"># pub   rsa3072 2022-06-08 [SC] [expires: 2024-06-07]</span></span><br><span class="line"><span class="comment">#       59A515D898B01A868EE23385B60DFC718514E8C3</span></span><br><span class="line"><span class="comment"># uid           [ultimate] wukaige &lt;wdkany@gmail.com&gt;</span></span><br><span class="line"><span class="comment"># sub   rsa3072 2022-06-08 [E] [expires: 2024-06-07]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="初始化-PASS"><a href="#初始化-PASS" class="headerlink" title="初始化 PASS"></a>初始化 PASS</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pass init [uid]</span></span><br><span class="line">pass init wukaige</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 储存密码</span></span><br><span class="line">pass edit email/wdkany@qq.com</span><br><span class="line"><span class="comment"># 查看</span></span><br><span class="line">pass email/wdkany@qq.com</span><br><span class="line"><span class="comment"># 复制到剪贴板</span></span><br><span class="line">pass -c email/wdkany@qq.com</span><br><span class="line"><span class="comment"># 移除密码</span></span><br><span class="line">pass <span class="built_in">rm</span> email/wdkany@qq.com</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --bare git@github.com:gitduk/dotfiles.git ~/.dotfiles</span><br><span class="line"><span class="built_in">alias</span> c=<span class="string">&#x27;/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME</span></span><br><span class="line"><span class="string">c checkout</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="WireGuard"><a href="#WireGuard" class="headerlink" title="WireGuard"></a>WireGuard</h2><p><a target="_blank" rel="noopener" href="https://www.myfreax.com/how-to-set-up-wireguard-vpn-on-ubuntu-20-04/">https://www.myfreax.com/how-to-set-up-wireguard-vpn-on-ubuntu-20-04/</a></p>
+<h2 id="开启-x2F-var-x2F-log-x2F-messages"><a href="#开启-x2F-var-x2F-log-x2F-messages" class="headerlink" title="开启  &#x2F;var&#x2F;log&#x2F;messages"></a>开启  <u>&#x2F;var&#x2F;log&#x2F;messages</u></h2><p><u>&#x2F;etc&#x2F;rsyslog.d&#x2F;50-default.conf</u> 中添加或者注释掉</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*.=info;*.=notice;*.=warn;\</span><br><span class="line">	auth,authpriv.none;\</span><br><span class="line">	cron,daemon.none;\</span><br><span class="line">	mail,news.none		-/var/log/messages</span><br></pre></td></tr></table></figure>
+
+
+
+<p>重启服务: <code>systemctl restart rsyslog.service</code></p>
+<h2 id="软件源仓库"><a href="#软件源仓库" class="headerlink" title="软件源仓库"></a>软件源仓库</h2><p><strong>docker</strong></p>
+<p>curl -fsSL <a target="_blank" rel="noopener" href="https://download.docker.com/linux/ubuntu/gpg">https://download.docker.com/linux/ubuntu/gpg</a> | sudo gpg –dearmor -o &#x2F;usr&#x2F;share&#x2F;keyrings&#x2F;docker-archive-keyring.gpg<br>echo “deb [arch&#x3D;$(dpkg –print-architecture) signed-by&#x3D;&#x2F;usr&#x2F;share&#x2F;keyrings&#x2F;docker-archive-keyring.gpg] <a target="_blank" rel="noopener" href="https://download.docker.com/linux/ubuntu">https://download.docker.com/linux/ubuntu</a> $(lsb_release -cs) stable” | sudo tee &#x2F;etc&#x2F;apt&#x2F;sources.list.d&#x2F;docker.list &gt; &#x2F;dev&#x2F;null</p>
+<p><strong>sogouimebs</strong></p>
+<p>curl -sL ‘<a target="_blank" rel="noopener" href="https://keyserver.ubuntu.com/pks/lookup?&op=get&search=0x73BC8FBCF5DE40C6ADFCFFFA9C949F2093F565FF">https://keyserver.ubuntu.com/pks/lookup?&amp;op=get&amp;search=0x73BC8FBCF5DE40C6ADFCFFFA9C949F2093F565FF</a>‘ | sudo apt-key add<br>sudo apt-add-repository ‘deb <a target="_blank" rel="noopener" href="http://archive.ubuntukylin.com/ukui">http://archive.ubuntukylin.com/ukui</a> focal main’</p>
+<p><strong>others</strong></p>
+<p>sudo add-apt-repository ppa:spvkgn&#x2F;exa          # exa<br>sudo add-apt-repository ppa:deadsnakes&#x2F;ppa      # python3.10<br>sudo add-apt-repository ppa:graphics-drivers    # nvidia driver</p>
+<h2 id="SwitchyOmega"><a href="#SwitchyOmega" class="headerlink" title="SwitchyOmega"></a>SwitchyOmega</h2><p>黑名单: <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt">https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt</a><br>白名单: <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/breakwa11/gfw_whitelist/master/whiteiplist.pac">https://raw.githubusercontent.com/breakwa11/gfw_whitelist/master/whiteiplist.pac</a><br>下载地址: <a target="_blank" rel="noopener" href="https://github.com/FelisCatus/SwitchyOmega/releases">https://github.com/FelisCatus/SwitchyOmega/releases</a></p>
+<h2 id="switchhosts"><a href="#switchhosts" class="headerlink" title="switchhosts"></a>switchhosts</h2><p><a target="_blank" rel="noopener" href="https://raw.hellogithub.com/hosts">https://raw.hellogithub.com/hosts</a><br><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/hosts">https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/hosts</a></p>
+<h2 id="solve-time-error"><a href="#solve-time-error" class="headerlink" title="solve time error"></a>solve time error</h2><p>sudo ntpdate time.windows.com<br>sudo hwclock –localtime –systohc</p>
+<p>wifi network could not be found</p>
+<p>sudo iw dev wlan0 interface add ap0 type __ap<br>sudo pkill wpa_supplicant &amp;&amp; sudo pkill dhcpcd<br>sudo systemctl restart NetworkManager<br>nmcli con up myNetwork</p>
+<h2 id="remote-login"><a href="#remote-login" class="headerlink" title="remote login"></a>remote login</h2><p>user - JumpHost username<br>name - RemoteHost username<br>ssh -qTfNn -R 2222:localhost:22 user@$RIP<br>ssh -NR 2222:localhost:22 user@$RIP<br>ssh name@$RIP -p 2222</p>
+<h2 id="change-ibus-to-fcitx"><a href="#change-ibus-to-fcitx" class="headerlink" title="change ibus to fcitx"></a>change ibus to fcitx</h2><p>run <code>im-config</code><br>then choose to fcitx</p>
+<h2 id="change-python-version"><a href="#change-python-version" class="headerlink" title="change python version"></a>change python version</h2><p>sudo update-alternatives –install &#x2F;usr&#x2F;bin&#x2F;python python &#x2F;usr&#x2F;bin&#x2F;python3.9 1<br>sudo update-alternatives –install &#x2F;usr&#x2F;bin&#x2F;python python &#x2F;usr&#x2F;bin&#x2F;python3.10 2<br>sudo update-alternatives –config python</p>
+<h2 id="crontab-set-user-env"><a href="#crontab-set-user-env" class="headerlink" title="crontab set user env"></a>crontab set user env</h2><p>DISPLAY&#x3D;”:0.0”<br>XAUTHORITY&#x3D;”&#x2F;home&#x2F;wukaige&#x2F;.Xauthority”<br>XDG_RUNTIME_DIR&#x3D;”&#x2F;run&#x2F;user&#x2F;1000”</p>
+<h2 id="fix-docker-permission"><a href="#fix-docker-permission" class="headerlink" title="fix docker permission"></a>fix docker permission</h2><p>sudo usermod -aG docker $USER<br>newgrp docker<br>reboot</p>
+<h2 id="list-dependencies"><a href="#list-dependencies" class="headerlink" title="list dependencies"></a>list dependencies</h2><p>systemctl list-dependencies graphical.target</p>
+<h2 id="graphical"><a href="#graphical" class="headerlink" title="graphical"></a>graphical</h2><p>ubuntu-drivers devices</p>
+<h2 id="lightdm-greeters-x2F-user-session"><a href="#lightdm-greeters-x2F-user-session" class="headerlink" title="lightdm greeters&#x2F;user-session"></a>lightdm greeters&#x2F;user-session</h2><p>ls -l &#x2F;usr&#x2F;share&#x2F;xgreeters<br>ls &#x2F;usr&#x2F;share&#x2F;xsessions</p>
+<h2 id="upgrade-ubuntu-version"><a href="#upgrade-ubuntu-version" class="headerlink" title="upgrade ubuntu version"></a>upgrade ubuntu version</h2><p>need reboot when upgradable list is null<br>sudo apt list –upgradable -a<br>sudo update-manager -d</p>
+<h2 id="change-input-method"><a href="#change-input-method" class="headerlink" title="change input method"></a>change input method</h2><p>im-config -n fcitx5</p>
+<h2 id="设置默认的启动管理器"><a href="#设置默认的启动管理器" class="headerlink" title="设置默认的启动管理器"></a>设置默认的启动管理器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg-reconfigure lightdm</span><br></pre></td></tr></table></figure>
+
+<h2 id="lightdm"><a href="#lightdm" class="headerlink" title="lightdm"></a>lightdm</h2><h4 id="themes"><a href="#themes" class="headerlink" title="themes"></a>themes</h4><p>wget -c <a target="_blank" rel="noopener" href="http://ftp.lysator.liu.se/pub/opensuse/repositories/home:/antergos/Debian_9.0/amd64/lightdm-webkit2-greeter_2.2.5-1+15.8_amd64.deb">http://ftp.lysator.liu.se/pub/opensuse/repositories/home:/antergos/Debian_9.0/amd64/lightdm-webkit2-greeter_2.2.5-1+15.8_amd64.deb</a><br>sudo dpkg -i lightdm-webkit2-greeter_2.2.5-1+15.8_amd64.deb</p>
+<h4 id="config"><a href="#config" class="headerlink" title="config"></a>config</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.361shipin.com/blog/1551298778114293760">https://www.361shipin.com/blog/1551298778114293760</a></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Seat:*]</span><br><span class="line">user-session=name	# ls /usr/share/xsessions/*.desktop 可查看 session 可用名称</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="rofi-themes"><a href="#rofi-themes" class="headerlink" title="rofi themes"></a>rofi themes</h2><p>git clone –depth&#x3D;1 <a target="_blank" rel="noopener" href="https://github.com/adi1090x/rofi.git">https://github.com/adi1090x/rofi.git</a><br>cd rofi &amp;&amp; .&#x2F;setup.sh</p>
+<h2 id="fcitx5-theme"><a href="#fcitx5-theme" class="headerlink" title="fcitx5 theme"></a>fcitx5 theme</h2><p>git clone –depth&#x3D;1 <a target="_blank" rel="noopener" href="https://github.com/thep0y/fcitx5-themes.git">https://github.com/thep0y/fcitx5-themes.git</a> &#x2F;tmp&#x2F;fcitx5-themes<br>cd &#x2F;tmp&#x2F;fcitx5-themes<br>mv .&#x2F;* ~&#x2F;.local&#x2F;share&#x2F;fcitx5&#x2F;themes</p>
+<h2 id="sddm-themes"><a href="#sddm-themes" class="headerlink" title="sddm themes"></a>sddm themes</h2><blockquote>
+<p>if load themes error, install: sddm-theme-breeze</p>
+<p>themes: Nord, Red-Dot</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">theme=&quot;Nord&quot;</span><br><span class="line">sudo rm -rf /usr/share/sddm/themes/ubuntu-theme</span><br><span class="line">tar -xvf $HOME/.sddm/$theme.tar.gz -C $HOME/.local/share/sddm/</span><br><span class="line">sudo ln -s $HOME/.local/share/sddm/$theme /usr/share/sddm/themes/ubuntu-theme</span><br></pre></td></tr></table></figure>
+
+<h4 id="change-brew-source"><a href="#change-brew-source" class="headerlink" title="change brew source"></a>change brew source</h4><p>brew current source</p>
+<p><code>git -C &quot;$(brew --repo)&quot; remote -v</code></p>
+<p>change source</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git -C <span class="string">&quot;<span class="subst">$(brew --repo)</span>&quot;</span> remote set-url origin https://mirrors.ustc.edu.cn/brew.git</span><br><span class="line">git -C <span class="string">&quot;<span class="subst">$(brew --repo)</span>/Library/Taps/homebrew/homebrew-core&quot;</span> remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git</span><br><span class="line">git -C <span class="string">&quot;<span class="subst">$(brew --repo)</span>/Library/Taps/homebrew/homebrew-cask&quot;</span> remote set-url origin https://mirrors.ustc.edu.cn/homebrew-cask.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># reset source</span></span><br><span class="line"><span class="built_in">unset</span> HOMEBREW_BREW_GIT_REMOTE</span><br><span class="line">git -C <span class="string">&quot;<span class="subst">$(brew --repo)</span>&quot;</span> remote set-url origin https://github.com/Homebrew/brew</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h4 id="add-user-to-group"><a href="#add-user-to-group" class="headerlink" title="add user to group"></a>add user to group</h4><p><code>sudo gpasswd -a user_name group_name</code></p>
+<h4 id="apt-update-NO-PUBKEY"><a href="#apt-update-NO-PUBKEY" class="headerlink" title="apt update NO_PUBKEY *************"></a>apt update NO_PUBKEY *************</h4><p>sudo apt-key adv –keyserver keyserver.ubuntu.com –recv-keys *************</p>
+<h4 id="grub-themes"><a href="#grub-themes" class="headerlink" title="grub themes"></a>grub themes</h4><p>git clone –depth&#x3D;1 <a target="_blank" rel="noopener" href="https://hub.fastgit.xyz/vinceliuice/grub2-themes.git">https://hub.fastgit.xyz/vinceliuice/grub2-themes.git</a><br>cd grub2-themes &amp;&amp; sudo .&#x2F;install.sh</p>
+<h4 id="gdm3-themes"><a href="#gdm3-themes" class="headerlink" title="gdm3 themes"></a>gdm3 themes</h4><p>git clone –depth&#x3D;1 <a target="_blank" rel="noopener" href="https://github.com/realmazharhussain/gdm-tools.git">https://github.com/realmazharhussain/gdm-tools.git</a><br>cd gdm-tools &amp;&amp; .&#x2F;install<br>set-gdm-theme</p>
+<h4 id="ssh-config"><a href="#ssh-config" class="headerlink" title="ssh config"></a>ssh config</h4><p>referer: <a target="_blank" rel="noopener" href="https://hellodk.cn/post/975">https://hellodk.cn/post/975</a><br>Host *<br>  TCPKeepAlive yes<br>  ServerAliveInterval 30</p>
+<p>Host github.com<br>  HostName ssh.github.com<br>  IdentityFile ~&#x2F;.ssh&#x2F;id_rsa<br>  User git<br>  Port 443<br>  ProxyCommand nc -v -x 127.0.0.1:1090 %h %p</p>
+<h4 id="pycharm-pip-source"><a href="#pycharm-pip-source" class="headerlink" title="pycharm pip source"></a>pycharm pip source</h4><p><a target="_blank" rel="noopener" href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a></p>
+<h4 id="部署-dnsmasq"><a href="#部署-dnsmasq" class="headerlink" title="部署 dnsmasq"></a>部署 dnsmasq</h4><ol>
+<li>修改 &#x2F;etc&#x2F;resolv.conf nameserver 为 dnsmasq 监听地址</li>
+<li>备份原 nameserver, 并修改 dnsmasq 的 resolv-file 为备份地址</li>
+<li>disable systemd-resolved &amp;&amp; enable dnsmasq</li>
+</ol>
+<h4 id="iptables"><a href="#iptables" class="headerlink" title="iptables"></a>iptables</h4><p>CHAIN&#x3D;INPUT&#x2F;OUTPUT&#x2F;FORWARD<br>IP&#x3D;xxx.xxx.xxx.xxx<br>iptables -L CHAIN                                 # 列出规则<br>iptables –line -L CHAIN                          # 列出规则,序号<br>iptables -nvL CHAIN                               # 列出规则,并计数<br>iptables -F CHAIN                                 # 清空规则<br>iptables -P CHAIN ACCEPT&#x2F;DROP                     # 设置默认策略<br>iptables -A&#x2F;-I CHAIN -s IP -j ACCEPT&#x2F;DROP         # 流量控制<br>iptables -I CHAIN n -s IP -j ACCEPT&#x2F;DROP          # 插入规则到 n 位置<br>iptables -D CHAIN n                               # 删除 n 位置的规则<br>iptables -R CHAIN n -s IP -j ACCEPT&#x2F;DROP          # 修改 n 位置的规则<br>iptables -t table -N CHAIN                        # 创建 chain</p>
+<h4 id="nftables"><a href="#nftables" class="headerlink" title="nftables"></a>nftables</h4><p>please enable nftables<br>ip、ip6 和 inet 簇支持的钩子有： prerouting、 input、forward、 output、postrouting<br>arp 簇支持的钩子有： input、output</p>
+<h4 id="x2F-var-x2F-log-x2F-journal-过大问题"><a href="#x2F-var-x2F-log-x2F-journal-过大问题" class="headerlink" title="&#x2F;var&#x2F;log&#x2F;journal 过大问题"></a>&#x2F;var&#x2F;log&#x2F;journal 过大问题</h4><p>只保留近一周的日志<br>journalctl –vacuum-time&#x3D;1w<br>只保留500MB的日志<br>journalctl –vacuum-size&#x3D;500M<br>直接删除 &#x2F;var&#x2F;log&#x2F;journal&#x2F; 目录下的日志文件<br>sudo rm -rf &#x2F;var&#x2F;log&#x2F;journal&#x2F;*</p>
+<h4 id="v2ray-订阅地址"><a href="#v2ray-订阅地址" class="headerlink" title="v2ray 订阅地址"></a>v2ray 订阅地址</h4><p><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/ssrsub/ssr/master/ssrsub">https://raw.githubusercontent.com/ssrsub/ssr/master/ssrsub</a><br><a target="_blank" rel="noopener" href="https://raw.fastgit.org/freefq/free/master/v2">https://raw.fastgit.org/freefq/free/master/v2</a></p>
+<h4 id="latest-go-version"><a href="#latest-go-version" class="headerlink" title="latest go version"></a>latest go version</h4><h4 id="x2F-usr-x2F-bin-x2F-X-not-found"><a href="#x2F-usr-x2F-bin-x2F-X-not-found" class="headerlink" title="&#x2F;usr&#x2F;bin&#x2F;X not found"></a>&#x2F;usr&#x2F;bin&#x2F;X not found</h4><p>sudo apt-fast install xinit<br>sudo apt-fast install x-window-system-core</p>
+<h4 id="copy-x2F-mv-命令增加进度条-—-advcp-x2F-advmv"><a href="#copy-x2F-mv-命令增加进度条-—-advcp-x2F-advmv" class="headerlink" title="copy&#x2F;mv 命令增加进度条 — advcp&#x2F;advmv"></a>copy&#x2F;mv 命令增加进度条 — advcp&#x2F;advmv</h4><p><a target="_blank" rel="noopener" href="https://github.com/jarun/advcpmv">https://github.com/jarun/advcpmv</a><br>curl <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/jarun/advcpmv/master/install.sh">https://raw.githubusercontent.com/jarun/advcpmv/master/install.sh</a> –create-dirs -o .&#x2F;advcpmv&#x2F;install.sh &amp;&amp; (cd advcpmv &amp;&amp; sh install.sh)</p>
+<h3 id="进入紧急模式"><a href="#进入紧急模式" class="headerlink" title="进入紧急模式"></a>进入紧急模式</h3><p>grub 菜单按 e，然后在 linux 开头的行添加 <code>systemd.unit=rescue.target</code>，再按 C-x 进入紧急模式</p>
+<h4 id="本地扫描"><a href="#本地扫描" class="headerlink" title="本地扫描"></a>本地扫描</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 扫描存活机器</span></span><br><span class="line">nmap -sP host/24</span><br><span class="line"></span><br><span class="line"><span class="comment"># 扫描机器 TCP 20-80 端口</span></span><br><span class="line">nmap -sT host -p 20-80</span><br><span class="line"></span><br><span class="line"><span class="comment"># 扫描机器 UDP 20-80 端口</span></span><br><span class="line">nmap -sU host -p 20-80</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="禁-x2F-启用网卡"><a href="#禁-x2F-启用网卡" class="headerlink" title="禁&#x2F;启用网卡"></a>禁&#x2F;启用网卡</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ip <span class="built_in">link</span> <span class="built_in">set</span> eno1 down</span><br><span class="line">sudo ip <span class="built_in">link</span> <span class="built_in">set</span> eno1 up</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<nav class="article-nav">
+  
+    <a href="/2023/01/10/golang/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-caption">下一篇</div>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/01/10/Android%20%E9%80%86%E5%90%91/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+
+    <section class="share">
+        <div class="share-title">分享</div>
+        <a class="share-item" target="_blank"
+            href="https://twitter.com/share?text= - Hexo&url=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2Flinux%2F">
+            <ion-icon name="logo-twitter"></ion-icon>
+        </a>
+        <a class="share-item" target="_blank"
+            href="https://www.facebook.com/sharer.php?title= - Hexo&u=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2Flinux%2F">
+            <ion-icon name="logo-facebook"></ion-icon>
+        </a>
+        <!-- <a class="share-item" target="_blank"
+            href="https://service.weibo.com/share/share.php?title= - Hexo&url=http://example.com/2023/01/10/linux/&pic=">
+            <div class="n-icon n-icon-weibo"></div>
+        </a> -->
+    </section>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </section>
+            </section>
+
+            
+            <aside class="sidebar ">
+                
+
+
+<div class="widget" id="widget">
+    
+      
+  <div class="widget-wrap">
+    <div class="widget-inner">
+      <div class="toc post-toc-html"></div>
+    </div>
+  </div>
+
+    
+      
+
+    
+      
+
+    
+      
+  <div class="widget-wrap widget-recent-posts">
+    <div class="widget-title"><span>Recent Posts</span></div>
+    <div class="widget-inner">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB%E8%AE%B0%E5%BD%95/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/Telegram/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/selenium/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/xpath/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget-wrap widget-archive">
+    <div class="widget-title"><span>Archive</span></div>
+    <div class="widget-inner">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a></li></ul>
+    </div>
+  </div>
+
+
+    
+</div>
+
+<div id="backtop"><i class="icon icon-arrow-up"></i></div>
+            </aside>
+            
+        </div>
+    </div>
+
+    <footer class="footer">
+    <div class="footer-wave">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#3c4859" fill-opacity="1" d="M0,160L60,181.3C120,203,240,245,360,240C480,235,600,181,720,186.7C840,192,960,256,1080,261.3C1200,267,1320,213,1380,186.7L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+    </div>
+
+    <!-- Please do not remove this -->
+    <!-- 开源不易，请勿删除 -->
+    <div class="footer-wrap">
+        <div class="footer-inner"> 
+            Hexo &copy; 2023<br>
+            Powered By Hexo · Theme By <a href="https://linhong.me/" target="_blank">Aomori</a> · <a href="https://github.com/lh1me/hexo-theme-aomori" target="_blank">Github</a>
+        </div>
+    </div>
+
+</footer>
+
+<script type="module" src="https://unpkg.com/ionicons@6.0.2/dist/ionicons/ionicons.esm.js"></script>
+
+
+
+
+
+
+<script src="/dist/build.js?1654266144177.js"></script>
+
+
+<script src="/dist/custom.js?1654266144177.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

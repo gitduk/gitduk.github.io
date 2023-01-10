@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+    <title>Hexo</title>
+
+    <meta name="description" content="Hexo">
+    <meta name="keywords" content="">
+
+    
+
+    <meta property="og:locale" content="en" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content= "Hexo"  />
+    <meta property="og:description" content= "Hexo" />
+    <meta property="og:url" content="http://example.com/2023/01/10/scrapy/index.html" />
+    <meta property="og:site_name" content="" />
+    <meta property="article:author" content="John Doe" />
+    <meta property="article:publisher" content="" />
+    <meta property="og:description" content="Hexo" />
+    <meta name="twitter:title" content="Hexo"/>
+    <meta name="twitter:description" content="Hexo"/>
+    <script type="application/ld+json">
+        {
+            "description": "Hexo",
+            "author": { "@type": "Person", "name": "John Doe" },
+            "@type": "BlogPosting",
+            "url": "http://example.com/2023/01/10/scrapy/index.html",
+            "publisher": {
+            "@type": "Organization",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http://example.comundefined"
+            },
+            "name": "John Doe"
+            },
+            "headline": "Hexo",
+            "datePublished": "2023-01-10T06:36:42.116Z",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "http://example.com/2023/01/10/scrapy/index.html"
+            },
+            "@context": "http://schema.org"
+        }
+    </script>
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<link rel="stylesheet" href="/dist/build.css?v=1654266144177.css">
+
+
+    
+<link rel="stylesheet" href="/dist/custom.css?v=1654266144177.css">
+
+
+    <script>
+        window.isPost = true
+        window.aomori = {
+            
+            
+            
+        }
+        window.aomori_logo_typed_animated = false
+        window.aomori_search_algolia = false
+
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div class="container">
+    <header class="header">
+        <div class="header-type">
+            
+            <div class="header-type-inner">
+                
+                    <a class="header-type-title" href="/">Hexo</a>
+                
+    
+                
+            </div>
+        </div>
+        <div class="header-menu">
+            <div class="header-menu-inner">
+                
+            </div>
+            <div class="header-menu-social">
+                
+            </div>
+        </div>
+
+        <div class="header-menu-mobile">
+            <div class="header-menu-mobile-inner" id="mobile-menu-open">
+                <i class="icon icon-menu"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="header-menu-mobile-menu">
+        <div class="header-menu-mobile-menu-bg"></div>
+        <div class="header-menu-mobile-menu-wrap">
+            <div class="header-menu-mobile-menu-inner">
+                <div class="header-menu-mobile-menu-close" id="mobile-menu-close">
+                    <i class="icon icon-cross"></i>
+                </div>
+                <div class="header-menu-mobile-menu-list">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <div class="container">
+        <div class="main">
+            <section class="inner">
+                <section class="inner-main">
+                    <div class="post">
+    <article id="post-clcpv2vg6000efuef8drh2ov1" class="article article-type-post" itemscope
+    itemprop="blogPost">
+
+    <div class="article-inner">
+
+        
+          
+        
+        
+        
+
+        
+
+        <div class="article-more-info article-more-info-post hairline">
+
+            <div class="article-date">
+  <time datetime="2023-01-10T06:36:42.116Z" itemprop="datePublished">2023-01-10</time>
+</div>
+
+            
+
+            
+
+            
+
+        </div>
+
+        <div class="article-entry post-inner-html hairline" itemprop="articleBody">
+            <h2 id="scrapyd"><a href="#scrapyd" class="headerlink" title="scrapyd"></a>scrapyd</h2><p>scrapyd 默认配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[scrapyd]</span><br><span class="line">eggs_dir            = eggs</span><br><span class="line">logs_dir            = logs</span><br><span class="line">items_dir           =</span><br><span class="line">jobs_to_keep        = 5</span><br><span class="line">dbs_dir             = dbs</span><br><span class="line">max_proc            = 0</span><br><span class="line">max_proc_per_cpu    = 10</span><br><span class="line">finished_to_keep    = 100</span><br><span class="line">poll_interval       = 5.0</span><br><span class="line">bind_address        = 0.0.0.0</span><br><span class="line">http_port           = 6000</span><br><span class="line">username            =</span><br><span class="line">password            =</span><br><span class="line">debug               = off</span><br><span class="line">runner              = scrapyd.runner</span><br><span class="line">jobstorage          = scrapyd.jobstorage.MemoryJobStorage</span><br><span class="line">application         = scrapyd.app.application</span><br><span class="line">launcher            = scrapyd.launcher.Launcher</span><br><span class="line">webroot             = scrapyd.website.Root</span><br><span class="line">eggstorage          = scrapyd.eggstorage.FilesystemEggStorage</span><br><span class="line"></span><br><span class="line">[services]</span><br><span class="line">addversion.json     = scrapyd.webservice.AddVersion</span><br><span class="line">cancel.json         = scrapyd.webservice.Cancel</span><br><span class="line">delproject.json     = scrapyd.webservice.DeleteProject</span><br><span class="line">delversion.json     = scrapyd.webservice.DeleteVersion</span><br><span class="line">daemonstatus.json   = scrapyd.webservice.DaemonStatus</span><br><span class="line">listprojects.json   = scrapyd.webservice.ListProjects</span><br><span class="line">listversions.json   = scrapyd.webservice.ListVersions</span><br><span class="line">listspiders.json    = scrapyd.webservice.ListSpiders</span><br><span class="line">listjobs.json       = scrapyd.webservice.ListJobs</span><br><span class="line">schedule.json       = scrapyd.webservice.Schedule</span><br></pre></td></tr></table></figure>
+
+<h4 id="部署-scrapy-项目到-scrapyd"><a href="#部署-scrapy-项目到-scrapyd" class="headerlink" title="部署 scrapy 项目到 scrapyd"></a>部署 scrapy 项目到 scrapyd</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/scrapy/scrapyd-client#scrapy-configuration-file">https://github.com/scrapy/scrapyd-client#scrapy-configuration-file</a></p>
+</blockquote>
+<ol>
+<li>项目根目录生成 setup.py</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install scrapyd-client</span><br><span class="line">scrapyd-deploy --build-egg=/dev/null</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改 <u>setup.py</u> <code>project</code> 字段为具体项目名称 (可选)</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from setuptools import setup, find_packages</span><br><span class="line"></span><br><span class="line">setup(</span><br><span class="line">    name         = &#x27;project&#x27;,</span><br><span class="line">    version      = &#x27;1.0&#x27;,</span><br><span class="line">    packages     = find_packages(),</span><br><span class="line">    entry_points = &#123;&#x27;scrapy&#x27;: [&#x27;settings = projectname.settings&#x27;]&#125;,</span><br><span class="line">    package_data = &#123;&#x27;projectname&#x27;: [&#x27;path/to/*.json&#x27;]&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>修改 <u>scrapy.cfg</u> 文件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[deploy]</span><br><span class="line">url = http://localhost:6800/</span><br><span class="line">project = fatong_spider</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>部署项目到 scrapyd</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapyd-deploy</span><br></pre></td></tr></table></figure>
+
+<h2 id="scrapydweb"><a href="#scrapydweb" class="headerlink" title="scrapydweb"></a>scrapydweb</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/my8100/scrapydweb">https://github.com/my8100/scrapydweb</a></p>
+</blockquote>
+<p>依赖文件 <u>requirements.txt</u></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pip&gt;=19.1.1</span><br><span class="line">APScheduler&gt;=3.5.3</span><br><span class="line">flask&gt;=1.0.2</span><br><span class="line">flask-compress&gt;=1.4.0</span><br><span class="line">Flask-SQLAlchemy&gt;=2.3.2</span><br><span class="line">logparser==0.8.2</span><br><span class="line">requests&gt;=2.21.0</span><br><span class="line">setuptools&gt;=40.6.3</span><br><span class="line">six&gt;=1.12.0</span><br><span class="line">SQLAlchemy&gt;=1.2.15</span><br><span class="line">w3lib&gt;=1.17.0</span><br><span class="line">Werkzeug==2.0.3</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br><span class="line">pip install scrapydweb</span><br></pre></td></tr></table></figure>
+
+<p><strong>400 错误</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall Werkzeug</span><br><span class="line">pip install Werkzeug==2.0.3</span><br></pre></td></tr></table></figure>
+
+<h4 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapydweb</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># run LogParser as a subprocess at startup</span><br><span class="line">ENABLE_LOGPARSER = True</span><br><span class="line"></span><br><span class="line"># enable the monitor feature</span><br><span class="line">ENABLE_MONITOR = True</span><br></pre></td></tr></table></figure>
+
+<h2 id="python-执行爬虫"><a href="#python-执行爬虫" class="headerlink" title="python 执行爬虫"></a>python 执行爬虫</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy </span><br><span class="line"><span class="keyword">from</span> scrapy.crawler <span class="keyword">import</span> CrawlerProcess</span><br><span class="line"><span class="keyword">from</span> baidu.com <span class="keyword">import</span> BaiduComSpider</span><br><span class="line"></span><br><span class="line">process = CrawlerProcess() <span class="comment"># 括号中可以添加参数</span></span><br><span class="line"></span><br><span class="line">process.crawl(BaiduComSpider) </span><br><span class="line">process.start() </span><br></pre></td></tr></table></figure>
+
+<h2 id="puppeteer-amp-scrapy"><a href="#puppeteer-amp-scrapy" class="headerlink" title="puppeteer &amp; scrapy"></a>puppeteer &amp; scrapy</h2><p>安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install gerapy_pyppeteer </span><br></pre></td></tr></table></figure>
+
+<p>启用下载中间件</p>
+<p><code>&#39;gerapy_pyppeteer.downloadermiddlewares.PyppeteerMiddleware&#39;: 542,</code></p>
+<p>用 <code>PyppeteerRequest</code> 替换 <code>Request</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gerapy_pyppeteer <span class="keyword">import</span> PyppeteerRequest</span><br><span class="line"></span><br><span class="line"><span class="meta">... </span></span><br><span class="line"><span class="keyword">yield</span> PyppeteerRequest(url, headers=headers, wait_for=<span class="string">&#x27;&#x27;</span>) </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Settings"><a href="#Settings" class="headerlink" title="Settings"></a>Settings</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">REDIRECT_ENABLED = <span class="literal">False</span> </span><br><span class="line"></span><br><span class="line">DOWNLOAD_DELAY = <span class="number">0.5</span>  <span class="comment"># 250 ms of delay</span></span><br><span class="line">DOWNLOAD_FAIL_ON_DATALOSS = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">FEED_EXPORT_ENCODING = <span class="string">&#x27;utf-8&#x27;</span></span><br><span class="line">FEED_STORE_EMPTY = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">LOG_FORMATTER = <span class="string">&quot;fatong_spider.utils.log.LogFormatter&quot;</span></span><br><span class="line"></span><br><span class="line">HTTPERROR_ALLOWED_CODES = [<span class="number">301</span>]</span><br></pre></td></tr></table></figure>
+
+<h4 id="http2"><a href="#http2" class="headerlink" title="http2"></a>http2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DOWNLOAD_HANDLERS = &#123;</span><br><span class="line">	<span class="string">&#x27;https&#x27;</span>: <span class="string">&#x27;scrapy.core.downloader.handlers.http2.H2DownloadHandler&#x27;</span>, </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<h4 id="禁止重定向"><a href="#禁止重定向" class="headerlink" title="禁止重定向"></a>禁止重定向</h4><p>方式一<br>在settings里面设置 <code>REDIRECT_ENABLED = False</code> </p>
+<p>方式二<br><code>meta=&#123;&#39;dont_redirect&#39;: True&#125;</code> 或者</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">meta = &#123;</span><br><span class="line">	<span class="string">&#x27;dont_redirect&#x27;</span>: <span class="literal">True</span>,</span><br><span class="line">	<span class="string">&#x27;handle_httpstatuslist&#x27;</span>: [<span class="number">302</span>]</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="处理-302-404-返回值"><a href="#处理-302-404-返回值" class="headerlink" title="处理 302, 404 返回值"></a>处理 302, 404 返回值</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class MySpider(CrawlSpider):</span><br><span class="line">    handle_httpstatus_list = [302, 404]</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<nav class="article-nav">
+  
+    <a href="/2023/01/10/samba/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-caption">下一篇</div>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/01/10/ftp/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+
+    <section class="share">
+        <div class="share-title">分享</div>
+        <a class="share-item" target="_blank"
+            href="https://twitter.com/share?text= - Hexo&url=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2Fscrapy%2F">
+            <ion-icon name="logo-twitter"></ion-icon>
+        </a>
+        <a class="share-item" target="_blank"
+            href="https://www.facebook.com/sharer.php?title= - Hexo&u=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2Fscrapy%2F">
+            <ion-icon name="logo-facebook"></ion-icon>
+        </a>
+        <!-- <a class="share-item" target="_blank"
+            href="https://service.weibo.com/share/share.php?title= - Hexo&url=http://example.com/2023/01/10/scrapy/&pic=">
+            <div class="n-icon n-icon-weibo"></div>
+        </a> -->
+    </section>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </section>
+            </section>
+
+            
+            <aside class="sidebar ">
+                
+
+
+<div class="widget" id="widget">
+    
+      
+  <div class="widget-wrap">
+    <div class="widget-inner">
+      <div class="toc post-toc-html"></div>
+    </div>
+  </div>
+
+    
+      
+
+    
+      
+
+    
+      
+  <div class="widget-wrap widget-recent-posts">
+    <div class="widget-title"><span>Recent Posts</span></div>
+    <div class="widget-inner">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB%E8%AE%B0%E5%BD%95/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/Telegram/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/selenium/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/xpath/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget-wrap widget-archive">
+    <div class="widget-title"><span>Archive</span></div>
+    <div class="widget-inner">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a></li></ul>
+    </div>
+  </div>
+
+
+    
+</div>
+
+<div id="backtop"><i class="icon icon-arrow-up"></i></div>
+            </aside>
+            
+        </div>
+    </div>
+
+    <footer class="footer">
+    <div class="footer-wave">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#3c4859" fill-opacity="1" d="M0,160L60,181.3C120,203,240,245,360,240C480,235,600,181,720,186.7C840,192,960,256,1080,261.3C1200,267,1320,213,1380,186.7L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+    </div>
+
+    <!-- Please do not remove this -->
+    <!-- 开源不易，请勿删除 -->
+    <div class="footer-wrap">
+        <div class="footer-inner"> 
+            Hexo &copy; 2023<br>
+            Powered By Hexo · Theme By <a href="https://linhong.me/" target="_blank">Aomori</a> · <a href="https://github.com/lh1me/hexo-theme-aomori" target="_blank">Github</a>
+        </div>
+    </div>
+
+</footer>
+
+<script type="module" src="https://unpkg.com/ionicons@6.0.2/dist/ionicons/ionicons.esm.js"></script>
+
+
+
+
+
+
+<script src="/dist/build.js?1654266144177.js"></script>
+
+
+<script src="/dist/custom.js?1654266144177.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
