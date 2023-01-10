@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     
-    <title>git submodule 使用 | Wukaige&#39;s Blog</title>
+    <title>ssh 反向代理 | Wukaige&#39;s Blog</title>
 
     <meta name="description" content="Wukaige&#39;s Blog">
     <meta name="keywords" content="">
@@ -15,21 +15,21 @@
 
     <meta property="og:locale" content="zh-CN" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content= "git submodule 使用 | Wukaige&#39;s Blog"  />
+    <meta property="og:title" content= "ssh 反向代理 | Wukaige&#39;s Blog"  />
     <meta property="og:description" content= "Wukaige&#39;s Blog" />
-    <meta property="og:url" content="http://example.com/2023/01/10/git/index.html" />
+    <meta property="og:url" content="http://example.com/ssh/index.html" />
     <meta property="og:site_name" content="" />
     <meta property="article:author" content="wukaige" />
     <meta property="article:publisher" content="" />
     <meta property="og:description" content="Wukaige&#39;s Blog" />
-    <meta name="twitter:title" content="git submodule 使用 | Wukaige&#39;s Blog"/>
+    <meta name="twitter:title" content="ssh 反向代理 | Wukaige&#39;s Blog"/>
     <meta name="twitter:description" content="Wukaige&#39;s Blog"/>
     <script type="application/ld+json">
         {
             "description": "Wukaige&#39;s Blog",
             "author": { "@type": "Person", "name": "wukaige" },
             "@type": "BlogPosting",
-            "url": "http://example.com/2023/01/10/git/index.html",
+            "url": "http://example.com/ssh/index.html",
             "publisher": {
             "@type": "Organization",
             "logo": {
@@ -38,11 +38,11 @@
             },
             "name": "wukaige"
             },
-            "headline": "git submodule 使用 | Wukaige&#39;s Blog",
-            "datePublished": "2023-01-10T07:51:33.000Z",
+            "headline": "ssh 反向代理 | Wukaige&#39;s Blog",
+            "datePublished": "2023-01-10T07:35:14.000Z",
             "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": "http://example.com/2023/01/10/git/index.html"
+                "@id": "http://example.com/ssh/index.html"
             },
             "@context": "http://schema.org"
         }
@@ -138,7 +138,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-clcq2dghf0003k1ef1pea96y2" class="article article-type-post" itemscope
+    <article id="post-clcq3h5gi0005unef8vwi80rp" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -154,7 +154,7 @@
             
   
     <h1 class="article-title" itemprop="name">
-      git submodule 使用
+      ssh 反向代理
     </h1>
   
 
@@ -164,14 +164,14 @@
         <div class="article-more-info article-more-info-post hairline">
 
             <div class="article-date">
-  <time datetime="2023-01-10T07:51:33.000Z" itemprop="datePublished">2023-01-10</time>
+  <time datetime="2023-01-10T07:35:14.000Z" itemprop="datePublished">2023-01-10</time>
 </div>
 
             
 
             
             <div class="article-tag">
-                <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/" rel="tag">git</a></li></ul>
+                <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/" rel="tag">ssh</a></li></ul>
             </div>
             
 
@@ -180,24 +180,28 @@
         </div>
 
         <div class="article-entry post-inner-html hairline" itemprop="articleBody">
-            <p><strong>To add a submodule</strong></p>
-<pre><code class="bash">git submodule add url path-to-submodule
+            <blockquote>
+<p>端口映射 2222 -&gt; 22 为例</p>
+</blockquote>
+<h4 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a><strong>环境配置</strong></h4><pre><code class="shell"># A client side
+ssh-keygen -t rsa -C &#39;wdkany@qq.com&#39;
+ssh-copy-id user_server@JumpHost
+sudo ufw allow 22
+sudo ufw reload
+
+# B client side
+ssh-keygen -t rsa -C &#39;wdkany@qq.com&#39;
+ssh-copy-id user_server@JumpHost
+
+# server side
+sudo ufw allow 2222
+sudo ufw reload
 </code></pre>
-<p><u>.gitmodules</u></p>
-<pre><code class="text">[submodule &quot;.fzf&quot;]
-  path = .fzf
-  url = https://github.com/junegunn/fzf.git
+<h4 id="端口映射命令"><a href="#端口映射命令" class="headerlink" title="端口映射命令"></a><strong>端口映射命令</strong></h4><pre><code class="shell"># A client side
+ssh -NR 2222:localhost:22 user_serve@JumpHost
 </code></pre>
-<p><strong>To remove a submodule you need to:</strong></p>
-<ol>
-<li>Delete the relevant section from the <code>.gitmodules</code> file.</li>
-<li>Stage the <code>.gitmodules</code> changes:<br> <code>git add .gitmodules</code></li>
-<li>Delete the relevant section from <code>.git/config</code>.</li>
-<li>Remove the submodule files from the working tree and index:<br> <code>git rm --cached path_to_submodule</code> (no trailing slash).</li>
-<li>xxxxxxxxxx sudo ufw allow 50000:60000&#x2F;tcpsudo ufw reloadshell</li>
-<li>Commit the changes:<br> <code>git commit -m &quot;Removed submodule &lt;name&gt;&quot;</code></li>
-<li>Delete the now untracked submodule files:<br> <code>rm -rf path_to_submodule</code></li>
-</ol>
+<h4 id="B-连接-A"><a href="#B-连接-A" class="headerlink" title="B 连接 A"></a><strong>B 连接 A</strong></h4><pre><code class="python">ssh user_a@JumpHost -p 2222
+</code></pre>
 
         </div>
 
@@ -216,20 +220,15 @@
     
 <nav class="article-nav">
   
-    <a href="/2023/01/10/ftp/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/git/" id="article-nav-newer" class="article-nav-link-wrap">
       <div class="article-nav-caption">下一篇</div>
       <div class="article-nav-title">
         
-          Linux 搭建 ftp 服务器
+          git submodule 使用
         
       </div>
     </a>
   
-  
-    <a href="/2023/01/10/ssh-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-caption">上一篇</div>
-      <div class="article-nav-title">ssh 反向代理</div>
-    </a>
   
 </nav>
 
@@ -237,15 +236,15 @@
     <section class="share">
         <div class="share-title">分享</div>
         <a class="share-item" target="_blank"
-            href="https://twitter.com/share?text=git submodule 使用 - Wukaige's Blog&url=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2Fgit%2F">
+            href="https://twitter.com/share?text=ssh 反向代理 - Wukaige's Blog&url=http%3A%2F%2Fexample.com%2Fssh%2F">
             <ion-icon name="logo-twitter"></ion-icon>
         </a>
         <a class="share-item" target="_blank"
-            href="https://www.facebook.com/sharer.php?title=git submodule 使用 - Wukaige's Blog&u=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2Fgit%2F">
+            href="https://www.facebook.com/sharer.php?title=ssh 反向代理 - Wukaige's Blog&u=http%3A%2F%2Fexample.com%2Fssh%2F">
             <ion-icon name="logo-facebook"></ion-icon>
         </a>
         <!-- <a class="share-item" target="_blank"
-            href="https://service.weibo.com/share/share.php?title=git submodule 使用 - Wukaige's Blog&url=http://example.com/2023/01/10/git/&pic=">
+            href="https://service.weibo.com/share/share.php?title=ssh 反向代理 - Wukaige's Blog&url=http://example.com/ssh/&pic=">
             <div class="n-icon n-icon-weibo"></div>
         </a> -->
     </section>
@@ -313,19 +312,19 @@
       <ul>
         
           <li>
-            <a href="/2023/01/10/Hexo/">Hexo 使用笔记</a>
+            <a href="/Hexo/">Hexo 使用笔记</a>
           </li>
         
           <li>
-            <a href="/2023/01/10/ftp/">Linux 搭建 ftp 服务器</a>
+            <a href="/ftp/">Linux 搭建 ftp 服务器</a>
           </li>
         
           <li>
-            <a href="/2023/01/10/git/">git submodule 使用</a>
+            <a href="/git/">git submodule 使用</a>
           </li>
         
           <li>
-            <a href="/2023/01/10/ssh-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/">ssh 反向代理</a>
+            <a href="/ssh/">ssh 反向代理</a>
           </li>
         
       </ul>
