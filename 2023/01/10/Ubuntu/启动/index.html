@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+    <title>Hexo</title>
+
+    <meta name="description" content="Hexo">
+    <meta name="keywords" content="">
+
+    
+
+    <meta property="og:locale" content="en" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content= "Hexo"  />
+    <meta property="og:description" content= "Hexo" />
+    <meta property="og:url" content="http://example.com/2023/01/10/Ubuntu/%E5%90%AF%E5%8A%A8/index.html" />
+    <meta property="og:site_name" content="" />
+    <meta property="article:author" content="John Doe" />
+    <meta property="article:publisher" content="" />
+    <meta property="og:description" content="Hexo" />
+    <meta name="twitter:title" content="Hexo"/>
+    <meta name="twitter:description" content="Hexo"/>
+    <script type="application/ld+json">
+        {
+            "description": "Hexo",
+            "author": { "@type": "Person", "name": "John Doe" },
+            "@type": "BlogPosting",
+            "url": "http://example.com/2023/01/10/Ubuntu/%E5%90%AF%E5%8A%A8/index.html",
+            "publisher": {
+            "@type": "Organization",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http://example.comundefined"
+            },
+            "name": "John Doe"
+            },
+            "headline": "Hexo",
+            "datePublished": "2023-01-10T06:39:00.310Z",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "http://example.com/2023/01/10/Ubuntu/%E5%90%AF%E5%8A%A8/index.html"
+            },
+            "@context": "http://schema.org"
+        }
+    </script>
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<link rel="stylesheet" href="/dist/build.css?v=1654266144177.css">
+
+
+    
+<link rel="stylesheet" href="/dist/custom.css?v=1654266144177.css">
+
+
+    <script>
+        window.isPost = true
+        window.aomori = {
+            
+            
+            
+        }
+        window.aomori_logo_typed_animated = false
+        window.aomori_search_algolia = false
+
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div class="container">
+    <header class="header">
+        <div class="header-type">
+            
+            <div class="header-type-inner">
+                
+                    <a class="header-type-title" href="/">Hexo</a>
+                
+    
+                
+            </div>
+        </div>
+        <div class="header-menu">
+            <div class="header-menu-inner">
+                
+            </div>
+            <div class="header-menu-social">
+                
+            </div>
+        </div>
+
+        <div class="header-menu-mobile">
+            <div class="header-menu-mobile-inner" id="mobile-menu-open">
+                <i class="icon icon-menu"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="header-menu-mobile-menu">
+        <div class="header-menu-mobile-menu-bg"></div>
+        <div class="header-menu-mobile-menu-wrap">
+            <div class="header-menu-mobile-menu-inner">
+                <div class="header-menu-mobile-menu-close" id="mobile-menu-close">
+                    <i class="icon icon-cross"></i>
+                </div>
+                <div class="header-menu-mobile-menu-list">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <div class="container">
+        <div class="main">
+            <section class="inner">
+                <section class="inner-main">
+                    <div class="post">
+    <article id="post-clcpv4qku000uo1ef89gm2ghp" class="article article-type-post" itemscope
+    itemprop="blogPost">
+
+    <div class="article-inner">
+
+        
+          
+        
+        
+        
+
+        
+
+        <div class="article-more-info article-more-info-post hairline">
+
+            <div class="article-date">
+  <time datetime="2023-01-10T06:39:00.310Z" itemprop="datePublished">2023-01-10</time>
+</div>
+
+            
+
+            
+
+            
+
+        </div>
+
+        <div class="article-entry post-inner-html hairline" itemprop="articleBody">
+            <h1 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h1><h4 id="设置默认的启动管理器"><a href="#设置默认的启动管理器" class="headerlink" title="设置默认的启动管理器"></a>设置默认的启动管理器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg-reconfigure lightdm</span><br></pre></td></tr></table></figure>
+
+<h4 id="进入紧急模式"><a href="#进入紧急模式" class="headerlink" title="进入紧急模式"></a>进入紧急模式</h4><p>grub 菜单按 e，然后在 linux 开头的行添加 <code>systemd.unit=rescue.target</code>，再按 C-x 进入紧急模式</p>
+<p>‍</p>
+<h2 id="Lightdm"><a href="#Lightdm" class="headerlink" title="Lightdm"></a>Lightdm</h2><h4 id="lightdm-greeters-x2F-user-session-list"><a href="#lightdm-greeters-x2F-user-session-list" class="headerlink" title="lightdm greeters&#x2F;user-session list"></a>lightdm greeters&#x2F;user-session list</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l /usr/share/xgreeters</span><br><span class="line"><span class="built_in">ls</span> /usr/share/xsessions</span><br></pre></td></tr></table></figure>
+
+<h4 id="themes"><a href="#themes" class="headerlink" title="themes"></a>themes</h4><p>wget -c <a target="_blank" rel="noopener" href="http://ftp.lysator.liu.se/pub/opensuse/repositories/home:/antergos/Debian_9.0/amd64/lightdm-webkit2-greeter_2.2.5-1+15.8_amd64.deb">http://ftp.lysator.liu.se/pub/opensuse/repositories/home:/antergos/Debian_9.0/amd64/lightdm-webkit2-greeter_2.2.5-1+15.8_amd64.deb</a><br>sudo dpkg -i lightdm-webkit2-greeter_2.2.5-1+15.8_amd64.deb</p>
+<h4 id="config"><a href="#config" class="headerlink" title="config"></a>config</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.361shipin.com/blog/1551298778114293760">https://www.361shipin.com/blog/1551298778114293760</a></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Seat:*]</span><br><span class="line">user-session=name	# ls /usr/share/xsessions/*.desktop 可查看 session 可用名称</span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+<h2 id="Gdm3"><a href="#Gdm3" class="headerlink" title="Gdm3"></a>Gdm3</h2><h4 id="themes-1"><a href="#themes-1" class="headerlink" title="themes"></a>themes</h4><p>git clone –depth&#x3D;1 <a target="_blank" rel="noopener" href="https://github.com/realmazharhussain/gdm-tools.git">https://github.com/realmazharhussain/gdm-tools.git</a><br>cd gdm-tools &amp;&amp; .&#x2F;install<br>set-gdm-theme</p>
+<p>‍</p>
+<h2 id="SDDM"><a href="#SDDM" class="headerlink" title="SDDM"></a>SDDM</h2><h4 id="themes-2"><a href="#themes-2" class="headerlink" title="themes"></a>themes</h4><blockquote>
+<p>if load themes error, install: sddm-theme-breeze</p>
+<p>themes: Nord, Red-Dot</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">theme=&quot;Nord&quot;</span><br><span class="line">sudo rm -rf /usr/share/sddm/themes/ubuntu-theme</span><br><span class="line">tar -xvf $HOME/.sddm/$theme.tar.gz -C $HOME/.local/share/sddm/</span><br><span class="line">sudo ln -s $HOME/.local/share/sddm/$theme /usr/share/sddm/themes/ubuntu-theme</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<nav class="article-nav">
+  
+    <a href="/2023/01/10/Ubuntu/v2ray/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-caption">下一篇</div>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/01/10/Ubuntu/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+
+    <section class="share">
+        <div class="share-title">分享</div>
+        <a class="share-item" target="_blank"
+            href="https://twitter.com/share?text= - Hexo&url=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2FUbuntu%2F%25E5%2590%25AF%25E5%258A%25A8%2F">
+            <ion-icon name="logo-twitter"></ion-icon>
+        </a>
+        <a class="share-item" target="_blank"
+            href="https://www.facebook.com/sharer.php?title= - Hexo&u=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2FUbuntu%2F%25E5%2590%25AF%25E5%258A%25A8%2F">
+            <ion-icon name="logo-facebook"></ion-icon>
+        </a>
+        <!-- <a class="share-item" target="_blank"
+            href="https://service.weibo.com/share/share.php?title= - Hexo&url=http://example.com/2023/01/10/Ubuntu/%E5%90%AF%E5%8A%A8/&pic=">
+            <div class="n-icon n-icon-weibo"></div>
+        </a> -->
+    </section>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </section>
+            </section>
+
+            
+            <aside class="sidebar ">
+                
+
+
+<div class="widget" id="widget">
+    
+      
+  <div class="widget-wrap">
+    <div class="widget-inner">
+      <div class="toc post-toc-html"></div>
+    </div>
+  </div>
+
+    
+      
+
+    
+      
+
+    
+      
+  <div class="widget-wrap widget-recent-posts">
+    <div class="widget-title"><span>Recent Posts</span></div>
+    <div class="widget-inner">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/Scrapy/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/selenium/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/xpath/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget-wrap widget-archive">
+    <div class="widget-title"><span>Archive</span></div>
+    <div class="widget-inner">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a></li></ul>
+    </div>
+  </div>
+
+
+    
+</div>
+
+<div id="backtop"><i class="icon icon-arrow-up"></i></div>
+            </aside>
+            
+        </div>
+    </div>
+
+    <footer class="footer">
+    <div class="footer-wave">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#3c4859" fill-opacity="1" d="M0,160L60,181.3C120,203,240,245,360,240C480,235,600,181,720,186.7C840,192,960,256,1080,261.3C1200,267,1320,213,1380,186.7L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+    </div>
+
+    <!-- Please do not remove this -->
+    <!-- 开源不易，请勿删除 -->
+    <div class="footer-wrap">
+        <div class="footer-inner"> 
+            Hexo &copy; 2023<br>
+            Powered By Hexo · Theme By <a href="https://linhong.me/" target="_blank">Aomori</a> · <a href="https://github.com/lh1me/hexo-theme-aomori" target="_blank">Github</a>
+        </div>
+    </div>
+
+</footer>
+
+<script type="module" src="https://unpkg.com/ionicons@6.0.2/dist/ionicons/ionicons.esm.js"></script>
+
+
+
+
+
+
+<script src="/dist/build.js?1654266144177.js"></script>
+
+
+<script src="/dist/custom.js?1654266144177.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

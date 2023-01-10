@@ -39,7 +39,7 @@
             "name": "John Doe"
             },
             "headline": "Hexo",
-            "datePublished": "2023-01-10T06:36:42.112Z",
+            "datePublished": "2023-01-10T06:39:00.310Z",
             "mainEntityOfPage": {
                 "@type": "WebPage",
                 "@id": "http://example.com/2023/01/10/golang/index.html"
@@ -138,7 +138,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-clcpv2vg10005fuef0rgc0mbo" class="article article-type-post" itemscope
+    <article id="post-clcpv4qkj0008o1ef1vxbckwj" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -154,7 +154,7 @@
         <div class="article-more-info article-more-info-post hairline">
 
             <div class="article-date">
-  <time datetime="2023-01-10T06:36:42.112Z" itemprop="datePublished">2023-01-10</time>
+  <time datetime="2023-01-10T06:39:00.310Z" itemprop="datePublished">2023-01-10</time>
 </div>
 
             
@@ -166,10 +166,15 @@
         </div>
 
         <div class="article-entry post-inner-html hairline" itemprop="articleBody">
-            <p><code>for of</code> 循环获取index值</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (let [index,value] of radioList.entries()) &#123;</span><br><span class="line">	console.log(value); </span><br><span class="line">	console.log(index); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h1 id="golang"><a href="#golang" class="headerlink" title="golang"></a>golang</h1><p><code>for of</code> 循环获取 index 值</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (let [index,value] of radioList.entries()) &#123;</span><br><span class="line">    console.log(value); </span><br><span class="line">    console.log(index); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>解决 go 依赖</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">go env -w GO111MODULE=on </span><br><span class="line">go env -w GOPROXY=&lt;https://goproxy.io,direct&gt;</span><br><span class="line"></span><br><span class="line">go get -u -v github.com/mdempsky/go</span><br><span class="line">go get -u -v github.com/uudashr/gopkgs/v2/cmd/gopkgs </span><br><span class="line">go get -u -v github.com/ramya-rao-a/go-outline </span><br><span class="line">go get -u -v github.com/acroca/go-symbols </span><br><span class="line">go get -u -v golang.org/x/tools/cmd/guru </span><br><span class="line">go get -u -v golang.org/x/tools/cmd/gorename </span><br><span class="line">go get -u -v github.com/cweill/gotests/... </span><br><span class="line">go get -u -v github.com/fatih/gomodifytags</span><br><span class="line">go get -u -v github.com/josharian/impl </span><br><span class="line">go get -u -v github.com/davidrjenni/reftools/cmd/fillstruct </span><br><span class="line">go get -u -v github.com/haya14busa/goplay/cmd/goplay </span><br><span class="line">go get -u -v github.com/godoctor/godoctor </span><br><span class="line">go get -u -v github.com/go-delve/delve/cmd/dlv </span><br><span class="line">go get -u -v github.com/stamblerre/go``` </span><br><span class="line">go get -u -v github.com/rogpeppe/godef </span><br><span class="line">go get -u -v github.com/sqs/goreturns </span><br><span class="line">go get -u -v golang.org/x/lint/golint</span><br><span class="line">go get -u -v golang.org/x/tools/gopls</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">go env -w GO111MODULE=on </span><br><span class="line">go env -w GOPROXY=&lt;https://goproxy.io,direct&gt;</span><br><span class="line"></span><br><span class="line">go get -u -v github.com/mdempsky/go</span><br><span class="line">go get -u -v github.com/uudashr/gopkgs/v2/cmd/gopkgs </span><br><span class="line">go get -u -v github.com/ramya-rao-a/go-outline </span><br><span class="line">go get -u -v github.com/acroca/go-symbols </span><br><span class="line">go get -u -v golang.org/x/tools/cmd/guru </span><br><span class="line">go get -u -v golang.org/x/tools/cmd/gorename </span><br><span class="line">go get -u -v github.com/cweill/gotests/... </span><br><span class="line">go get -u -v github.com/fatih/gomodifytags</span><br><span class="line">go get -u -v github.com/josharian/impl </span><br><span class="line">go get -u -v github.com/davidrjenni/reftools/cmd/fillstruct </span><br><span class="line">go get -u -v github.com/haya14busa/goplay/cmd/goplay </span><br><span class="line">go get -u -v github.com/godoctor/godoctor </span><br><span class="line">go get -u -v github.com/go-delve/delve/cmd/dlv </span><br><span class="line">go get -u -v github.com/stamblerre/go</span><br><span class="line">go get -u -v github.com/rogpeppe/godef </span><br><span class="line">go get -u -v github.com/sqs/goreturns </span><br><span class="line">go get -u -v golang.org/x/lint/golint</span><br><span class="line">go get -u -v golang.org/x/tools/gopls</span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+<p>‍</p>
+
         </div>
 
     </div>
@@ -187,7 +192,7 @@
     
 <nav class="article-nav">
   
-    <a href="/2023/01/10/ftp/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2023/01/10/Untitled/" id="article-nav-newer" class="article-nav-link-wrap">
       <div class="article-nav-caption">下一篇</div>
       <div class="article-nav-title">
         
@@ -197,7 +202,7 @@
     </a>
   
   
-    <a href="/2023/01/10/linux/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2023/01/10/python/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-caption">上一篇</div>
       <div class="article-nav-title"></div>
     </a>
@@ -270,7 +275,7 @@
       <ul>
         
           <li>
-            <a href="/2023/01/10/%E7%88%AC%E8%99%AB%E8%AE%B0%E5%BD%95/">(no title)</a>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/">(no title)</a>
           </li>
         
           <li>
@@ -278,15 +283,15 @@
           </li>
         
           <li>
-            <a href="/2023/01/10/Telegram/">(no title)</a>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/Scrapy/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2023/01/10/selenium/">(no title)</a>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/selenium/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2023/01/10/xpath/">(no title)</a>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/xpath/">(no title)</a>
           </li>
         
       </ul>

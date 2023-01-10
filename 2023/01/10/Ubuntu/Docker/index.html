@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+    <title>Hexo</title>
+
+    <meta name="description" content="Hexo">
+    <meta name="keywords" content="">
+
+    
+
+    <meta property="og:locale" content="en" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content= "Hexo"  />
+    <meta property="og:description" content= "Hexo" />
+    <meta property="og:url" content="http://example.com/2023/01/10/Ubuntu/Docker/index.html" />
+    <meta property="og:site_name" content="" />
+    <meta property="article:author" content="John Doe" />
+    <meta property="article:publisher" content="" />
+    <meta property="og:description" content="Hexo" />
+    <meta name="twitter:title" content="Hexo"/>
+    <meta name="twitter:description" content="Hexo"/>
+    <script type="application/ld+json">
+        {
+            "description": "Hexo",
+            "author": { "@type": "Person", "name": "John Doe" },
+            "@type": "BlogPosting",
+            "url": "http://example.com/2023/01/10/Ubuntu/Docker/index.html",
+            "publisher": {
+            "@type": "Organization",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http://example.comundefined"
+            },
+            "name": "John Doe"
+            },
+            "headline": "Hexo",
+            "datePublished": "2023-01-10T06:39:00.310Z",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "http://example.com/2023/01/10/Ubuntu/Docker/index.html"
+            },
+            "@context": "http://schema.org"
+        }
+    </script>
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<link rel="stylesheet" href="/dist/build.css?v=1654266144177.css">
+
+
+    
+<link rel="stylesheet" href="/dist/custom.css?v=1654266144177.css">
+
+
+    <script>
+        window.isPost = true
+        window.aomori = {
+            
+            
+            
+        }
+        window.aomori_logo_typed_animated = false
+        window.aomori_search_algolia = false
+
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div class="container">
+    <header class="header">
+        <div class="header-type">
+            
+            <div class="header-type-inner">
+                
+                    <a class="header-type-title" href="/">Hexo</a>
+                
+    
+                
+            </div>
+        </div>
+        <div class="header-menu">
+            <div class="header-menu-inner">
+                
+            </div>
+            <div class="header-menu-social">
+                
+            </div>
+        </div>
+
+        <div class="header-menu-mobile">
+            <div class="header-menu-mobile-inner" id="mobile-menu-open">
+                <i class="icon icon-menu"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="header-menu-mobile-menu">
+        <div class="header-menu-mobile-menu-bg"></div>
+        <div class="header-menu-mobile-menu-wrap">
+            <div class="header-menu-mobile-menu-inner">
+                <div class="header-menu-mobile-menu-close" id="mobile-menu-close">
+                    <i class="icon icon-cross"></i>
+                </div>
+                <div class="header-menu-mobile-menu-list">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <div class="container">
+        <div class="main">
+            <section class="inner">
+                <section class="inner-main">
+                    <div class="post">
+    <article id="post-clcpv4qkp000io1ef3ic79hx2" class="article article-type-post" itemscope
+    itemprop="blogPost">
+
+    <div class="article-inner">
+
+        
+          
+        
+        
+        
+
+        
+
+        <div class="article-more-info article-more-info-post hairline">
+
+            <div class="article-date">
+  <time datetime="2023-01-10T06:39:00.310Z" itemprop="datePublished">2023-01-10</time>
+</div>
+
+            
+
+            
+
+            
+
+        </div>
+
+        <div class="article-entry post-inner-html hairline" itemprop="articleBody">
+            <h1 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h1><h2 id="Docker-1"><a href="#Docker-1" class="headerlink" title="Docker"></a>Docker</h2><p>docker run 参数</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d</td>
+<td>让 Docker 在后台运行</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>交互模式</td>
+</tr>
+<tr>
+<td>-p&#x2F;P</td>
+<td>映射端口</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>分配一个伪装的 tty</td>
+</tr>
+<tr>
+<td>–name</td>
+<td>命名 container</td>
+</tr>
+<tr>
+<td>–network</td>
+<td>为 container 分配网络</td>
+</tr>
+<tr>
+<td>–dns</td>
+<td>为 container 分配 DNS 服务器</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>为 container 绑定数据卷</td>
+</tr>
+<tr>
+<td>–rm</td>
+<td>container 存在时先移除，再创建</td>
+</tr>
+</tbody></table>
+<p>导出容器 <code>docker export 7691a814370e &gt; ubuntu.tar</code></p>
+<p>导入容器 <code>cat ubuntu.tar | docker import - test/ubuntu:v1.0</code></p>
+<p>创建网络 <code>docker network create -d bridge my-net</code></p>
+<p>配置 DNS 全局配置，修改 <code>/etc/docker/daemon.json</code> 文件，加入以下配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span> <span class="attr">&quot;dns&quot;</span> <span class="punctuation">:</span> <span class="punctuation">[</span> <span class="string">&quot;114.114.114.114&quot;</span><span class="punctuation">,</span> <span class="string">&quot;8.8.8.8&quot;</span> <span class="punctuation">]</span> <span class="punctuation">&#125;</span> </span><br></pre></td></tr></table></figure>
+
+<p>单个 container 修改，创建容器使用参数 <code>--dns=IP_ADDRESS</code></p>
+<p>验证 DNS 服务器 <code>docker run -it --rm ubuntu:18.04 cat /etc/resolv.conf</code></p>
+<p>Docker 容器的 DNS 配置通过 &#x2F;etc&#x2F;resolv.conf 文件立刻得到更新</p>
+<p>‍</p>
+<h4 id="Dockerfile-编译"><a href="#Dockerfile-编译" class="headerlink" title="Dockerfile 编译"></a>Dockerfile 编译</h4><blockquote>
+<p>编译 smartdns</p>
+<p>Dockerfile: <a target="_blank" rel="noopener" href="https://github.com/pymumu/smartdns/blob/master/Dockerfile">https://github.com/pymumu/smartdns/blob/master/Dockerfile</a></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> Dockerfile</span><br><span class="line">docker build -t smartdns/smartdns .</span><br><span class="line">docker run -d --name smartdns -p 53:53/udp -v /path/to/smartdns/config/:/etc/smartdns/ --restart=always smartdns/smartdns</span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+
+        </div>
+
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<nav class="article-nav">
+  
+    <a href="/2023/01/10/Ubuntu/Brew/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-caption">下一篇</div>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/01/10/Ubuntu/FTP/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+
+    <section class="share">
+        <div class="share-title">分享</div>
+        <a class="share-item" target="_blank"
+            href="https://twitter.com/share?text= - Hexo&url=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2FUbuntu%2FDocker%2F">
+            <ion-icon name="logo-twitter"></ion-icon>
+        </a>
+        <a class="share-item" target="_blank"
+            href="https://www.facebook.com/sharer.php?title= - Hexo&u=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2FUbuntu%2FDocker%2F">
+            <ion-icon name="logo-facebook"></ion-icon>
+        </a>
+        <!-- <a class="share-item" target="_blank"
+            href="https://service.weibo.com/share/share.php?title= - Hexo&url=http://example.com/2023/01/10/Ubuntu/Docker/&pic=">
+            <div class="n-icon n-icon-weibo"></div>
+        </a> -->
+    </section>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </section>
+            </section>
+
+            
+            <aside class="sidebar ">
+                
+
+
+<div class="widget" id="widget">
+    
+      
+  <div class="widget-wrap">
+    <div class="widget-inner">
+      <div class="toc post-toc-html"></div>
+    </div>
+  </div>
+
+    
+      
+
+    
+      
+
+    
+      
+  <div class="widget-wrap widget-recent-posts">
+    <div class="widget-title"><span>Recent Posts</span></div>
+    <div class="widget-inner">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/Scrapy/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/selenium/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/xpath/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget-wrap widget-archive">
+    <div class="widget-title"><span>Archive</span></div>
+    <div class="widget-inner">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a></li></ul>
+    </div>
+  </div>
+
+
+    
+</div>
+
+<div id="backtop"><i class="icon icon-arrow-up"></i></div>
+            </aside>
+            
+        </div>
+    </div>
+
+    <footer class="footer">
+    <div class="footer-wave">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#3c4859" fill-opacity="1" d="M0,160L60,181.3C120,203,240,245,360,240C480,235,600,181,720,186.7C840,192,960,256,1080,261.3C1200,267,1320,213,1380,186.7L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+    </div>
+
+    <!-- Please do not remove this -->
+    <!-- 开源不易，请勿删除 -->
+    <div class="footer-wrap">
+        <div class="footer-inner"> 
+            Hexo &copy; 2023<br>
+            Powered By Hexo · Theme By <a href="https://linhong.me/" target="_blank">Aomori</a> · <a href="https://github.com/lh1me/hexo-theme-aomori" target="_blank">Github</a>
+        </div>
+    </div>
+
+</footer>
+
+<script type="module" src="https://unpkg.com/ionicons@6.0.2/dist/ionicons/ionicons.esm.js"></script>
+
+
+
+
+
+
+<script src="/dist/build.js?1654266144177.js"></script>
+
+
+<script src="/dist/custom.js?1654266144177.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

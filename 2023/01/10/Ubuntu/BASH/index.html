@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+    <title>Hexo</title>
+
+    <meta name="description" content="Hexo">
+    <meta name="keywords" content="">
+
+    
+
+    <meta property="og:locale" content="en" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content= "Hexo"  />
+    <meta property="og:description" content= "Hexo" />
+    <meta property="og:url" content="http://example.com/2023/01/10/Ubuntu/BASH/index.html" />
+    <meta property="og:site_name" content="" />
+    <meta property="article:author" content="John Doe" />
+    <meta property="article:publisher" content="" />
+    <meta property="og:description" content="Hexo" />
+    <meta name="twitter:title" content="Hexo"/>
+    <meta name="twitter:description" content="Hexo"/>
+    <script type="application/ld+json">
+        {
+            "description": "Hexo",
+            "author": { "@type": "Person", "name": "John Doe" },
+            "@type": "BlogPosting",
+            "url": "http://example.com/2023/01/10/Ubuntu/BASH/index.html",
+            "publisher": {
+            "@type": "Organization",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http://example.comundefined"
+            },
+            "name": "John Doe"
+            },
+            "headline": "Hexo",
+            "datePublished": "2023-01-10T06:39:00.310Z",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "http://example.com/2023/01/10/Ubuntu/BASH/index.html"
+            },
+            "@context": "http://schema.org"
+        }
+    </script>
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<link rel="stylesheet" href="/dist/build.css?v=1654266144177.css">
+
+
+    
+<link rel="stylesheet" href="/dist/custom.css?v=1654266144177.css">
+
+
+    <script>
+        window.isPost = true
+        window.aomori = {
+            
+            
+            
+        }
+        window.aomori_logo_typed_animated = false
+        window.aomori_search_algolia = false
+
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div class="container">
+    <header class="header">
+        <div class="header-type">
+            
+            <div class="header-type-inner">
+                
+                    <a class="header-type-title" href="/">Hexo</a>
+                
+    
+                
+            </div>
+        </div>
+        <div class="header-menu">
+            <div class="header-menu-inner">
+                
+            </div>
+            <div class="header-menu-social">
+                
+            </div>
+        </div>
+
+        <div class="header-menu-mobile">
+            <div class="header-menu-mobile-inner" id="mobile-menu-open">
+                <i class="icon icon-menu"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="header-menu-mobile-menu">
+        <div class="header-menu-mobile-menu-bg"></div>
+        <div class="header-menu-mobile-menu-wrap">
+            <div class="header-menu-mobile-menu-inner">
+                <div class="header-menu-mobile-menu-close" id="mobile-menu-close">
+                    <i class="icon icon-cross"></i>
+                </div>
+                <div class="header-menu-mobile-menu-list">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <div class="container">
+        <div class="main">
+            <section class="inner">
+                <section class="inner-main">
+                    <div class="post">
+    <article id="post-clcpv4qko000go1ef1advae7r" class="article article-type-post" itemscope
+    itemprop="blogPost">
+
+    <div class="article-inner">
+
+        
+          
+        
+        
+        
+
+        
+
+        <div class="article-more-info article-more-info-post hairline">
+
+            <div class="article-date">
+  <time datetime="2023-01-10T06:39:00.310Z" itemprop="datePublished">2023-01-10</time>
+</div>
+
+            
+
+            
+
+            
+
+        </div>
+
+        <div class="article-entry post-inner-html hairline" itemprop="articleBody">
+            <h1 id="BASH"><a href="#BASH" class="headerlink" title="BASH"></a>BASH</h1><h2 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dongwuming/article/details/50605911">linux shell 字符串操作详解 （长度，读取，替换，截取，连接，对比，删除，位置 ）</a></p>
+<p>‍</p>
+<h2 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h2><p>一、文件&#x2F;目录判断</p>
+<ul>
+<li>[ -a FILE ] 如果 FILE 存在则为真。</li>
+<li>[ -b FILE ] 如果 FILE 存在且是一个块文件则返回为真。</li>
+<li>[ -c FILE ] 如果 FILE 存在且是一个字符文件则返回为真。</li>
+<li>[ -d FILE ] 如果 FILE 存在且是一个目录则返回为真。</li>
+<li>xxxxxxxxxx td {     border-width: 0 1px 1px 0;     border-style: dashed;    border-color: #666; }css</li>
+<li>[ -f FILE ] 如果 FILE 存在且是一个普通文件则返回为真。</li>
+<li>[ -g FILE ] 如果 FILE 存在且设置了SGID则返回为真。</li>
+<li>[ -h FILE ] 如果 FILE 存在且是一个符号符号链接文件则返回为真。（该选项在一些老系统上无效）</li>
+<li>[-k FILE ] 如果 FILE 存在且已经设置了冒险位则返回为真。</li>
+<li>[ -p FILE ] 如果 FILE 存并且是命令管道时返回为真。</li>
+<li>[ -r FILE ] 如果 FILE 存在且是可读的则返回为真。</li>
+<li>[ -s FILE ] 如果 FILE 存在且大小非0时为真则返回为真。</li>
+<li>[ -u FILE ] 如果 FILE 存在且设置了SUID位时返回为真。</li>
+<li>[ -w FILE ] 如果 FILE 存在且是可写的则返回为真。（一个目录为了它的内容被访问必然是可执行的）</li>
+<li>[ -x FILE ] 如果 FILE 存在且是可执行的则返回为真。</li>
+<li>[ -O FILE ] 如果 FILE 存在且属有效用户ID则返回为真。</li>
+<li>[ -G FILE ] 如果 FILE 存在且默认组为当前组则返回为真。（只检查系统默认组）</li>
+<li>[ -L FILE ] 如果 FILE 存在且是一个符号连接则返回为真。</li>
+<li>[ -N FILE ] 如果 FILE 存在 and has been mod如果ied since it was last read则返回为真。</li>
+<li>[ -S FILE ] 如果 FILE 存在且是一个套接字则返回为真。</li>
+<li>[ FILE1 -nt FILE2 ] 如果 FILE1 比 FILE2 新, 或者 FILE1 存在但是 FILE2 不存在则返回为真。</li>
+<li>[ FILE1 -ot FILE2 ] 如果 FILE1 比 FILE2 老, 或者 FILE2 存在但是 FILE1 不存在则返回为真。</li>
+<li>[ FILE1 -ef FILE2 ] 如果 FILE1 和 FILE2 指向相同的设备和节点号则返回为真。</li>
+</ul>
+<p>二、字符串判断</p>
+<ul>
+<li>[ -z STRING ] 如果STRING的长度为零则返回为真，即空是真</li>
+<li>[ -n STRING ] 如果STRING的长度非零则返回为真，即非空是真</li>
+<li>[ STRING1 ] 如果字符串不为空则返回为真,与-n类似</li>
+<li>[ STRING1 &#x3D;&#x3D; STRING2 ] 如果两个字符串相同则返回为真</li>
+<li>[ STRING1 !&#x3D; STRING2 ] 如果字符串不相同则返回为真</li>
+<li>[ STRING1 &lt; STRING2 ] 如果 STRING1 字典排序在 STRING2 前面则返回为真。</li>
+<li>[ STRING1 &gt; STRING2 ] 如果 “STRING1”字典排序在”STRING2”后面则返回为真。</li>
+</ul>
+<p>三、数值判断</p>
+<ul>
+<li>[ INT1 -eq INT2 ] INT1和INT2两数相等返回为真 , &#x3D;</li>
+<li>[ INT1 -ne INT2 ] INT1和INT2两数不等返回为真 , &lt;&gt;</li>
+<li>[ INT1 -gt INT2 ] INT1大于INT2返回为真 , &gt;</li>
+<li>[ INT1 -ge INT2 ] INT1大于等于INT2返回为真, &gt;&#x3D;</li>
+<li>[ INT1 -lt INT2 ] INT1小于INT2返回为真 , &lt;</li>
+<li>[ INT1 -le INT2 ] INT1小于等于INT2返回为真, &lt;&#x3D;</li>
+</ul>
+<p>四、逻辑判断</p>
+<ul>
+<li>[ ! EXPR ] 逻辑非，如果 EXPR 是false则返回为真。</li>
+<li>[ EXPR1 -a EXPR2 ] 逻辑与，如果 EXPR1 and EXPR2 全真则返回为真。</li>
+<li>[ EXPR1 -o EXPR2 ] 逻辑或，如果 EXPR1 或者 EXPR2 为真则返回为真。</li>
+<li><input disabled="" type="checkbox"> || [ ] 用OR来合并两个条件</li>
+<li><input disabled="" type="checkbox"> &amp;&amp; [ ] 用AND来合并两个条件</li>
+</ul>
+<p>五、其他判断 [ -t FD ] 如果文件描述符 FD<br>（默认值为1）打开且指向一个终端则返回为真 [ -o optionname ]<br>如果shell选项optionname开启则返回为真</p>
+
+        </div>
+
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<nav class="article-nav">
+  
+    <a href="/2023/01/10/HTML/css/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-caption">下一篇</div>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/01/10/Ubuntu/Brew/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+
+    <section class="share">
+        <div class="share-title">分享</div>
+        <a class="share-item" target="_blank"
+            href="https://twitter.com/share?text= - Hexo&url=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2FUbuntu%2FBASH%2F">
+            <ion-icon name="logo-twitter"></ion-icon>
+        </a>
+        <a class="share-item" target="_blank"
+            href="https://www.facebook.com/sharer.php?title= - Hexo&u=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2FUbuntu%2FBASH%2F">
+            <ion-icon name="logo-facebook"></ion-icon>
+        </a>
+        <!-- <a class="share-item" target="_blank"
+            href="https://service.weibo.com/share/share.php?title= - Hexo&url=http://example.com/2023/01/10/Ubuntu/BASH/&pic=">
+            <div class="n-icon n-icon-weibo"></div>
+        </a> -->
+    </section>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </section>
+            </section>
+
+            
+            <aside class="sidebar ">
+                
+
+
+<div class="widget" id="widget">
+    
+      
+  <div class="widget-wrap">
+    <div class="widget-inner">
+      <div class="toc post-toc-html"></div>
+    </div>
+  </div>
+
+    
+      
+
+    
+      
+
+    
+      
+  <div class="widget-wrap widget-recent-posts">
+    <div class="widget-title"><span>Recent Posts</span></div>
+    <div class="widget-inner">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/Scrapy/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/selenium/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/xpath/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget-wrap widget-archive">
+    <div class="widget-title"><span>Archive</span></div>
+    <div class="widget-inner">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a></li></ul>
+    </div>
+  </div>
+
+
+    
+</div>
+
+<div id="backtop"><i class="icon icon-arrow-up"></i></div>
+            </aside>
+            
+        </div>
+    </div>
+
+    <footer class="footer">
+    <div class="footer-wave">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#3c4859" fill-opacity="1" d="M0,160L60,181.3C120,203,240,245,360,240C480,235,600,181,720,186.7C840,192,960,256,1080,261.3C1200,267,1320,213,1380,186.7L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+    </div>
+
+    <!-- Please do not remove this -->
+    <!-- 开源不易，请勿删除 -->
+    <div class="footer-wrap">
+        <div class="footer-inner"> 
+            Hexo &copy; 2023<br>
+            Powered By Hexo · Theme By <a href="https://linhong.me/" target="_blank">Aomori</a> · <a href="https://github.com/lh1me/hexo-theme-aomori" target="_blank">Github</a>
+        </div>
+    </div>
+
+</footer>
+
+<script type="module" src="https://unpkg.com/ionicons@6.0.2/dist/ionicons/ionicons.esm.js"></script>
+
+
+
+
+
+
+<script src="/dist/build.js?1654266144177.js"></script>
+
+
+<script src="/dist/custom.js?1654266144177.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

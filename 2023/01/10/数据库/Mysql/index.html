@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+    <title>Hexo</title>
+
+    <meta name="description" content="Hexo">
+    <meta name="keywords" content="">
+
+    
+
+    <meta property="og:locale" content="en" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content= "Hexo"  />
+    <meta property="og:description" content= "Hexo" />
+    <meta property="og:url" content="http://example.com/2023/01/10/%E6%95%B0%E6%8D%AE%E5%BA%93/Mysql/index.html" />
+    <meta property="og:site_name" content="" />
+    <meta property="article:author" content="John Doe" />
+    <meta property="article:publisher" content="" />
+    <meta property="og:description" content="Hexo" />
+    <meta name="twitter:title" content="Hexo"/>
+    <meta name="twitter:description" content="Hexo"/>
+    <script type="application/ld+json">
+        {
+            "description": "Hexo",
+            "author": { "@type": "Person", "name": "John Doe" },
+            "@type": "BlogPosting",
+            "url": "http://example.com/2023/01/10/%E6%95%B0%E6%8D%AE%E5%BA%93/Mysql/index.html",
+            "publisher": {
+            "@type": "Organization",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http://example.comundefined"
+            },
+            "name": "John Doe"
+            },
+            "headline": "Hexo",
+            "datePublished": "2023-01-10T06:39:00.310Z",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "http://example.com/2023/01/10/%E6%95%B0%E6%8D%AE%E5%BA%93/Mysql/index.html"
+            },
+            "@context": "http://schema.org"
+        }
+    </script>
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<link rel="stylesheet" href="/dist/build.css?v=1654266144177.css">
+
+
+    
+<link rel="stylesheet" href="/dist/custom.css?v=1654266144177.css">
+
+
+    <script>
+        window.isPost = true
+        window.aomori = {
+            
+            
+            
+        }
+        window.aomori_logo_typed_animated = false
+        window.aomori_search_algolia = false
+
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <div class="container">
+    <header class="header">
+        <div class="header-type">
+            
+            <div class="header-type-inner">
+                
+                    <a class="header-type-title" href="/">Hexo</a>
+                
+    
+                
+            </div>
+        </div>
+        <div class="header-menu">
+            <div class="header-menu-inner">
+                
+            </div>
+            <div class="header-menu-social">
+                
+            </div>
+        </div>
+
+        <div class="header-menu-mobile">
+            <div class="header-menu-mobile-inner" id="mobile-menu-open">
+                <i class="icon icon-menu"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="header-menu-mobile-menu">
+        <div class="header-menu-mobile-menu-bg"></div>
+        <div class="header-menu-mobile-menu-wrap">
+            <div class="header-menu-mobile-menu-inner">
+                <div class="header-menu-mobile-menu-close" id="mobile-menu-close">
+                    <i class="icon icon-cross"></i>
+                </div>
+                <div class="header-menu-mobile-menu-list">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <div class="container">
+        <div class="main">
+            <section class="inner">
+                <section class="inner-main">
+                    <div class="post">
+    <article id="post-clcpv4ql00018o1ef59qk87xk" class="article article-type-post" itemscope
+    itemprop="blogPost">
+
+    <div class="article-inner">
+
+        
+          
+        
+        
+        
+
+        
+
+        <div class="article-more-info article-more-info-post hairline">
+
+            <div class="article-date">
+  <time datetime="2023-01-10T06:39:00.310Z" itemprop="datePublished">2023-01-10</time>
+</div>
+
+            
+
+            
+
+            
+
+        </div>
+
+        <div class="article-entry post-inner-html hairline" itemprop="articleBody">
+            <h1 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h1><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-fast install mysql-server</span><br><span class="line">sudo mysql_secure_installation</span><br></pre></td></tr></table></figure>
+
+<h4 id="基操"><a href="#基操" class="headerlink" title="基操"></a>基操</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> `fatong_assess` (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span> auto_increment comment,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">not</span> <span class="keyword">null</span> comment &quot;名称&quot;,</span><br><span class="line">  `address` <span class="type">varchar</span>(<span class="number">255</span>) comment &quot;地址&quot;,</span><br><span class="line">  <span class="keyword">primary</span> key (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb4;</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改用户密码"><a href="#修改用户密码" class="headerlink" title="修改用户密码"></a>修改用户密码</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">user</span> root<span class="variable">@localhost</span> identified <span class="keyword">with</span> mysql_native_password <span class="keyword">by</span> <span class="string">&#x27;123456&#x27;</span>;</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<h4 id="排查锁"><a href="#排查锁" class="headerlink" title="排查锁"></a>排查锁</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查看运行中的进程 </span></span><br><span class="line"><span class="keyword">show</span> processlist</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看的当前事务</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> information_schema.INNODB_TRX</span><br><span class="line"><span class="keyword">select</span> trx_id,trx_state,trx_mysql_thread_id,trx_isolation_level,trx_query <span class="keyword">from</span> information_schema.INNODB_TRX</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看行级锁状态 </span></span><br><span class="line"><span class="keyword">show</span> status <span class="keyword">like</span> <span class="string">&#x27;innodb_row_lock_%&#x27;</span>; </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>innodb_lock_wait_timeout：innodb 的 dml 操作的行级锁的等待时间</li>
+<li>lock_wait_timeout：数据结构 ddl 操作的锁的等待时间</li>
+<li>Lock wait timeout exceeded：后提交的事务等待前面处理的事务释放锁，但是在等待的时候超过了mysql的锁等待时间，就会引发这个异常。</li>
+<li>Dead Lock：两个事务互相等待对方释放相同资源的锁，从而造成的死循环，就会引发这个异常。</li>
+</ul>
+<p>Mysql造成锁的情况有很多，下面我们就列举一些情况：</p>
+<ul>
+<li>执行DML操作没有commit，再执行删除操作就会锁表。</li>
+<li>在同一事务内先后对同一条数据进行插入和更新操作。</li>
+<li>表索引设计不当，导致数据库出现死锁。</li>
+<li>xxxxxxxxxx &gt;&gt;&gt; class Parent: … pass &gt;&gt;&gt; class Son(Parent): … pass &gt;&gt;&gt; issubclass(Son, Parent) True &gt;&gt;&gt; type(issubclass(Son, Parent)) &lt;class ‘bool’&gt; python</li>
+</ul>
+<h4 id="修改-innode-lock-wait-timeout-的值"><a href="#修改-innode-lock-wait-timeout-的值" class="headerlink" title="修改 innode lock wait timeout 的值"></a>修改 innode lock wait timeout 的值</h4><p><a target="_blank" rel="noopener" href="https://ningyu1.github.io/site/post/75-mysql-lock-wait-timeout-exceeded/">凝雨 - Yun</a></p>
+<p>方法一： 通过下面语句修改</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> innodb_lock_wait_timeout<span class="operator">=</span><span class="number">100</span>;</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> innodb_lock_wait_timeout<span class="operator">=</span><span class="number">100</span>;</span><br></pre></td></tr></table></figure>
+
+<p>ps. 注意global的修改对当前线程是不生效的，只有建立新的连接才生效。</p>
+<p>方法二：</p>
+<p>修改参数文件 <u>&#x2F;etc&#x2F;my.cnf</u></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">innodb_lock_wait_timeout <span class="operator">=</span> <span class="number">50</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>innodb_lock_wait_timeout</code> 指的是事务等待获取资源等待的最长时间，超过这个时间还未分配到资源则会返回应用失败； 当锁等待超过设置时间的时候，就会报如下的错误；<code>ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction</code>。其参数的时间单位是秒，最小可设置为1s(一般不会设置得这么小)，最大可设置1073741824秒，默认安装时这个值是50s(默认参数设置)。*</p>
+</blockquote>
+<h4 id="转换数据类型"><a href="#转换数据类型" class="headerlink" title="转换数据类型"></a>转换数据类型</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CONVERT</span>(filedName, UNSIGNED <span class="type">INTEGER</span>) ; </span><br></pre></td></tr></table></figure>
+
+<h4 id="转移数据-同一数据库表到表"><a href="#转移数据-同一数据库表到表" class="headerlink" title="转移数据(同一数据库表到表)"></a>转移数据(同一数据库表到表)</h4><p><a target="_blank" rel="noopener" href="https://gohom.win/2016/01/31/MySQL-transferdata/">参考资料</a></p>
+<p>表复制</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> table2</span><br><span class="line"><span class="keyword">LIKE</span> table1 ;</span><br></pre></td></tr></table></figure>
+
+<p>数据插入另一张表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table2 </span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table1</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">primary</span><span class="operator">=</span><span class="keyword">value</span>;</span><br></pre></td></tr></table></figure>
+
+<p>注意列要对齐</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table2 (field1,filed2) </span><br><span class="line"><span class="keyword">SELECT</span> field1,field2 <span class="keyword">FROM</span> table1;</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用正则"><a href="#使用正则" class="headerlink" title="使用正则"></a>使用正则</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> field regexp <span class="string">&#x27;re&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="导出表结构"><a href="#导出表结构" class="headerlink" title="导出表结构"></a>导出表结构</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump <span class="operator">-</span>h host <span class="operator">-</span>P port <span class="operator">-</span>u <span class="keyword">user</span> <span class="operator">-</span>p password <span class="operator">-</span>d dbname table_name <span class="operator">&gt;</span> db.sql</span><br></pre></td></tr></table></figure>
+
+<h4 id="批量杀死数据库连接"><a href="#批量杀死数据库连接" class="headerlink" title="批量杀死数据库连接"></a>批量杀死数据库连接</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> concat(<span class="string">&#x27;KILL &#x27;</span>,id,<span class="string">&#x27;;&#x27;</span>) <span class="keyword">from</span> information_schema.processlist <span class="keyword">where</span> <span class="keyword">user</span><span class="operator">=</span><span class="string">&#x27;xxx&#x27;</span> <span class="keyword">and</span> command<span class="operator">=</span><span class="string">&#x27;sleep&#x27;</span> <span class="keyword">and</span> <span class="type">time</span><span class="operator">&gt;</span><span class="number">1000</span> <span class="keyword">into</span> outfile <span class="string">&#x27;/tmp/a.txt&#x27;</span>;</span><br><span class="line">source <span class="operator">/</span>tmp<span class="operator">/</span>a.txt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="replace"><a href="#replace" class="headerlink" title="replace"></a>replace</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> `dede_addonarticle` <span class="keyword">SET</span> body <span class="operator">=</span> REPLACE(body, <span class="string">&#x27;&lt;/td&gt;&#x27;</span>, <span class="string">&#x27;&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="regex-replace"><a href="#regex-replace" class="headerlink" title="regex_replace"></a>regex_replace</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> lawyers <span class="keyword">set</span> working_years<span class="operator">=</span>regexp_replace(working_years, &quot;([0-9]+)年.*月&quot;, &quot;$1&quot;) <span class="keyword">where</span> working_years <span class="keyword">like</span> &quot;%年%月&quot;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="binlog"><a href="#binlog" class="headerlink" title="binlog"></a>binlog</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000039707144">https://segmentfault.com/a/1190000039707144</a></p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- Binlog 状态查看</span></span><br><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;log_bin&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>开启 Binlog 功能</strong></p>
+<p>需要修改my.cnf或my.ini配置文件，在[mysqld]下面增加log_bin&#x3D;mysql_bin_log，重启MySQL服务。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#log-bin=ON </span></span><br><span class="line"><span class="comment">#log-bin-basename=mysqlbinlog </span></span><br><span class="line"><span class="attr">binlog-format</span>=ROW </span><br><span class="line"><span class="attr">log-bin</span>=mysqlbinlog</span><br></pre></td></tr></table></figure>
+
+<p>执行开启语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> log_bin<span class="operator">=</span>mysqllogbin;</span><br></pre></td></tr></table></figure>
+
+<h4 id="数据恢复"><a href="#数据恢复" class="headerlink" title="数据恢复"></a>数据恢复</h4><p>查看日志文件</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="type">binary</span> logs</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+---------------+------------+-----------+</span><br><span class="line">| Log_name      | File_size  | Encrypted |</span><br><span class="line">+---------------+------------+-----------+</span><br><span class="line">| binlog.000045 | 1598895911 | No        |</span><br><span class="line">| binlog.000046 | 388        | No        |</span><br><span class="line">+---------------+------------+-----------+</span><br></pre></td></tr></table></figure>
+
+<p>查看记录</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> binlog events <span class="keyword">in</span> <span class="string">&#x27;binlog.000046&#x27;</span>\G;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">***************************[ 1. row ]***************************</span><br><span class="line">Log_name    | binlog.000046</span><br><span class="line">Pos         | 4</span><br><span class="line">Event_type  | Format_desc</span><br><span class="line">Server_id   | 1</span><br><span class="line">End_log_pos | 125</span><br><span class="line">Info        | Server ver: 8.0.21, Binlog ver: 4</span><br><span class="line">***************************[ 2. row ]***************************</span><br><span class="line">Log_name    | binlog.000046</span><br><span class="line">Pos         | 125</span><br><span class="line">Event_type  | Previous_gtids</span><br><span class="line">Server_id   | 1</span><br><span class="line">End_log_pos | 156</span><br><span class="line">Info        |</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>使用 binlog 恢复数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">/</span><span class="operator">/</span>按指定时间恢复 </span><br><span class="line">mysqlbinlog <span class="comment">--start-datetime=&quot;2020-04-25 18:00:00&quot; --stop-datetime=&quot;2020-04-26 00:00:00&quot; mysqlbinlog.000002 | mysql -uroot -p1234 </span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>按事件位置号恢复 </span><br><span class="line">mysqlbinlog <span class="comment">--start-position=154 --stop-position=957 mysqlbinlog.000002 | mysql -uroot -p1234</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="筛选出中文字符"><a href="#筛选出中文字符" class="headerlink" title="筛选出中文字符"></a>筛选出中文字符</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> name <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> length(name)<span class="operator">!=</span><span class="keyword">char_length</span>(name);</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改字段名"><a href="#修改字段名" class="headerlink" title="修改字段名"></a>修改字段名</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> users change old_name new_name <span class="type">varchar</span>(<span class="number">25</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加索引"><a href="#添加索引" class="headerlink" title="添加索引"></a>添加索引</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 这条语句创建索引的值必须是唯一的（除了NULL外，NULL可能会出现多次）</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">ADD</span> <span class="keyword">UNIQUE</span> index_name (column_list)</span><br><span class="line"><span class="comment">-- 添加普通索引，索引值可出现多次</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">ADD</span> INDEX index_name (column_list)</span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+<p>全表遍历</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 索引提速</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> a <span class="keyword">where</span> id <span class="operator">&gt;</span> <span class="number">0</span> <span class="keyword">order</span> <span class="keyword">by</span> id limit <span class="number">10000</span>;</span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+<p><strong>MySQL: ERROR 1040: Too many connections</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> &quot;max_connections&quot;;</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> max_connections <span class="operator">=</span> <span class="number">200</span>;</span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+<h4 id="连续-ID-寻找缺失值"><a href="#连续-ID-寻找缺失值" class="headerlink" title="连续 ID 寻找缺失值"></a>连续 ID 寻找缺失值</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">  <span class="keyword">START</span>,</span><br><span class="line">  STOP </span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">  (<span class="keyword">SELECT</span> </span><br><span class="line">    s.id <span class="operator">+</span> <span class="number">1</span> <span class="keyword">AS</span> <span class="keyword">START</span>,</span><br><span class="line">    (<span class="keyword">SELECT</span> </span><br><span class="line">      <span class="built_in">MIN</span>(id) <span class="operator">-</span> <span class="number">1</span> </span><br><span class="line">    <span class="keyword">FROM</span></span><br><span class="line">      precedent <span class="keyword">AS</span> xx </span><br><span class="line">    <span class="keyword">WHERE</span> xx.id <span class="operator">&gt;</span> s.id) <span class="keyword">AS</span> STOP </span><br><span class="line">  <span class="keyword">FROM</span></span><br><span class="line">    precedent <span class="keyword">AS</span> s </span><br><span class="line">    <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> precedent <span class="keyword">AS</span> r </span><br><span class="line">      <span class="keyword">ON</span> s.id <span class="operator">=</span> r.id <span class="operator">-</span> <span class="number">1</span> </span><br><span class="line">  <span class="keyword">WHERE</span> r.id <span class="keyword">IS</span> <span class="keyword">NULL</span>) <span class="keyword">AS</span> t </span><br><span class="line"><span class="keyword">WHERE</span> STOP <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 全部+1，再判断在原来记录中找不到</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> beginId,</span><br><span class="line">(<span class="keyword">select</span> <span class="built_in">min</span>(id)<span class="number">-1</span> <span class="keyword">from</span> precedent <span class="keyword">where</span> id <span class="operator">&gt;</span> beginId) <span class="keyword">as</span> endId </span><br><span class="line"><span class="keyword">from</span> (  </span><br><span class="line"><span class="keyword">select</span> id<span class="operator">+</span><span class="number">1</span> <span class="keyword">as</span> beginId <span class="keyword">from</span> precedent</span><br><span class="line"><span class="keyword">where</span> id<span class="operator">+</span><span class="number">1</span> <span class="keyword">not</span> <span class="keyword">in</span> </span><br><span class="line">(<span class="keyword">select</span> id <span class="keyword">from</span> precedent) </span><br><span class="line"><span class="keyword">and</span> id <span class="operator">&lt;</span> (<span class="keyword">select</span> <span class="built_in">max</span>(id) <span class="keyword">from</span> precedent)  </span><br><span class="line">) <span class="keyword">as</span> t</span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+<h4 id="MySQL数据库datetime类型不能为空字符串的问题"><a href="#MySQL数据库datetime类型不能为空字符串的问题" class="headerlink" title="MySQL数据库datetime类型不能为空字符串的问题"></a>MySQL数据库datetime类型不能为空字符串的问题</h4><blockquote>
+<p>这几天做MySQL数据转移的时候出现问题，本地用的是MySQL 4.1，现在要移植到MySQL 5.5上。库脚本导入之后，发现更新数据的时候不报错，但是数据更新不成功，苦苦努力才发现 datetime类型出了问题，程序里面给 datetime 类型的一个字段是一个空字符串，因此报错。奇怪的是，我把同样的SQL语句发给MySQL公司的人，他们可以正常执行，只是报出一个Warning。</p>
+<pre><code> 经过大量的查找资料后发现，问题出现my.ini里面的sql-mode的设置上，sql-mode默认为&quot;STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&quot;，这里把STRICT_TRANS_TALBES去掉之后，重启MySQL，就OK了。
+
+ STRICT_TRANS_TABLES的工作方式：  
+ · 对于事务性存储引擎，在语句中任何地方出现的不良数据值均会导致放弃语句并执行回滚。  
+ · 对于非事务性存储引擎，如果错误出现在要插入或更新的第1行，将放弃语句。（在这种情况下，可以认为语句未改变表，就像事务表一样）。首行后出现的错误不会导致放弃语句。取而代之的是，将调整不良数据值，并给出告警，而不是错误。换句话讲，使用STRICT_TRANS_TABLES后，错误值会导致MySQL执行回滚操作，如果可以，所有更新到此为止。
+
+ 当然，如果想要执行严格的检查，请启用STRICT_TRANS_TABLES，那样的话，就得修改程序，把给datetime类型的空字符修改成&quot;0000-00-00 00:00:00&quot;即可。
+</code></pre>
+</blockquote>
+<p>‍</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> precedent <span class="keyword">set</span> 裁判日期<span class="operator">=</span><span class="string">&#x27;0000-00-00 00:00:00&#x27;</span> <span class="keyword">where</span> 裁判日期<span class="operator">=</span><span class="string">&#x27;&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+<h4 id="SQLException-Zero-date-value-prohibited"><a href="#SQLException-Zero-date-value-prohibited" class="headerlink" title="SQLException: Zero date value prohibited"></a>SQLException: Zero date value prohibited</h4><p>logstash 导入数据到 ES，date 类型数据不可为 ‘0000-00-00’，需改成 null</p>
+
+        </div>
+
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<nav class="article-nav">
+  
+    <a href="/2023/01/10/%E6%95%B0%E6%8D%AE%E5%BA%93/MongoDB/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-caption">下一篇</div>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/01/10/%E6%95%B0%E6%8D%AE%E5%BA%93/Redis/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+
+    <section class="share">
+        <div class="share-title">分享</div>
+        <a class="share-item" target="_blank"
+            href="https://twitter.com/share?text= - Hexo&url=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2F%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%2FMysql%2F">
+            <ion-icon name="logo-twitter"></ion-icon>
+        </a>
+        <a class="share-item" target="_blank"
+            href="https://www.facebook.com/sharer.php?title= - Hexo&u=http%3A%2F%2Fexample.com%2F2023%2F01%2F10%2F%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%2FMysql%2F">
+            <ion-icon name="logo-facebook"></ion-icon>
+        </a>
+        <!-- <a class="share-item" target="_blank"
+            href="https://service.weibo.com/share/share.php?title= - Hexo&url=http://example.com/2023/01/10/%E6%95%B0%E6%8D%AE%E5%BA%93/Mysql/&pic=">
+            <div class="n-icon n-icon-weibo"></div>
+        </a> -->
+    </section>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </section>
+            </section>
+
+            
+            <aside class="sidebar ">
+                
+
+
+<div class="widget" id="widget">
+    
+      
+  <div class="widget-wrap">
+    <div class="widget-inner">
+      <div class="toc post-toc-html"></div>
+    </div>
+  </div>
+
+    
+      
+
+    
+      
+
+    
+      
+  <div class="widget-wrap widget-recent-posts">
+    <div class="widget-title"><span>Recent Posts</span></div>
+    <div class="widget-inner">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/Scrapy/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/selenium/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/10/%E7%88%AC%E8%99%AB/xpath/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget-wrap widget-archive">
+    <div class="widget-title"><span>Archive</span></div>
+    <div class="widget-inner">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a></li></ul>
+    </div>
+  </div>
+
+
+    
+</div>
+
+<div id="backtop"><i class="icon icon-arrow-up"></i></div>
+            </aside>
+            
+        </div>
+    </div>
+
+    <footer class="footer">
+    <div class="footer-wave">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#3c4859" fill-opacity="1" d="M0,160L60,181.3C120,203,240,245,360,240C480,235,600,181,720,186.7C840,192,960,256,1080,261.3C1200,267,1320,213,1380,186.7L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+    </div>
+
+    <!-- Please do not remove this -->
+    <!-- 开源不易，请勿删除 -->
+    <div class="footer-wrap">
+        <div class="footer-inner"> 
+            Hexo &copy; 2023<br>
+            Powered By Hexo · Theme By <a href="https://linhong.me/" target="_blank">Aomori</a> · <a href="https://github.com/lh1me/hexo-theme-aomori" target="_blank">Github</a>
+        </div>
+    </div>
+
+</footer>
+
+<script type="module" src="https://unpkg.com/ionicons@6.0.2/dist/ionicons/ionicons.esm.js"></script>
+
+
+
+
+
+
+<script src="/dist/build.js?1654266144177.js"></script>
+
+
+<script src="/dist/custom.js?1654266144177.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
