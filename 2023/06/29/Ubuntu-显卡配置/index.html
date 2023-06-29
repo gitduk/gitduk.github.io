@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="description" content="系统环境系统: Ubuntu 22.04内核: 5.19.0-32-generic显卡: AD102 [GeForce RTX 4090] 前期准备123456789101112131415161718192021222324252627282930313233343536373839# 查看显卡设备lshw -numeric -C display# 查看显卡lsmod | grep -E &amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu 显卡配置">
+<meta property="og:url" content="https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="系统环境系统: Ubuntu 22.04内核: 5.19.0-32-generic显卡: AD102 [GeForce RTX 4090] 前期准备123456789101112131415161718192021222324252627282930313233343536373839# 查看显卡设备lshw -numeric -C display# 查看显卡lsmod | grep -E &amp;qu">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-06-29T09:09:35.000Z">
+<meta property="article:modified_time" content="2023-06-29T10:21:45.481Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Ubuntu 显卡配置</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/gitduk">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/06/29/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/06/27/tidb-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&text=Ubuntu 显卡配置"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&title=Ubuntu 显卡配置"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&is_video=false&description=Ubuntu 显卡配置"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ubuntu 显卡配置&body=Check out this article: https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&title=Ubuntu 显卡配置"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&title=Ubuntu 显卡配置"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&title=Ubuntu 显卡配置"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&title=Ubuntu 显卡配置"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&name=Ubuntu 显卡配置&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&t=Ubuntu 显卡配置"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">系统环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">前期准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E8%BF%9B%E5%85%A5%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">重启进入命令行模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CUDA-%E5%AE%89%E8%A3%85"><span class="toc-number">4.</span> <span class="toc-text">CUDA 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CUDNN-%E5%AE%89%E8%A3%85"><span class="toc-number">5.</span> <span class="toc-text">CUDNN 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">6.</span> <span class="toc-text">参考链接</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Ubuntu 显卡配置
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">John Doe</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-06-29T09:09:35.000Z" class="dt-published" itemprop="datePublished">2023-06-29</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><p>系统: Ubuntu 22.04<br>内核: 5.19.0-32-generic<br>显卡: AD102 [GeForce RTX 4090]</p>
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"># 查看显卡设备</span><br><span class="line">lshw -numeric -C display</span><br><span class="line"></span><br><span class="line"># 查看显卡</span><br><span class="line">lsmod | grep -E &quot;nvidia|nouveau&quot;</span><br><span class="line"></span><br><span class="line"># 添加显卡 ppa</span><br><span class="line">sudo add-apt-repository ppa:graphics-drivers</span><br><span class="line">sudo apt update</span><br><span class="line"></span><br><span class="line"># 禁用 nouveau</span><br><span class="line">echo &quot;</span><br><span class="line">blacklist nouveau</span><br><span class="line">blacklist lbm-nouveau</span><br><span class="line"></span><br><span class="line">alias nouveau off</span><br><span class="line">alias lbm-nouveau off</span><br><span class="line"></span><br><span class="line">options nouveau modeset=0</span><br><span class="line"></span><br><span class="line"># for sway</span><br><span class="line">options nvidia-drm modeset=1</span><br><span class="line"></span><br><span class="line">&quot; | sudo tee /etc/modprobe.d/blacklist-nvidia-nouveau.conf</span><br><span class="line">sudo update-initramfs -u</span><br><span class="line"></span><br><span class="line"># 禁用 nvidia, enable nouveau</span><br><span class="line"># echo &quot;</span><br><span class="line"># blacklist nvidia</span><br><span class="line"># options nvidia modeset=0</span><br><span class="line"># &quot; | sudo tee /etc/modprobe.d/blacklist-nvidia-nouveau.conf</span><br><span class="line"># sudo update-initramfs -u</span><br><span class="line"></span><br><span class="line"># 查看推荐的驱动版本, 到官网下载对应的显卡驱动 &lt;https://www.nvidia.com/Download/index.aspx?lang=en-us&gt;</span><br><span class="line">ubuntu-drivers devices</span><br><span class="line"></span><br><span class="line"># 文本模式</span><br><span class="line">sudo systemctl set-default multi-user.target</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="重启进入命令行模式"><a href="#重启进入命令行模式" class="headerlink" title="重启进入命令行模式"></a>重启进入命令行模式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装显卡驱动</span></span><br><span class="line">sudo dpkg -i xxx.deb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 图形模式</span></span><br><span class="line">sudo systemctl set-default multi-user.target</span><br><span class="line">reboot</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看安装</span></span><br><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+
+
+
+<p>显卡型号查询地址:</p>
+<p><a target="_blank" rel="noopener" href="http://pci-ids.ucw.cz/mods/PC/10de/2684">http://pci-ids.ucw.cz/mods/PC/10de/2684</a></p>
+<h2 id="CUDA-安装"><a href="#CUDA-安装" class="headerlink" title="CUDA 安装"></a>CUDA 安装</h2><p>先查看显卡驱动支持的 CUDA 版本</p>
+<p><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html</a></p>
+<p>再进入官网下载安装</p>
+<p><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=deb_local">https://developer.nvidia.com/cuda-downloads?target_os=Linux&amp;target_arch=x86_64&amp;Distribution=Ubuntu&amp;target_version=22.04&amp;target_type=deb_local</a></p>
+<h2 id="CUDNN-安装"><a href="#CUDNN-安装" class="headerlink" title="CUDNN 安装"></a>CUDNN 安装</h2><p>解压<a target="_blank" rel="noopener" href="https://developer.nvidia.com/rdp/cudnn-archive">下载</a>的 CUDNN 文件: cudnn-linux-x86_64-8.8.0.121_cuda11-archive.tar.xz</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> cudnn-linux-x86_64-8.8.0.121_cuda11-archive/</span><br><span class="line">sudo <span class="built_in">cp</span> include/cudnn*.h /usr/local/cuda/include</span><br><span class="line">sudo <span class="built_in">cp</span> lib64/libcudnn* /usr/local/cuda/lib64</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">chmod</span> a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2000757">https://cloud.tencent.com/developer/article/2000757</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Zhou_Dao/article/details/103703289">https://blog.csdn.net/Zhou_Dao/article/details/103703289</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/installing-multiple-cuda-cudnn-versions-in-ubuntu-fcb6aa5194e2">https://towardsdatascience.com/installing-multiple-cuda-cudnn-versions-in-ubuntu-fcb6aa5194e2</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tag</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/gitduk">Projects</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">系统环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">前期准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E8%BF%9B%E5%85%A5%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">重启进入命令行模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CUDA-%E5%AE%89%E8%A3%85"><span class="toc-number">4.</span> <span class="toc-text">CUDA 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CUDNN-%E5%AE%89%E8%A3%85"><span class="toc-number">5.</span> <span class="toc-text">CUDNN 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">6.</span> <span class="toc-text">参考链接</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&text=Ubuntu 显卡配置"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&title=Ubuntu 显卡配置"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&is_video=false&description=Ubuntu 显卡配置"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ubuntu 显卡配置&body=Check out this article: https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&title=Ubuntu 显卡配置"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&title=Ubuntu 显卡配置"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&title=Ubuntu 显卡配置"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&title=Ubuntu 显卡配置"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&name=Ubuntu 显卡配置&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://gitduk.github.io/2023/06/29/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/&t=Ubuntu 显卡配置"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/gitduk">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

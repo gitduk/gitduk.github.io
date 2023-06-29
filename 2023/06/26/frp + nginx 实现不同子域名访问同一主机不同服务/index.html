@@ -6,16 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="前置条件 运行在内网的多个服务 一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案） 一个域名  域名解析 假设你的域名是 wukaige.com  到 cloudflare 解析配置你的域名解析  Frps, Nginx 服务配置 在服务器端操作  frps 部署 - https:&#x2F;&#x2F;github.com&#x2F;fatedier&#x2F;frp Nginx 安装 - sudo apt instal">
+    <meta name="referrer" content="no-referrer" />
+    <meta name="description" content="前置条件 运行在内网的多个服务 一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案） 一个域名  域名解析到 cloudflare 解析配置你的域名解析  Frps, Nginx 服务配置frps 部署 - https:&#x2F;&#x2F;github.com&#x2F;fatedier&#x2F;frp Nginx 安装 - sudo apt install nginx frps 配置文件 1234567891011[">
 <meta property="og:type" content="article">
 <meta property="og:title" content="frp + nginx 实现不同子域名访问同一主机不同服务">
 <meta property="og:url" content="https://gitduk.github.io/2023/06/26/frp%20+%20nginx%20%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前置条件 运行在内网的多个服务 一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案） 一个域名  域名解析 假设你的域名是 wukaige.com  到 cloudflare 解析配置你的域名解析  Frps, Nginx 服务配置 在服务器端操作  frps 部署 - https:&#x2F;&#x2F;github.com&#x2F;fatedier&#x2F;frp Nginx 安装 - sudo apt instal">
+<meta property="og:description" content="前置条件 运行在内网的多个服务 一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案） 一个域名  域名解析到 cloudflare 解析配置你的域名解析  Frps, Nginx 服务配置frps 部署 - https:&#x2F;&#x2F;github.com&#x2F;fatedier&#x2F;frp Nginx 安装 - sudo apt install nginx frps 配置文件 1234567891011[">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230629164727654.png">
 <meta property="article:published_time" content="2023-06-26T09:57:22.340Z">
-<meta property="article:modified_time" content="2023-06-29T08:48:05.316Z">
+<meta property="article:modified_time" content="2023-06-29T10:20:59.165Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="frp">
 <meta property="article:tag" content="nginx">
@@ -73,11 +74,11 @@
         <!--
        --><li><a href="/">Home</a></li><!--
      --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
        --><li><a href="/archives/">Writing</a></li><!--
      --><!--
        --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/gitduk">Projects</a></li><!--
      --><!--
@@ -172,15 +173,9 @@
 <li>一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案）</li>
 <li>一个域名</li>
 </ul>
-<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><blockquote>
-<p>假设你的域名是 wukaige.com</p>
-</blockquote>
-<p>到 cloudflare 解析配置你的域名解析</p>
+<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><p>到 cloudflare 解析配置你的域名解析</p>
 <p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230629164727654.png" alt="image-20230629164727654"></p>
-<h2 id="Frps-Nginx-服务配置"><a href="#Frps-Nginx-服务配置" class="headerlink" title="Frps, Nginx 服务配置"></a>Frps, Nginx 服务配置</h2><blockquote>
-<p>在服务器端操作</p>
-</blockquote>
-<p>frps 部署 - <a target="_blank" rel="noopener" href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p>
+<h2 id="Frps-Nginx-服务配置"><a href="#Frps-Nginx-服务配置" class="headerlink" title="Frps, Nginx 服务配置"></a>Frps, Nginx 服务配置</h2><p>frps 部署 - <a target="_blank" rel="noopener" href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p>
 <p>Nginx 安装 - <code>sudo apt install nginx</code></p>
 <p>frps 配置文件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br><span class="line">bind_addr = 0.0.0.0</span><br><span class="line">vhost_http_port = 7080</span><br><span class="line">token = [custom token]</span><br><span class="line"></span><br><span class="line">dashboard_port = 7050</span><br><span class="line">dashboard_user = admin</span><br><span class="line">dashboard_pwd = changeme</span><br><span class="line"></span><br><span class="line">subdomain_host = wukaige.com</span><br></pre></td></tr></table></figure>
@@ -197,21 +192,15 @@
 
 
 
-<h2 id="Frpc-配置"><a href="#Frpc-配置" class="headerlink" title="Frpc 配置"></a>Frpc 配置</h2><blockquote>
-<p>在内网机器上操作</p>
-</blockquote>
-<p>frpc 配置文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = [ip to frps server]</span><br><span class="line">server_port = 7000</span><br><span class="line">token = [custom token]</span><br><span class="line"></span><br><span class="line">[alist]</span><br><span class="line">type = http</span><br><span class="line">local_port = 5244</span><br><span class="line">subdomain = alist</span><br></pre></td></tr></table></figure>
+<h2 id="Frpc-配置"><a href="#Frpc-配置" class="headerlink" title="Frpc 配置"></a>Frpc 配置</h2><p>frpc 配置文件</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = [ip to frps server]</span><br><span class="line">server_port = 7000</span><br><span class="line">token = [custom token]</span><br><span class="line"></span><br><span class="line">[alist]</span><br><span class="line">type = http</span><br><span class="line">local_port = 5244</span><br><span class="line">subdomain = alist</span><br></pre></td></tr></table></figure>
 
 
 
 <p>重启 frpc 服务</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 以服务方式安装的 frpc</span><br><span class="line">sudo systemctl restart frpc.service</span><br></pre></td></tr></table></figure>
 
-
-
-<p>没有例外的话，访问 <code>alist.wukaige.com</code> 即可访问本地 alist 服务。</p>
-<p>有例外的话，看看服务器和本地防火墙，是否开放需要开放的端口。</p>
+<p>没有例外的话，访问 <code>alist.wukaige.com</code> 即可访问本地 alist 服务。<br>有例外的话，看看服务器和本地防火墙，是否开放需要开放的端口。</p>
 
   </div>
 </article>
@@ -227,11 +216,11 @@
         
           <li><a href="/">Home</a></li>
         
-          <li><a href="/search/">Search</a></li>
-        
           <li><a href="/archives/">Writing</a></li>
         
           <li><a href="/tags/">Tag</a></li>
+        
+          <li><a href="/search/">Search</a></li>
         
           <li><a target="_blank" rel="noopener" href="https://github.com/gitduk">Projects</a></li>
         
@@ -291,11 +280,11 @@
         <!--
        --><li><a href="/">Home</a></li><!--
      --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
        --><li><a href="/archives/">Writing</a></li><!--
      --><!--
        --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/gitduk">Projects</a></li><!--
      --><!--
