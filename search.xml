@@ -4,6 +4,57 @@
   
     
     <entry>
+      <title></title>
+      <link href="/2023/07/04/Untitled/"/>
+      <url>/2023/07/04/Untitled/</url>
+      
+        <content type="html"><![CDATA[<table><thead><tr><th>项目</th><th>金额</th></tr></thead><tbody><tr><td>GPT 账号</td><td>30*6 + 25*30 &#x3D; 930</td></tr><tr><td>一年服务器</td><td>100 * 7 &#x3D; 700</td></tr><tr><td>打车车费</td><td>30 * 2 &#x3D; 60</td></tr><tr><td>代理月费</td><td>25 * n &#x3D; ?</td></tr><tr><td>总金额</td><td>930 + 700 + 60 &#x3D; 1690</td></tr></tbody></table>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>TIDB 集群节点损坏修复</title>
+      <link href="/2023/07/04/TIDB-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/"/>
+      <url>/2023/07/04/TIDB-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>tidb 某个节点的数据目录被删除，导致节点损坏。</p><h2 id="删除损坏节点"><a href="#删除损坏节点" class="headerlink" title="删除损坏节点"></a>删除损坏节点</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 损坏节点 IP 为：192.168.70.51 端口为：27161</span></span><br><span class="line">tiup cluster scale-in tidb-cluster --node 192.168.70.51:27161</span><br></pre></td></tr></table></figure><h2 id="添加新的节点"><a href="#添加新的节点" class="headerlink" title="添加新的节点"></a>添加新的节点</h2><p><u>scale-out.yaml</u> 文件内容：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tikv_servers:</span><br><span class="line">  - host: 192.168.70.51</span><br><span class="line">    port: 27161</span><br><span class="line">    status_port: 27181</span><br><span class="line">    numa_node: &quot;1&quot;</span><br><span class="line">    config:</span><br><span class="line">      server.labels: &#123; host: &quot;tikv3&quot; &#125;</span><br><span class="line">      readpool.unified.max-thread-count: 25</span><br><span class="line">      storage.block-cache.capacity: &quot;30GiB&quot;</span><br><span class="line">      raftstore.capacity: &quot;2048GiB&quot;</span><br></pre></td></tr></table></figure><p>添加节点：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 集群名称为：tidb-cluster</span></span><br><span class="line">tiup cluster scale-out tidb-cluster ./scale-out.yaml --user root -p</span><br></pre></td></tr></table></figure><h2 id="验证集群状态"><a href="#验证集群状态" class="headerlink" title="验证集群状态"></a>验证集群状态</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tiup cluster display tidb-cluster</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> tidb </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hexo 自建博客如何被 google 收录？</title>
+      <link href="/2023/07/04/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95%EF%BC%9F/"/>
+      <url>/2023/07/04/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95%EF%BC%9F/</url>
+      
+        <content type="html"><![CDATA[<h2 id="测试站点是否被-google-收录"><a href="#测试站点是否被-google-收录" class="headerlink" title="测试站点是否被 google 收录"></a>测试站点是否被 google 收录</h2><p>测试方法：打开 google 主页，在搜索框键入 <code>site:blog.wukaige.com</code></p><p>未被收录：</p><p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704153416648.png" alt="image-20230704153416648"></p><p>被收录：<br><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704153457622.png" alt="image-20230704153457622"></p><h2 id="安装-hexo-generator-sitemap-插件"><a href="#安装-hexo-generator-sitemap-插件" class="headerlink" title="安装 hexo-generator-sitemap 插件"></a>安装 hexo-generator-sitemap 插件</h2><p>hexo-generator-sitemap 可自动在根目录生成 sitemap.xml 文件</p><p>安装： <code>npm install hexo-generator-sitemap --save</code></p><p>在 <u>_config.yaml</u> 文件中添加：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># https://github.com/hexojs/hexo-generator-sitemap</span><br><span class="line">sitemap:</span><br><span class="line">  path: </span><br><span class="line">    - sitemap.xml</span><br><span class="line">    - sitemap.txt</span><br><span class="line">  rel: false</span><br><span class="line">  tags: true</span><br><span class="line">  categories: true</span><br></pre></td></tr></table></figure><h2 id="提交站点-URL-到-Google-Search-Console"><a href="#提交站点-URL-到-Google-Search-Console" class="headerlink" title="提交站点 URL 到 Google Search Console"></a>提交站点 URL 到 Google Search Console</h2><p>打开 <a href="https://www.google.com/webmasters/tools/home#utm_source=en-wmxmsg&utm_medium=wmxmsg&utm_campaign=bm&authuser=0">Google Search Console</a> 并添加网站资源</p><p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704153836019.png" alt="image-20230704153836019"></p><p>在下面添加你的博客 url 链接，并点击 CONTINUE，根据提示授权 Google 访问你的网站。</p><p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704153924857.png" alt="image-20230704153924857"></p><p>这里填入自动生成的 <strong>sitemap.xml</strong> ，状态为 Success 代表添加成功。</p><p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704154016411.png" alt="image-20230704154016411"></p><h2 id="测试-Google-Search-Console-是否配置完成"><a href="#测试-Google-Search-Console-是否配置完成" class="headerlink" title="测试 Google Search Console 是否配置完成"></a>测试 Google Search Console 是否配置完成</h2><p>在这里填入你的博客地址：</p><p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704155013177.png" alt="image-20230704155013177"></p><p>下面是你的网站状态：</p><p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704155054178.png" alt="image-20230704155054178"></p><p>URL is not on Google，问题不大，可能是刚刚收录还没来得及抓取你的网站。</p><p>点击右上角的 <strong>TEST LIVE URL</strong> 测试配置是否成功：</p><p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704155337684.png" alt="image-20230704155337684"></p><p>出现这个页面代表配置没问题。</p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul><li><a href="https://zhuanlan.zhihu.com/p/129022264">https://zhuanlan.zhihu.com/p/129022264</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>frp + nginx 实现不同子域名访问同一主机不同服务</title>
       <link href="/2023/07/04/frp-nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/"/>
       <url>/2023/07/04/frp-nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/</url>
