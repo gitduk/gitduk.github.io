@@ -4,6 +4,48 @@
   
     
     <entry>
+      <title>frp + nginx 实现不同子域名访问同一主机不同服务</title>
+      <link href="/2023/07/04/frp-nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/"/>
+      <url>/2023/07/04/frp-nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h2><ul><li>运行在内网的多个服务</li><li>一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案）</li><li>一个域名</li></ul><h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><p>到 cloudflare 解析配置你的域名解析</p><p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230629164727654.png" alt="image-20230629164727654"></p><h2 id="Frps-Nginx-服务配置"><a href="#Frps-Nginx-服务配置" class="headerlink" title="Frps, Nginx 服务配置"></a>Frps, Nginx 服务配置</h2><p>frps 部署 - <a href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p><p>Nginx 安装 - <code>sudo apt install nginx</code></p><p>frps 配置文件</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br><span class="line">bind_addr = 0.0.0.0</span><br><span class="line">vhost_http_port = 7080</span><br><span class="line">token = [custom token]</span><br><span class="line"></span><br><span class="line">dashboard_port = 7050</span><br><span class="line">dashboard_user = admin</span><br><span class="line">dashboard_pwd = changeme</span><br><span class="line"></span><br><span class="line">subdomain_host = wukaige.com</span><br></pre></td></tr></table></figure><p>nginx 配置 <u>&#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;frp.conf</u></p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">        <span class="attribute">server_name</span> alist.wukaige.com;</span><br><span class="line">        <span class="section">location</span> / &#123;</span><br><span class="line">                <span class="attribute">proxy_pass</span> http://127.0.0.1:7080;</span><br><span class="line">                <span class="attribute">proxy_set_header</span>   Host             <span class="variable">$host</span>;</span><br><span class="line">                <span class="attribute">proxy_set_header</span>   X-Real-IP        <span class="variable">$remote_addr</span>;</span><br><span class="line">                <span class="attribute">proxy_set_header</span>   X-Forwarded-For  <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>重启 frps 和 nginx 服务</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart nginx.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以服务方式安装的 frps</span></span><br><span class="line">sudo systemctl restart frps.service</span><br></pre></td></tr></table></figure><h2 id="Frpc-配置"><a href="#Frpc-配置" class="headerlink" title="Frpc 配置"></a>Frpc 配置</h2><p>frpc 配置文件</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = [ip to frps server]</span><br><span class="line">server_port = 7000</span><br><span class="line">token = [custom token]</span><br><span class="line"></span><br><span class="line">[alist]</span><br><span class="line">type = http</span><br><span class="line">local_port = 5244</span><br><span class="line">subdomain = alist</span><br></pre></td></tr></table></figure><p>重启 frpc 服务</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 以服务方式安装的 frpc</span><br><span class="line">sudo systemctl restart frpc.service</span><br></pre></td></tr></table></figure><p>没有例外的话，访问 <code>alist.wukaige.com</code> 即可访问本地 alist 服务。<br>有例外的话，看看服务器和本地防火墙，是否开放需要开放的端口。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> nginx </tag>
+            
+            <tag> frp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Nginx 代理 openai api</title>
+      <link href="/2023/07/04/Nginx-%E4%BB%A3%E7%90%86-openai-api/"/>
+      <url>/2023/07/04/Nginx-%E4%BB%A3%E7%90%86-openai-api/</url>
+      
+        <content type="html"><![CDATA[<h2 id="安装-Nginx"><a href="#安装-Nginx" class="headerlink" title="安装 Nginx"></a>安装 Nginx</h2><p>ubuntu: <code>sudo apt install nginx</code></p><h2 id="配置-Openai-反向代理"><a href="#配置-Openai-反向代理" class="headerlink" title="配置 Openai 反向代理"></a>配置 Openai 反向代理</h2><p>在目录 <code>/etc/nginx/conf.d</code> 下创建文件 <code>openai.conf</code></p><p><u>&#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;openai.conf</u></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 8000;</span><br><span class="line">    </span><br><span class="line">    location /v1/ &#123;</span><br><span class="line">        proxy_pass https://api.openai.com/v1/; # OpenAI API URL</span><br><span class="line">        proxy_ssl_server_name on; # 避免出现反代https域名出现502错误</span><br><span class="line">        proxy_buffering off; # 关闭缓存实现打字机效果</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>重启 nginx 服务： <code>sudo systemctl reload nginx</code></p><h2 id="使用-Openai-Api-接口"><a href="#使用-Openai-Api-接口" class="headerlink" title="使用 Openai Api 接口"></a>使用 Openai Api 接口</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 requests 会话</span></span><br><span class="line">requests.adapters.DEFAULT_RETRIES = <span class="number">5</span></span><br><span class="line">session = requests.session()</span><br><span class="line">session.keep_alive = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">API_KEY = <span class="string">&quot;sk-bvUyWowek6qxxjztEMchT3Blbkfj5Xlzr27jMbX28YxGp4wh&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 OpenAI API 密钥</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Authorization&quot;</span>: <span class="string">f&quot;Bearer <span class="subst">&#123;API_KEY&#125;</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send_request</span>(<span class="params">data</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    发送请求到 OpenAI API 并返回响应。</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        response = session.post(</span><br><span class="line">            <span class="string">&quot;http://[your nginx server ip address]:8000/v1/chat/completions&quot;</span>,</span><br><span class="line">            headers=headers,</span><br><span class="line">            data=json.dumps(data),</span><br><span class="line">            timeout=<span class="number">30</span></span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">raise</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> nginx </tag>
+            
+            <tag> openai </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>文本转向量并插入到 ES 中</title>
       <link href="/2023/07/03/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-ES-%E4%B8%AD/"/>
       <url>/2023/07/03/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-ES-%E4%B8%AD/</url>
@@ -50,6 +92,14 @@
       
       
       
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> nvidia </tag>
+            
+        </tags>
+      
     </entry>
     
     
@@ -66,27 +116,6 @@
         <tags>
             
             <tag> tidb </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>frp + nginx 实现不同子域名访问同一主机不同服务</title>
-      <link href="/2023/06/26/frp%20+%20nginx%20%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/"/>
-      <url>/2023/06/26/frp%20+%20nginx%20%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/</url>
-      
-        <content type="html"><![CDATA[<h2 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h2><ul><li>运行在内网的多个服务</li><li>一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案）</li><li>一个域名</li></ul><h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><p>到 cloudflare 解析配置你的域名解析</p><p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230629164727654.png" alt="image-20230629164727654"></p><h2 id="Frps-Nginx-服务配置"><a href="#Frps-Nginx-服务配置" class="headerlink" title="Frps, Nginx 服务配置"></a>Frps, Nginx 服务配置</h2><p>frps 部署 - <a href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p><p>Nginx 安装 - <code>sudo apt install nginx</code></p><p>frps 配置文件</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br><span class="line">bind_addr = 0.0.0.0</span><br><span class="line">vhost_http_port = 7080</span><br><span class="line">token = [custom token]</span><br><span class="line"></span><br><span class="line">dashboard_port = 7050</span><br><span class="line">dashboard_user = admin</span><br><span class="line">dashboard_pwd = changeme</span><br><span class="line"></span><br><span class="line">subdomain_host = wukaige.com</span><br></pre></td></tr></table></figure><p>nginx 配置 <u>&#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;frp.conf</u></p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">        <span class="attribute">server_name</span> alist.wukaige.com;</span><br><span class="line">        <span class="section">location</span> / &#123;</span><br><span class="line">                <span class="attribute">proxy_pass</span> http://127.0.0.1:7080;</span><br><span class="line">                <span class="attribute">proxy_set_header</span>   Host             <span class="variable">$host</span>;</span><br><span class="line">                <span class="attribute">proxy_set_header</span>   X-Real-IP        <span class="variable">$remote_addr</span>;</span><br><span class="line">                <span class="attribute">proxy_set_header</span>   X-Forwarded-For  <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>重启 frps 和 nginx 服务</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart nginx.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以服务方式安装的 frps</span></span><br><span class="line">sudo systemctl restart frps.service</span><br></pre></td></tr></table></figure><h2 id="Frpc-配置"><a href="#Frpc-配置" class="headerlink" title="Frpc 配置"></a>Frpc 配置</h2><p>frpc 配置文件</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = [ip to frps server]</span><br><span class="line">server_port = 7000</span><br><span class="line">token = [custom token]</span><br><span class="line"></span><br><span class="line">[alist]</span><br><span class="line">type = http</span><br><span class="line">local_port = 5244</span><br><span class="line">subdomain = alist</span><br></pre></td></tr></table></figure><p>重启 frpc 服务</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 以服务方式安装的 frpc</span><br><span class="line">sudo systemctl restart frpc.service</span><br></pre></td></tr></table></figure><p>没有例外的话，访问 <code>alist.wukaige.com</code> 即可访问本地 alist 服务。<br>有例外的话，看看服务器和本地防火墙，是否开放需要开放的端口。</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> frp </tag>
-            
-            <tag> nginx </tag>
             
         </tags>
       
