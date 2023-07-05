@@ -4,13 +4,38 @@
   
     
     <entry>
-      <title></title>
-      <link href="/2023/07/04/Untitled/"/>
-      <url>/2023/07/04/Untitled/</url>
+      <title>tidb 快照恢复</title>
+      <link href="/2023/07/05/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/"/>
+      <url>/2023/07/05/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/</url>
       
-        <content type="html"><![CDATA[<table><thead><tr><th>项目</th><th>金额</th></tr></thead><tbody><tr><td>GPT 账号</td><td>30*6 + 25*30 &#x3D; 930</td></tr><tr><td>一年服务器</td><td>100 * 7 &#x3D; 700</td></tr><tr><td>打车车费</td><td>30 * 2 &#x3D; 60</td></tr><tr><td>代理月费</td><td>25 * n &#x3D; ?</td></tr><tr><td>总金额</td><td>930 + 700 + 60 &#x3D; 1690</td></tr></tbody></table>]]></content>
+        <content type="html"><![CDATA[<h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>公司小萌新误操作，把项目数据库删掉了。</p><h2 id="修改快照恢复周期"><a href="#修改快照恢复周期" class="headerlink" title="修改快照恢复周期"></a>修改快照恢复周期</h2><p>tidb 默认快照周期比较短，一旦删库的时间点超过这个时间就直接完犊子。</p><p>登录 tidb 数据库，查看快照恢复周期</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> mysql.tidb <span class="keyword">where</span> variable_name <span class="operator">=</span> <span class="string">&#x27;tikv_gc_life_time&#x27;</span>;</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230705175301357.png" alt="image-20230705175301357"></p><p>60 分钟，我们有 1.5 亿条数据，不太够。</p><p>设置快照恢复周期：</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       
       
+      
+        <tags>
+            
+            <tag> tidb </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>TIKV 内存占用过高排查</title>
+      <link href="/2023/07/05/TIKV-%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E6%8E%92%E6%9F%A5/"/>
+      <url>/2023/07/05/TIKV-%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E6%8E%92%E6%9F%A5/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>tidb 集群（tidb-cluster）的 tikv 节点，占用内存高达 30&#x2F;50 G，内存不够用。</p><h2 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h2><p>登录 grafana 监控面板，发现 tidb-cluster-TiKV-Details 下面的 Block cache size 面板疑似有点问题。</p><p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230705173007288.png" alt="image-20230705173007288"></p><p>遂去查看 tidb-cluster 集群的配置文件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tiup cluster edit-config tidb-cluster</span><br></pre></td></tr></table></figure><p>问题在于 tikv 的 <code>storage.block-cache.capacity</code> 配置：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">storage.block-cache.capacity:</span> <span class="string">50GiB</span></span><br></pre></td></tr></table></figure><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>把 tikv 的 <code>storage.block-cache.capacity</code> 配置修改成合适的值，保存配置，重启 tidb 集群即可。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> tidb </tag>
+            
+        </tags>
       
     </entry>
     

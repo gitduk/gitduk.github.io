@@ -2,9 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.wukaige.com/2023/07/04/Untitled/</loc>
+    <loc>https://blog.wukaige.com/2023/07/05/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/</loc>
     
-    <lastmod>2023-07-04</lastmod>
+    <lastmod>2023-07-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.wukaige.com/2023/06/29/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</loc>
+    
+    <lastmod>2023-07-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.wukaige.com/2023/07/05/TIKV-%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E6%8E%92%E6%9F%A5/</loc>
+    
+    <lastmod>2023-07-05</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -92,15 +110,6 @@
   </url>
   
   <url>
-    <loc>https://blog.wukaige.com/2023/06/29/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</loc>
-    
-    <lastmod>2023-06-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.wukaige.com/tags/index.html</loc>
     
     <lastmod>2023-06-26</lastmod>
@@ -121,7 +130,7 @@
 
   <url>
     <loc>https://blog.wukaige.com/</loc>
-    <lastmod>2023-07-04</lastmod>
+    <lastmod>2023-07-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -129,56 +138,56 @@
   
   <url>
     <loc>https://blog.wukaige.com/tags/nginx/</loc>
-    <lastmod>2023-07-04</lastmod>
+    <lastmod>2023-07-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/openai/</loc>
-    <lastmod>2023-07-04</lastmod>
+    <lastmod>2023-07-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/tidb/</loc>
-    <lastmod>2023-07-04</lastmod>
+    <lastmod>2023-07-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/linux/</loc>
-    <lastmod>2023-07-04</lastmod>
+    <lastmod>2023-07-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/nvidia/</loc>
-    <lastmod>2023-07-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.wukaige.com/tags/hexo/</loc>
-    <lastmod>2023-07-04</lastmod>
+    <lastmod>2023-07-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/frp/</loc>
-    <lastmod>2023-07-04</lastmod>
+    <lastmod>2023-07-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.wukaige.com/tags/hexo/</loc>
+    <lastmod>2023-07-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/ES/</loc>
-    <lastmod>2023-07-04</lastmod>
+    <lastmod>2023-07-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
