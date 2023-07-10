@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>DM 数据复制</title>
+      <link href="/2023/07/10/DM-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6/"/>
+      <url>/2023/07/10/DM-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6/</url>
+      
+        <content type="html"><![CDATA[<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230710183510578.png" alt="image-20230710183510578"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> tidb </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>TIDB 多物理机集群部署</title>
       <link href="/2023/07/10/TIDB-%E5%A4%9A%E7%89%A9%E7%90%86%E6%9C%BA%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/"/>
       <url>/2023/07/10/TIDB-%E5%A4%9A%E7%89%A9%E7%90%86%E6%9C%BA%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/</url>
