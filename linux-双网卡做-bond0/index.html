@@ -15,7 +15,7 @@
 <meta property="og:description" content="为了提供网络的高可用性，我们可能需要将多块网卡绑定成一块虚拟网卡对外提供服务，这样即使其中的一块物理网卡出现故障，也不会导致连接中断。  前情提要服务器配置了两张网卡，现在需要做 bond0。 网关: 192.168.0.1网卡一: eno8303 (192.168.0.2)网卡二: eno8403 (192.168.0.3) 创建 bond01sudo nmcli con add type b">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-07-11T09:55:28.000Z">
-<meta property="article:modified_time" content="2023-07-11T10:27:45.144Z">
+<meta property="article:modified_time" content="2023-07-12T06:33:08.146Z">
 <meta property="article:author" content="wukaige">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
@@ -41,6 +41,14 @@
     <title>linux 双网卡做 bond0</title>
     <!-- async scripts -->
     <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-06LZ6HJ4BH"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-06LZ6HJ4BH');
+  </script>
 
 
     <!-- Umami Analytics -->
