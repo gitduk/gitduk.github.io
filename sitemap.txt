@@ -1,3 +1,6 @@
+https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/
+https://blog.wukaige.com/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/
+https://blog.wukaige.com/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-ES-%E4%B8%AD/
 https://blog.wukaige.com/linux-%E5%8F%8C%E7%BD%91%E5%8D%A1%E5%81%9A-bond0/
 https://blog.wukaige.com/DM-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6/
 https://blog.wukaige.com/TIDB-%E5%A4%9A%E7%89%A9%E7%90%86%E6%9C%BA%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/
@@ -8,8 +11,6 @@ https://blog.wukaige.com/TIDB-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9
 https://blog.wukaige.com/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95%EF%BC%9F/
 https://blog.wukaige.com/Nginx-%E4%BB%A3%E7%90%86-openai-api/
 https://blog.wukaige.com/frp-nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/
-https://blog.wukaige.com/Ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/
-https://blog.wukaige.com/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-ES-%E4%B8%AD/
 https://blog.wukaige.com/about/index.html
 https://blog.wukaige.com/hello-world/
 https://blog.wukaige.com/tidb-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/
@@ -17,10 +18,10 @@ https://blog.wukaige.com/tags/index.html
 https://blog.wukaige.com/search/index.html
 https://blog.wukaige.com/
 https://blog.wukaige.com/tags/tidb/
+https://blog.wukaige.com/tags/ES/
 https://blog.wukaige.com/tags/nginx/
 https://blog.wukaige.com/tags/openai/
 https://blog.wukaige.com/tags/linux/
 https://blog.wukaige.com/tags/nvidia/
 https://blog.wukaige.com/tags/frp/
 https://blog.wukaige.com/tags/hexo/
-https://blog.wukaige.com/tags/ES/

@@ -15,7 +15,7 @@
 <meta property="og:description" content="系统环境系统: Ubuntu 22.04内核: 5.19.0-32-generic显卡: AD102 [GeForce RTX 4090] 前期准备123456789101112131415161718192021222324252627282930313233343536373839# 查看显卡设备lshw -numeric -C display# 查看显卡lsmod | grep -E &amp;qu">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-06-29T09:09:35.000Z">
-<meta property="article:modified_time" content="2023-07-04T06:38:07.133Z">
+<meta property="article:modified_time" content="2023-07-14T06:40:31.126Z">
 <meta property="article:author" content="wukaige">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="nvidia">
@@ -181,12 +181,9 @@
 
 
 
-<p>显卡型号查询地址:</p>
-<p><a target="_blank" rel="noopener" href="http://pci-ids.ucw.cz/mods/PC/10de/2684">http://pci-ids.ucw.cz/mods/PC/10de/2684</a></p>
-<h2 id="CUDA-安装"><a href="#CUDA-安装" class="headerlink" title="CUDA 安装"></a>CUDA 安装</h2><p>先查看显卡驱动支持的 CUDA 版本</p>
-<p><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html</a></p>
-<p>再进入官网下载安装</p>
-<p><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=deb_local">https://developer.nvidia.com/cuda-downloads?target_os=Linux&amp;target_arch=x86_64&amp;Distribution=Ubuntu&amp;target_version=22.04&amp;target_type=deb_local</a></p>
+<p>显卡型号查询地址:<br><a target="_blank" rel="noopener" href="http://pci-ids.ucw.cz/mods/PC/10de/2684">http://pci-ids.ucw.cz/mods/PC/10de/2684</a></p>
+<h2 id="CUDA-安装"><a href="#CUDA-安装" class="headerlink" title="CUDA 安装"></a>CUDA 安装</h2><p>先查看显卡驱动支持的 CUDA 版本<br><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html</a></p>
+<p>再进入官网下载安装<br><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=deb_local">https://developer.nvidia.com/cuda-downloads?target_os=Linux&amp;target_arch=x86_64&amp;Distribution=Ubuntu&amp;target_version=22.04&amp;target_type=deb_local</a></p>
 <h2 id="CUDNN-安装"><a href="#CUDNN-安装" class="headerlink" title="CUDNN 安装"></a>CUDNN 安装</h2><p>解压<a target="_blank" rel="noopener" href="https://developer.nvidia.com/rdp/cudnn-archive">下载</a>的 CUDNN 文件: cudnn-linux-x86_64-8.8.0.121_cuda11-archive.tar.xz</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> cudnn-linux-x86_64-8.8.0.121_cuda11-archive/</span><br><span class="line">sudo <span class="built_in">cp</span> include/cudnn*.h /usr/local/cuda/include</span><br><span class="line">sudo <span class="built_in">cp</span> lib64/libcudnn* /usr/local/cuda/lib64</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">chmod</span> a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure>
 
