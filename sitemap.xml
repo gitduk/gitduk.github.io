@@ -166,64 +166,64 @@
 
   <url>
     <loc>https://blog.wukaige.com/</loc>
-    <lastmod>2023-07-14</lastmod>
+    <lastmod>2023-07-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>https://blog.wukaige.com/tags/tidb/</loc>
-    <lastmod>2023-07-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.wukaige.com/tags/ES/</loc>
-    <lastmod>2023-07-14</lastmod>
+    <lastmod>2023-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/nginx/</loc>
-    <lastmod>2023-07-14</lastmod>
+    <lastmod>2023-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/openai/</loc>
-    <lastmod>2023-07-14</lastmod>
+    <lastmod>2023-07-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.wukaige.com/tags/tidb/</loc>
+    <lastmod>2023-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/linux/</loc>
-    <lastmod>2023-07-14</lastmod>
+    <lastmod>2023-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/nvidia/</loc>
-    <lastmod>2023-07-14</lastmod>
+    <lastmod>2023-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/frp/</loc>
-    <lastmod>2023-07-14</lastmod>
+    <lastmod>2023-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/hexo/</loc>
-    <lastmod>2023-07-14</lastmod>
+    <lastmod>2023-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
