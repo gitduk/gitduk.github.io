@@ -1,3 +1,4 @@
+https://blog.wukaige.com/flask-gunicorn-%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%B9%B6%E5%8F%91/
 https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/
 https://blog.wukaige.com/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/
 https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-tidb-lightning/
@@ -27,6 +28,7 @@ https://blog.wukaige.com/tags/nginx/
 https://blog.wukaige.com/tags/openai/
 https://blog.wukaige.com/tags/linux/
 https://blog.wukaige.com/tags/nvidia/
+https://blog.wukaige.com/tags/flask/
 https://blog.wukaige.com/tags/frp/
 https://blog.wukaige.com/tags/hexo/
 https://blog.wukaige.com/tags/alist/
