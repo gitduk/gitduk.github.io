@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-tidb-lightning/</loc>
+    
+    <lastmod>2023-07-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.wukaige.com/flask-gunicorn-%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%B9%B6%E5%8F%91/</loc>
     
     <lastmod>2023-07-24</lastmod>
@@ -21,15 +30,6 @@
   
   <url>
     <loc>https://blog.wukaige.com/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/</loc>
-    
-    <lastmod>2023-07-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-tidb-lightning/</loc>
     
     <lastmod>2023-07-20</lastmod>
     
@@ -202,7 +202,7 @@
 
   <url>
     <loc>https://blog.wukaige.com/</loc>
-    <lastmod>2023-07-26</lastmod>
+    <lastmod>2023-07-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -210,77 +210,77 @@
   
   <url>
     <loc>https://blog.wukaige.com/tags/tidb/</loc>
-    <lastmod>2023-07-26</lastmod>
+    <lastmod>2023-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/ES/</loc>
-    <lastmod>2023-07-26</lastmod>
+    <lastmod>2023-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/logstash/</loc>
-    <lastmod>2023-07-26</lastmod>
+    <lastmod>2023-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/nginx/</loc>
-    <lastmod>2023-07-26</lastmod>
+    <lastmod>2023-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/openai/</loc>
-    <lastmod>2023-07-26</lastmod>
+    <lastmod>2023-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/linux/</loc>
-    <lastmod>2023-07-26</lastmod>
+    <lastmod>2023-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/nvidia/</loc>
-    <lastmod>2023-07-26</lastmod>
+    <lastmod>2023-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/flask/</loc>
-    <lastmod>2023-07-26</lastmod>
+    <lastmod>2023-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/frp/</loc>
-    <lastmod>2023-07-26</lastmod>
+    <lastmod>2023-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/hexo/</loc>
-    <lastmod>2023-07-26</lastmod>
+    <lastmod>2023-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/alist/</loc>
-    <lastmod>2023-07-26</lastmod>
+    <lastmod>2023-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
