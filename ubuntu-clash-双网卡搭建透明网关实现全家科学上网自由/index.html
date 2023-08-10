@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="description" content="前情提要手机科学上网需要打开 clash 软件，手动开启代理，非常不爽，我想搭建一个无感科学上网环境，连上 WIFI 就能科学上网。 硬件配置 台式主机，连接网线 enp3s0 一个 USB 无线网卡 wlan0  软件环境 Ubuntu 22.04 clash nftables  配置网卡配置思路：enp3s0 连接有线网，wlan0 开启热点，供手机连接。 使用 nmcli 命令，在 wlan">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由">
+<meta property="og:url" content="https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前情提要手机科学上网需要打开 clash 软件，手动开启代理，非常不爽，我想搭建一个无感科学上网环境，连上 WIFI 就能科学上网。 硬件配置 台式主机，连接网线 enp3s0 一个 USB 无线网卡 wlan0  软件环境 Ubuntu 22.04 clash nftables  配置网卡配置思路：enp3s0 连接有线网，wlan0 开启热点，供手机连接。 使用 nmcli 命令，在 wlan">
+<meta property="og:locale">
+<meta property="og:image" content="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230810153406140.png">
+<meta property="og:image" content="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230810151615005.png">
+<meta property="article:published_time" content="2023-08-10T06:49:26.000Z">
+<meta property="article:modified_time" content="2023-08-10T07:49:58.086Z">
+<meta property="article:author" content="wukaige">
+<meta property="article:tag" content="clash">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230810153406140.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-06LZ6HJ4BH"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-06LZ6HJ4BH');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-40min/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&text=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&title=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&is_video=false&description=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由&body=Check out this article: https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&title=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&title=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&title=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&title=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&name=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&t=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">前情提要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">硬件配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E7%8E%AF%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">软件环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%BD%91%E5%8D%A1"><span class="toc-number">4.</span> <span class="toc-text">配置网卡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%90%AF-Ubuntu-ip-%E8%BD%AC%E5%8F%91"><span class="toc-number">5.</span> <span class="toc-text">开启 Ubuntu ip 转发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-clash-%E9%87%8D%E5%AE%9A%E5%90%91%E7%AB%AF%E5%8F%A3"><span class="toc-number">6.</span> <span class="toc-text">配置 clash 重定向端口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-nftables-%E8%BD%AC%E5%8F%91%E6%B5%81%E9%87%8F"><span class="toc-number">7.</span> <span class="toc-text">配置 nftables 转发流量</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">wukaige</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-08-10T06:49:26.000Z" class="dt-published" itemprop="datePublished">2023-08-10</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/clash/" rel="tag">clash</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>手机科学上网需要打开 clash 软件，手动开启代理，非常不爽，我想搭建一个无感科学上网环境，连上 WIFI 就能科学上网。</p>
+<h2 id="硬件配置"><a href="#硬件配置" class="headerlink" title="硬件配置"></a>硬件配置</h2><ul>
+<li>台式主机，连接网线 enp3s0</li>
+<li>一个 USB 无线网卡 wlan0</li>
+</ul>
+<h2 id="软件环境"><a href="#软件环境" class="headerlink" title="软件环境"></a>软件环境</h2><ul>
+<li>Ubuntu 22.04</li>
+<li>clash</li>
+<li>nftables</li>
+</ul>
+<h2 id="配置网卡"><a href="#配置网卡" class="headerlink" title="配置网卡"></a>配置网卡</h2><p>配置思路：enp3s0 连接有线网，wlan0 开启热点，供手机连接。</p>
+<p>使用 nmcli 命令，在 wlan0 上创建热点。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli dev wifi hotspot ifname wlan0 con-name hotspot ssid [WIFI 名称] password <span class="string">&#x27;12345678&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>开启热点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli con up hotspot</span><br></pre></td></tr></table></figure>
+
+<p>查看设备上的网络连接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli dev</span><br></pre></td></tr></table></figure>
+
+<p>一切正常的话，可以看到以下输出：</p>
+<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230810153406140.png" alt="image-20230810153406140"></p>
+<p>手机用密码 <code>12345678</code> 连接创建的 WIFI，此时可以正常上网，但是不可共享台式机的 clash 代理。</p>
+<h2 id="开启-Ubuntu-ip-转发"><a href="#开启-Ubuntu-ip-转发" class="headerlink" title="开启 Ubuntu ip 转发"></a>开启 Ubuntu ip 转发</h2><p>把文件 <code>/etc/sysctl.conf</code> 中 <code>net.ipv4.ip_forward=1</code> 的注释删除</p>
+<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230810151615005.png" alt="image-20230810151615005"></p>
+<p>加载并应用配置文件中的参数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl -p</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="配置-clash-重定向端口"><a href="#配置-clash-重定向端口" class="headerlink" title="配置 clash 重定向端口"></a>配置 clash 重定向端口</h2><p>安装 clash: <a target="_blank" rel="noopener" href="https://github.com/Dreamacro/clash">https://github.com/Dreamacro/clash</a></p>
+<p>clash 配置文件加上下面配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redir-port: 7892</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="配置-nftables-转发流量"><a href="#配置-nftables-转发流量" class="headerlink" title="配置 nftables 转发流量"></a>配置 nftables 转发流量</h2><p>安装 nftables</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y nftables</span><br></pre></td></tr></table></figure>
+
+
+
+<p>nftables 配置文件: <u>&#x2F;etc&#x2F;nftables.conf</u></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/sbin/nft -f</span><br><span class="line"></span><br><span class="line">flush ruleset</span><br><span class="line"></span><br><span class="line">define private_list = &#123;</span><br><span class="line">    0.0.0.0/8,</span><br><span class="line">    10.0.0.0/8,</span><br><span class="line">    127.0.0.0/8,</span><br><span class="line">    169.254.0.0/16,</span><br><span class="line">    172.16.0.0/12,</span><br><span class="line">    192.168.0.0/16,</span><br><span class="line">    224.0.0.0/4,</span><br><span class="line">    240.0.0.0/4</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">table inet filter &#123;</span><br><span class="line">    chain input &#123;</span><br><span class="line">        type filter hook input priority 0;</span><br><span class="line">    &#125;</span><br><span class="line">    chain forward &#123;</span><br><span class="line">        type filter hook forward priority 0;</span><br><span class="line">    &#125;</span><br><span class="line">    chain output &#123;</span><br><span class="line">        type filter hook output priority 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">table ip nat &#123;</span><br><span class="line">    chain proxy &#123;</span><br><span class="line">        ip daddr $private_list return</span><br><span class="line">        ip protocol tcp redirect to :7892</span><br><span class="line">    &#125;</span><br><span class="line">    chain prerouting &#123;</span><br><span class="line">        type nat hook prerouting priority 0; policy accept;</span><br><span class="line">        jump proxy</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重启 nftables 以重载配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart nftables.service</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这些配置无误后，手机连上 WIFI，直接就可科学上网。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tag</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">前情提要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">硬件配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E7%8E%AF%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">软件环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%BD%91%E5%8D%A1"><span class="toc-number">4.</span> <span class="toc-text">配置网卡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%90%AF-Ubuntu-ip-%E8%BD%AC%E5%8F%91"><span class="toc-number">5.</span> <span class="toc-text">开启 Ubuntu ip 转发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-clash-%E9%87%8D%E5%AE%9A%E5%90%91%E7%AB%AF%E5%8F%A3"><span class="toc-number">6.</span> <span class="toc-text">配置 clash 重定向端口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-nftables-%E8%BD%AC%E5%8F%91%E6%B5%81%E9%87%8F"><span class="toc-number">7.</span> <span class="toc-text">配置 nftables 转发流量</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&text=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&title=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&is_video=false&description=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由&body=Check out this article: https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&title=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&title=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&title=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&title=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&name=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/&t=ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    wukaige
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

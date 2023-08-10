@@ -1,3 +1,4 @@
+https://blog.wukaige.com/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/
 https://blog.wukaige.com/tidb-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/
 https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-40min/
 https://blog.wukaige.com/Python-%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0-mysql-%E6%95%B0%E6%8D%AE%E5%BA%93-asyncio-aiomysql/
@@ -35,4 +36,5 @@ https://blog.wukaige.com/tags/nvidia/
 https://blog.wukaige.com/tags/flask/
 https://blog.wukaige.com/tags/frp/
 https://blog.wukaige.com/tags/hexo/
+https://blog.wukaige.com/tags/clash/
 https://blog.wukaige.com/tags/alist/
