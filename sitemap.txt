@@ -24,9 +24,9 @@ https://blog.wukaige.com/hello-world/
 https://blog.wukaige.com/tags/index.html
 https://blog.wukaige.com/search/index.html
 https://blog.wukaige.com/
-https://blog.wukaige.com/tags/tidb/
 https://blog.wukaige.com/tags/ES/
 https://blog.wukaige.com/tags/logstash/
+https://blog.wukaige.com/tags/tidb/
 https://blog.wukaige.com/tags/async/
 https://blog.wukaige.com/tags/nginx/
 https://blog.wukaige.com/tags/openai/
