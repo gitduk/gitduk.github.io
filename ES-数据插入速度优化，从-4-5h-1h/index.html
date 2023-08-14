@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="description" content="写了个脚本把数据库里面的 content 字段转换为向量插入到 ES， 100w 数据需要 4.5 小时，太慢了！！！  一、慢速度脚本（4.5h）只用 aiomysql 对数据库进行异步请求，ES 更新则是一条一更新。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES 数据插入速度优化，从 4.5h -&gt; 1h">
+<meta property="og:url" content="https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="写了个脚本把数据库里面的 content 字段转换为向量插入到 ES， 100w 数据需要 4.5 小时，太慢了！！！  一、慢速度脚本（4.5h）只用 aiomysql 对数据库进行异步请求，ES 更新则是一条一更新。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484">
+<meta property="og:locale">
+<meta property="og:image" content="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230804092603804.png">
+<meta property="og:image" content="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230804112915854.png">
+<meta property="og:image" content="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230814172629394.png">
+<meta property="article:published_time" content="2023-08-04T01:19:10.000Z">
+<meta property="article:modified_time" content="2023-08-14T09:29:03.065Z">
+<meta property="article:author" content="wukaige">
+<meta property="article:tag" content="ES">
+<meta property="article:tag" content="async">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230804092603804.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>ES 数据插入速度优化，从 4.5h -&gt; 1h</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-06LZ6HJ4BH"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-06LZ6HJ4BH');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/Python-%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0-mysql-%E6%95%B0%E6%8D%AE%E5%BA%93-asyncio-aiomysql/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&text=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&title=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&is_video=false&description=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ES 数据插入速度优化，从 4.5h -&gt; 1h&body=Check out this article: https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&title=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&title=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&title=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&title=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&name=ES 数据插入速度优化，从 4.5h -&gt; 1h&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&t=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%85%A2%E9%80%9F%E5%BA%A6%E8%84%9A%E6%9C%AC%EF%BC%884-5h%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">一、慢速度脚本（4.5h）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%9D%E6%AD%A5%E4%BC%98%E5%8C%96%EF%BC%881h%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">二、初步优化（1h）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">三、内存优化</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        ES 数据插入速度优化，从 4.5h -&gt; 1h
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">wukaige</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-08-04T01:19:10.000Z" class="dt-published" itemprop="datePublished">2023-08-04</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/ES/" rel="tag">ES</a>, <a class="p-category" href="/tags/async/" rel="tag">async</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>写了个脚本把数据库里面的 content 字段转换为向量插入到 ES， 100w 数据需要 4.5 小时，太慢了！！！</p>
+</blockquote>
+<h2 id="一、慢速度脚本（4-5h）"><a href="#一、慢速度脚本（4-5h）" class="headerlink" title="一、慢速度脚本（4.5h）"></a>一、慢速度脚本（4.5h）</h2><p>只用 aiomysql 对数据库进行异步请求，ES 更新则是一条一更新。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">import</span> aiomysql</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> text2vec <span class="keyword">import</span> SentenceModel</span><br><span class="line"><span class="keyword">from</span> requests.auth <span class="keyword">import</span> HTTPBasicAuth</span><br><span class="line"></span><br><span class="line"><span class="comment"># tidb</span></span><br><span class="line">host = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">port = <span class="number">3306</span></span><br><span class="line">database = <span class="string">&quot;[database]&quot;</span></span><br><span class="line">user = <span class="string">&quot;root&quot;</span></span><br><span class="line">password = <span class="string">&quot;[password]&quot;</span></span><br><span class="line">batch_size = <span class="number">10000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># es</span></span><br><span class="line">es_url = <span class="string">&quot;http://127.0.0.1:9200&quot;</span></span><br><span class="line"><span class="comment"># es_user = &quot;[elastic]&quot;</span></span><br><span class="line"><span class="comment"># es_user = &quot;[password]&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># load model</span></span><br><span class="line">model = SentenceModel(<span class="string">&quot;shibing624/text2vec-base-chinese&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">query_mysql</span>(<span class="params">start, end, cursor</span>):</span><br><span class="line">    sql_query = <span class="string">f&quot;select id,content from [table] where id &gt; <span class="subst">&#123;start&#125;</span> and id &lt;= <span class="subst">&#123;end&#125;</span>&quot;</span></span><br><span class="line">    <span class="keyword">await</span> cursor.execute(sql_query)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">await</span> cursor.fetchall()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">update_es</span>(<span class="params">data</span>):</span><br><span class="line">    _<span class="built_in">id</span> = data.get(<span class="string">&quot;id&quot;</span>)</span><br><span class="line">    url = <span class="string">f&quot;<span class="subst">&#123;es_url&#125;</span>/[INDEX]/_doc/<span class="subst">&#123;_<span class="built_in">id</span>&#125;</span>&quot;</span></span><br><span class="line">    <span class="comment"># 如果 ES 开启了安全验证</span></span><br><span class="line">    <span class="comment"># response = requests.put(url, json=data，auth=HTTPBasicAuth(es_username, es_password))</span></span><br><span class="line">    response = requests.put(url, json=data)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查响应状态码</span></span><br><span class="line">    <span class="keyword">if</span> response.status_code <span class="keyword">in</span> [<span class="number">200</span>, <span class="number">201</span>]:</span><br><span class="line">        msg = <span class="string">f&quot;[<span class="subst">&#123;_<span class="built_in">id</span>&#125;</span>] 插入成功&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        msg = <span class="string">f&quot;[<span class="subst">&#123;<span class="built_in">id</span>&#125;</span>] 插入失败: <span class="subst">&#123;response.text&#125;</span>&quot;</span></span><br><span class="line">        os.system(<span class="string">&quot;echo &#x27;&#123;&#125;&#x27; &gt;&gt; ./error.log&quot;</span>.<span class="built_in">format</span>(msg))</span><br><span class="line">    <span class="built_in">print</span>(msg)</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">process_batch</span>(<span class="params">start, end, pool</span>):</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> pool.acquire() <span class="keyword">as</span> conn:</span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">with</span> conn.cursor() <span class="keyword">as</span> cursor:</span><br><span class="line">            rows = <span class="keyword">await</span> query_mysql(start, end, cursor)</span><br><span class="line">            ids = [row[<span class="number">0</span>] <span class="keyword">for</span> row <span class="keyword">in</span> rows]</span><br><span class="line">            contents = [row[<span class="number">1</span>] <span class="keyword">for</span> row <span class="keyword">in</span> rows]</span><br><span class="line">            vector = model.encode(contents, show_progress_bar=<span class="literal">True</span>)</span><br><span class="line">            <span class="keyword">for</span> _<span class="built_in">id</span>, vec <span class="keyword">in</span> <span class="built_in">zip</span>(ids, vector.tolist()):</span><br><span class="line">                data = &#123;</span><br><span class="line">                    <span class="string">&quot;id&quot;</span>: _<span class="built_in">id</span>,</span><br><span class="line">                    <span class="string">&quot;content_vector&quot;</span>: vec</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">await</span> update_es(data)</span><br><span class="line"></span><br><span class="line">                </span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">batches</span>):</span><br><span class="line">    pool = <span class="keyword">await</span> aiomysql.create_pool(host=host, port=port, user=user, password=password, db=database)</span><br><span class="line">    tasks = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(batches):</span><br><span class="line">        start = i * batch_size</span><br><span class="line">        end = (i + <span class="number">1</span>) * batch_size</span><br><span class="line">        tasks.append(process_batch(start, end, pool))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> asyncio.gather(*tasks)</span><br><span class="line">    pool.close()</span><br><span class="line">    <span class="keyword">await</span> pool.wait_closed()</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    asyncio.run(main(<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+
+
+
+<p>运行截图(4h 30m 21s)：<br><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230804092603804.png" alt="image-20230804092603804"></p>
+<h2 id="二、初步优化（1h）"><a href="#二、初步优化（1h）" class="headerlink" title="二、初步优化（1h）"></a>二、初步优化（1h）</h2><p>安装 elasticsearch[async] 模块</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install <span class="string">&#x27;elasticsearch[async]&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用 es bulk 批量更新数据，加速数据插入。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">import</span> aiomysql</span><br><span class="line"><span class="keyword">from</span> text2vec <span class="keyword">import</span> SentenceModel</span><br><span class="line"><span class="keyword">from</span> elasticsearch <span class="keyword">import</span> AsyncElasticsearch</span><br><span class="line"><span class="keyword">from</span> elasticsearch.helpers <span class="keyword">import</span> async_bulk</span><br><span class="line"></span><br><span class="line">host = <span class="string">&#x27;127.0.0.1&#x27;</span></span><br><span class="line">port = <span class="number">3306</span></span><br><span class="line">database = <span class="string">&#x27;[database]&#x27;</span></span><br><span class="line">user = <span class="string">&#x27;root&#x27;</span></span><br><span class="line">password = <span class="string">&#x27;[password]&#x27;</span></span><br><span class="line">batch_size = <span class="number">10000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># load model</span></span><br><span class="line">model = SentenceModel(<span class="string">&#x27;shibing624/text2vec-base-chinese&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># es client</span></span><br><span class="line"><span class="comment"># 如果加了安全验证机制：</span></span><br><span class="line"><span class="comment"># es = AsyncElasticsearch([&quot;http://127.0.0.1:9200&quot;], basic_auth=(&quot;elastic&quot;, &quot;[password]&quot;))</span></span><br><span class="line">es = AsyncElasticsearch([<span class="string">&quot;http://127.0.0.1:9200&quot;</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">build_bulk_data</span>(<span class="params">ids, vectors</span>):</span><br><span class="line">  	<span class="keyword">for</span> _<span class="built_in">id</span>, vec <span class="keyword">in</span> <span class="built_in">zip</span>(ids, vectors):</span><br><span class="line">    	data = &#123;</span><br><span class="line">      		<span class="string">&quot;_index&quot;</span>: index,</span><br><span class="line">      		<span class="string">&quot;_id&quot;</span>: _<span class="built_in">id</span>,</span><br><span class="line">      		<span class="string">&quot;_source&quot;</span>: &#123;</span><br><span class="line">        		<span class="string">&quot;id&quot;</span>: _<span class="built_in">id</span>, </span><br><span class="line">        		<span class="string">&quot;content_vector&quot;</span>: vec</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">yield</span> data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">query_mysql</span>(<span class="params">start, end, cursor</span>):</span><br><span class="line">    sql_query = <span class="string">f&quot;select id,content from [table] where id &gt; <span class="subst">&#123;start&#125;</span> and id &lt;= <span class="subst">&#123;end&#125;</span>&quot;</span></span><br><span class="line">    <span class="keyword">await</span> cursor.execute(sql_query)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">await</span> cursor.fetchall()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">process_batch</span>(<span class="params">start, end, pool</span>):</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> pool.acquire() <span class="keyword">as</span> conn:</span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">with</span> conn.cursor() <span class="keyword">as</span> cursor:</span><br><span class="line">            <span class="comment"># query mysql</span></span><br><span class="line">            rows = <span class="keyword">await</span> query_mysql(start, end, cursor)</span><br><span class="line">            ids = [row[<span class="number">0</span>] <span class="keyword">for</span> row <span class="keyword">in</span> rows]</span><br><span class="line">            contents = [row[<span class="number">1</span>] <span class="keyword">for</span> row <span class="keyword">in</span> rows]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># encode content</span></span><br><span class="line">            vectors = model.encode(contents, show_progress_bar=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># build bulk data</span></span><br><span class="line">            <span class="comment"># 内存不足的情况下，可以用生成器代替列表:</span></span><br><span class="line">            <span class="comment"># bulk_data = build_bulk_data(ids, vectors)</span></span><br><span class="line">            bulk_data = [&#123;<span class="string">&quot;_index&quot;</span>: index, <span class="string">&quot;_id&quot;</span>: _<span class="built_in">id</span>, <span class="string">&quot;_source&quot;</span>: &#123;<span class="string">&quot;id&quot;</span>: _<span class="built_in">id</span>, <span class="string">&quot;content_vector&quot;</span>: vec&#125;&#125; <span class="keyword">for</span> _<span class="built_in">id</span>, vec <span class="keyword">in</span> <span class="built_in">zip</span>(ids, vectors)]</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                resp = <span class="keyword">await</span> async_bulk(es, bulk_data, chunk_size=<span class="number">500</span>, max_retries=<span class="number">3</span>, request_timeout=<span class="number">60</span>*<span class="number">3</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;[<span class="subst">&#123;start&#125;</span>-<span class="subst">&#123;end&#125;</span>] Error: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;[<span class="subst">&#123;start&#125;</span>-<span class="subst">&#123;end&#125;</span>] SUCCESS: <span class="subst">&#123;resp[<span class="number">0</span>]&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">batches, offset=<span class="number">0</span></span>):</span><br><span class="line">    <span class="comment"># mysql pool</span></span><br><span class="line">    pool = <span class="keyword">await</span> aiomysql.create_pool(host=host, port=port, user=user, password=password, db=database)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># create task list</span></span><br><span class="line">    tasks = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(offset, offset + batches):</span><br><span class="line">        start = i * batch_size</span><br><span class="line">        end = (i + <span class="number">1</span>) * batch_size</span><br><span class="line">        tasks.append(process_batch(start, end, pool))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> asyncio.gather(*tasks)</span><br><span class="line">    pool.close()</span><br><span class="line">    <span class="keyword">await</span> pool.wait_closed()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    asyncio.run(main(<span class="number">100</span>, offset=<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+
+<p>运行截图(1h 3m 9s)：</p>
+<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230804112915854.png" alt="image-20230804112915854"></p>
+<h2 id="三、内存优化"><a href="#三、内存优化" class="headerlink" title="三、内存优化"></a>三、内存优化</h2><p>优化目的：减少内存使用</p>
+<p>优化策略：</p>
+<ul>
+<li>使用 async_streaming_bulk 代替 async_bulk</li>
+<li>使用 asyncio.as_completed 代替 asyncio.gather</li>
+</ul>
+<p>async_streaming_bulk 和 async_bulk 的区别：</p>
+<ul>
+<li><p>async_bulk 会将所有请求收集到一个列表中，然后一次性发送给 Elasticsearch，它会等待所有的请求完成，然后返回结果。</p>
+</li>
+<li><p>async_streaming_bulk 则是一边收集请求，一边流式地发送给 Elasticsearch，不需要等待所有的请求收集完成，它会实时返回每个请求的结果。</p>
+</li>
+<li><p>async_bulk 适用于需要等待所有请求完成才返回的场景，但是需要消耗更多内存来 hold 住所有请求。</p>
+</li>
+<li><p>async_streaming_bulk 适用于对实时返回每个结果更敏感的场景，它消耗的内存更少。</p>
+</li>
+<li><p>sync_bulk 的性能会比 async_streaming_bulk 好，因为它是批量发送请求。但是 async_streaming_bulk 更适合处理大量请求，不会因为内存消耗太大而出问题。</p>
+</li>
+</ul>
+<p>asyncio.as_completed 和 asyncio.gather 的区别：</p>
+<ul>
+<li>asyncio.gather 会同时启动所有的异步任务，等待它们全部完成后才返回结果。</li>
+<li>asyncio.as_completed 会按任务完成的顺序返回结果，不会等待所有的任务完成。</li>
+<li>asyncio.gather 如果有一个任务 raise 异常会立即停止其它任务。asyncio.as_completed 不会，会继续返回其它已经完成的任务的结果。</li>
+<li>asyncio.gather 的结果顺序和传入的任务顺序一致。asyncio.as_completed 的结果顺序依赖于任务完成的时间，与传入顺序无关。</li>
+<li>asyncio.gather 更适合需要同时开始执行多个任务，并需要所有任务结果才能继续的场景。asyncio.as_completed 更适合只关心任务完成就使用结果的场景。</li>
+<li>asyncio.gather 的性能和资源消耗可能更高，因为同时启动和跟踪更多任务。</li>
+<li>asyncio.as_completed 可以通过返回完成任务来提早优化或发出决策。</li>
+</ul>
+<p>优化后的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">import</span> aiomysql</span><br><span class="line"><span class="keyword">import</span> aiohttp</span><br><span class="line"><span class="keyword">from</span> text2vec <span class="keyword">import</span> SentenceModel</span><br><span class="line"><span class="keyword">from</span> elasticsearch <span class="keyword">import</span> AsyncElasticsearch</span><br><span class="line"><span class="keyword">from</span> elasticsearch.helpers <span class="keyword">import</span> async_streaming_bulk</span><br><span class="line"></span><br><span class="line">host = <span class="string">&#x27;127.0.0.1&#x27;</span></span><br><span class="line">port = <span class="number">3306</span></span><br><span class="line">database = <span class="string">&#x27;[DATABASE]&#x27;</span></span><br><span class="line">user = <span class="string">&#x27;root&#x27;</span></span><br><span class="line">password = <span class="string">&#x27;[PASSWD]&#x27;</span></span><br><span class="line">batch_size = <span class="number">10000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># load model</span></span><br><span class="line">model = SentenceModel(<span class="string">&#x27;shibing624/text2vec-base-chinese&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># es client</span></span><br><span class="line">es = AsyncElasticsearch([<span class="string">&quot;http://127.0.0.1:9220&quot;</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">build_bulk_data</span>(<span class="params">ids, vectors</span>):</span><br><span class="line">    <span class="keyword">for</span> _<span class="built_in">id</span>, vec <span class="keyword">in</span> <span class="built_in">zip</span>(ids, vectors):</span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">&quot;_index&quot;</span>: index,</span><br><span class="line">            <span class="string">&quot;_id&quot;</span>: _<span class="built_in">id</span>,</span><br><span class="line">            <span class="string">&quot;_source&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;id&quot;</span>: _<span class="built_in">id</span>, </span><br><span class="line">                <span class="string">&quot;content_vector&quot;</span>: vec</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">yield</span> data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">query_mysql</span>(<span class="params">start, end, cursor</span>):</span><br><span class="line">    sql_query = <span class="string">f&quot;select id,content from [table] where id &gt; <span class="subst">&#123;start&#125;</span> and id &lt;= <span class="subst">&#123;end&#125;</span>&quot;</span></span><br><span class="line">    <span class="keyword">await</span> cursor.execute(sql_query)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">await</span> cursor.fetchall()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">process_batch</span>(<span class="params">start, end, pool</span>):</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> pool.acquire() <span class="keyword">as</span> conn:</span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">with</span> conn.cursor() <span class="keyword">as</span> cursor:</span><br><span class="line">            <span class="comment"># query mysql</span></span><br><span class="line">            rows = <span class="keyword">await</span> query_mysql(start, end, cursor)</span><br><span class="line">            ids = [row[<span class="number">0</span>] <span class="keyword">for</span> row <span class="keyword">in</span> rows]</span><br><span class="line">            contents = [row[<span class="number">1</span>] <span class="keyword">for</span> row <span class="keyword">in</span> rows]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># encode content</span></span><br><span class="line">            vectors = model.encode(contents, show_progress_bar=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># build bulk data</span></span><br><span class="line">            <span class="comment"># bulk_data = [&#123;&quot;_index&quot;: index, &quot;_id&quot;: _id, &quot;_source&quot;: &#123;&quot;id&quot;: _id, &quot;content_vector&quot;: vec&#125;&#125; for _id, vec in zip(ids, vectors)]</span></span><br><span class="line">            bulk_data = build_bulk_data(ids, vectors)</span><br><span class="line">            <span class="keyword">async</span> <span class="keyword">for</span> ok, result <span class="keyword">in</span> async_streaming_bulk(es, bulk_data, chunk_size=<span class="number">5000</span>, max_retries=<span class="number">3</span>, request_timeout=<span class="number">60</span>*<span class="number">3</span>):</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> ok:</span><br><span class="line">                    os.systemd(<span class="string">&quot;echo &#x27;&#123;&#125;&#x27; &gt;&gt; ./error.log&quot;</span>.<span class="built_in">format</span>(result))</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="built_in">print</span>(result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">batches, offset=<span class="number">0</span></span>):</span><br><span class="line"></span><br><span class="line">    <span class="comment"># mysql pool</span></span><br><span class="line">    pool = <span class="keyword">await</span> aiomysql.create_pool(host=host, port=port, user=user, password=password, db=database)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># task list</span></span><br><span class="line">    tasks = [process_batch(i * batch_size, (i + <span class="number">1</span>) * batch_size, pool) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(offset, offset + batches)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># wait task completed</span></span><br><span class="line">    <span class="keyword">for</span> completed <span class="keyword">in</span> asyncio.as_completed(tasks):</span><br><span class="line">        <span class="keyword">await</span> completed</span><br><span class="line"></span><br><span class="line">    pool.close()</span><br><span class="line">    <span class="keyword">await</span> pool.wait_closed()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    asyncio.run(main(<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+
+<p>运行截图(59m 28s)：</p>
+<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230814172629394.png" alt="image-20230814172629394"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tag</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%85%A2%E9%80%9F%E5%BA%A6%E8%84%9A%E6%9C%AC%EF%BC%884-5h%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">一、慢速度脚本（4.5h）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%9D%E6%AD%A5%E4%BC%98%E5%8C%96%EF%BC%881h%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">二、初步优化（1h）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">三、内存优化</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&text=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&title=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&is_video=false&description=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ES 数据插入速度优化，从 4.5h -&gt; 1h&body=Check out this article: https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&title=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&title=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&title=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&title=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&name=ES 数据插入速度优化，从 4.5h -&gt; 1h&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/&t=ES 数据插入速度优化，从 4.5h -&gt; 1h"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    wukaige
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
