@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>logstash 导出 ES 数据到 csv 文件</title>
+      <link href="/logstash-%E5%AF%BC%E5%87%BA-ES-%E6%95%B0%E6%8D%AE%E5%88%B0-csv-%E6%96%87%E4%BB%B6/"/>
+      <url>/logstash-%E5%AF%BC%E5%87%BA-ES-%E6%95%B0%E6%8D%AE%E5%88%B0-csv-%E6%96%87%E4%BB%B6/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>有一个需求，把 ES 索引里面的某个字段导入 csv 文件里面。</p></blockquote><h2 id="logstash-配置文件"><a href="#logstash-配置文件" class="headerlink" title="logstash 配置文件"></a>logstash 配置文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">input &#123;</span><br><span class="line">  elasticsearch &#123;</span><br><span class="line">    hosts =&gt; [ &#x27;http://127.0.0.1:9200&#x27; ]</span><br><span class="line">    index =&gt; &#x27;[index]&#x27;</span><br><span class="line">    user =&gt; &quot;[user]&quot;</span><br><span class="line">    password =&gt; &quot;[password]&quot;</span><br><span class="line">    query =&gt; &#x27;&#123;</span><br><span class="line">      &quot;query&quot;: &#123;</span><br><span class="line">        &quot;range&quot;: &#123;</span><br><span class="line">          &quot;id&quot;: &#123;</span><br><span class="line">            &quot;gte&quot;:0,</span><br><span class="line">            &quot;lte&quot;:100</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;_source&quot;: [&quot;content&quot;]</span><br><span class="line">    &#125;&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">output &#123;</span><br><span class="line">  csv &#123;</span><br><span class="line">    fields =&gt; [&quot;content&quot;]</span><br><span class="line">    path =&gt; &quot;content.csv&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  stdout &#123;</span><br><span class="line">    codec =&gt; rubydebug</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>运行 logstash</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/path/to/logstash -f <span class="string">&quot;/path/to/config/file&quot;</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> logstash </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由</title>
       <link href="/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/"/>
       <url>/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/</url>
@@ -93,8 +112,6 @@
       
       
         <tags>
-            
-            <tag> ES </tag>
             
             <tag> logstash </tag>
             
