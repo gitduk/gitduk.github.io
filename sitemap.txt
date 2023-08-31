@@ -25,9 +25,9 @@ https://blog.wukaige.com/about/index.html
 https://blog.wukaige.com/tags/index.html
 https://blog.wukaige.com/search/index.html
 https://blog.wukaige.com/
+https://blog.wukaige.com/tags/tidb/
 https://blog.wukaige.com/tags/ES/
 https://blog.wukaige.com/tags/logstash/
-https://blog.wukaige.com/tags/tidb/
 https://blog.wukaige.com/tags/async/
 https://blog.wukaige.com/tags/nginx/
 https://blog.wukaige.com/tags/openai/
@@ -37,5 +37,5 @@ https://blog.wukaige.com/tags/nvidia/
 https://blog.wukaige.com/tags/flask/
 https://blog.wukaige.com/tags/frp/
 https://blog.wukaige.com/tags/hexo/
-https://blog.wukaige.com/tags/clash/
 https://blog.wukaige.com/tags/alist/
+https://blog.wukaige.com/tags/clash/
