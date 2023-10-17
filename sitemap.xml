@@ -2,9 +2,45 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.wukaige.com/Rust-%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/</loc>
+    
+    <lastmod>2023-10-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.wukaige.com/rust-sqlserver/</loc>
+    
+    <lastmod>2023-10-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.wukaige.com/sqlserver-tidb-logstash-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</loc>
+    
+    <lastmod>2023-10-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E4%B9%8B-reindex/</loc>
     
-    <lastmod>2023-08-24</lastmod>
+    <lastmod>2023-10-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.wukaige.com/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-ES-%E4%B8%AD/</loc>
+    
+    <lastmod>2023-09-18</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -32,15 +68,6 @@
     <loc>https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-1h/</loc>
     
     <lastmod>2023-08-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.wukaige.com/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-ES-%E4%B8%AD/</loc>
-    
-    <lastmod>2023-08-14</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -238,7 +265,7 @@
 
   <url>
     <loc>https://blog.wukaige.com/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -246,98 +273,119 @@
   
   <url>
     <loc>https://blog.wukaige.com/tags/tidb/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/ES/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/logstash/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/async/</loc>
-    <lastmod>2023-09-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.wukaige.com/tags/python/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/nginx/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/openai/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.wukaige.com/tags/python/</loc>
+    <lastmod>2023-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.wukaige.com/tags/Rust/</loc>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/linux/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/nvidia/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/flask/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/frp/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/hexo/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.wukaige.com/tags/rust/</loc>
+    <lastmod>2023-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.wukaige.com/tags/sqlserver/</loc>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/clash/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.wukaige.com/tags/alist/</loc>
-    <lastmod>2023-09-14</lastmod>
+    <lastmod>2023-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
