@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://github.com/gitduk/gitduk.github.io.git/sitemap.xml
+Sitemap: https://blog.wukaige.com/sitemap.xml

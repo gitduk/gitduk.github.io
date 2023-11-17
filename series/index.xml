@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Series on TeXify</title>
-    <link>https://github.com/gitduk/gitduk.github.io.git/series/</link>
+    <link>https://blog.wukaige.com/series/</link>
     <description>Recent content in Series on TeXify</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <managingEditor>me@example.com (author)</managingEditor>
-    <webMaster>me@example.com (author)</webMaster>
-    <lastBuildDate>Mon, 11 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://github.com/gitduk/gitduk.github.io.git/series/index.xml" rel="self" type="application/rss+xml" />
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Mon, 11 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.wukaige.com/series/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Themes Guide</title>
-      <link>https://github.com/gitduk/gitduk.github.io.git/series/themes-guide/</link>
+      <link>https://blog.wukaige.com/series/themes-guide/</link>
       <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
-      <author>me@example.com (author)</author>
-      <guid>https://github.com/gitduk/gitduk.github.io.git/series/themes-guide/</guid>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/series/themes-guide/</guid>
       
       <description></description>
       
