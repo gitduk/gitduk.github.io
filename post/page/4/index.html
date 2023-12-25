@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>Posts :: Home</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="https://blog.wukaige.com/post/" />
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://blog.wukaige.com/styles.css">
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="https://blog.wukaige.com/favicon.ico">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:site" content="" />
+  
+    <meta name="twitter:creator" content="" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Posts">
+<meta property="og:description" content="" />
+<meta property="og:url" content="https://blog.wukaige.com/post/" />
+<meta property="og:site_name" content="Home" />
+
+  
+    <meta property="og:image" content="https://blog.wukaige.com/favicon.ico">
+  
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+
+
+
+  <link href="/post/index.xml" rel="alternate" type="application/rss+xml" title="Home" />
+
+
+
+
+
+
+
+
+
+</head>
+<body class="blue">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Home
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/post/">Post</a></li>
+        
+      
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+      
+        
+          <li><a href="/categories/">Categories</a></li>
+        
+      
+        
+          <li><a href="/categories/leetcode">Leetcode</a></li>
+        
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+      
+        <hr />
+        
+          <li>
+            <a href="https://blog.wukaige.com/cn/">简体中文</a>
+          </li>
+        
+          <li>
+            <a href="https://blog.wukaige.com/">English</a>
+          </li>
+        
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+      <ul class="menu menu--desktop menu--language-selector">
+  <li class="menu__trigger">English&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        <li><a href="https://blog.wukaige.com/cn/">简体中文</a></li>
+      
+        <li><a href="https://blog.wukaige.com/">English</a></li>
+      
+    </ul>
+  </li>
+</ul>
+
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/post/" >Post</a></li>
+        
+      
+        
+          <li><a href="/tags/" >Tags</a></li>
+        
+      
+        
+          <li><a href="/categories/" >Categories</a></li>
+        
+      
+        
+          <li><a href="/categories/leetcode" >Leetcode</a></li>
+        
+      
+        
+          <li><a href="/about" >About</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+  
+  <div class="posts">
+    
+      <article class="post on-list">
+        <h1 class="post-title">
+          <a href="https://blog.wukaige.com/post/rust-%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/">Rust 代码片段</a>
+        </h1>
+        <div class="post-meta"><time class="post-date">2023-09-22</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://blog.wukaige.com/tags/rust/">Rust</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            mysql https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html use mysql::{Pool, PooledConn, from_row}; fn my_conn(url: &amp;str) -&gt; Result&lt;PooledConn, mysql::Error&gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &#34;mysql://xxx:xxx@127.0.0.1:3306/DB&#34;; let conn = my_conn(url).unwrap(); let sql = &#34;select title from table;&#34;; // query map let _books = conn.query_map(sql, |title: String| { title })?; // query iter let sql = &#34;select id,title,date from table2;&#34;; conn.query_iter(query)?.for_each(|row| { let r: (i32, String, String)
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button" href="/post/rust-%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/">Read more →</a>
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title">
+          <a href="https://blog.wukaige.com/post/es-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E4%B9%8B-reindex/">ES 数据迁移</a>
+        </h1>
+        <div class="post-meta"><time class="post-date">2023-08-24</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://blog.wukaige.com/tags/es/">ES</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            <p>老板有一个需求，把旧索引里面的数据全部迁移到新索引，ES 内置的 reindex 可以快速进行数据迁移。</p>
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button" href="/post/es-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E4%B9%8B-reindex/">Read more →</a>
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title">
+          <a href="https://blog.wukaige.com/post/logstash-%E5%AF%BC%E5%87%BA-es-%E6%95%B0%E6%8D%AE%E5%88%B0-csv-%E6%96%87%E4%BB%B6/">logstash 导出 ES 数据到 csv 文件</a>
+        </h1>
+        <div class="post-meta"><time class="post-date">2023-08-15</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://blog.wukaige.com/tags/logstash/">logstash</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            <p>有一个需求，把 ES 索引里面的某个字段导入 csv 文件里面。</p>
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button" href="/post/logstash-%E5%AF%BC%E5%87%BA-es-%E6%95%B0%E6%8D%AE%E5%88%B0-csv-%E6%96%87%E4%BB%B6/">Read more →</a>
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title">
+          <a href="https://blog.wukaige.com/post/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/">ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由</a>
+        </h1>
+        <div class="post-meta"><time class="post-date">2023-08-10</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://blog.wukaige.com/tags/clash/">clash</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            <p>手机科学上网需要打开 clash 软件，手动开启代理，非常不爽，我想搭建一个无感科学上网环境，连上 WIFI 就能科学上网。</p>
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button" href="/post/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/">Read more →</a>
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title">
+          <a href="https://blog.wukaige.com/post/es-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E4%BB%8E-4-5h-1h/">ES 数据插入速度优化，从 4.5h -&gt; 1h</a>
+        </h1>
+        <div class="post-meta"><time class="post-date">2023-08-04</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://blog.wukaige.com/tags/es/">ES</a>&nbsp;
+            
+            #<a href="https://blog.wukaige.com/tags/async/">async</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            <p>写了个脚本把数据库里面的 content 字段转换为向量插入到 ES， 100w 数据需要 4.5 小时，太慢了！！！</p>
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button" href="/post/es-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E4%BB%8E-4-5h-1h/">Read more →</a>
+          </div>
+        
+      </article>
+    
+
+    <div class="pagination">
+  <div class="pagination__buttons">
+    
+      <a href="/post/page/3/" class="button previous">
+        <span class="button__icon">←</span>
+        <span class="button__text">Newer posts</span>
+      </a>
+    
+    
+      <a href="/post/page/5/" class="button next">
+        <span class="button__text">Older posts</span>
+        <span class="button__icon">→</span>
+      </a>
+    
+  </div>
+</div>
+
+  </div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  
+    <title>TiDB 快照恢复 :: Home</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TiDB 使用周期性运行的 GC（Garbage Collection，垃圾回收）来进行清理，默认情况下每 10 分钟一次。每次 GC 时，TiDB 会计算一个称为 safe point 的时间戳（默认为上次运行 GC 的时间减去 10 分钟），接下来 TiDB 会在保证在 safe point 之后的快照都能够读取到正确数据的前提下，删除更早的过期数据。
+" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="https://blog.wukaige.com/cn/post/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/" />
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://blog.wukaige.com/styles.css">
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="https://blog.wukaige.com/favicon.ico">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:site" content="" />
+  
+    <meta name="twitter:creator" content="" />
+
+
+
+<meta property="og:locale" content="cn" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="TiDB 快照恢复">
+<meta property="og:description" content="TiDB 使用周期性运行的 GC（Garbage Collection，垃圾回收）来进行清理，默认情况下每 10 分钟一次。每次 GC 时，TiDB 会计算一个称为 safe point 的时间戳（默认为上次运行 GC 的时间减去 10 分钟），接下来 TiDB 会在保证在 safe point 之后的快照都能够读取到正确数据的前提下，删除更早的过期数据。
+" />
+<meta property="og:url" content="https://blog.wukaige.com/cn/post/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/" />
+<meta property="og:site_name" content="Home" />
+
+  
+    <meta property="og:image" content="https://blog.wukaige.com/favicon.ico">
+  
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+  <meta property="article:published_time" content="2023-07-05 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="blue">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/cn">
+  <div class="logo">
+    主页
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/cn/post/">文章</a></li>
+        
+      
+        
+          <li><a href="/cn/tags/">标签</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/">类别</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/leetcode">力扣</a></li>
+        
+      
+        
+          <li><a href="/cn/about">关于</a></li>
+        
+      
+      
+        <hr />
+        
+          <li>
+            <a href="https://blog.wukaige.com/cn/">简体中文</a>
+          </li>
+        
+          <li>
+            <a href="https://blog.wukaige.com/">English</a>
+          </li>
+        
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+      <ul class="menu menu--desktop menu--language-selector">
+  <li class="menu__trigger">简体中文&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        <li><a href="https://blog.wukaige.com/cn/">简体中文</a></li>
+      
+        <li><a href="https://blog.wukaige.com/">English</a></li>
+      
+    </ul>
+  </li>
+</ul>
+
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/cn/post/" >文章</a></li>
+        
+      
+        
+          <li><a href="/cn/tags/" >标签</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/" >类别</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/leetcode" >力扣</a></li>
+        
+      
+        
+          <li><a href="/cn/about" >关于</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://blog.wukaige.com/cn/post/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/">TiDB 快照恢复</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2023-07-05</time><span class="post-reading-time">2 min read (701 words)</span></div>
+
+  
+    <span class="post-tags">
+      
+      #<a href="https://blog.wukaige.com/cn/tags/tidb/">TiDB</a>&nbsp;
+      
+    </span>
+  
+  
+
+
+  
+
+  <div class="post-content"><div>
+        <p>TiDB 使用周期性运行的 GC（Garbage Collection，垃圾回收）来进行清理，默认情况下每 10 分钟一次。每次 GC 时，TiDB 会计算一个称为 safe point 的时间戳（默认为上次运行 GC 的时间减去 10 分钟），接下来 TiDB 会在保证在 safe point 之后的快照都能够读取到正确数据的前提下，删除更早的过期数据。</p>
+<h2 id="前情提要">前情提要<a href="#前情提要" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>公司小萌新误操作，把数据表清空。</p>
+<h2 id="修改-gc-的生存时间">修改 GC 的生存时间<a href="#修改-gc-的生存时间" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>tidb 默认 GC 生存时间比较短，一旦删库的时间点超过这个时间就直接完犊子。</p>
+<p>登录 tidb 数据库，查看 GC 生存时间：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> mysql.tidb <span style="color:#66d9ef">where</span> variable_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;tikv_gc_life_time&#39;</span>;
+</span></span></code></pre></div><p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230705175301357.png" alt="image-20230705175301357"></p>
+<p>60 分钟，我们有 1.5 亿条数据，不太够。</p>
+<p>设置 GC 生存时间为 72 小时：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">update</span> mysql.tidb <span style="color:#66d9ef">set</span> VARIABLE_VALUE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;72h&#34;</span> <span style="color:#66d9ef">where</span> VARIABLE_NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tikv_gc_life_time&#34;</span>;
+</span></span></code></pre></div><h2 id="设置快照时间点">设置快照时间点<a href="#设置快照时间点" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>设置 tidb_snapshot 变量为删库前的某个时间点：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">set</span> <span style="color:#f92672">@@</span>tidb_snapshot<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2023-05-30 13:10:00&#34;</span>;
+</span></span></code></pre></div><p>设置完成之后，应该就能看到被删除的数据了，接下来需要导出导入数据。</p>
+<h2 id="使用-tiup-dumpling-导出被删除的数据">使用 tiup dumpling 导出被删除的数据<a href="#使用-tiup-dumpling-导出被删除的数据" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup dumpling -u root -P <span style="color:#f92672">[</span>port<span style="color:#f92672">]</span> -p <span style="color:#f92672">[</span>password<span style="color:#f92672">]</span> -h 127.0.0.1 -o /path/to/export/backup -r <span style="color:#ae81ff">200000</span> --filter <span style="color:#e6db74">&#34;[DataBase].[Table]&#34;</span> --snapshot <span style="color:#e6db74">&#34;2023-05-30 13:10:00&#34;</span>
+</span></span></code></pre></div><p>数据完全导出后，可恢复 tidb_snapshot 为 <code>&quot;&quot;</code>，并删除空表。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">set</span> <span style="color:#f92672">@@</span>tidb_snapshot<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">table</span> [<span style="color:#66d9ef">table</span>];
+</span></span></code></pre></div><h2 id="使用-tidb-lightning-导入数据">使用 tidb-lightning 导入数据<a href="#使用-tidb-lightning-导入数据" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>安装 tidb-lightning</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup install tidb-lightning
+</span></span></code></pre></div><p>创建 tidb-lightning 配置文件 <!-- raw HTML omitted -->tidb-lightning.toml<!-- raw HTML omitted --> ：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[<span style="color:#a6e22e">lightning</span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 日志</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">level</span> = <span style="color:#e6db74">&#34;info&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">file</span> = <span style="color:#e6db74">&#34;log/tidb-lightning.log&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">tikv-importer</span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 选择使用的导入模式</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">backend</span> = <span style="color:#e6db74">&#34;tidb&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 设置排序的键值对的临时存放地址，目标路径需要是一个空目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">sorted-kv-dir</span> = <span style="color:#e6db74">&#34;/tmp/sorted-kv-dir&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">mydumper</span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 源数据目录。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">data-source-dir</span> = <span style="color:#e6db74">&#34;/path/to/export/backup&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 配置通配符规则，默认规则会过滤 mysql、sys、INFORMATION_SCHEMA、PERFORMANCE_SCHEMA、METRICS_SCHEMA、INSPECTION_SCHEMA 系统数据库下的所有表</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 若不配置该项，导入系统表时会出现“找不到 schema”的异常</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">filter</span> = [<span style="color:#e6db74">&#39;*.*&#39;</span>, <span style="color:#e6db74">&#39;!mysql.*&#39;</span>, <span style="color:#e6db74">&#39;!sys.*&#39;</span>, <span style="color:#e6db74">&#39;!INFORMATION_SCHEMA.*&#39;</span>, <span style="color:#e6db74">&#39;!PERFORMANCE_SCHEMA.*&#39;</span>, <span style="color:#e6db74">&#39;!METRICS_SCHEMA.*&#39;</span>, <span style="color:#e6db74">&#39;!INSPECTION_SCHEMA.*&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">tidb</span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 目标集群的信息</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">host</span> = <span style="color:#e6db74">&#34;127.0.0.1&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">port</span> = [<span style="color:#a6e22e">port</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user</span> = <span style="color:#e6db74">&#34;root&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">password</span> = <span style="color:#e6db74">&#34;xxxxx&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 表架构信息在从 TiDB 的 &#34;状态端口&#34; 获取。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">status-port</span> = <span style="color:#ae81ff">15080</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 集群 pd 的地址，可用 tiup cluster display [your cluster] 查看</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pd-addr</span> = <span style="color:#e6db74">&#34;127.0.0.1:2879&#34;</span>
+</span></span></code></pre></div><p>导入数据到 TIDB 数据库：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup tidb-lightning -config tidb-lightning.toml
+</span></span></code></pre></div>
+      </div></div>
+
+  
+
+  
+    
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

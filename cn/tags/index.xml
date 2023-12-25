@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Home</title>
+    <link>https://blog.wukaige.com/cn/tags/</link>
+    <description>Recent content in Tags on Home</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Wed, 06 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.wukaige.com/cn/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker</title>
+      <link>https://blog.wukaige.com/cn/tags/docker/</link>
+      <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/tags/docker/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>Milvus</title>
+      <link>https://blog.wukaige.com/cn/tags/milvus/</link>
+      <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/tags/milvus/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>ES</title>
+      <link>https://blog.wukaige.com/cn/tags/es/</link>
+      <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/tags/es/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>Lightning</title>
+      <link>https://blog.wukaige.com/cn/tags/lightning/</link>
+      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/tags/lightning/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>TiDB</title>
+      <link>https://blog.wukaige.com/cn/tags/tidb/</link>
+      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/tags/tidb/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>esrally</title>
+      <link>https://blog.wukaige.com/cn/tags/esrally/</link>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/tags/esrally/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>https://blog.wukaige.com/cn/tags/hugo/</link>
+      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/tags/hugo/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>mysql</title>
+      <link>https://blog.wukaige.com/cn/tags/mysql/</link>
+      <pubDate>Tue, 17 Oct 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/tags/mysql/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>Rust</title>
+      <link>https://blog.wukaige.com/cn/tags/rust/</link>
+      <pubDate>Tue, 17 Oct 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/tags/rust/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>nvidia</title>
+      <link>https://blog.wukaige.com/cn/tags/nvidia/</link>
+      <pubDate>Fri, 13 Oct 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/tags/nvidia/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+  </channel>
+</rss>

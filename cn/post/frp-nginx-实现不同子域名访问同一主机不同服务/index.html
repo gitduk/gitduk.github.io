@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  
+    <title>frp &#43; nginx 实现不同子域名访问同一主机不同服务 :: Home</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="前置条件 运行在内网的多个服务 一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案） 一个域名 域名解析 到 cloudflare 解析配置你的域名解析 Frps, Nginx 服务配置 frps" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="https://blog.wukaige.com/cn/post/frp-nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/" />
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://blog.wukaige.com/styles.css">
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="https://blog.wukaige.com/favicon.ico">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:site" content="" />
+  
+    <meta name="twitter:creator" content="" />
+
+
+
+<meta property="og:locale" content="cn" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="frp &#43; nginx 实现不同子域名访问同一主机不同服务">
+<meta property="og:description" content="前置条件 运行在内网的多个服务 一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案） 一个域名 域名解析 到 cloudflare 解析配置你的域名解析 Frps, Nginx 服务配置 frps" />
+<meta property="og:url" content="https://blog.wukaige.com/cn/post/frp-nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/" />
+<meta property="og:site_name" content="Home" />
+
+  
+    <meta property="og:image" content="https://blog.wukaige.com/favicon.ico">
+  
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+  <meta property="article:published_time" content="2023-07-04 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="blue">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/cn">
+  <div class="logo">
+    主页
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/cn/post/">文章</a></li>
+        
+      
+        
+          <li><a href="/cn/tags/">标签</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/">类别</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/leetcode">力扣</a></li>
+        
+      
+        
+          <li><a href="/cn/about">关于</a></li>
+        
+      
+      
+        <hr />
+        
+          <li>
+            <a href="https://blog.wukaige.com/cn/">简体中文</a>
+          </li>
+        
+          <li>
+            <a href="https://blog.wukaige.com/">English</a>
+          </li>
+        
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+      <ul class="menu menu--desktop menu--language-selector">
+  <li class="menu__trigger">简体中文&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        <li><a href="https://blog.wukaige.com/cn/">简体中文</a></li>
+      
+        <li><a href="https://blog.wukaige.com/">English</a></li>
+      
+    </ul>
+  </li>
+</ul>
+
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/cn/post/" >文章</a></li>
+        
+      
+        
+          <li><a href="/cn/tags/" >标签</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/" >类别</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/leetcode" >力扣</a></li>
+        
+      
+        
+          <li><a href="/cn/about" >关于</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://blog.wukaige.com/cn/post/frp-nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/">frp + nginx 实现不同子域名访问同一主机不同服务</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2023-07-04</time><span class="post-reading-time">1 min read (265 words)</span></div>
+
+  
+    <span class="post-tags">
+      
+      #<a href="https://blog.wukaige.com/cn/tags/frp/">frp</a>&nbsp;
+      
+      #<a href="https://blog.wukaige.com/cn/tags/nginx/">nginx</a>&nbsp;
+      
+    </span>
+  
+  
+
+
+  
+
+  <div class="post-content"><div>
+        <h2 id="前置条件">前置条件<a href="#前置条件" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<ul>
+<li>运行在内网的多个服务</li>
+<li>一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案）</li>
+<li>一个域名</li>
+</ul>
+<h2 id="域名解析">域名解析<a href="#域名解析" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>到 cloudflare 解析配置你的域名解析</p>
+<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230629164727654.png" alt="image-20230629164727654"></p>
+<h2 id="frps-nginx-服务配置">Frps, Nginx 服务配置<a href="#frps-nginx-服务配置" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>frps 部署 - <a href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p>
+<p>Nginx 安装 - <code>sudo apt install nginx</code></p>
+<p>frps 配置文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-t" data-lang="t"><span style="display:flex;"><span>[common]
+</span></span><span style="display:flex;"><span>bind_port <span style="color:#f92672">=</span> <span style="color:#ae81ff">7000</span>
+</span></span><span style="display:flex;"><span>bind_addr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0.0.0</span>
+</span></span><span style="display:flex;"><span>vhost_http_port <span style="color:#f92672">=</span> <span style="color:#ae81ff">7080</span>
+</span></span><span style="display:flex;"><span>token <span style="color:#f92672">=</span> [custom token]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dashboard_port <span style="color:#f92672">=</span> <span style="color:#ae81ff">7050</span>
+</span></span><span style="display:flex;"><span>dashboard_user <span style="color:#f92672">=</span> admin
+</span></span><span style="display:flex;"><span>dashboard_pwd <span style="color:#f92672">=</span> changeme
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>subdomain_host <span style="color:#f92672">=</span> wukaige<span style="color:#f92672">.</span>com
+</span></span></code></pre></div><p>nginx 配置 <!-- raw HTML omitted -->/etc/nginx/conf.d/frp.conf<!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#66d9ef">server</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">listen</span> <span style="color:#ae81ff">80</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">server_name</span> <span style="color:#e6db74">alist.wukaige.com</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">location</span> <span style="color:#e6db74">/</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">proxy_pass</span> <span style="color:#e6db74">http://127.0.0.1:7080</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">proxy_set_header</span>   <span style="color:#e6db74">Host</span>             $host;
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">proxy_set_header</span>   <span style="color:#e6db74">X-Real-IP</span>        $remote_addr;
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">proxy_set_header</span>   <span style="color:#e6db74">X-Forwarded-For</span>  $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>重启 frps 和 nginx 服务</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart nginx.service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 以服务方式安装的 frps</span>
+</span></span><span style="display:flex;"><span>sudo systemctl restart frps.service
+</span></span></code></pre></div><h2 id="frpc-配置">Frpc 配置<a href="#frpc-配置" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>frpc 配置文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[common]
+</span></span><span style="display:flex;"><span>server_addr = [ip to frps server]
+</span></span><span style="display:flex;"><span>server_port = 7000
+</span></span><span style="display:flex;"><span>token = [custom token]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[alist]
+</span></span><span style="display:flex;"><span>type = http
+</span></span><span style="display:flex;"><span>local_port = 5244
+</span></span><span style="display:flex;"><span>subdomain = alist
+</span></span></code></pre></div><p>重启 frpc 服务</p>
+<pre tabindex="0"><code># 以服务方式安装的 frpc
+sudo systemctl restart frpc.service
+</code></pre><p>没有例外的话，访问 <code>alist.wukaige.com</code> 即可访问本地 alist 服务。
+有例外的话，看看服务器和本地防火墙，是否开放需要开放的端口。</p>
+
+      </div></div>
+
+  
+
+  
+    
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

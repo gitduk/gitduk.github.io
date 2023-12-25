@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  
+    <title>ES 数据插入速度优化，从 4.5h -&gt; 1h :: Home</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="写了个脚本把数据库里面的 content 字段转换为向量插入到 ES， 100w 数据需要 4.5 小时，太慢了！！！
+" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="https://blog.wukaige.com/cn/post/es-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E4%BB%8E-4-5h-1h/" />
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://blog.wukaige.com/styles.css">
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="https://blog.wukaige.com/favicon.ico">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:site" content="" />
+  
+    <meta name="twitter:creator" content="" />
+
+
+
+<meta property="og:locale" content="cn" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="ES 数据插入速度优化，从 4.5h -&gt; 1h">
+<meta property="og:description" content="写了个脚本把数据库里面的 content 字段转换为向量插入到 ES， 100w 数据需要 4.5 小时，太慢了！！！
+" />
+<meta property="og:url" content="https://blog.wukaige.com/cn/post/es-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E4%BB%8E-4-5h-1h/" />
+<meta property="og:site_name" content="Home" />
+
+  
+    <meta property="og:image" content="https://blog.wukaige.com/favicon.ico">
+  
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+  <meta property="article:published_time" content="2023-08-04 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="blue">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/cn">
+  <div class="logo">
+    主页
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/cn/post/">文章</a></li>
+        
+      
+        
+          <li><a href="/cn/tags/">标签</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/">类别</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/leetcode">力扣</a></li>
+        
+      
+        
+          <li><a href="/cn/about">关于</a></li>
+        
+      
+      
+        <hr />
+        
+          <li>
+            <a href="https://blog.wukaige.com/cn/">简体中文</a>
+          </li>
+        
+          <li>
+            <a href="https://blog.wukaige.com/">English</a>
+          </li>
+        
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+      <ul class="menu menu--desktop menu--language-selector">
+  <li class="menu__trigger">简体中文&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        <li><a href="https://blog.wukaige.com/cn/">简体中文</a></li>
+      
+        <li><a href="https://blog.wukaige.com/">English</a></li>
+      
+    </ul>
+  </li>
+</ul>
+
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/cn/post/" >文章</a></li>
+        
+      
+        
+          <li><a href="/cn/tags/" >标签</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/" >类别</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/leetcode" >力扣</a></li>
+        
+      
+        
+          <li><a href="/cn/about" >关于</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://blog.wukaige.com/cn/post/es-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E4%BB%8E-4-5h-1h/">ES 数据插入速度优化，从 4.5h -&gt; 1h</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2023-08-04</time><span class="post-reading-time">4 min read (1561 words)</span></div>
+
+  
+    <span class="post-tags">
+      
+      #<a href="https://blog.wukaige.com/cn/tags/es/">ES</a>&nbsp;
+      
+      #<a href="https://blog.wukaige.com/cn/tags/async/">async</a>&nbsp;
+      
+    </span>
+  
+  
+
+
+  
+
+  <div class="post-content"><div>
+        <p>写了个脚本把数据库里面的 content 字段转换为向量插入到 ES， 100w 数据需要 4.5 小时，太慢了！！！</p>
+<h2 id="一慢速度脚本45h">一、慢速度脚本（4.5h）<a href="#一慢速度脚本45h" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>只用 aiomysql 对数据库进行异步请求，ES 更新则是一条一更新。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> asyncio
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> aiomysql
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> text2vec <span style="color:#f92672">import</span> SentenceModel
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> requests.auth <span style="color:#f92672">import</span> HTTPBasicAuth
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># tidb</span>
+</span></span><span style="display:flex;"><span>host <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;127.0.0.1&#34;</span>
+</span></span><span style="display:flex;"><span>port <span style="color:#f92672">=</span> <span style="color:#ae81ff">3306</span>
+</span></span><span style="display:flex;"><span>database <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;[database]&#34;</span>
+</span></span><span style="display:flex;"><span>user <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;root&#34;</span>
+</span></span><span style="display:flex;"><span>password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;[password]&#34;</span>
+</span></span><span style="display:flex;"><span>batch_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># es</span>
+</span></span><span style="display:flex;"><span>es_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://127.0.0.1:9200&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># es_user = &#34;[elastic]&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># es_user = &#34;[password]&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># load model</span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> SentenceModel(<span style="color:#e6db74">&#34;shibing624/text2vec-base-chinese&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">query_mysql</span>(start, end, cursor):
+</span></span><span style="display:flex;"><span>    sql_query <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;select id,content from [table] where id &gt; </span><span style="color:#e6db74">{</span>start<span style="color:#e6db74">}</span><span style="color:#e6db74"> and id &lt;= </span><span style="color:#e6db74">{</span>end<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> cursor<span style="color:#f92672">.</span>execute(sql_query)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> cursor<span style="color:#f92672">.</span>fetchall()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update_es</span>(data):
+</span></span><span style="display:flex;"><span>    _id <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;id&#34;</span>)
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>es_url<span style="color:#e6db74">}</span><span style="color:#e6db74">/[INDEX]/_doc/</span><span style="color:#e6db74">{</span>_id<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 如果 ES 开启了安全验证</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># response = requests.put(url, json=data，auth=HTTPBasicAuth(es_username, es_password))</span>
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>put(url, json<span style="color:#f92672">=</span>data)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 检查响应状态码</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">in</span> [<span style="color:#ae81ff">200</span>, <span style="color:#ae81ff">201</span>]:
+</span></span><span style="display:flex;"><span>        msg <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">{</span>_id<span style="color:#e6db74">}</span><span style="color:#e6db74">] 插入成功&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        msg <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">{</span>id<span style="color:#e6db74">}</span><span style="color:#e6db74">] 插入失败: </span><span style="color:#e6db74">{</span>response<span style="color:#f92672">.</span>text<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>        os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;echo &#39;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39; &gt;&gt; ./error.log&#34;</span><span style="color:#f92672">.</span>format(msg))
+</span></span><span style="display:flex;"><span>    print(msg)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">process_batch</span>(start, end, pool):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">with</span> pool<span style="color:#f92672">.</span>acquire() <span style="color:#66d9ef">as</span> conn:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">with</span> conn<span style="color:#f92672">.</span>cursor() <span style="color:#66d9ef">as</span> cursor:
+</span></span><span style="display:flex;"><span>            rows <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> query_mysql(start, end, cursor)
+</span></span><span style="display:flex;"><span>            ids <span style="color:#f92672">=</span> [row[<span style="color:#ae81ff">0</span>] <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> rows]
+</span></span><span style="display:flex;"><span>            contents <span style="color:#f92672">=</span> [row[<span style="color:#ae81ff">1</span>] <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> rows]
+</span></span><span style="display:flex;"><span>            vector <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>encode(contents, show_progress_bar<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> _id, vec <span style="color:#f92672">in</span> zip(ids, vector<span style="color:#f92672">.</span>tolist()):
+</span></span><span style="display:flex;"><span>                data <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;id&#34;</span>: _id,
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;content_vector&#34;</span>: vec
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">await</span> update_es(data)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>(batches):
+</span></span><span style="display:flex;"><span>    pool <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> aiomysql<span style="color:#f92672">.</span>create_pool(host<span style="color:#f92672">=</span>host, port<span style="color:#f92672">=</span>port, user<span style="color:#f92672">=</span>user, password<span style="color:#f92672">=</span>password, db<span style="color:#f92672">=</span>database)
+</span></span><span style="display:flex;"><span>    tasks <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(batches):
+</span></span><span style="display:flex;"><span>        start <span style="color:#f92672">=</span> i <span style="color:#f92672">*</span> batch_size
+</span></span><span style="display:flex;"><span>        end <span style="color:#f92672">=</span> (i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> batch_size
+</span></span><span style="display:flex;"><span>        tasks<span style="color:#f92672">.</span>append(process_batch(start, end, pool))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> asyncio<span style="color:#f92672">.</span>gather(<span style="color:#f92672">*</span>tasks)
+</span></span><span style="display:flex;"><span>    pool<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> pool<span style="color:#f92672">.</span>wait_closed()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    asyncio<span style="color:#f92672">.</span>run(main(<span style="color:#ae81ff">100</span>))
+</span></span></code></pre></div><p>运行截图(4h 30m 21s)：
+<img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230804092603804.png" alt="image-20230804092603804"></p>
+<h2 id="二初步优化1h">二、初步优化（1h）<a href="#二初步优化1h" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>安装 elasticsearch[async] 模块</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip3 install <span style="color:#e6db74">&#39;elasticsearch[async]&#39;</span>
+</span></span></code></pre></div><p>使用 es bulk 批量更新数据，加速数据插入。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> asyncio
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> aiomysql
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> text2vec <span style="color:#f92672">import</span> SentenceModel
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> elasticsearch <span style="color:#f92672">import</span> AsyncElasticsearch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> elasticsearch.helpers <span style="color:#f92672">import</span> async_bulk
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>host <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;127.0.0.1&#39;</span>
+</span></span><span style="display:flex;"><span>port <span style="color:#f92672">=</span> <span style="color:#ae81ff">3306</span>
+</span></span><span style="display:flex;"><span>database <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;[database]&#39;</span>
+</span></span><span style="display:flex;"><span>user <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;root&#39;</span>
+</span></span><span style="display:flex;"><span>password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;[password]&#39;</span>
+</span></span><span style="display:flex;"><span>batch_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># load model</span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> SentenceModel(<span style="color:#e6db74">&#39;shibing624/text2vec-base-chinese&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># es client</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 如果加了安全验证机制：</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># es = AsyncElasticsearch([&#34;http://127.0.0.1:9200&#34;], basic_auth=(&#34;elastic&#34;, &#34;[password]&#34;))</span>
+</span></span><span style="display:flex;"><span>es <span style="color:#f92672">=</span> AsyncElasticsearch([<span style="color:#e6db74">&#34;http://127.0.0.1:9200&#34;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build_bulk_data</span>(ids, vectors):
+</span></span><span style="display:flex;"><span>  	<span style="color:#66d9ef">for</span> _id, vec <span style="color:#f92672">in</span> zip(ids, vectors):
+</span></span><span style="display:flex;"><span>    	data <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>      		<span style="color:#e6db74">&#34;_index&#34;</span>: index,
+</span></span><span style="display:flex;"><span>      		<span style="color:#e6db74">&#34;_id&#34;</span>: _id,
+</span></span><span style="display:flex;"><span>      		<span style="color:#e6db74">&#34;_source&#34;</span>: {
+</span></span><span style="display:flex;"><span>        		<span style="color:#e6db74">&#34;id&#34;</span>: _id, 
+</span></span><span style="display:flex;"><span>        		<span style="color:#e6db74">&#34;content_vector&#34;</span>: vec
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">yield</span> data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">query_mysql</span>(start, end, cursor):
+</span></span><span style="display:flex;"><span>    sql_query <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;select id,content from [table] where id &gt; </span><span style="color:#e6db74">{</span>start<span style="color:#e6db74">}</span><span style="color:#e6db74"> and id &lt;= </span><span style="color:#e6db74">{</span>end<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> cursor<span style="color:#f92672">.</span>execute(sql_query)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> cursor<span style="color:#f92672">.</span>fetchall()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">process_batch</span>(start, end, pool):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">with</span> pool<span style="color:#f92672">.</span>acquire() <span style="color:#66d9ef">as</span> conn:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">with</span> conn<span style="color:#f92672">.</span>cursor() <span style="color:#66d9ef">as</span> cursor:
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># query mysql</span>
+</span></span><span style="display:flex;"><span>            rows <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> query_mysql(start, end, cursor)
+</span></span><span style="display:flex;"><span>            ids <span style="color:#f92672">=</span> [row[<span style="color:#ae81ff">0</span>] <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> rows]
+</span></span><span style="display:flex;"><span>            contents <span style="color:#f92672">=</span> [row[<span style="color:#ae81ff">1</span>] <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> rows]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># encode content</span>
+</span></span><span style="display:flex;"><span>            vectors <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>encode(contents, show_progress_bar<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># build bulk data</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># 内存不足的情况下，可以用生成器代替列表:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># bulk_data = build_bulk_data(ids, vectors)</span>
+</span></span><span style="display:flex;"><span>            bulk_data <span style="color:#f92672">=</span> [{<span style="color:#e6db74">&#34;_index&#34;</span>: index, <span style="color:#e6db74">&#34;_id&#34;</span>: _id, <span style="color:#e6db74">&#34;_source&#34;</span>: {<span style="color:#e6db74">&#34;id&#34;</span>: _id, <span style="color:#e6db74">&#34;content_vector&#34;</span>: vec}} <span style="color:#66d9ef">for</span> _id, vec <span style="color:#f92672">in</span> zip(ids, vectors)]
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>                resp <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> async_bulk(es, bulk_data, chunk_size<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>, max_retries<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, request_timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">{</span>start<span style="color:#e6db74">}</span><span style="color:#e6db74">-</span><span style="color:#e6db74">{</span>end<span style="color:#e6db74">}</span><span style="color:#e6db74">] Error: </span><span style="color:#e6db74">{</span>e<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">{</span>start<span style="color:#e6db74">}</span><span style="color:#e6db74">-</span><span style="color:#e6db74">{</span>end<span style="color:#e6db74">}</span><span style="color:#e6db74">] SUCCESS: </span><span style="color:#e6db74">{</span>resp[<span style="color:#ae81ff">0</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>(batches, offset<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># mysql pool</span>
+</span></span><span style="display:flex;"><span>    pool <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> aiomysql<span style="color:#f92672">.</span>create_pool(host<span style="color:#f92672">=</span>host, port<span style="color:#f92672">=</span>port, user<span style="color:#f92672">=</span>user, password<span style="color:#f92672">=</span>password, db<span style="color:#f92672">=</span>database)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># create task list</span>
+</span></span><span style="display:flex;"><span>    tasks <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(offset, offset <span style="color:#f92672">+</span> batches):
+</span></span><span style="display:flex;"><span>        start <span style="color:#f92672">=</span> i <span style="color:#f92672">*</span> batch_size
+</span></span><span style="display:flex;"><span>        end <span style="color:#f92672">=</span> (i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> batch_size
+</span></span><span style="display:flex;"><span>        tasks<span style="color:#f92672">.</span>append(process_batch(start, end, pool))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> asyncio<span style="color:#f92672">.</span>gather(<span style="color:#f92672">*</span>tasks)
+</span></span><span style="display:flex;"><span>    pool<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> pool<span style="color:#f92672">.</span>wait_closed()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    asyncio<span style="color:#f92672">.</span>run(main(<span style="color:#ae81ff">100</span>, offset<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>))
+</span></span></code></pre></div><p>运行截图(1h 3m 9s)：</p>
+<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230804112915854.png" alt="image-20230804112915854"></p>
+<h2 id="三内存优化">三、内存优化<a href="#三内存优化" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>优化目的：减少内存使用</p>
+<p>优化策略：</p>
+<ul>
+<li>使用 async_streaming_bulk 代替 async_bulk</li>
+<li>使用 asyncio.as_completed 代替 asyncio.gather</li>
+</ul>
+<p>async_streaming_bulk 和 async_bulk 的区别：</p>
+<ul>
+<li>
+<p>async_bulk 会将所有请求收集到一个列表中，然后一次性发送给 Elasticsearch，它会等待所有的请求完成，然后返回结果。</p>
+</li>
+<li>
+<p>async_streaming_bulk 则是一边收集请求，一边流式地发送给 Elasticsearch，不需要等待所有的请求收集完成，它会实时返回每个请求的结果。</p>
+</li>
+<li>
+<p>async_bulk 适用于需要等待所有请求完成才返回的场景，但是需要消耗更多内存来 hold 住所有请求。</p>
+</li>
+<li>
+<p>async_streaming_bulk 适用于对实时返回每个结果更敏感的场景，它消耗的内存更少。</p>
+</li>
+<li>
+<p>sync_bulk 的性能会比 async_streaming_bulk 好，因为它是批量发送请求。但是 async_streaming_bulk 更适合处理大量请求，不会因为内存消耗太大而出问题。</p>
+</li>
+</ul>
+<p>asyncio.as_completed 和 asyncio.gather 的区别：</p>
+<ul>
+<li>asyncio.gather 会同时启动所有的异步任务，等待它们全部完成后才返回结果。</li>
+<li>asyncio.as_completed 会按任务完成的顺序返回结果，不会等待所有的任务完成。</li>
+<li>asyncio.gather 如果有一个任务 raise 异常会立即停止其它任务。asyncio.as_completed 不会，会继续返回其它已经完成的任务的结果。</li>
+<li>asyncio.gather 的结果顺序和传入的任务顺序一致。asyncio.as_completed 的结果顺序依赖于任务完成的时间，与传入顺序无关。</li>
+<li>asyncio.gather 更适合需要同时开始执行多个任务，并需要所有任务结果才能继续的场景。asyncio.as_completed 更适合只关心任务完成就使用结果的场景。</li>
+<li>asyncio.gather 的性能和资源消耗可能更高，因为同时启动和跟踪更多任务。</li>
+<li>asyncio.as_completed 可以通过返回完成任务来提早优化或发出决策。</li>
+</ul>
+<p>优化后的代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> asyncio
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> aiomysql
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> aiohttp
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> text2vec <span style="color:#f92672">import</span> SentenceModel
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> elasticsearch <span style="color:#f92672">import</span> AsyncElasticsearch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> elasticsearch.helpers <span style="color:#f92672">import</span> async_streaming_bulk
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>host <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;127.0.0.1&#39;</span>
+</span></span><span style="display:flex;"><span>port <span style="color:#f92672">=</span> <span style="color:#ae81ff">3306</span>
+</span></span><span style="display:flex;"><span>database <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;[DATABASE]&#39;</span>
+</span></span><span style="display:flex;"><span>user <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;root&#39;</span>
+</span></span><span style="display:flex;"><span>password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;[PASSWD]&#39;</span>
+</span></span><span style="display:flex;"><span>batch_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># load model</span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> SentenceModel(<span style="color:#e6db74">&#39;shibing624/text2vec-base-chinese&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># es client</span>
+</span></span><span style="display:flex;"><span>es <span style="color:#f92672">=</span> AsyncElasticsearch([<span style="color:#e6db74">&#34;http://127.0.0.1:9220&#34;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build_bulk_data</span>(ids, vectors):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> _id, vec <span style="color:#f92672">in</span> zip(ids, vectors):
+</span></span><span style="display:flex;"><span>        data <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;_index&#34;</span>: index,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;_id&#34;</span>: _id,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;_source&#34;</span>: {
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;id&#34;</span>: _id, 
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;content_vector&#34;</span>: vec
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">yield</span> data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">query_mysql</span>(start, end, cursor):
+</span></span><span style="display:flex;"><span>    sql_query <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;select id,content from [table] where id &gt; </span><span style="color:#e6db74">{</span>start<span style="color:#e6db74">}</span><span style="color:#e6db74"> and id &lt;= </span><span style="color:#e6db74">{</span>end<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> cursor<span style="color:#f92672">.</span>execute(sql_query)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> cursor<span style="color:#f92672">.</span>fetchall()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">process_batch</span>(start, end, pool):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">with</span> pool<span style="color:#f92672">.</span>acquire() <span style="color:#66d9ef">as</span> conn:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">with</span> conn<span style="color:#f92672">.</span>cursor() <span style="color:#66d9ef">as</span> cursor:
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># query mysql</span>
+</span></span><span style="display:flex;"><span>            rows <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> query_mysql(start, end, cursor)
+</span></span><span style="display:flex;"><span>            ids <span style="color:#f92672">=</span> [row[<span style="color:#ae81ff">0</span>] <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> rows]
+</span></span><span style="display:flex;"><span>            contents <span style="color:#f92672">=</span> [row[<span style="color:#ae81ff">1</span>] <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> rows]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># encode content</span>
+</span></span><span style="display:flex;"><span>            vectors <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>encode(contents, show_progress_bar<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># build bulk data</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># bulk_data = [{&#34;_index&#34;: index, &#34;_id&#34;: _id, &#34;_source&#34;: {&#34;id&#34;: _id, &#34;content_vector&#34;: vec}} for _id, vec in zip(ids, vectors)]</span>
+</span></span><span style="display:flex;"><span>            bulk_data <span style="color:#f92672">=</span> build_bulk_data(ids, vectors)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">for</span> ok, result <span style="color:#f92672">in</span> async_streaming_bulk(es, bulk_data, chunk_size<span style="color:#f92672">=</span><span style="color:#ae81ff">5000</span>, max_retries<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, request_timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">3</span>):
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> ok:
+</span></span><span style="display:flex;"><span>                    os<span style="color:#f92672">.</span>systemd(<span style="color:#e6db74">&#34;echo &#39;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39; &gt;&gt; ./error.log&#34;</span><span style="color:#f92672">.</span>format(result))
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                    print(result)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>(batches, offset<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># mysql pool</span>
+</span></span><span style="display:flex;"><span>    pool <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> aiomysql<span style="color:#f92672">.</span>create_pool(host<span style="color:#f92672">=</span>host, port<span style="color:#f92672">=</span>port, user<span style="color:#f92672">=</span>user, password<span style="color:#f92672">=</span>password, db<span style="color:#f92672">=</span>database)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># task list</span>
+</span></span><span style="display:flex;"><span>    tasks <span style="color:#f92672">=</span> [process_batch(i <span style="color:#f92672">*</span> batch_size, (i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> batch_size, pool) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(offset, offset <span style="color:#f92672">+</span> batches)]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># wait task completed</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> completed <span style="color:#f92672">in</span> asyncio<span style="color:#f92672">.</span>as_completed(tasks):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> completed
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    pool<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> pool<span style="color:#f92672">.</span>wait_closed()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    asyncio<span style="color:#f92672">.</span>run(main(<span style="color:#ae81ff">100</span>))
+</span></span></code></pre></div><p>运行截图(59m 28s)：</p>
+<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230814172629394.png" alt="image-20230814172629394"></p>
+      </div></div>
+
+  
+
+  
+    
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  
+    <title>使用 https 访问 alist :: Home</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="通过 http 访问 alist，地址栏那个感叹号看起来有点丑。
+" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="https://blog.wukaige.com/cn/post/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/" />
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://blog.wukaige.com/styles.css">
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="https://blog.wukaige.com/favicon.ico">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:site" content="" />
+  
+    <meta name="twitter:creator" content="" />
+
+
+
+<meta property="og:locale" content="cn" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="使用 https 访问 alist">
+<meta property="og:description" content="通过 http 访问 alist，地址栏那个感叹号看起来有点丑。
+" />
+<meta property="og:url" content="https://blog.wukaige.com/cn/post/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/" />
+<meta property="og:site_name" content="Home" />
+
+  
+    <meta property="og:image" content="https://blog.wukaige.com/favicon.ico">
+  
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+  <meta property="article:published_time" content="2023-07-17 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="blue">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/cn">
+  <div class="logo">
+    主页
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/cn/post/">文章</a></li>
+        
+      
+        
+          <li><a href="/cn/tags/">标签</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/">类别</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/leetcode">力扣</a></li>
+        
+      
+        
+          <li><a href="/cn/about">关于</a></li>
+        
+      
+      
+        <hr />
+        
+          <li>
+            <a href="https://blog.wukaige.com/cn/">简体中文</a>
+          </li>
+        
+          <li>
+            <a href="https://blog.wukaige.com/">English</a>
+          </li>
+        
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+      <ul class="menu menu--desktop menu--language-selector">
+  <li class="menu__trigger">简体中文&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        <li><a href="https://blog.wukaige.com/cn/">简体中文</a></li>
+      
+        <li><a href="https://blog.wukaige.com/">English</a></li>
+      
+    </ul>
+  </li>
+</ul>
+
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/cn/post/" >文章</a></li>
+        
+      
+        
+          <li><a href="/cn/tags/" >标签</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/" >类别</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/leetcode" >力扣</a></li>
+        
+      
+        
+          <li><a href="/cn/about" >关于</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://blog.wukaige.com/cn/post/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/">使用 https 访问 alist</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2023-07-17</time><span class="post-reading-time">1 min read (109 words)</span></div>
+
+  
+    <span class="post-tags">
+      
+      #<a href="https://blog.wukaige.com/cn/tags/nginx/">nginx</a>&nbsp;
+      
+      #<a href="https://blog.wukaige.com/cn/tags/alist/">alist</a>&nbsp;
+      
+    </span>
+  
+  
+
+
+  
+
+  <div class="post-content"><div>
+        <p>通过 http 访问 alist，地址栏那个感叹号看起来有点丑。</p>
+<h2 id="申请-cloudflare-证书">申请 Cloudflare 证书<a href="#申请-cloudflare-证书" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p><a href="https://www.google.com.hk/search?q=%E7%94%B3%E8%AF%B7+Cloudflare+%E8%AF%81%E4%B9%A6&amp;oq=%E7%94%B3%E8%AF%B7+Cloudflare+%E8%AF%81%E4%B9%A6&amp;aqs=chrome..69i57.630j0j7&amp;sourceid=chrome&amp;ie=UTF-8">看这里</a></p>
+<p>把 Origin Certificate 保存为： your-domain.pem</p>
+<p>把 Private Key 保存为： your-domain.key</p>
+<h2 id="配置-nginx-转发规则">配置 nginx 转发规则<a href="#配置-nginx-转发规则" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#66d9ef">server</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">listen</span> <span style="color:#ae81ff">80</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">listen</span> <span style="color:#ae81ff">443</span> <span style="color:#e6db74">ssl</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">server_name</span> <span style="color:#e6db74">alist.wukaige.com</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_certificate</span> <span style="color:#e6db74">/path/to/your-domain.pem</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_certificate_key</span> <span style="color:#e6db74">/path/to/your-domain.key</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">if</span> <span style="color:#e6db74">(</span>$scheme <span style="color:#e6db74">!=</span> <span style="color:#e6db74">&#34;https&#34;)</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">return</span> <span style="color:#ae81ff">301</span> <span style="color:#e6db74">https://</span>$server_name$request_uri;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">client_max_body_size</span> <span style="color:#ae81ff">10000m</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">location</span> <span style="color:#e6db74">/</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_pass</span> <span style="color:#e6db74">http://127.0.0.1:7080</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">Host</span> $host;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Real-IP</span> $remote_addr;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-For</span> $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-Proto</span> <span style="color:#e6db74">https</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="重启-nginx-服务">重启 nginx 服务<a href="#重启-nginx-服务" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart nginx.service
+</span></span></code></pre></div>
+      </div></div>
+
+  
+
+  
+    
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

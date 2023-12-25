@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>logstash on Home</title>
+    <link>https://blog.wukaige.com/cn/tags/logstash/</link>
+    <description>Recent content in logstash on Home</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Tue, 15 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.wukaige.com/cn/tags/logstash/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>logstash 导出 ES 数据到 csv 文件</title>
+      <link>https://blog.wukaige.com/cn/post/logstash-%E5%AF%BC%E5%87%BA-es-%E6%95%B0%E6%8D%AE%E5%88%B0-csv-%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/post/logstash-%E5%AF%BC%E5%87%BA-es-%E6%95%B0%E6%8D%AE%E5%88%B0-csv-%E6%96%87%E4%BB%B6/</guid>
+      <description>&lt;p&gt;有一个需求，把 ES 索引里面的某个字段导入 csv 文件里面。&lt;/p&gt;</description>
+      <content>&lt;p&gt;有一个需求，把 ES 索引里面的某个字段导入 csv 文件里面。&lt;/p&gt;
+&lt;h2 id=&#34;logstash-配置文件&#34;&gt;logstash 配置文件&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-conf&#34; data-lang=&#34;conf&#34;&gt;input {
+  elasticsearch {
+    hosts =&amp;gt; [ &amp;#39;http://127.0.0.1:9200&amp;#39; ]
+    index =&amp;gt; &amp;#39;[index]&amp;#39;
+    user =&amp;gt; &amp;#34;[user]&amp;#34;
+    password =&amp;gt; &amp;#34;[password]&amp;#34;
+    query =&amp;gt; &amp;#39;{
+      &amp;#34;query&amp;#34;: {
+        &amp;#34;range&amp;#34;: {
+          &amp;#34;id&amp;#34;: {
+            &amp;#34;gte&amp;#34;:0,
+            &amp;#34;lte&amp;#34;:100
+          }
+        }
+      },
+      &amp;#34;_source&amp;#34;: [&amp;#34;content&amp;#34;]
+    }&amp;#39;
+  }
+}
+
+output {
+  csv {
+    fields =&amp;gt; [&amp;#34;content&amp;#34;]
+    path =&amp;gt; &amp;#34;content.csv&amp;#34;
+  }
+  stdout {
+    codec =&amp;gt; rubydebug
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;运行 logstash&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/path/to/logstash -f &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/path/to/config/file&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+    </item>
+    
+    <item>
+      <title>logstash 拼接字段</title>
+      <link>https://blog.wukaige.com/cn/post/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/</link>
+      <pubDate>Wed, 19 Jul 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/post/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/</guid>
+      <description>&lt;p&gt;ES 数据的 content 字段是 html 格式的内容，现在想用纯文本内容代替 html。&lt;/p&gt;</description>
+      <content>&lt;p&gt;ES 数据的 content 字段是 html 格式的内容，现在想用纯文本内容代替 html。&lt;/p&gt;
+&lt;h2 id=&#34;方案一&#34;&gt;方案一&lt;/h2&gt;
+&lt;p&gt;用 ES reindex API 的 script 功能去除 html 标签。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SOURCE_INDEX&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[source index]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;TARGET_INDEX&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[target index]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;START&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;$1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;END&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;$2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BATCH_SIZE&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Elasticsearch 集群的 SSL 配置&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# CERT_FILE=&amp;#34;/path/to/your/es/http_ca.crt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 执行 reindex 操作&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;((&lt;/span&gt;i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $START; i &amp;lt; $END; i++&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  from&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$((&lt;/span&gt;i &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; BATCH_SIZE&lt;span style=&#34;color:#66d9ef&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  to&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$((&lt;/span&gt;from &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; BATCH_SIZE&lt;span style=&#34;color:#66d9ef&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  printf &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Processing batch &lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$((&lt;/span&gt;i &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;))&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; of &lt;/span&gt;$END&lt;span style=&#34;color:#e6db74&#34;&gt; ...\n&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# 发起 reindex 请求&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# curl -s -X POST &amp;#34;https://127.0.0.1:9555/_reindex?refresh=false&amp;#34; -H &amp;#39;Content-Type: application/json&amp;#39; --cacert $CERT_FILE -u &amp;#34;elastic:[passwd]&amp;#34; -d &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  curl -s -X POST &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://127.0.0.1:9220/_reindex?refresh=false&amp;#34;&lt;/span&gt; -H &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Content-Type: application/json&amp;#39;&lt;/span&gt; -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    \&amp;#34;source\&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      \&amp;#34;index\&amp;#34;: \&amp;#34;&lt;/span&gt;$SOURCE_INDEX&lt;span style=&#34;color:#e6db74&#34;&gt;\&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      \&amp;#34;size\&amp;#34;: &lt;/span&gt;$BATCH_SIZE&lt;span style=&#34;color:#e6db74&#34;&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      \&amp;#34;query\&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        \&amp;#34;range\&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;          \&amp;#34;id\&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;            \&amp;#34;gte\&amp;#34;: &lt;/span&gt;$from&lt;span style=&#34;color:#e6db74&#34;&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;            \&amp;#34;lt\&amp;#34;: &lt;/span&gt;$to&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;          }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    },
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    \&amp;#34;dest\&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      \&amp;#34;index\&amp;#34;: \&amp;#34;&lt;/span&gt;$TARGET_INDEX&lt;span style=&#34;color:#e6db74&#34;&gt;\&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    },
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    \&amp;#34;script\&amp;#34;: { \&amp;#34;source\&amp;#34;: \&amp;#34;ctx._source.content = /&amp;lt;[^&amp;gt;]+&amp;gt;/ .matcher(ctx._source.content).replaceAll(&amp;#39;&amp;#39;)\&amp;#34; }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  }&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  echo
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;done&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Reindex completed.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;发现去掉了很多原文内容，舍弃。&lt;/p&gt;
+&lt;h2 id=&#34;方案二&#34;&gt;方案二&lt;/h2&gt;
+&lt;p&gt;从原始数据库查询 content 字段的各个部分（text 版本的 content 被分成了 section_1, section_2, section_3）并更新 ES 的 content 字段。&lt;/p&gt;
+&lt;p&gt;logstash 配置文件： &lt;!-- raw HTML omitted --&gt;update-content.conf&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-conf&#34; data-lang=&#34;conf&#34;&gt;input {
+    jdbc {
+      jdbc_driver_library =&amp;gt; &amp;#39;/path/to/mysql-connector-java-8.0.21.jar&amp;#39;
+      jdbc_driver_class =&amp;gt; &amp;#39;com.mysql.cj.jdbc.Driver&amp;#39;
+      jdbc_connection_string =&amp;gt; &amp;#39;jdbc:mysql://127.0.0.1:4011/LawDB?useSSL=false&amp;amp;serverTimezone=UTC&amp;amp;rewriteBatchedStatements=true&amp;amp;autoReconnect=true&amp;#39;
+      jdbc_user =&amp;gt; &amp;#39;root&amp;#39;
+      jdbc_password =&amp;gt; &amp;#39;[passwd]&amp;#39;
+      jdbc_validate_connection =&amp;gt; true
+      jdbc_paging_enabled =&amp;gt; &amp;#39;true&amp;#39;
+      jdbc_page_size =&amp;gt; &amp;#39;1000&amp;#39;
+      jdbc_default_timezone =&amp;gt; &amp;#39;Asia/Shanghai&amp;#39;
+      statement =&amp;gt; &amp;#39;select id,section_1,section_2,section_3 from [your table]&amp;#39;
+    }
+}
+
+filter {
+  mutate {
+    add_field =&amp;gt; {
+      &amp;#34;content&amp;#34; =&amp;gt; &amp;#34;%{section_1} %{section_2} %{section_3}&amp;#34;
+    }
+  }
+  mutate {
+    remove_field =&amp;gt; [&amp;#34;@version&amp;#34;, &amp;#34;@timestamp&amp;#34;, &amp;#34;section_1&amp;#34;, &amp;#34;section_2&amp;#34;, &amp;#34;section_3&amp;#34;]
+  }
+}
+
+output {
+    stdout {
+      codec =&amp;gt; rubydebug
+    }
+    elasticsearch {
+      hosts =&amp;gt; [ &amp;#39;http://127.0.0.1:9220&amp;#39; ]
+      index =&amp;gt; &amp;#39;[your index]&amp;#39;
+      action =&amp;gt; &amp;#39;update&amp;#39;
+      document_id =&amp;gt; &amp;#39;%{id}&amp;#39;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;运行 logstash&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;logstash -w &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; --path.data &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/tmp/logstash-data&amp;#34;&lt;/span&gt; -f /path/to/update-content.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+    </item>
+    
+    <item>
+      <title>ES 数据导入之 logstash</title>
+      <link>https://blog.wukaige.com/cn/post/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/</link>
+      <pubDate>Fri, 14 Jul 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/post/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/cn/logstash/&#34;&gt;Logstash&lt;/a&gt; 是免费且开放的服务器端数据处理管道，能够从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。&lt;/p&gt;</description>
+      <content>&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/cn/logstash/&#34;&gt;Logstash&lt;/a&gt; 是免费且开放的服务器端数据处理管道，能够从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。&lt;/p&gt;
+&lt;h2 id=&#34;前情提要&#34;&gt;前情提要&lt;/h2&gt;
+&lt;p&gt;新建了一个 ES 索引，需要从 TIDB 导入一些数据到 ES 索引中。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ES 索引名： index_test&lt;/li&gt;
+&lt;li&gt;tidb 地址： 127.0.0.1:4000&lt;/li&gt;
+&lt;li&gt;es 地址： 127.0.0.1:9200, 127.0.0.1:9201, 127.0.0.1:9202&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;下载-mysql-connector-java-8021jar-包&#34;&gt;下载 mysql-connector-java-8.0.21.jar 包&lt;/h2&gt;
+&lt;p&gt;下载链接： &lt;a href=&#34;https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.21/mysql-connector-java-8.0.21.jar&#34;&gt;https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.21/mysql-connector-java-8.0.21.jar&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;创建-logstash-configuration-文件&#34;&gt;创建 Logstash configuration 文件&lt;/h2&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;tidb-to-es.tml&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;input {
+    jdbc {
+      jdbc_driver_library =&amp;gt; &amp;#39;/path/to/mysql-connector-java-8.0.21.jar&amp;#39;
+      jdbc_driver_class =&amp;gt; &amp;#39;com.mysql.cj.jdbc.Driver&amp;#39;
+        jdbc_connection_string =&amp;gt; &amp;#39;jdbc:mysql://127.0.0.1:4000/LawDB?useSSL=false&amp;amp;serverTimezone=UTC&amp;amp;rewriteBatchedStatements=true&amp;amp;autoReconnect=true&amp;#39;
+        jdbc_user =&amp;gt; &amp;#39;root&amp;#39;
+        jdbc_password =&amp;gt; &amp;#39;[password]&amp;#39;
+        jdbc_validate_connection =&amp;gt; true
+        # jdbc_paging_enabled =&amp;gt; &amp;#39;true&amp;#39;
+        # jdbc_page_size =&amp;gt; &amp;#39;100&amp;#39;
+        jdbc_default_timezone =&amp;gt; &amp;#39;Asia/Shanghai&amp;#39;
+      statement =&amp;gt; &amp;#39;select id,title,content from [your table] where id &amp;lt;= 10000&amp;#39;
+    }
+}
+
+filter {
+  mutate {
+    remove_field =&amp;gt; [&amp;#39;@version&amp;#39;, &amp;#39;@timestamp&amp;#39;]
+  }
+}
+
+output {
+    stdout {
+      codec =&amp;gt; rubydebug
+    }
+    elasticsearch {
+      hosts =&amp;gt; [ &amp;#39;http://127.0.0.1:9200&amp;#39;, &amp;#39;http://127.0.0.1:9201&amp;#39;, &amp;#39;http://127.0.0.1:9202&amp;#39; ]
+      index =&amp;gt; &amp;#39;index_test&amp;#39;
+      action =&amp;gt; &amp;#39;create&amp;#39;
+      document_id =&amp;gt; &amp;#39;%{id}&amp;#39;
+      cacert =&amp;gt; &amp;#39;/home/[USER]/elasticsearch-8.5.3/config/certs/http_ca.crt&amp;#39;
+      user =&amp;gt; &amp;#34;elastic&amp;#34;
+      password =&amp;gt; &amp;#34;[elastic password]&amp;#34;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;开始导入数据&#34;&gt;开始导入数据&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;logstash -f /path/to/tidb-to-es.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;分页处理&#34;&gt;分页处理&lt;/h2&gt;
+&lt;p&gt;当数据量很大的时候，Logstash 可自动分页导入数据&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-conf&#34; data-lang=&#34;conf&#34;&gt;jdbc_paging_enabled =&amp;gt; &amp;#39;true&amp;#39;
+jdbc_page_size =&amp;gt; &amp;#39;100&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;但是 ES 分页语句效率极其低下，于是自己写了个脚本分页&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;paging.sh&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/usr/bin/env zsh
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;table_name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[your table]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;index_name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[your index]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;limit&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i in &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;$1..$2&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;[[&lt;/span&gt; -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;./stop&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;]]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$0&lt;span style=&#34;color:#e6db74&#34;&gt; &lt;/span&gt;$i&lt;span style=&#34;color:#e6db74&#34;&gt; &lt;/span&gt;$2&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;./stop&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; exit &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  offset&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$((&lt;/span&gt; $i &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; $limit &lt;span style=&#34;color:#66d9ef&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  text&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;input {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    jdbc {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      jdbc_driver_library =&amp;gt; &amp;#39;/path/to/mysql-connector-java-8.0.21.jar&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      jdbc_driver_class =&amp;gt; &amp;#39;com.mysql.cj.jdbc.Driver&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      jdbc_connection_string =&amp;gt; &amp;#39;jdbc:mysql://127.0.0.1:4000/LawDB?useSSL=false&amp;amp;serverTimezone=UTC&amp;amp;rewriteBatchedStatements=true&amp;amp;autoReconnect=true&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      jdbc_user =&amp;gt; &amp;#39;root&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      jdbc_password =&amp;gt; &amp;#39;[passwd]&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      jdbc_validate_connection =&amp;gt; true
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      # jdbc_paging_enabled =&amp;gt; &amp;#39;true&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      # jdbc_page_size =&amp;gt; &amp;#39;10000&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      jdbc_default_timezone =&amp;gt; &amp;#39;Asia/Shanghai&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      statement =&amp;gt; &amp;#39;select id,section_head,section_party,section_litigation,section_truth,section_reason,section_result from &lt;/span&gt;$table_name&lt;span style=&#34;color:#e6db74&#34;&gt; where id &amp;gt; &lt;/span&gt;$offset&lt;span style=&#34;color:#e6db74&#34;&gt; order by id limit &lt;/span&gt;$limit&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  filter {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    mutate {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      remove_field =&amp;gt; [&amp;#39;@version&amp;#39;, &amp;#39;@timestamp&amp;#39;]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  output {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      stdout {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        codec =&amp;gt; rubydebug
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  	elasticsearch {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        hosts =&amp;gt; [ &amp;#39;http://127.0.0.1:9200&amp;#39;, &amp;#39;http://127.0.0.1:9201&amp;#39;, &amp;#39;http://127.0.0.1:9202&amp;#39; ]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        index =&amp;gt; &amp;#39;&lt;/span&gt;$index_name&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        action =&amp;gt; &amp;#39;create&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        document_id =&amp;gt; &amp;#39;%{id}&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  	}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  /path/to/logstash -w &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; --path.data &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/tmp/logstash-&lt;/span&gt;$1&lt;span style=&#34;color:#e6db74&#34;&gt;-&lt;/span&gt;$2&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$text&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;done&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;导入 100W 数据&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;paging.sh &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;想暂停 logstash，只需在脚本目录建立一个 stop 空文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;touch stop
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+    </item>
+    
+  </channel>
+</rss>

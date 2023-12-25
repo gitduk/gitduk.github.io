@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  
+    <title>Posts :: Home</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="https://blog.wukaige.com/cn/post/" />
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://blog.wukaige.com/styles.css">
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="https://blog.wukaige.com/favicon.ico">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:site" content="" />
+  
+    <meta name="twitter:creator" content="" />
+
+
+
+<meta property="og:locale" content="cn" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Posts">
+<meta property="og:description" content="" />
+<meta property="og:url" content="https://blog.wukaige.com/cn/post/" />
+<meta property="og:site_name" content="Home" />
+
+  
+    <meta property="og:image" content="https://blog.wukaige.com/favicon.ico">
+  
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+
+
+
+  <link href="/cn/post/index.xml" rel="alternate" type="application/rss+xml" title="Home" />
+
+
+
+
+
+
+
+
+
+</head>
+<body class="blue">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/cn">
+  <div class="logo">
+    主页
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/cn/post/">文章</a></li>
+        
+      
+        
+          <li><a href="/cn/tags/">标签</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/">类别</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/leetcode">力扣</a></li>
+        
+      
+        
+          <li><a href="/cn/about">关于</a></li>
+        
+      
+      
+        <hr />
+        
+          <li>
+            <a href="https://blog.wukaige.com/cn/">简体中文</a>
+          </li>
+        
+          <li>
+            <a href="https://blog.wukaige.com/">English</a>
+          </li>
+        
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+      <ul class="menu menu--desktop menu--language-selector">
+  <li class="menu__trigger">简体中文&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        <li><a href="https://blog.wukaige.com/cn/">简体中文</a></li>
+      
+        <li><a href="https://blog.wukaige.com/">English</a></li>
+      
+    </ul>
+  </li>
+</ul>
+
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/cn/post/" >文章</a></li>
+        
+      
+        
+          <li><a href="/cn/tags/" >标签</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/" >类别</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/leetcode" >力扣</a></li>
+        
+      
+        
+          <li><a href="/cn/about" >关于</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+  
+  <div class="posts">
+    
+      <article class="post on-list">
+        <h1 class="post-title">
+          <a href="https://blog.wukaige.com/cn/post/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/">文本转向量并插入到 ES 中</a>
+        </h1>
+        <div class="post-meta"><time class="post-date">2023-07-03</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://blog.wukaige.com/cn/tags/es/">ES</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            ES 中创建索引 PUT vector-index { &#34;mappings&#34;: { &#34;properties&#34;: { &#34;title&#34;: { &#34;type&#34;: &#34;text&#34; }, &#34;content_vector&#34;: { &#34;type&#34;: &#34;dense_vector&#34;, &#34;dims&#34;: 768, &#34;index&#34;: true, &#34;similarity&#34;: &#34;l2_norm&#34; } } } } 导入一些数据 使用 logstash 工具从 mysql 数据库导入数据 input { jdbc { jdbc_driver_library =&gt; &#39;path/to/mysql-connector-java-8.0.21.jar&#39; jdbc_driver_class =&gt; &#39;com.mysql.cj.jdbc.Driver&#39; jdbc_connection_string =&gt; &#39;jdbc:mysql://[IP ADDR]:[POST]/[DATABASE]?useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true&amp;autoReconnect=true&#39; jdbc_user =&gt; &#39;root&#39; jdbc_password
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button" href="/cn/post/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/">Read more →</a>
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title">
+          <a href="https://blog.wukaige.com/cn/post/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">hexo cactus 外链图片无法显示解决办法</a>
+        </h1>
+        <div class="post-meta"><time class="post-date">2023-06-29</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://blog.wukaige.com/cn/tags/hexo/">hexo</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            修复外链 cactus 主题目录结构 在 /layout/_partial/head.ejs 文件中加一行代码 &lt;meta name=&#34;referrer&#34; content=&#34;no-referrer&#34; /&gt; 参考链接 https://zhuanlan.zhihu.com/p/577256660
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button" href="/cn/post/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">Read more →</a>
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title">
+          <a href="https://blog.wukaige.com/cn/post/ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/">Ubuntu 显卡配置</a>
+        </h1>
+        <div class="post-meta"><time class="post-date">2023-06-29</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://blog.wukaige.com/cn/tags/linux/">linux</a>&nbsp;
+            
+            #<a href="https://blog.wukaige.com/cn/tags/nvidia/">nvidia</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            系统环境 系统: Ubuntu 22.04 内核: 5.19.0-32-generic 显卡: AD102 [GeForce RTX 4090] 前期准备 # 查看显卡设备 lshw -numeric -C display # 查看显卡 lsmod | grep -E &#34;nvidia|nouveau&#34; # 添加显卡 ppa sudo add-apt-repository ppa:graphics-drivers sudo apt update # 禁用 nouveau echo &#34; blacklist nouveau blacklist lbm-nouveau alias nouveau off
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button" href="/cn/post/ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/">Read more →</a>
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title">
+          <a href="https://blog.wukaige.com/cn/post/tidb-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/">TiDB 用户管理</a>
+        </h1>
+        <div class="post-meta"><time class="post-date">2023-06-27</time></div>
+
+        
+          <span class="post-tags">
+            
+            #<a href="https://blog.wukaige.com/cn/tags/tidb/">TiDB</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+
+        <div class="post-content">
+          
+            创建新用户 CREATE USER &#39;user&#39;@&#39;%&#39; IDENTIFIED BY &#39;password&#39;; 设置用户权限 -- 部分权限 GRANT SELECT,INSERT ON database.* TO &#39;user&#39;@&#39;%&#39;; -- 所有权限 GRANT ALL PRIVILEGES ON database.* TO &#39;user&#39;@&#39;%&#39;; 修改用户密码 SET PASSWORD FOR &#39;root&#39;@&#39;%&#39; = &#39;xxx&#39;; 刷新权限 FLUSH PRIVILEGES; 删除用户 DROP USER &#39;user&#39;@&#39;host&#39;;
+          
+        </div>
+
+        
+          <div>
+            <a class="read-more button" href="/cn/post/tidb-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/">Read more →</a>
+          </div>
+        
+      </article>
+    
+
+    <div class="pagination">
+  <div class="pagination__buttons">
+    
+      <a href="/cn/post/page/7/" class="button previous">
+        <span class="button__icon">←</span>
+        <span class="button__text">Newer posts</span>
+      </a>
+    
+    
+  </div>
+</div>
+
+  </div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

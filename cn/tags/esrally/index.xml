@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>esrally on Home</title>
+    <link>https://blog.wukaige.com/cn/tags/esrally/</link>
+    <description>Recent content in esrally on Home</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Tue, 21 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.wukaige.com/cn/tags/esrally/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ES 集群压测</title>
+      <link>https://blog.wukaige.com/cn/post/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/</link>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/cn/post/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/</guid>
+      <description>&lt;p&gt;新进了一台高性能服务器，准备把旧的 ES 集群迁移到新服务器，需要对比两个 ES 集群的性能。&lt;/p&gt;</description>
+      <content>&lt;p&gt;新进了一台高性能服务器，准备把旧的 ES 集群迁移到新服务器，需要对比两个 ES 集群的性能。&lt;/p&gt;
+&lt;h2 id=&#34;一些信息&#34;&gt;一些信息&lt;/h2&gt;
+&lt;p&gt;旧服务器 ES 地址:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;192.168.0.1:9200&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;新服务器 ES 地址:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;192.168.0.2:9200&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;测试工具&#34;&gt;测试工具&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/elastic/rally?spm=a2c6h.12873639.article-detail.10.56e43a96p8hfqD&#34;&gt;esrally&lt;/a&gt; 是 elastic 官方开源的一款基于 python3 实现的针对 es 的压测工具。&lt;/p&gt;
+&lt;h4 id=&#34;查询压测&#34;&gt;查询压测&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;自定义查询压测: 对当前索引进行自定义 dsl 查询压测&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;自定义 track:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 创建 track 文件夹&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir track_1 &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; cd track_1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 获取索引的 map 信息&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;elastic:passwd&amp;#34;&lt;/span&gt; --cacert /path/to/es/http_ca.crt &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://192.168.0.1:9200/your_index/_mapping?pretty=true&amp;#34;&lt;/span&gt; &amp;gt; your_index.json
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 创建 track.json 文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;touch track.json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;track.json&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;rally.helpers&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;rally&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;context&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;%&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;version&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;description&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Tracker-generated track for test&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;indices&amp;#34;&lt;/span&gt;: [
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;your_index&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;body&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;your_index.json&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  ],
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;schedule&amp;#34;&lt;/span&gt;: [
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;operation&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;query-dsl&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;operation-type&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;search&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;body&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;query&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;match_phrase&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;content&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;搜索字符串&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      },
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;warmup-time-period&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;time-period&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;120&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;target-throughput&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;1000&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;clients&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  ]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;warmup-time-period&lt;/code&gt; 预热时间 10 s&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;time-period&lt;/code&gt; 测试时间 120 s&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;target-throughput&lt;/code&gt; 目标吞吐量 1000&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;clients&lt;/code&gt; 客户端数量 100&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对 ES 集群进行测试&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;esrally race --track-path&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/path/to/track_1 --pipeline&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;benchmark-only --target-hosts&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;192.168.0.1:9200 --client-options&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;use_ssl:true,verify_certs:true,ca_certs:&amp;#39;/path/to/old_es/http_ca.crt&amp;#39;,basic_auth_user:&amp;#39;elastic&amp;#39;,basic_auth_password:&amp;#39;passwd&amp;#39;&amp;#34;&lt;/span&gt; --kill-running-processes --report-file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;track_1_old.csv
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对新 ES 集群进行测试&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;esrally race --track-path&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/path/to/track_1 --pipeline&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;benchmark-only --target-hosts&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;192.168.0.2:9200 --client-options&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;use_ssl:true,verify_certs:true,ca_certs:&amp;#39;/path/to/new_es/http_ca.crt&amp;#39;,basic_auth_user:&amp;#39;elastic&amp;#39;,basic_auth_password:&amp;#39;passwd&amp;#39;&amp;#34;&lt;/span&gt; --kill-running-processes --report-file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;track_1_new.csv
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对比测试结果&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;esrally compare --baseline&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;9c42f589-df61-45f2-902c-9dd742877c43 --contender&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;a51179ee-91f6-444d-87af-a2cb60a46159
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;其中 &lt;code&gt;9c42f589-df61-45f2-902c-9dd742877c43&lt;/code&gt; 和 &lt;code&gt;a51179ee-91f6-444d-87af-a2cb60a46159&lt;/code&gt; 分别是两次测试的 Race ID.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;esrally list races&lt;/code&gt; 命令可查看 Race ID.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.tencent.com/developer/article/1973178&#34;&gt;https://cloud.tencent.com/developer/article/1973178&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+    </item>
+    
+  </channel>
+</rss>

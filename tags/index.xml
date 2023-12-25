@@ -1,122 +1,112 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on TeXify</title>
+    <title>Tags on Home</title>
     <link>https://blog.wukaige.com/tags/</link>
-    <description>Recent content in Tags on TeXify</description>
+    <description>Recent content in Tags on Home</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>en-US</language>
     <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
     <webMaster>wdkany@gmail.com (wukaige)</webMaster>
-    <lastBuildDate>Fri, 17 Nov 2023 18:07:51 +0000</lastBuildDate><atom:link href="https://blog.wukaige.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 06 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.wukaige.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>TiDB</title>
-      <link>https://blog.wukaige.com/tags/tidb/</link>
-      <pubDate>Fri, 17 Nov 2023 18:07:51 +0000</pubDate>
+      <title>Docker</title>
+      <link>https://blog.wukaige.com/tags/docker/</link>
+      <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate>
       <author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/tags/tidb/</guid>
-      
+      <guid>https://blog.wukaige.com/tags/docker/</guid>
       <description></description>
-      
+      <content></content>
     </item>
     
     <item>
-      <title>hugo</title>
-      <link>https://blog.wukaige.com/tags/hugo/</link>
-      <pubDate>Fri, 17 Nov 2023 14:39:24 +0000</pubDate>
+      <title>Milvus</title>
+      <link>https://blog.wukaige.com/tags/milvus/</link>
+      <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate>
       <author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/tags/hugo/</guid>
-      
+      <guid>https://blog.wukaige.com/tags/milvus/</guid>
       <description></description>
-      
-    </item>
-    
-    <item>
-      <title>Lightning</title>
-      <link>https://blog.wukaige.com/tags/lightning/</link>
-      <pubDate>Fri, 17 Nov 2023 10:10:01 +0000</pubDate>
-      <author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/tags/lightning/</guid>
-      
-      <description></description>
-      
-    </item>
-    
-    <item>
-      <title>mysql</title>
-      <link>https://blog.wukaige.com/tags/mysql/</link>
-      <pubDate>Tue, 17 Oct 2023 16:35:57 +0000</pubDate>
-      <author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/tags/mysql/</guid>
-      
-      <description></description>
-      
-    </item>
-    
-    <item>
-      <title>Rust</title>
-      <link>https://blog.wukaige.com/tags/rust/</link>
-      <pubDate>Tue, 17 Oct 2023 16:35:57 +0000</pubDate>
-      <author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/tags/rust/</guid>
-      
-      <description></description>
-      
-    </item>
-    
-    <item>
-      <title>sqlserver</title>
-      <link>https://blog.wukaige.com/tags/sqlserver/</link>
-      <pubDate>Fri, 13 Oct 2023 16:44:30 +0000</pubDate>
-      <author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/tags/sqlserver/</guid>
-      
-      <description></description>
-      
+      <content></content>
     </item>
     
     <item>
       <title>ES</title>
       <link>https://blog.wukaige.com/tags/es/</link>
-      <pubDate>Thu, 24 Aug 2023 10:36:43 +0000</pubDate>
+      <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate>
       <author>wdkany@gmail.com (wukaige)</author>
       <guid>https://blog.wukaige.com/tags/es/</guid>
-      
       <description></description>
-      
+      <content></content>
     </item>
     
     <item>
-      <title>Logstash</title>
-      <link>https://blog.wukaige.com/tags/logstash/</link>
-      <pubDate>Tue, 15 Aug 2023 17:51:57 +0000</pubDate>
+      <title>Lightning</title>
+      <link>https://blog.wukaige.com/tags/lightning/</link>
+      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate>
       <author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/tags/logstash/</guid>
-      
+      <guid>https://blog.wukaige.com/tags/lightning/</guid>
       <description></description>
-      
+      <content></content>
     </item>
     
     <item>
-      <title>clash</title>
-      <link>https://blog.wukaige.com/tags/clash/</link>
-      <pubDate>Thu, 10 Aug 2023 14:49:26 +0000</pubDate>
+      <title>TiDB</title>
+      <link>https://blog.wukaige.com/tags/tidb/</link>
+      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate>
       <author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/tags/clash/</guid>
-      
+      <guid>https://blog.wukaige.com/tags/tidb/</guid>
       <description></description>
-      
+      <content></content>
     </item>
     
     <item>
-      <title>async</title>
-      <link>https://blog.wukaige.com/tags/async/</link>
-      <pubDate>Fri, 04 Aug 2023 09:19:10 +0000</pubDate>
+      <title>esrally</title>
+      <link>https://blog.wukaige.com/tags/esrally/</link>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
       <author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/tags/async/</guid>
-      
+      <guid>https://blog.wukaige.com/tags/esrally/</guid>
       <description></description>
-      
+      <content></content>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>https://blog.wukaige.com/tags/hugo/</link>
+      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/tags/hugo/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>mysql</title>
+      <link>https://blog.wukaige.com/tags/mysql/</link>
+      <pubDate>Tue, 17 Oct 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/tags/mysql/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>Rust</title>
+      <link>https://blog.wukaige.com/tags/rust/</link>
+      <pubDate>Tue, 17 Oct 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/tags/rust/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>nvidia</title>
+      <link>https://blog.wukaige.com/tags/nvidia/</link>
+      <pubDate>Fri, 13 Oct 2023 00:00:00 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/tags/nvidia/</guid>
+      <description></description>
+      <content></content>
     </item>
     
   </channel>

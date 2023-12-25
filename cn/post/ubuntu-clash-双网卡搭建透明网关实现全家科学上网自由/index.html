@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  
+    <title>ubuntu &#43; clash &#43; 双网卡搭建透明网关实现全家科学上网自由 :: Home</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="手机科学上网需要打开 clash 软件，手动开启代理，非常不爽，我想搭建一个无感科学上网环境，连上 WIFI 就能科学上网。
+" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="https://blog.wukaige.com/cn/post/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/" />
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://blog.wukaige.com/styles.css">
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="https://blog.wukaige.com/favicon.ico">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:site" content="" />
+  
+    <meta name="twitter:creator" content="" />
+
+
+
+<meta property="og:locale" content="cn" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="ubuntu &#43; clash &#43; 双网卡搭建透明网关实现全家科学上网自由">
+<meta property="og:description" content="手机科学上网需要打开 clash 软件，手动开启代理，非常不爽，我想搭建一个无感科学上网环境，连上 WIFI 就能科学上网。
+" />
+<meta property="og:url" content="https://blog.wukaige.com/cn/post/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/" />
+<meta property="og:site_name" content="Home" />
+
+  
+    <meta property="og:image" content="https://blog.wukaige.com/favicon.ico">
+  
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+  <meta property="article:published_time" content="2023-08-10 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="blue">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/cn">
+  <div class="logo">
+    主页
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/cn/post/">文章</a></li>
+        
+      
+        
+          <li><a href="/cn/tags/">标签</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/">类别</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/leetcode">力扣</a></li>
+        
+      
+        
+          <li><a href="/cn/about">关于</a></li>
+        
+      
+      
+        <hr />
+        
+          <li>
+            <a href="https://blog.wukaige.com/cn/">简体中文</a>
+          </li>
+        
+          <li>
+            <a href="https://blog.wukaige.com/">English</a>
+          </li>
+        
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+      <ul class="menu menu--desktop menu--language-selector">
+  <li class="menu__trigger">简体中文&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        <li><a href="https://blog.wukaige.com/cn/">简体中文</a></li>
+      
+        <li><a href="https://blog.wukaige.com/">English</a></li>
+      
+    </ul>
+  </li>
+</ul>
+
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/cn/post/" >文章</a></li>
+        
+      
+        
+          <li><a href="/cn/tags/" >标签</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/" >类别</a></li>
+        
+      
+        
+          <li><a href="/cn/categories/leetcode" >力扣</a></li>
+        
+      
+        
+          <li><a href="/cn/about" >关于</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://blog.wukaige.com/cn/post/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/">ubuntu + clash + 双网卡搭建透明网关实现全家科学上网自由</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2023-08-10</time><span class="post-reading-time">1 min read (426 words)</span></div>
+
+  
+    <span class="post-tags">
+      
+      #<a href="https://blog.wukaige.com/cn/tags/clash/">clash</a>&nbsp;
+      
+    </span>
+  
+  
+
+
+  
+
+  <div class="post-content"><div>
+        <p>手机科学上网需要打开 clash 软件，手动开启代理，非常不爽，我想搭建一个无感科学上网环境，连上 WIFI 就能科学上网。</p>
+<h2 id="硬件配置">硬件配置<a href="#硬件配置" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<ul>
+<li>台式主机，连接网线 enp3s0</li>
+<li>一个 USB 无线网卡 wlan0</li>
+</ul>
+<h2 id="软件环境">软件环境<a href="#软件环境" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<ul>
+<li>Ubuntu 22.04</li>
+<li>clash</li>
+<li>nftables</li>
+</ul>
+<h2 id="配置网卡">配置网卡<a href="#配置网卡" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>配置思路：enp3s0 连接有线网，wlan0 开启热点，供手机连接。</p>
+<p>使用 nmcli 命令，在 wlan0 上创建热点。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmcli dev wifi hotspot ifname wlan0 con-name hotspot ssid <span style="color:#f92672">[</span>WIFI 名称<span style="color:#f92672">]</span> password <span style="color:#e6db74">&#39;12345678&#39;</span>
+</span></span></code></pre></div><p>开启热点</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmcli con up hotspot
+</span></span></code></pre></div><p>查看设备上的网络连接</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmcli dev
+</span></span></code></pre></div><p>一切正常的话，可以看到以下输出：</p>
+<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230810153406140.png" alt="image-20230810153406140"></p>
+<p>手机用密码 <code>12345678</code> 连接创建的 WIFI，此时可以正常上网，但是不可共享台式机的 clash 代理。</p>
+<h2 id="开启-ubuntu-ip-转发">开启 Ubuntu ip 转发<a href="#开启-ubuntu-ip-转发" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>把文件 <code>/etc/sysctl.conf</code> 中 <code>net.ipv4.ip_forward=1</code> 的注释删除</p>
+<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230810151615005.png" alt="image-20230810151615005"></p>
+<p>加载并应用配置文件中的参数</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo sysctl -p
+</span></span></code></pre></div><h2 id="配置-clash-重定向端口">配置 clash 重定向端口<a href="#配置-clash-重定向端口" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>安装 clash: <a href="https://github.com/Dreamacro/clash">https://github.com/Dreamacro/clash</a></p>
+<p>clash 配置文件加上下面配置：</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">redir-port: 7892
+</code></pre><h2 id="配置-nftables-转发流量">配置 nftables 转发流量<a href="#配置-nftables-转发流量" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>安装 nftables</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install -y nftables
+</span></span></code></pre></div><p>nftables 配置文件: <!-- raw HTML omitted -->/etc/nftables.conf<!-- raw HTML omitted --></p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">#!/usr/sbin/nft -f
+
+flush ruleset
+
+define private_list = {
+    0.0.0.0/8,
+    10.0.0.0/8,
+    127.0.0.0/8,
+    169.254.0.0/16,
+    172.16.0.0/12,
+    192.168.0.0/16,
+    224.0.0.0/4,
+    240.0.0.0/4
+}
+
+table inet filter {
+    chain input {
+        type filter hook input priority 0;
+    }
+    chain forward {
+        type filter hook forward priority 0;
+    }
+    chain output {
+        type filter hook output priority 0;
+    }
+}
+
+table ip nat {
+    chain proxy {
+        ip daddr $private_list return
+        ip protocol tcp redirect to :7892
+    }
+    chain prerouting {
+        type nat hook prerouting priority 0; policy accept;
+        jump proxy
+    }
+}
+</code></pre><p>重启 nftables 以重载配置</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart nftables.service
+</span></span></code></pre></div><p>这些配置无误后，手机连上 WIFI，直接就可科学上网。</p>
+      </div></div>
+
+  
+
+  
+    
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

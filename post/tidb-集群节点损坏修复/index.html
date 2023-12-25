@@ -1,119 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+    <title>TiDB 集群节点损坏修复 :: Home</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="tidb 某个节点的数据目录被删除，导致节点损坏。
+" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="https://blog.wukaige.com/post/tidb-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/" />
+
+
+
+
+
 
   
-  <meta name="author" content="wukaige">
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://blog.wukaige.com/styles.css">
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="https://blog.wukaige.com/favicon.ico">
+
+
+
+<meta name="twitter:card" content="summary" />
 
   
+    <meta name="twitter:site" content="" />
   
-  <meta name="description" content="前情提要 tidb 某个节点的数据目录被删除，导致节点损坏。 删除损坏节点 # 损坏节点 IP 为：192.168.70.51 端口为：27161 tiup cluster scale-in tidb-cluster --node 192.168.70.51:27161 添加新">
-  
+    <meta name="twitter:creator" content="" />
 
-  
-  <link rel="icon" href="https://blog.wukaige.com/favicon.ico">
 
-  
-  
-  <meta name="keywords" content=" hugo  latex  theme ">
-  
 
-  
-  
-
-  
-  <meta property="og:title" content="TiDB 集群节点损坏修复" />
-<meta property="og:description" content="前情提要 tidb 某个节点的数据目录被删除，导致节点损坏。 删除损坏节点 # 损坏节点 IP 为：192.168.70.51 端口为：27161 tiup cluster scale-in tidb-cluster --node 192.168.70.51:27161 添加新" />
+<meta property="og:locale" content="en" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.wukaige.com/post/tidb-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2023-07-04T16:01:58+00:00" />
-<meta property="article:modified_time" content="2023-07-04T16:01:58+00:00" />
-
-
-
-
-  
-  <link rel="canonical" href="https://blog.wukaige.com/post/tidb-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/">
+<meta property="og:title" content="TiDB 集群节点损坏修复">
+<meta property="og:description" content="tidb 某个节点的数据目录被删除，导致节点损坏。
+" />
+<meta property="og:url" content="https://blog.wukaige.com/post/tidb-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/" />
+<meta property="og:site_name" content="Home" />
 
   
-  
-  <meta itemprop="name" content="TiDB 集群节点损坏修复">
-<meta itemprop="description" content="前情提要 tidb 某个节点的数据目录被删除，导致节点损坏。 删除损坏节点 # 损坏节点 IP 为：192.168.70.51 端口为：27161 tiup cluster scale-in tidb-cluster --node 192.168.70.51:27161 添加新"><meta itemprop="datePublished" content="2023-07-04T16:01:58+00:00" />
-<meta itemprop="dateModified" content="2023-07-04T16:01:58+00:00" />
-<meta itemprop="wordCount" content="143">
-<meta itemprop="keywords" content="TiDB," />
-
-  
-  <link media="screen" rel="stylesheet" href='https://blog.wukaige.com/css/common.css'>
-  <link media="screen" rel="stylesheet" href='https://blog.wukaige.com/css/content.css'>
-
-  
-  
-  <title>TiDB 集群节点损坏修复 - TeXify</title>
+    <meta property="og:image" content="https://blog.wukaige.com/favicon.ico">
   
 
-  
-  <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="TiDB 集群节点损坏修复"/>
-<meta name="twitter:description" content="前情提要 tidb 某个节点的数据目录被删除，导致节点损坏。 删除损坏节点 # 损坏节点 IP 为：192.168.70.51 端口为：27161 tiup cluster scale-in tidb-cluster --node 192.168.70.51:27161 添加新"/>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
 
 
-  
-<link rel="stylesheet" href='https://blog.wukaige.com/css/single.css'>
+  <meta property="article:published_time" content="2023-07-04 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
 
 </head>
+<body class="blue">
 
-<body>
-  <div id="wrapper">
-    <header id="header">
-  <h1>
-    <a href="https://blog.wukaige.com/">TeXify</a>
-  </h1>
 
-  <nav>
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Home
+  </div>
+</a>
+
+    </div>
     
-    <span class="nav-bar-item">
-      <a class="link" href="/">Post</a>
-    </span>
-    
-    <span class="nav-bar-item">
-      <a class="link" href="/post/">Archives</a>
-    </span>
-    
-    <span class="nav-bar-item">
-      <a class="link" href="/about/">About</a>
-    </span>
-    
-  </nav>
-</header>
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/post/">Post</a></li>
+        
+      
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+      
+        
+          <li><a href="/categories/">Categories</a></li>
+        
+      
+        
+          <li><a href="/categories/leetcode">Leetcode</a></li>
+        
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+      
+        <hr />
+        
+          <li>
+            <a href="https://blog.wukaige.com/cn/">简体中文</a>
+          </li>
+        
+          <li>
+            <a href="https://blog.wukaige.com/">English</a>
+          </li>
+        
+      
+    </ul>
+  </li>
+</ul>
 
     
-<main id="main" class="post">
-  
-  
-  <h1>TiDB 集群节点损坏修复</h1>
-  
-  <div>
-    <b>Keywords: </b>
     
-    <a class="link" href='https://blog.wukaige.com/tags/tidb'>#TiDB</a>
+      <ul class="menu menu--desktop menu--language-selector">
+  <li class="menu__trigger">English&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        <li><a href="https://blog.wukaige.com/cn/">简体中文</a></li>
+      
+        <li><a href="https://blog.wukaige.com/">English</a></li>
+      
+    </ul>
+  </li>
+</ul>
+
     
   </div>
   
-  
-  <article class="content">
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
     
-    <h2 id="前情提要">前情提要</h2>
-<p>tidb 某个节点的数据目录被删除，导致节点损坏。</p>
-<h2 id="删除损坏节点">删除损坏节点</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># 损坏节点 IP 为：192.168.70.51 端口为：27161</span>
+      
+        
+          <li><a href="/post/" >Post</a></li>
+        
+      
+        
+          <li><a href="/tags/" >Tags</a></li>
+        
+      
+        
+          <li><a href="/categories/" >Categories</a></li>
+        
+      
+        
+          <li><a href="/categories/leetcode" >Leetcode</a></li>
+        
+      
+        
+          <li><a href="/about" >About</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://blog.wukaige.com/post/tidb-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/">TiDB 集群节点损坏修复</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2023-07-04</time><span class="post-reading-time">1 min read (139 words)</span></div>
+
+  
+    <span class="post-tags">
+      
+      #<a href="https://blog.wukaige.com/tags/tidb/">TiDB</a>&nbsp;
+      
+    </span>
+  
+  
+
+
+  
+
+  <div class="post-content"><div>
+        <p>tidb 某个节点的数据目录被删除，导致节点损坏。</p>
+<h2 id="删除损坏节点">删除损坏节点<a href="#删除损坏节点" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 损坏节点 IP 为：192.168.70.51 端口为：27161</span>
 </span></span><span style="display:flex;"><span>tiup cluster scale-in tidb-cluster --node 192.168.70.51:27161
-</span></span></code></pre></div><h2 id="添加新的节点">添加新的节点</h2>
-<p><u>scale-out.yaml</u> 文件内容：</p>
+</span></span></code></pre></div><h2 id="添加新的节点">添加新的节点<a href="#添加新的节点" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p><!-- raw HTML omitted -->scale-out.yaml<!-- raw HTML omitted --> 文件内容：</p>
 <pre tabindex="0"><code>tikv_servers:
   - host: 192.168.70.51
     port: 27161
@@ -125,64 +221,48 @@
       storage.block-cache.capacity: &#34;30GiB&#34;
       raftstore.capacity: &#34;2048GiB&#34;
 </code></pre><p>添加节点：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># 集群名称为：tidb-cluster</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 集群名称为：tidb-cluster</span>
 </span></span><span style="display:flex;"><span>tiup cluster scale-out tidb-cluster ./scale-out.yaml --user root -p
-</span></span></code></pre></div><h2 id="验证集群状态">验证集群状态</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup cluster display tidb-cluster
+</span></span></code></pre></div><h2 id="验证集群状态">验证集群状态<a href="#验证集群状态" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup cluster display tidb-cluster
 </span></span></code></pre></div>
-    
-  </article>
-  <div class="paginator">
-    
-    <a class="link" href="https://blog.wukaige.com/post/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95/">← prev</a>
-    
-    
-    <a class="link" href="https://blog.wukaige.com/post/tikv-%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E6%8E%92%E6%9F%A5/">next →</a>
-    
-  </div>
-  <div class="comment">
-    
-    
-    
-    
-    
-    
-  </div>
+      </div></div>
+
   
-</main>
 
-    <footer id="footer">
-  <div>
-    <span>© 2019</span> - <span>2023</span>
+  
+    
+
+  
+</article>
+
   </div>
 
-  <div>
-    <span>Powered by </span>
-    <a class="link" href="https://gohugo.io/">Hugo</a>
-    <span> 🍦 Theme </span>
-    <a class="link" href="https://github.com/queensferryme/hugo-theme-texify">TeXify</a>
-  </div>
-
-  <div class="footnote">
-    <span>Follow me on <a class=link href=https://github.com/queensferryme>GitHub</a>,
-<a class=link href=https://twitter.com/queensferryme>Twitter</a> or
-<a class=link href=/index.xml>RSS</a> |
-<a class=link href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh target=_blank rel=noopener>CC BY-NC-SA 4.0</a>
-</span>
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
   </div>
 </footer>
 
-  </div>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
 
   
-  
-
-  
-  
-
-  
-  
+</div>
 
 </body>
-
 </html>

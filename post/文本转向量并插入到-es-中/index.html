@@ -1,113 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+    <title>文本转向量并插入到 ES 中 :: Home</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ES 中创建索引 PUT vector-index { &amp;#34;mappings&amp;#34;: { &amp;#34;properties&amp;#34;: { &amp;#34;title&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;text&amp;#34; }, &amp;#34;content_vector&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;dense_vector&amp;#34;, &amp;#34;dims&amp;#34;: 768, &amp;#34;index&amp;#34;: true, &amp;#34;similarity&amp;#34;: &amp;#34;l2_norm&amp;#34; } } } } 导入一些数据 使用 logstash 工具从 mysql 数据库导入数据 input { jdbc { jdbc_driver_library =&amp;gt; &amp;#39;path/to/mysql-connector-java-8.0.21.jar&amp;#39; jdbc_driver_class =&amp;gt; &amp;#39;com.mysql.cj.jdbc.Driver&amp;#39; jdbc_connection_string =&amp;gt; &amp;#39;jdbc:mysql://[IP ADDR]:[POST]/[DATABASE]?useSSL=false&amp;amp;serverTimezone=UTC&amp;amp;rewriteBatchedStatements=true&amp;amp;autoReconnect=true&amp;#39; jdbc_user =&amp;gt; &amp;#39;root&amp;#39; jdbc_password" />
+<meta name="keywords" content="" />
 
-  
-  <meta name="author" content="wukaige">
+  <meta name="robots" content="noodp" />
 
-  
-  
-  <meta name="description" content="ES 中创建索引 PUT vector-index { &#34;mappings&#34;: { &#34;properties&#34;: { &#34;title&#34;: { &#34;type&#34;: &#34;text&#34; }, &#34;content_vector&#34;: { &#34;type&#34;: &#34;dense_vector&#34;, &#34;dims&#34;: 768, &#34;index&#34;: true, &#34;similarity&#34;: &#34;l2_norm&#34; } } } } 导入一些数据 使用 logstash 工具从 mysql 数据库导入数据 input { jdbc { jdbc_driver_library =&gt; &#39;path/to/mysql-connector-java-8.0.21.jar&#39; jdbc_driver_class =&gt; &#39;com.mysql.cj.jdbc.Driver&#39; jdbc_connection_string =&gt; &#39;jdbc:mysql://[IP ADDR]:[POST]/[DATABASE]?useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true&amp;autoReconnect=true&#39; jdbc_user =&gt; &#39;root&#39; jdbc_password">
-  
+<link rel="canonical" href="https://blog.wukaige.com/post/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/" />
 
-  
-  <link rel="icon" href="https://blog.wukaige.com/favicon.ico">
 
-  
-  
-  <meta name="keywords" content=" hugo  latex  theme ">
-  
+
+
+
 
   
   
+  
+  
+  
+  <link rel="stylesheet" href="https://blog.wukaige.com/styles.css">
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="https://blog.wukaige.com/favicon.ico">
+
+
+
+<meta name="twitter:card" content="summary" />
 
   
-  <meta property="og:title" content="文本转向量并插入到 ES 中" />
-<meta property="og:description" content="ES 中创建索引 PUT vector-index { &#34;mappings&#34;: { &#34;properties&#34;: { &#34;title&#34;: { &#34;type&#34;: &#34;text&#34; }, &#34;content_vector&#34;: { &#34;type&#34;: &#34;dense_vector&#34;, &#34;dims&#34;: 768, &#34;index&#34;: true, &#34;similarity&#34;: &#34;l2_norm&#34; } } } } 导入一些数据 使用 logstash 工具从 mysql 数据库导入数据 input { jdbc { jdbc_driver_library =&gt; &#39;path/to/mysql-connector-java-8.0.21.jar&#39; jdbc_driver_class =&gt; &#39;com.mysql.cj.jdbc.Driver&#39; jdbc_connection_string =&gt; &#39;jdbc:mysql://[IP ADDR]:[POST]/[DATABASE]?useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true&amp;autoReconnect=true&#39; jdbc_user =&gt; &#39;root&#39; jdbc_password" />
+    <meta name="twitter:site" content="" />
+  
+    <meta name="twitter:creator" content="" />
+
+
+
+<meta property="og:locale" content="en" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.wukaige.com/post/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2023-07-03T17:52:05+00:00" />
-<meta property="article:modified_time" content="2023-07-03T17:52:05+00:00" />
-
-
-
+<meta property="og:title" content="文本转向量并插入到 ES 中">
+<meta property="og:description" content="ES 中创建索引 PUT vector-index { &amp;#34;mappings&amp;#34;: { &amp;#34;properties&amp;#34;: { &amp;#34;title&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;text&amp;#34; }, &amp;#34;content_vector&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;dense_vector&amp;#34;, &amp;#34;dims&amp;#34;: 768, &amp;#34;index&amp;#34;: true, &amp;#34;similarity&amp;#34;: &amp;#34;l2_norm&amp;#34; } } } } 导入一些数据 使用 logstash 工具从 mysql 数据库导入数据 input { jdbc { jdbc_driver_library =&amp;gt; &amp;#39;path/to/mysql-connector-java-8.0.21.jar&amp;#39; jdbc_driver_class =&amp;gt; &amp;#39;com.mysql.cj.jdbc.Driver&amp;#39; jdbc_connection_string =&amp;gt; &amp;#39;jdbc:mysql://[IP ADDR]:[POST]/[DATABASE]?useSSL=false&amp;amp;serverTimezone=UTC&amp;amp;rewriteBatchedStatements=true&amp;amp;autoReconnect=true&amp;#39; jdbc_user =&amp;gt; &amp;#39;root&amp;#39; jdbc_password" />
+<meta property="og:url" content="https://blog.wukaige.com/post/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/" />
+<meta property="og:site_name" content="Home" />
 
   
-  <link rel="canonical" href="https://blog.wukaige.com/post/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/">
-
-  
-  
-  <meta itemprop="name" content="文本转向量并插入到 ES 中">
-<meta itemprop="description" content="ES 中创建索引 PUT vector-index { &#34;mappings&#34;: { &#34;properties&#34;: { &#34;title&#34;: { &#34;type&#34;: &#34;text&#34; }, &#34;content_vector&#34;: { &#34;type&#34;: &#34;dense_vector&#34;, &#34;dims&#34;: 768, &#34;index&#34;: true, &#34;similarity&#34;: &#34;l2_norm&#34; } } } } 导入一些数据 使用 logstash 工具从 mysql 数据库导入数据 input { jdbc { jdbc_driver_library =&gt; &#39;path/to/mysql-connector-java-8.0.21.jar&#39; jdbc_driver_class =&gt; &#39;com.mysql.cj.jdbc.Driver&#39; jdbc_connection_string =&gt; &#39;jdbc:mysql://[IP ADDR]:[POST]/[DATABASE]?useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true&amp;autoReconnect=true&#39; jdbc_user =&gt; &#39;root&#39; jdbc_password"><meta itemprop="datePublished" content="2023-07-03T17:52:05+00:00" />
-<meta itemprop="dateModified" content="2023-07-03T17:52:05+00:00" />
-<meta itemprop="wordCount" content="485">
-<meta itemprop="keywords" content="ES," />
-
-  
-  <link media="screen" rel="stylesheet" href='https://blog.wukaige.com/css/common.css'>
-  <link media="screen" rel="stylesheet" href='https://blog.wukaige.com/css/content.css'>
-
-  
-  
-  <title>文本转向量并插入到 ES 中 - TeXify</title>
+    <meta property="og:image" content="https://blog.wukaige.com/favicon.ico">
   
 
-  
-  <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="文本转向量并插入到 ES 中"/>
-<meta name="twitter:description" content="ES 中创建索引 PUT vector-index { &#34;mappings&#34;: { &#34;properties&#34;: { &#34;title&#34;: { &#34;type&#34;: &#34;text&#34; }, &#34;content_vector&#34;: { &#34;type&#34;: &#34;dense_vector&#34;, &#34;dims&#34;: 768, &#34;index&#34;: true, &#34;similarity&#34;: &#34;l2_norm&#34; } } } } 导入一些数据 使用 logstash 工具从 mysql 数据库导入数据 input { jdbc { jdbc_driver_library =&gt; &#39;path/to/mysql-connector-java-8.0.21.jar&#39; jdbc_driver_class =&gt; &#39;com.mysql.cj.jdbc.Driver&#39; jdbc_connection_string =&gt; &#39;jdbc:mysql://[IP ADDR]:[POST]/[DATABASE]?useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true&amp;autoReconnect=true&#39; jdbc_user =&gt; &#39;root&#39; jdbc_password"/>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
 
 
-  
-<link rel="stylesheet" href='https://blog.wukaige.com/css/single.css'>
+  <meta property="article:published_time" content="2023-07-03 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
 
 </head>
+<body class="blue">
 
-<body>
-  <div id="wrapper">
-    <header id="header">
-  <h1>
-    <a href="https://blog.wukaige.com/">TeXify</a>
-  </h1>
 
-  <nav>
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Home
+  </div>
+</a>
+
+    </div>
     
-    <span class="nav-bar-item">
-      <a class="link" href="/">Post</a>
-    </span>
-    
-    <span class="nav-bar-item">
-      <a class="link" href="/post/">Archives</a>
-    </span>
-    
-    <span class="nav-bar-item">
-      <a class="link" href="/about/">About</a>
-    </span>
-    
-  </nav>
-</header>
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/post/">Post</a></li>
+        
+      
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+      
+        
+          <li><a href="/categories/">Categories</a></li>
+        
+      
+        
+          <li><a href="/categories/leetcode">Leetcode</a></li>
+        
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+      
+        <hr />
+        
+          <li>
+            <a href="https://blog.wukaige.com/cn/">简体中文</a>
+          </li>
+        
+          <li>
+            <a href="https://blog.wukaige.com/">English</a>
+          </li>
+        
+      
+    </ul>
+  </li>
+</ul>
 
     
-<main id="main" class="post">
-  
-  
-  <h1>文本转向量并插入到 ES 中</h1>
-  
-  <div>
-    <b>Keywords: </b>
     
-    <a class="link" href='https://blog.wukaige.com/tags/es'>#ES</a>
+      <ul class="menu menu--desktop menu--language-selector">
+  <li class="menu__trigger">English&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        <li><a href="https://blog.wukaige.com/cn/">简体中文</a></li>
+      
+        <li><a href="https://blog.wukaige.com/">English</a></li>
+      
+    </ul>
+  </li>
+</ul>
+
     
   </div>
   
-  
-  <article class="content">
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
     
-    <h2 id="es-中创建索引">ES 中创建索引</h2>
+      
+        
+          <li><a href="/post/" >Post</a></li>
+        
+      
+        
+          <li><a href="/tags/" >Tags</a></li>
+        
+      
+        
+          <li><a href="/categories/" >Categories</a></li>
+        
+      
+        
+          <li><a href="/categories/leetcode" >Leetcode</a></li>
+        
+      
+        
+          <li><a href="/about" >About</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://blog.wukaige.com/post/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/">文本转向量并插入到 ES 中</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2023-07-03</time><span class="post-reading-time">1 min read (485 words)</span></div>
+
+  
+    <span class="post-tags">
+      
+      #<a href="https://blog.wukaige.com/tags/es/">ES</a>&nbsp;
+      
+    </span>
+  
+  
+
+
+  
+
+  <div class="post-content"><div>
+        <h2 id="es-中创建索引">ES 中创建索引<a href="#es-中创建索引" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
 <pre tabindex="0"><code>PUT vector-index
 {
   &#34;mappings&#34;: {
@@ -124,7 +219,7 @@
     }
   }
 }
-</code></pre><h2 id="导入一些数据">导入一些数据</h2>
+</code></pre><h2 id="导入一些数据">导入一些数据<a href="#导入一些数据" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
 <p>使用 logstash 工具从 mysql 数据库导入数据</p>
 <pre tabindex="0"><code>input {
     jdbc {
@@ -161,143 +256,127 @@ output {
       password =&gt; &#34;[elastic password]&#34;
 	}
 }
-</code></pre><h2 id="文本转向量并插入-es">文本转向量并插入 ES</h2>
+</code></pre><h2 id="文本转向量并插入-es">文本转向量并插入 ES<a href="#文本转向量并插入-es" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
 <p>python 脚本</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">os</span>
-</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">pymysql</span>
-</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">pandas</span> <span style="color:#a2f;font-weight:bold">as</span> <span style="color:#00f;font-weight:bold">pd</span>
-</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">rich.progress</span> <span style="color:#a2f;font-weight:bold">import</span> Progress, TextColumn, BarColumn, TimeElapsedColumn, TimeRemainingColumn, MofNCompleteColumn
-</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">text2vec</span> <span style="color:#a2f;font-weight:bold">import</span> SentenceModel
-</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">requests</span>
-</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">requests.auth</span> <span style="color:#a2f;font-weight:bold">import</span> HTTPBasicAuth
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pymysql
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> rich.progress <span style="color:#f92672">import</span> Progress, TextColumn, BarColumn, TimeElapsedColumn, TimeRemainingColumn, MofNCompleteColumn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> text2vec <span style="color:#f92672">import</span> SentenceModel
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> requests.auth <span style="color:#f92672">import</span> HTTPBasicAuth
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>es_url <span style="color:#666">=</span> <span style="color:#b44">&#34;https://[ES IPADDR]:[ES POST]&#34;</span>
-</span></span><span style="display:flex;"><span>es_username <span style="color:#666">=</span> <span style="color:#b44">&#34;elastic&#34;</span>  <span style="color:#080;font-style:italic"># 替换为实际的用户名</span>
-</span></span><span style="display:flex;"><span>es_password <span style="color:#666">=</span> <span style="color:#b44">&#34;[password]&#34;</span>  <span style="color:#080;font-style:italic"># 替换为实际的密码</span>
+</span></span><span style="display:flex;"><span>es_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://[ES IPADDR]:[ES POST]&#34;</span>
+</span></span><span style="display:flex;"><span>es_username <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;elastic&#34;</span>  <span style="color:#75715e"># 替换为实际的用户名</span>
+</span></span><span style="display:flex;"><span>es_password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;[password]&#34;</span>  <span style="color:#75715e"># 替换为实际的密码</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>conn <span style="color:#666">=</span> pymysql<span style="color:#666">.</span>connect(
-</span></span><span style="display:flex;"><span>    host<span style="color:#666">=</span><span style="color:#b44">&#34;[MYSQL HOST]&#34;</span>, user<span style="color:#666">=</span><span style="color:#b44">&#34;[user]&#34;</span>, password<span style="color:#666">=</span><span style="color:#b44">&#34;[password]&#34;</span>, database<span style="color:#666">=</span><span style="color:#b44">&#34;[DATABASE]&#34;</span>, port<span style="color:#666">=</span>[your post],
-</span></span><span style="display:flex;"><span>    cursorclass<span style="color:#666">=</span>pymysql<span style="color:#666">.</span>cursors<span style="color:#666">.</span>DictCursor
+</span></span><span style="display:flex;"><span>conn <span style="color:#f92672">=</span> pymysql<span style="color:#f92672">.</span>connect(
+</span></span><span style="display:flex;"><span>    host<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[MYSQL HOST]&#34;</span>, user<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[user]&#34;</span>, password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[password]&#34;</span>, database<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[DATABASE]&#34;</span>, port<span style="color:#f92672">=</span>[your post],
+</span></span><span style="display:flex;"><span>    cursorclass<span style="color:#f92672">=</span>pymysql<span style="color:#f92672">.</span>cursors<span style="color:#f92672">.</span>DictCursor
 </span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>cursor <span style="color:#666">=</span> conn<span style="color:#666">.</span>cursor()
+</span></span><span style="display:flex;"><span>cursor <span style="color:#f92672">=</span> conn<span style="color:#f92672">.</span>cursor()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># load model</span>
-</span></span><span style="display:flex;"><span>model <span style="color:#666">=</span> SentenceModel(<span style="color:#b44">&#39;shibing624/text2vec-base-chinese&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># load model</span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> SentenceModel(<span style="color:#e6db74">&#39;shibing624/text2vec-base-chinese&#39;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># insert func</span>
-</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">to_es</span>(_id, vector):
-</span></span><span style="display:flex;"><span>    data <span style="color:#666">=</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#34;doc&#34;</span>: {
-</span></span><span style="display:flex;"><span>            <span style="color:#b44">&#34;content_vector&#34;</span>: vector<span style="color:#666">.</span>tolist()
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># insert func</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">to_es</span>(_id, vector):
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;doc&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;content_vector&#34;</span>: vector<span style="color:#f92672">.</span>tolist()
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    url <span style="color:#666">=</span> <span style="color:#b44">f</span><span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">{</span>es_url<span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">/precedent_vector/_update/</span><span style="color:#b68;font-weight:bold">{</span>_id<span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># crt 证书生成 pem 证书：openssl x509 -in http_ca.crt -out http_ca.pem</span>
-</span></span><span style="display:flex;"><span>    response <span style="color:#666">=</span> requests<span style="color:#666">.</span>post(url, json<span style="color:#666">=</span>data, auth<span style="color:#666">=</span>HTTPBasicAuth(es_username, es_password), verify<span style="color:#666">=</span><span style="color:#b44">&#39;http_ca.pem&#39;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># 检查响应状态码</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">if</span> response<span style="color:#666">.</span>status_code <span style="color:#666">!=</span> <span style="color:#666">200</span>:
-</span></span><span style="display:flex;"><span>        msg <span style="color:#666">=</span> <span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">{}</span><span style="color:#b44">:</span><span style="color:#b68;font-weight:bold">{}</span><span style="color:#b44">&#34;</span><span style="color:#666">.</span>format(_id, response<span style="color:#666">.</span>text)
-</span></span><span style="display:flex;"><span>        os<span style="color:#666">.</span>system(<span style="color:#b44">&#34;echo &#39;</span><span style="color:#b68;font-weight:bold">{}</span><span style="color:#b44">&#39; &gt;&gt; error.log&#34;</span><span style="color:#666">.</span>format(msg))
-</span></span><span style="display:flex;"><span>        <span style="color:#a2f">print</span>(msg)
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>es_url<span style="color:#e6db74">}</span><span style="color:#e6db74">/precedent_vector/_update/</span><span style="color:#e6db74">{</span>_id<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># crt 证书生成 pem 证书：openssl x509 -in http_ca.crt -out http_ca.pem</span>
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(url, json<span style="color:#f92672">=</span>data, auth<span style="color:#f92672">=</span>HTTPBasicAuth(es_username, es_password), verify<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;http_ca.pem&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 检查响应状态码</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">!=</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        msg <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(_id, response<span style="color:#f92672">.</span>text)
+</span></span><span style="display:flex;"><span>        os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;echo &#39;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39; &gt;&gt; error.log&#34;</span><span style="color:#f92672">.</span>format(msg))
+</span></span><span style="display:flex;"><span>        print(msg)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">with</span> Progress(TextColumn(<span style="color:#b44">&#34;[progress.description]</span><span style="color:#b68;font-weight:bold">{task.description}</span><span style="color:#b44">&#34;</span>),
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> Progress(TextColumn(<span style="color:#e6db74">&#34;[progress.description]</span><span style="color:#e6db74">{task.description}</span><span style="color:#e6db74">&#34;</span>),
 </span></span><span style="display:flex;"><span>              MofNCompleteColumn(),
 </span></span><span style="display:flex;"><span>              BarColumn(),
-</span></span><span style="display:flex;"><span>              TextColumn(<span style="color:#b44">&#34;[progress.percentage]</span><span style="color:#b68;font-weight:bold">{task.percentage:&gt;3.0f}</span><span style="color:#b44">%&#34;</span>),
+</span></span><span style="display:flex;"><span>              TextColumn(<span style="color:#e6db74">&#34;[progress.percentage]</span><span style="color:#e6db74">{task.percentage:&gt;3.0f}</span><span style="color:#e6db74">%&#34;</span>),
 </span></span><span style="display:flex;"><span>              TimeRemainingColumn(),
-</span></span><span style="display:flex;"><span>              TimeElapsedColumn()) <span style="color:#a2f;font-weight:bold">as</span> progress:
-</span></span><span style="display:flex;"><span>    start <span style="color:#666">=</span> <span style="color:#666">0</span>
-</span></span><span style="display:flex;"><span>    end <span style="color:#666">=</span> <span style="color:#666">100</span>
-</span></span><span style="display:flex;"><span>    batch_size <span style="color:#666">=</span> <span style="color:#666">100</span>
-</span></span><span style="display:flex;"><span>    batch <span style="color:#666">=</span> progress<span style="color:#666">.</span>add_task(description<span style="color:#666">=</span><span style="color:#b44">&#34;Batch&#34;</span>, total<span style="color:#666">=</span>end <span style="color:#666">-</span> start)
-</span></span><span style="display:flex;"><span>    task <span style="color:#666">=</span> progress<span style="color:#666">.</span>add_task(description<span style="color:#666">=</span><span style="color:#b44">&#34;Text Embedding&#34;</span>, total<span style="color:#666">=</span><span style="color:#666">3</span>)
-</span></span><span style="display:flex;"><span>    insert <span style="color:#666">=</span> progress<span style="color:#666">.</span>add_task(description<span style="color:#666">=</span><span style="color:#b44">&#34;Insert To ES&#34;</span>, total<span style="color:#666">=</span>batch_size)
+</span></span><span style="display:flex;"><span>              TimeElapsedColumn()) <span style="color:#66d9ef">as</span> progress:
+</span></span><span style="display:flex;"><span>    start <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    end <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>    batch_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>    batch <span style="color:#f92672">=</span> progress<span style="color:#f92672">.</span>add_task(description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Batch&#34;</span>, total<span style="color:#f92672">=</span>end <span style="color:#f92672">-</span> start)
+</span></span><span style="display:flex;"><span>    task <span style="color:#f92672">=</span> progress<span style="color:#f92672">.</span>add_task(description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Text Embedding&#34;</span>, total<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>    insert <span style="color:#f92672">=</span> progress<span style="color:#f92672">.</span>add_task(description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Insert To ES&#34;</span>, total<span style="color:#f92672">=</span>batch_size)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(start, end):
-</span></span><span style="display:flex;"><span>        start <span style="color:#666">=</span> i <span style="color:#666">*</span> batch_size
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(start, end):
+</span></span><span style="display:flex;"><span>        start <span style="color:#f92672">=</span> i <span style="color:#f92672">*</span> batch_size
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic"># step one</span>
-</span></span><span style="display:flex;"><span>        progress<span style="color:#666">.</span>update(task, advance<span style="color:#666">=</span><span style="color:#666">1</span>, description<span style="color:#666">=</span><span style="color:#b44">&#34;Query Data&#34;</span>)
-</span></span><span style="display:flex;"><span>        sql <span style="color:#666">=</span> <span style="color:#b44">f</span><span style="color:#b44">&#34;select id,section_head,section_party,section_litigation,section_truth,section_reason,section_result from precedent where id &gt; </span><span style="color:#b68;font-weight:bold">{</span>start<span style="color:#b68;font-weight:bold">}</span><span style="color:#b44"> order by id limit </span><span style="color:#b68;font-weight:bold">{</span>batch_size<span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">&#34;</span>
-</span></span><span style="display:flex;"><span>        os<span style="color:#666">.</span>system(<span style="color:#b44">&#34;echo &#39;</span><span style="color:#b68;font-weight:bold">{}</span><span style="color:#b44">&#39; &gt; ./query.sql&#34;</span><span style="color:#666">.</span>format(sql))
-</span></span><span style="display:flex;"><span>        cursor<span style="color:#666">.</span>execute(sql)
-</span></span><span style="display:flex;"><span>        results <span style="color:#666">=</span> cursor<span style="color:#666">.</span>fetchall()
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># step one</span>
+</span></span><span style="display:flex;"><span>        progress<span style="color:#f92672">.</span>update(task, advance<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Query Data&#34;</span>)
+</span></span><span style="display:flex;"><span>        sql <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;select id,section_head,section_party,section_litigation,section_truth,section_reason,section_result from precedent where id &gt; </span><span style="color:#e6db74">{</span>start<span style="color:#e6db74">}</span><span style="color:#e6db74"> order by id limit </span><span style="color:#e6db74">{</span>batch_size<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>        os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;echo &#39;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39; &gt; ./query.sql&#34;</span><span style="color:#f92672">.</span>format(sql))
+</span></span><span style="display:flex;"><span>        cursor<span style="color:#f92672">.</span>execute(sql)
+</span></span><span style="display:flex;"><span>        results <span style="color:#f92672">=</span> cursor<span style="color:#f92672">.</span>fetchall()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic"># step two</span>
-</span></span><span style="display:flex;"><span>        progress<span style="color:#666">.</span>update(task, advance<span style="color:#666">=</span><span style="color:#666">1</span>, description<span style="color:#666">=</span><span style="color:#b44">&#34;Create DataFrame&#34;</span>)
-</span></span><span style="display:flex;"><span>        df <span style="color:#666">=</span> pd<span style="color:#666">.</span>DataFrame(results)
-</span></span><span style="display:flex;"><span>        df[<span style="color:#b44">&#34;content&#34;</span>] <span style="color:#666">=</span> df[<span style="color:#b44">&#34;section_head&#34;</span>]<span style="color:#666">.</span>str<span style="color:#666">.</span>cat(
-</span></span><span style="display:flex;"><span>            [df[<span style="color:#b44">&#34;section_party&#34;</span>], df[<span style="color:#b44">&#34;section_litigation&#34;</span>], df[<span style="color:#b44">&#34;section_truth&#34;</span>], df[<span style="color:#b44">&#34;section_reason&#34;</span>],
-</span></span><span style="display:flex;"><span>             df[<span style="color:#b44">&#34;section_result&#34;</span>]], sep<span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b62;font-weight:bold">\n</span><span style="color:#b44">&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># step two</span>
+</span></span><span style="display:flex;"><span>        progress<span style="color:#f92672">.</span>update(task, advance<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Create DataFrame&#34;</span>)
+</span></span><span style="display:flex;"><span>        df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(results)
+</span></span><span style="display:flex;"><span>        df[<span style="color:#e6db74">&#34;content&#34;</span>] <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#34;section_head&#34;</span>]<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>cat(
+</span></span><span style="display:flex;"><span>            [df[<span style="color:#e6db74">&#34;section_party&#34;</span>], df[<span style="color:#e6db74">&#34;section_litigation&#34;</span>], df[<span style="color:#e6db74">&#34;section_truth&#34;</span>], df[<span style="color:#e6db74">&#34;section_reason&#34;</span>],
+</span></span><span style="display:flex;"><span>             df[<span style="color:#e6db74">&#34;section_result&#34;</span>]], sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic"># step three</span>
-</span></span><span style="display:flex;"><span>        progress<span style="color:#666">.</span>update(task, advance<span style="color:#666">=</span><span style="color:#666">1</span>, description<span style="color:#666">=</span><span style="color:#b44">f</span><span style="color:#b44">&#34;Text Embedding&#34;</span>)
-</span></span><span style="display:flex;"><span>        vectors <span style="color:#666">=</span> model<span style="color:#666">.</span>encode(df[<span style="color:#b44">&#34;content&#34;</span>]<span style="color:#666">.</span>tolist(), show_progress_bar<span style="color:#666">=</span><span style="color:#a2f;font-weight:bold">True</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># step three</span>
+</span></span><span style="display:flex;"><span>        progress<span style="color:#f92672">.</span>update(task, advance<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Text Embedding&#34;</span>)
+</span></span><span style="display:flex;"><span>        vectors <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>encode(df[<span style="color:#e6db74">&#34;content&#34;</span>]<span style="color:#f92672">.</span>tolist(), show_progress_bar<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic"># insert to es</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">for</span> _id, vector <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">zip</span>(df<span style="color:#666">.</span>id<span style="color:#666">.</span>tolist(), vectors):
-</span></span><span style="display:flex;"><span>            progress<span style="color:#666">.</span>update(insert, advance<span style="color:#666">=</span><span style="color:#666">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># insert to es</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> _id, vector <span style="color:#f92672">in</span> zip(df<span style="color:#f92672">.</span>id<span style="color:#f92672">.</span>tolist(), vectors):
+</span></span><span style="display:flex;"><span>            progress<span style="color:#f92672">.</span>update(insert, advance<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
 </span></span><span style="display:flex;"><span>            to_es(_id, vector)
-</span></span><span style="display:flex;"><span>        progress<span style="color:#666">.</span>reset(insert)
+</span></span><span style="display:flex;"><span>        progress<span style="color:#f92672">.</span>reset(insert)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        progress<span style="color:#666">.</span>update(batch, advance<span style="color:#666">=</span><span style="color:#666">1</span>)
-</span></span><span style="display:flex;"><span>        progress<span style="color:#666">.</span>reset(task)
-</span></span><span style="display:flex;"><span>    progress<span style="color:#666">.</span>reset(batch)
+</span></span><span style="display:flex;"><span>        progress<span style="color:#f92672">.</span>update(batch, advance<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        progress<span style="color:#f92672">.</span>reset(task)
+</span></span><span style="display:flex;"><span>    progress<span style="color:#f92672">.</span>reset(batch)
 </span></span></code></pre></div><p><strong>数据量不大，并且希望可以实时看到插入进度，可以用上面的代码，追求 ES 更新速度，请移步: <a href="https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-40min/">ES 数据插入速度优化，从 4.5h -&gt; 40min</a></strong></p>
 
-    
-  </article>
-  <div class="paginator">
-    
-    <a class="link" href="https://blog.wukaige.com/post/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">← prev</a>
-    
-    
-    <a class="link" href="https://blog.wukaige.com/post/nginx-%E4%BB%A3%E7%90%86-openai-api/">next →</a>
-    
-  </div>
-  <div class="comment">
-    
-    
-    
-    
-    
-    
-  </div>
+      </div></div>
+
   
-</main>
 
-    <footer id="footer">
-  <div>
-    <span>© 2019</span> - <span>2023</span>
+  
+    
+
+  
+</article>
+
   </div>
 
-  <div>
-    <span>Powered by </span>
-    <a class="link" href="https://gohugo.io/">Hugo</a>
-    <span> 🍦 Theme </span>
-    <a class="link" href="https://github.com/queensferryme/hugo-theme-texify">TeXify</a>
-  </div>
-
-  <div class="footnote">
-    <span>Follow me on <a class=link href=https://github.com/queensferryme>GitHub</a>,
-<a class=link href=https://twitter.com/queensferryme>Twitter</a> or
-<a class=link href=/index.xml>RSS</a> |
-<a class=link href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh target=_blank rel=noopener>CC BY-NC-SA 4.0</a>
-</span>
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
   </div>
 </footer>
 
-  </div>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
 
   
-  
-
-  
-  
-
-  
-  
+</div>
 
 </body>
-
 </html>
