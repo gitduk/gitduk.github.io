@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta name="generator" content="Hugo 0.120.4">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+  <meta name="author" content="wukaige">
+
+  
+  
+  <meta name="description" content="an example site for hugo theme TeXify">
+  
+
+  
+  <link rel="icon" href="https://blog.wukaige.com/favicon.ico">
+
+  
+  
+  <meta name="keywords" content=" hugo  latex  theme ">
+  
+
+  
+  
+
+  
+  <meta property="og:title" content="" />
+<meta property="og:description" content="an example site for hugo theme TeXify" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://blog.wukaige.com/" />
+
+
+
+
+  
+  <link rel="canonical" href="https://blog.wukaige.com/">
+
+  
+  
+  <link rel="alternate" type="application/rss+xml" href="https://blog.wukaige.com/index.xml" title="TeXify" />
+  
+  <meta itemprop="name" content="">
+<meta itemprop="description" content="an example site for hugo theme TeXify">
+
+  
+  <link media="screen" rel="stylesheet" href='https://blog.wukaige.com/css/common.css'>
+  <link media="screen" rel="stylesheet" href='https://blog.wukaige.com/css/content.css'>
+
+  
+  
+  <title>TeXify</title>
+  
+
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="an example site for hugo theme TeXify"/>
+
+
+  
+<link rel="stylesheet" href='https://blog.wukaige.com/css/index.css'>
+
+</head>
+
+<body>
+  <div id="wrapper">
+    <header id="header">
+  <h1>
+    <a href="https://blog.wukaige.com/">TeXify</a>
+  </h1>
+
+  <nav>
+    
+    <span class="nav-bar-item">
+      <a class="link" href="/">Post</a>
+    </span>
+    
+    <span class="nav-bar-item">
+      <a class="link" href="/post/">Archives</a>
+    </span>
+    
+    <span class="nav-bar-item">
+      <a class="link" href="/about/">About</a>
+    </span>
+    
+  </nav>
+</header>
+
+    
+<main id="main" class="index">
+  
+  
+  <div class="post">
+    <h2>
+      <a href="https://blog.wukaige.com/post/tidb-%E5%A4%9A%E7%89%A9%E7%90%86%E6%9C%BA%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/">TiDB 多物理机集群部署</a>
+      <time>2023-07-10</time>
+    </h2>
+    
+    <div>
+      <b>Keywords: </b>
+      
+      <a class="link" href='https://blog.wukaige.com/tags/tidb'>#TiDB</a>
+      
+    </div>
+    
+    <div class="content">
+      
+      前情提要 买了三台服务器，内网 IP 如下： 192.168.70.50 192.168.70.51 192.168.70.52 OS: RedHat 想搭建一个 TIDB 集群，只要有一台机器存活就能正常对外提供服务。 服务器环境准备 关闭系统 SWAP echo &#34;vm.swappiness = 0&#34; | sudo
+      
+    </div>
+  </div>
+  
+  <div class="post">
+    <h2>
+      <a href="https://blog.wukaige.com/post/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/">TiDB 快照恢复</a>
+      <time>2023-07-05</time>
+    </h2>
+    
+    <div>
+      <b>Keywords: </b>
+      
+      <a class="link" href='https://blog.wukaige.com/tags/tidb'>#TiDB</a>
+      
+    </div>
+    
+    <div class="content">
+      
+      TiDB 使用周期性运行的 GC（Garbage Collection，垃圾回收）来进行清理，默认情况下每 10 分钟一次。每次 GC 时，TiDB 会计算一个称为 safe
+      
+    </div>
+  </div>
+  
+  <div class="post">
+    <h2>
+      <a href="https://blog.wukaige.com/post/tikv-%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E6%8E%92%E6%9F%A5/">TIKV 内存占用过高排查</a>
+      <time>2023-07-05</time>
+    </h2>
+    
+    <div>
+      <b>Keywords: </b>
+      
+      <a class="link" href='https://blog.wukaige.com/tags/tidb'>#TiDB</a>
+      
+    </div>
+    
+    <div class="content">
+      
+      前情提要 tidb 集群（tidb-cluster）的 tikv 节点，占用内存高达 30/50 G，内存不够用。 排查 登录 grafana 监控面板，发现 tidb-cluster-TiKV-Details 下面的 Block cache size 面板疑似有点问题。 遂
+      
+    </div>
+  </div>
+  
+  <div class="post">
+    <h2>
+      <a href="https://blog.wukaige.com/post/tidb-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/">TiDB 集群节点损坏修复</a>
+      <time>2023-07-04</time>
+    </h2>
+    
+    <div>
+      <b>Keywords: </b>
+      
+      <a class="link" href='https://blog.wukaige.com/tags/tidb'>#TiDB</a>
+      
+    </div>
+    
+    <div class="content">
+      
+      前情提要 tidb 某个节点的数据目录被删除，导致节点损坏。 删除损坏节点 # 损坏节点 IP 为：192.168.70.51 端口为：27161 tiup cluster scale-in tidb-cluster --node 192.168.70.51:27161 添加新
+      
+    </div>
+  </div>
+  
+  <div class="post">
+    <h2>
+      <a href="https://blog.wukaige.com/post/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95/">hexo 自建博客如何被 google 收录？</a>
+      <time>2023-07-04</time>
+    </h2>
+    
+    <div>
+      <b>Keywords: </b>
+      
+      <a class="link" href='https://blog.wukaige.com/tags/hexo'>#hexo</a>
+      
+    </div>
+    
+    <div class="content">
+      
+      测试站点是否被 google 收录 测试方法：打开 google 主页，在搜索框键入 site:blog.wukaige.com 未被收录： 被收录： 安装 hexo-generator-sitemap 插件 hexo-generator-sitemap 可自动在根目录生成 sitemap.xml 文件 安装： npm install hexo-generator-sitemap --save 在 _config.yaml 文件中添加：
+      
+    </div>
+  </div>
+  
+  
+  <div class="paginator">
+    
+    <a class="link" href="/page/4/">← prev</a>
+    
+    
+    <a class="link" href="/page/6/">next →</a>
+    
+  </div>
+  
+</main>
+
+    <footer id="footer">
+  <div>
+    <span>© 2019</span> - <span>2023</span>
+  </div>
+
+  <div>
+    <span>Powered by </span>
+    <a class="link" href="https://gohugo.io/">Hugo</a>
+    <span> 🍦 Theme </span>
+    <a class="link" href="https://github.com/queensferryme/hugo-theme-texify">TeXify</a>
+  </div>
+
+  <div class="footnote">
+    <span>Follow me on <a class=link href=https://github.com/queensferryme>GitHub</a>,
+<a class=link href=https://twitter.com/queensferryme>Twitter</a> or
+<a class=link href=/index.xml>RSS</a> |
+<a class=link href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh target=_blank rel=noopener>CC BY-NC-SA 4.0</a>
+</span>
+  </div>
+</footer>
+
+  </div>
+
+  
+  
+
+  
+  
+
+  
+  
+
+</body>
+
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+  <meta name="author" content="wukaige">
+
+  
+  
+  <meta name="description" content="编写扩容配置文件 scale-out.yml tidb_servers: - host: 127.0.0.1 ssh_port: 22 port: 4001 status_port: 10081 numa_node: &#34;1&#34; # suggest numa node bindings. 扩容命令 检查配置文件 tiup cluster check tidb scale-out.yml --cluster --user root -p 自动修复配置文件 tiup cluster check tidb scale-out.yml --cluster --apply --user root -p 扩容 tiup cluster scale-out tidb scale-out.yml">
+  
+
+  
+  <link rel="icon" href="https://blog.wukaige.com/favicon.ico">
+
+  
+  
+  <meta name="keywords" content=" hugo  latex  theme ">
+  
+
+  
+  
+
+  
+  <meta property="og:title" content="TiDB 扩容" />
+<meta property="og:description" content="编写扩容配置文件 scale-out.yml tidb_servers: - host: 127.0.0.1 ssh_port: 22 port: 4001 status_port: 10081 numa_node: &#34;1&#34; # suggest numa node bindings. 扩容命令 检查配置文件 tiup cluster check tidb scale-out.yml --cluster --user root -p 自动修复配置文件 tiup cluster check tidb scale-out.yml --cluster --apply --user root -p 扩容 tiup cluster scale-out tidb scale-out.yml" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.wukaige.com/post/tidb-%E6%89%A9%E5%AE%B9/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-11-17T18:07:51+00:00" />
+<meta property="article:modified_time" content="2023-11-17T18:07:51+00:00" />
+
+
+
+
+  
+  <link rel="canonical" href="https://blog.wukaige.com/post/tidb-%E6%89%A9%E5%AE%B9/">
+
+  
+  
+  <meta itemprop="name" content="TiDB 扩容">
+<meta itemprop="description" content="编写扩容配置文件 scale-out.yml tidb_servers: - host: 127.0.0.1 ssh_port: 22 port: 4001 status_port: 10081 numa_node: &#34;1&#34; # suggest numa node bindings. 扩容命令 检查配置文件 tiup cluster check tidb scale-out.yml --cluster --user root -p 自动修复配置文件 tiup cluster check tidb scale-out.yml --cluster --apply --user root -p 扩容 tiup cluster scale-out tidb scale-out.yml"><meta itemprop="datePublished" content="2023-11-17T18:07:51+00:00" />
+<meta itemprop="dateModified" content="2023-11-17T18:07:51+00:00" />
+<meta itemprop="wordCount" content="73">
+<meta itemprop="keywords" content="TiDB," />
+
+  
+  <link media="screen" rel="stylesheet" href='https://blog.wukaige.com/css/common.css'>
+  <link media="screen" rel="stylesheet" href='https://blog.wukaige.com/css/content.css'>
+
+  
+  
+  <title>TiDB 扩容 - TeXify</title>
+  
+
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TiDB 扩容"/>
+<meta name="twitter:description" content="编写扩容配置文件 scale-out.yml tidb_servers: - host: 127.0.0.1 ssh_port: 22 port: 4001 status_port: 10081 numa_node: &#34;1&#34; # suggest numa node bindings. 扩容命令 检查配置文件 tiup cluster check tidb scale-out.yml --cluster --user root -p 自动修复配置文件 tiup cluster check tidb scale-out.yml --cluster --apply --user root -p 扩容 tiup cluster scale-out tidb scale-out.yml"/>
+
+
+  
+<link rel="stylesheet" href='https://blog.wukaige.com/css/single.css'>
+
+</head>
+
+<body>
+  <div id="wrapper">
+    <header id="header">
+  <h1>
+    <a href="https://blog.wukaige.com/">TeXify</a>
+  </h1>
+
+  <nav>
+    
+    <span class="nav-bar-item">
+      <a class="link" href="/">Post</a>
+    </span>
+    
+    <span class="nav-bar-item">
+      <a class="link" href="/post/">Archives</a>
+    </span>
+    
+    <span class="nav-bar-item">
+      <a class="link" href="/about/">About</a>
+    </span>
+    
+  </nav>
+</header>
+
+    
+<main id="main" class="post">
+  
+  
+  <h1>TiDB 扩容</h1>
+  
+  <div>
+    <b>Keywords: </b>
+    
+    <a class="link" href='https://blog.wukaige.com/tags/tidb'>#TiDB</a>
+    
+  </div>
+  
+  
+  <article class="content">
+    
+    <h2 id="编写扩容配置文件">编写扩容配置文件</h2>
+<p><u>scale-out.yml</u></p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">tidb_servers:
+  - host: 127.0.0.1
+    ssh_port: 22
+    port: 4001
+    status_port: 10081
+    numa_node: &#34;1&#34; # suggest numa node bindings.   
+</code></pre><h2 id="扩容命令">扩容命令</h2>
+<p>检查配置文件</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup cluster check tidb scale-out.yml --cluster --user root -p
+</span></span></code></pre></div><p>自动修复配置文件</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup cluster check tidb scale-out.yml --cluster --apply --user root -p
+</span></span></code></pre></div><p>扩容</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup cluster scale-out tidb scale-out.yml -u root -p
+</span></span></code></pre></div>
+    
+  </article>
+  <div class="paginator">
+    
+    <a class="link" href="https://blog.wukaige.com/post/hugo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">← prev</a>
+    
+    
+    <a></a>
+    
+  </div>
+  <div class="comment">
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</main>
+
+    <footer id="footer">
+  <div>
+    <span>© 2019</span> - <span>2023</span>
+  </div>
+
+  <div>
+    <span>Powered by </span>
+    <a class="link" href="https://gohugo.io/">Hugo</a>
+    <span> 🍦 Theme </span>
+    <a class="link" href="https://github.com/queensferryme/hugo-theme-texify">TeXify</a>
+  </div>
+
+  <div class="footnote">
+    <span>Follow me on <a class=link href=https://github.com/queensferryme>GitHub</a>,
+<a class=link href=https://twitter.com/queensferryme>Twitter</a> or
+<a class=link href=/index.xml>RSS</a> |
+<a class=link href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh target=_blank rel=noopener>CC BY-NC-SA 4.0</a>
+</span>
+  </div>
+</footer>
+
+  </div>
+
+  
+  
+
+  
+  
+
+  
+  
+
+</body>
+
+</html>

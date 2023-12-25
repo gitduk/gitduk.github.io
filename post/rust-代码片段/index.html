@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+  <meta name="author" content="wukaige">
+
+  
+  
+  <meta name="description" content="mysql https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html use mysql::{Pool, PooledConn, from_row}; fn my_conn(url: &amp;str) -&gt; Result&lt;PooledConn, mysql::Error&gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &#34;mysql://xxx:xxx@127.0.0.1:3306/DB&#34;; let conn = my_conn(url).unwrap(); let sql = &#34;select title from table;&#34;; // query map let _books = conn.query_map(sql, |title: String| { title })?; // query iter let sql = &#34;select id,title,date from table2;&#34;; conn.query_iter(query)?.for_each(|row| { let r: (i32, String, String)">
+  
+
+  
+  <link rel="icon" href="https://blog.wukaige.com/favicon.ico">
+
+  
+  
+  <meta name="keywords" content=" hugo  latex  theme ">
+  
+
+  
+  
+
+  
+  <meta property="og:title" content="Rust 代码片段" />
+<meta property="og:description" content="mysql https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html use mysql::{Pool, PooledConn, from_row}; fn my_conn(url: &amp;str) -&gt; Result&lt;PooledConn, mysql::Error&gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &#34;mysql://xxx:xxx@127.0.0.1:3306/DB&#34;; let conn = my_conn(url).unwrap(); let sql = &#34;select title from table;&#34;; // query map let _books = conn.query_map(sql, |title: String| { title })?; // query iter let sql = &#34;select id,title,date from table2;&#34;; conn.query_iter(query)?.for_each(|row| { let r: (i32, String, String)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.wukaige.com/post/rust-%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-09-22T09:37:56+00:00" />
+<meta property="article:modified_time" content="2023-09-22T09:37:56+00:00" />
+
+
+
+
+  
+  <link rel="canonical" href="https://blog.wukaige.com/post/rust-%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/">
+
+  
+  
+  <meta itemprop="name" content="Rust 代码片段">
+<meta itemprop="description" content="mysql https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html use mysql::{Pool, PooledConn, from_row}; fn my_conn(url: &amp;str) -&gt; Result&lt;PooledConn, mysql::Error&gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &#34;mysql://xxx:xxx@127.0.0.1:3306/DB&#34;; let conn = my_conn(url).unwrap(); let sql = &#34;select title from table;&#34;; // query map let _books = conn.query_map(sql, |title: String| { title })?; // query iter let sql = &#34;select id,title,date from table2;&#34;; conn.query_iter(query)?.for_each(|row| { let r: (i32, String, String)"><meta itemprop="datePublished" content="2023-09-22T09:37:56+00:00" />
+<meta itemprop="dateModified" content="2023-09-22T09:37:56+00:00" />
+<meta itemprop="wordCount" content="260">
+<meta itemprop="keywords" content="Rust," />
+
+  
+  <link media="screen" rel="stylesheet" href='https://blog.wukaige.com/css/common.css'>
+  <link media="screen" rel="stylesheet" href='https://blog.wukaige.com/css/content.css'>
+
+  
+  
+  <title>Rust 代码片段 - TeXify</title>
+  
+
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Rust 代码片段"/>
+<meta name="twitter:description" content="mysql https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html use mysql::{Pool, PooledConn, from_row}; fn my_conn(url: &amp;str) -&gt; Result&lt;PooledConn, mysql::Error&gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &#34;mysql://xxx:xxx@127.0.0.1:3306/DB&#34;; let conn = my_conn(url).unwrap(); let sql = &#34;select title from table;&#34;; // query map let _books = conn.query_map(sql, |title: String| { title })?; // query iter let sql = &#34;select id,title,date from table2;&#34;; conn.query_iter(query)?.for_each(|row| { let r: (i32, String, String)"/>
+
+
+  
+<link rel="stylesheet" href='https://blog.wukaige.com/css/single.css'>
+
+</head>
+
+<body>
+  <div id="wrapper">
+    <header id="header">
+  <h1>
+    <a href="https://blog.wukaige.com/">TeXify</a>
+  </h1>
+
+  <nav>
+    
+    <span class="nav-bar-item">
+      <a class="link" href="/">Post</a>
+    </span>
+    
+    <span class="nav-bar-item">
+      <a class="link" href="/post/">Archives</a>
+    </span>
+    
+    <span class="nav-bar-item">
+      <a class="link" href="/about/">About</a>
+    </span>
+    
+  </nav>
+</header>
+
+    
+<main id="main" class="post">
+  
+  
+  <h1>Rust 代码片段</h1>
+  
+  <div>
+    <b>Keywords: </b>
+    
+    <a class="link" href='https://blog.wukaige.com/tags/rust'>#Rust</a>
+    
+  </div>
+  
+  
+  <article class="content">
+    
+    <h2 id="mysql">mysql</h2>
+<blockquote>
+<p><a href="https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html">https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html</a></p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">use</span><span style="color:#bbb"> </span>mysql::{Pool,<span style="color:#bbb"> </span>PooledConn,<span style="color:#bbb"> </span>from_row};<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">fn</span> <span style="color:#00a000">my_conn</span>(url: <span style="color:#a2f">&amp;</span><span style="color:#0b0;font-weight:bold">str</span>)<span style="color:#bbb"> </span>-&gt; <span style="color:#a2f">Result</span><span style="color:#666">&lt;</span>PooledConn,<span style="color:#bbb"> </span>mysql::Error<span style="color:#666">&gt;</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>pool<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span>Pool::new(url)<span style="color:#666">?</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>conn<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span>pool.get_conn()<span style="color:#666">?</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f">Ok</span>(conn)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">fn</span> <span style="color:#00a000">main</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>url<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span><span style="color:#b44">&#34;mysql://xxx:xxx@127.0.0.1:3306/DB&#34;</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>conn<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span>my_conn(url).unwrap();<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>sql<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span><span style="color:#b44">&#34;select title from table;&#34;</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-style:italic">// query map
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>_books<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span>conn.query_map(sql,<span style="color:#bbb"> </span><span style="color:#666">|</span>title: <span style="color:#a2f">String</span><span style="color:#666">|</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>title<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>})<span style="color:#666">?</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-style:italic">// query iter
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>sql<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span><span style="color:#b44">&#34;select id,title,date from table2;&#34;</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>conn.query_iter(query)<span style="color:#666">?</span>.for_each(<span style="color:#666">|</span>row<span style="color:#666">|</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>r: (<span style="color:#0b0;font-weight:bold">i32</span>,<span style="color:#bbb"> </span><span style="color:#a2f">String</span>,<span style="color:#bbb"> </span><span style="color:#a2f">String</span>)<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span>from_row(row.unwrap());<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>println!(<span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">{}</span><span style="color:#b44"> </span><span style="color:#b68;font-weight:bold">{}</span><span style="color:#b44"> </span><span style="color:#b68;font-weight:bold">{}</span><span style="color:#b44">&#34;</span>,<span style="color:#bbb"> </span>r.<span style="color:#666">0</span>,<span style="color:#bbb"> </span>r.<span style="color:#666">1</span>,<span style="color:#bbb"> </span>r.<span style="color:#666">2</span>);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>});<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span></code></pre></div><h2 id="system-command">system command</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">fn</span> <span style="color:#00a000">run_command</span>(cmd: <span style="color:#a2f">String</span>)<span style="color:#bbb"> </span>-&gt; <span style="color:#a2f">Result</span><span style="color:#666">&lt;</span>(),<span style="color:#bbb"> </span><span style="color:#a2f">Box</span><span style="color:#666">&lt;</span><span style="color:#a2f;font-weight:bold">dyn</span><span style="color:#bbb"> </span>std::error::Error<span style="color:#666">&gt;&gt;</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>status<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span>Command::new(<span style="color:#b44">&#34;sh&#34;</span>)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>.arg(<span style="color:#b44">&#34;-c&#34;</span>)<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>.arg(<span style="color:#666">&amp;</span>cmd)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>.status()<span style="color:#666">?</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">if</span><span style="color:#bbb"> </span><span style="color:#666">!</span>status.success()<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>println!(<span style="color:#b44">&#34;命令执行失败: </span><span style="color:#b68;font-weight:bold">{}</span><span style="color:#b44">&#34;</span>,<span style="color:#bbb"> </span>cmd);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f">Ok</span>(())<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">fn</span> <span style="color:#00a000">main</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>cmd<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span><span style="color:#b44">&#34;echo hello&#34;</span>.to_string();<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">if</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span><span style="color:#a2f">Err</span>(e)<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span>run_command(cmd)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>eprintln!(<span style="color:#b44">&#34;执行 cmd 时出现错误: </span><span style="color:#b68;font-weight:bold">{:?}</span><span style="color:#b44">&#34;</span>,<span style="color:#bbb"> </span>e);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span></code></pre></div><h2 id="parse-json-file">parse json file</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">use</span><span style="color:#bbb"> </span>serde_json::Value;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">fn</span> <span style="color:#00a000">json_data</span>(path: <span style="color:#a2f">&amp;</span><span style="color:#0b0;font-weight:bold">str</span>)<span style="color:#bbb"> </span>-&gt; <span style="color:#a2f">Result</span><span style="color:#666">&lt;</span>Value,<span style="color:#bbb"> </span>std::io::Error<span style="color:#666">&gt;</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>data<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span>fs::read_to_string(path)<span style="color:#666">?</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>json: <span style="color:#00f">Value</span><span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span>serde_json::from_str(<span style="color:#666">&amp;</span>data)<span style="color:#666">?</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f">Ok</span>(json)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">fn</span> <span style="color:#00a000">main</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>path<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span><span style="color:#b44">&#34;file.json&#34;</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>_filter_array<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span>json_data(path).unwrap();<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span></code></pre></div><h2 id="get-env-value">get env value</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cargo run -- <span style="color:#666">1</span> <span style="color:#666">100</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">fn</span> <span style="color:#00a000">main</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>args: <span style="color:#a2f">Vec</span><span style="color:#666">&lt;</span>_<span style="color:#666">&gt;</span><span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span>env::args().collect();<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>start<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span><span style="color:#666">&amp;</span>args[<span style="color:#666">1</span>].parse::<span style="color:#666">&lt;</span><span style="color:#0b0;font-weight:bold">usize</span><span style="color:#666">&gt;</span>().unwrap();<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>end<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span><span style="color:#666">&amp;</span>args[<span style="color:#666">2</span>].parse::<span style="color:#666">&lt;</span><span style="color:#0b0;font-weight:bold">usize</span><span style="color:#666">&gt;</span>().unwrap();<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span></code></pre></div><h2 id="get-cpu-cores">get cpu cores</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>cores<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span>std::thread::available_parallelism().unwrap();<span style="color:#bbb">
+</span></span></span></code></pre></div><h2 id="hashmap-check-keys">hashmap check keys</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>map.contains_key(key)<span style="color:#bbb">
+</span></span></span></code></pre></div><h2 id="string-to-vecstr">String to Vec&lt;&amp;str&gt;</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>s<span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span><span style="color:#b44">&#34;&#34;</span>.to_string()<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#666">+</span><span style="color:#bbb"> </span><span style="color:#b44">&#34;line one</span><span style="color:#b62;font-weight:bold">\n</span><span style="color:#b44">&#34;</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#666">+</span><span style="color:#bbb"> </span><span style="color:#b44">&#34;line two</span><span style="color:#b62;font-weight:bold">\n</span><span style="color:#b44">&#34;</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#666">+</span><span style="color:#bbb"> </span><span style="color:#b44">&#34;line three&#34;</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">let</span><span style="color:#bbb"> </span>v: <span style="color:#a2f">Vec</span><span style="color:#666">&lt;&amp;</span><span style="color:#0b0;font-weight:bold">str</span><span style="color:#666">&gt;</span><span style="color:#bbb"> </span><span style="color:#666">=</span><span style="color:#bbb"> </span>s.split(<span style="color:#b44">&#39;,&#39;</span>).collect();<span style="color:#bbb">
+</span></span></span></code></pre></div>
+    
+  </article>
+  <div class="paginator">
+    
+    <a class="link" href="https://blog.wukaige.com/post/es-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E4%B9%8B-reindex/">← prev</a>
+    
+    
+    <a class="link" href="https://blog.wukaige.com/post/rust-sqlserver/">next →</a>
+    
+  </div>
+  <div class="comment">
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</main>
+
+    <footer id="footer">
+  <div>
+    <span>© 2019</span> - <span>2023</span>
+  </div>
+
+  <div>
+    <span>Powered by </span>
+    <a class="link" href="https://gohugo.io/">Hugo</a>
+    <span> 🍦 Theme </span>
+    <a class="link" href="https://github.com/queensferryme/hugo-theme-texify">TeXify</a>
+  </div>
+
+  <div class="footnote">
+    <span>Follow me on <a class=link href=https://github.com/queensferryme>GitHub</a>,
+<a class=link href=https://twitter.com/queensferryme>Twitter</a> or
+<a class=link href=/index.xml>RSS</a> |
+<a class=link href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh target=_blank rel=noopener>CC BY-NC-SA 4.0</a>
+</span>
+  </div>
+</footer>
+
+  </div>
+
+  
+  
+
+  
+  
+
+  
+  
+
+</body>
+
+</html>

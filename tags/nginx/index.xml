@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>nginx on TeXify</title>
+    <link>https://blog.wukaige.com/tags/nginx/</link>
+    <description>Recent content in nginx on TeXify</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Mon, 17 Jul 2023 16:29:58 +0000</lastBuildDate><atom:link href="https://blog.wukaige.com/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用 https 访问 alist</title>
+      <link>https://blog.wukaige.com/post/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/</link>
+      <pubDate>Mon, 17 Jul 2023 16:29:58 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/post/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/</guid>
+      
+      <description>&lt;h2 id=&#34;前情提要&#34;&gt;前情提要&lt;/h2&gt;
+&lt;p&gt;通过 http 访问 alist，地址栏那个感叹号看起来有点丑。&lt;/p&gt;
+&lt;h2 id=&#34;申请-cloudflare-证书&#34;&gt;申请 Cloudflare 证书&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.google.com.hk/search?q=%E7%94%B3%E8%AF%B7+Cloudflare+%E8%AF%81%E4%B9%A6&amp;amp;oq=%E7%94%B3%E8%AF%B7+Cloudflare+%E8%AF%81%E4%B9%A6&amp;amp;aqs=chrome..69i57.630j0j7&amp;amp;sourceid=chrome&amp;amp;ie=UTF-8&#34;&gt;看这里&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;把 Origin Certificate 保存为： your-domain.pem&lt;/p&gt;
+&lt;p&gt;把 Private Key 保存为： your-domain.key&lt;/p&gt;
+&lt;h2 id=&#34;配置-nginx-转发规则&#34;&gt;配置 nginx 转发规则&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;server&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;listen&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;80&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;listen&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;443&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;ssl&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;server_name&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;alist.wukaige.com&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;ssl_certificate&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;/path/to/your-domain.pem&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;ssl_certificate_key&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;/path/to/your-domain.key&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$scheme&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;https&amp;#34;)&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;301&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;https://&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$server_name$request_uri&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;client_max_body_size&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;10000m&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;/&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;http://127.0.0.1:7080&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;proxy_set_header&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;Host&lt;/span&gt; &lt;span style=&#34;color:#b8860b&#34;&gt;$host&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;proxy_set_header&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;X-Real-IP&lt;/span&gt; &lt;span style=&#34;color:#b8860b&#34;&gt;$remote_addr&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;proxy_set_header&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;X-Forwarded-For&lt;/span&gt; &lt;span style=&#34;color:#b8860b&#34;&gt;$proxy_add_x_forwarded_for&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;proxy_set_header&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;X-Forwarded-Proto&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;https&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;重启-nginx-服务&#34;&gt;重启 nginx 服务&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl restart nginx.service
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>frp &#43; nginx 实现不同子域名访问同一主机不同服务</title>
+      <link>https://blog.wukaige.com/post/frp-nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/</link>
+      <pubDate>Tue, 04 Jul 2023 14:36:31 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/post/frp-nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/</guid>
+      
+      <description>&lt;h2 id=&#34;前置条件&#34;&gt;前置条件&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;运行在内网的多个服务&lt;/li&gt;
+&lt;li&gt;一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案）&lt;/li&gt;
+&lt;li&gt;一个域名&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;域名解析&#34;&gt;域名解析&lt;/h2&gt;
+&lt;p&gt;到 cloudflare 解析配置你的域名解析&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230629164727654.png&#34; alt=&#34;image-20230629164727654&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;frps-nginx-服务配置&#34;&gt;Frps, Nginx 服务配置&lt;/h2&gt;
+&lt;p&gt;frps 部署 - &lt;a href=&#34;https://github.com/fatedier/frp&#34;&gt;https://github.com/fatedier/frp&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Nginx 安装 - &lt;code&gt;sudo apt install nginx&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;frps 配置文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-t&#34; data-lang=&#34;t&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[common]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bind_port &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;7000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bind_addr &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;0.0.0.0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;vhost_http_port &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;7080&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;token &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; [custom token]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dashboard_port &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;7050&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dashboard_user &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; admin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dashboard_pwd &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; changeme
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;subdomain_host &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; wukaige&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;com
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;nginx 配置 &lt;u&gt;/etc/nginx/conf.d/frp.conf&lt;/u&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;server&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;listen&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;80&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;server_name&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;alist.wukaige.com&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;/&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;http://127.0.0.1:7080&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;proxy_set_header&lt;/span&gt;   &lt;span style=&#34;color:#b44&#34;&gt;Host&lt;/span&gt;             &lt;span style=&#34;color:#b8860b&#34;&gt;$host&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;proxy_set_header&lt;/span&gt;   &lt;span style=&#34;color:#b44&#34;&gt;X-Real-IP&lt;/span&gt;        &lt;span style=&#34;color:#b8860b&#34;&gt;$remote_addr&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;proxy_set_header&lt;/span&gt;   &lt;span style=&#34;color:#b44&#34;&gt;X-Forwarded-For&lt;/span&gt;  &lt;span style=&#34;color:#b8860b&#34;&gt;$proxy_add_x_forwarded_for&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;重启 frps 和 nginx 服务&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl restart nginx.service
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 以服务方式安装的 frps&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl restart frps.service
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;frpc-配置&#34;&gt;Frpc 配置&lt;/h2&gt;
+&lt;p&gt;frpc 配置文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[common]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;server_addr = [ip to frps server]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;server_port = 7000
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;token = [custom token]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[alist]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;type = http
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;local_port = 5244
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;subdomain = alist
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;重启 frpc 服务&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# 以服务方式安装的 frpc
+sudo systemctl restart frpc.service
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;没有例外的话，访问 &lt;code&gt;alist.wukaige.com&lt;/code&gt; 即可访问本地 alist 服务。
+有例外的话，看看服务器和本地防火墙，是否开放需要开放的端口。&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Nginx 代理 openai api</title>
+      <link>https://blog.wukaige.com/post/nginx-%E4%BB%A3%E7%90%86-openai-api/</link>
+      <pubDate>Tue, 04 Jul 2023 14:34:35 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/post/nginx-%E4%BB%A3%E7%90%86-openai-api/</guid>
+      
+      <description>&lt;h2 id=&#34;安装-nginx&#34;&gt;安装 Nginx&lt;/h2&gt;
+&lt;p&gt;ubuntu: &lt;code&gt;sudo apt install nginx&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;配置-openai-反向代理&#34;&gt;配置 Openai 反向代理&lt;/h2&gt;
+&lt;p&gt;在目录 &lt;code&gt;/etc/nginx/conf.d&lt;/code&gt; 下创建文件 &lt;code&gt;openai.conf&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;/etc/nginx/conf.d/openai.conf&lt;/u&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;server {
+    listen 8000;
+    
+    location /v1/ {
+        proxy_pass https://api.openai.com/v1/; 	# OpenAI API URL
+        proxy_ssl_server_name on; 				# 避免出现反代https域名出现502错误
+        proxy_buffering off; 					# 关闭缓存实现打字机效果
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重启 nginx 服务： &lt;code&gt;sudo systemctl reload nginx&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;使用-openai-api-接口&#34;&gt;使用 Openai Api 接口&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;requests&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 设置 requests 会话&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;requests&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;adapters&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;DEFAULT_RETRIES &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;session &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;session()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;session&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;keep_alive &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;False&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;API_KEY &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;sk-bvUyWowek6qxxjztEMchT3Blbkfj5Xlzr27jMbX28YxGp4wh&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 设置 OpenAI API 密钥&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;headers &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;Content-Type&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;application/json&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;Authorization&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#b44&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;Bearer &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;API_KEY&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;send_request&lt;/span&gt;(data):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;    发送请求到 OpenAI API 并返回响应。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;try&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        response &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; session&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;post(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;http://[your nginx server ip address]:8000/v1/chat/completions&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            headers&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;headers,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            data&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;json&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;dumps(data),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            timeout&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;30&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        )
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;except&lt;/span&gt; &lt;span style=&#34;color:#d2413a;font-weight:bold&#34;&gt;Exception&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;as&lt;/span&gt; e:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;raise&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;else&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;return&lt;/span&gt; response
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>

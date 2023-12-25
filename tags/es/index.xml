@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ES on TeXify</title>
+    <link>https://blog.wukaige.com/tags/es/</link>
+    <description>Recent content in ES on TeXify</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Thu, 24 Aug 2023 10:36:43 +0000</lastBuildDate><atom:link href="https://blog.wukaige.com/tags/es/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ES 数据迁移</title>
+      <link>https://blog.wukaige.com/post/es-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E4%B9%8B-reindex/</link>
+      <pubDate>Thu, 24 Aug 2023 10:36:43 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/post/es-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E4%B9%8B-reindex/</guid>
+      
+      <description>&lt;blockquote&gt;
+&lt;p&gt;老板有一个需求，把旧索引里面的数据全部迁移到新索引，ES 内置的 reindex 可以快速进行数据迁移。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;迁移方案&#34;&gt;迁移方案&lt;/h2&gt;
+&lt;p&gt;由于数据量太大，一次性 reindex 可能会出问题。&lt;/p&gt;
+&lt;p&gt;于是写了一个脚本分批迁移。&lt;/p&gt;
+&lt;h2 id=&#34;分批-reindex-脚本&#34;&gt;分批 reindex 脚本&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;SOURCE_INDEX&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;old index&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;TARGET_INDEX&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;new index&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;START&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;END&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;BATCH_SIZE&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;10000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# Elasticsearch 集群的 SSL 配置&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# CERT_FILE=&amp;#34;/home/[USER]/elasticsearch/config/certs/http_ca.crt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 执行 reindex 操作&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;((&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b8860b&#34;&gt;$START&lt;/span&gt;; i &amp;lt; &lt;span style=&#34;color:#b8860b&#34;&gt;$END&lt;/span&gt;; i++&lt;span style=&#34;color:#666&#34;&gt;))&lt;/span&gt;; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#b8860b&#34;&gt;from&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;$((&lt;/span&gt;i &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; BATCH_SIZE&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#b8860b&#34;&gt;to&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;$((&lt;/span&gt;from &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; BATCH_SIZE&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a2f&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;Processing batch &lt;/span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;$((&lt;/span&gt;i &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;))&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt; of &lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$END&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt; ...\n&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 发起 reindex 请求&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  curl -s -X POST &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;https://127.0.0.1:9200/_reindex?refresh=false&amp;#34;&lt;/span&gt; -H &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;Content-Type: application/json&amp;#39;&lt;/span&gt; --cacert &lt;span style=&#34;color:#b8860b&#34;&gt;$CERT_FILE&lt;/span&gt; -u &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;elastic:[PASSWORD]&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;  {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;    \&amp;#34;source\&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      \&amp;#34;index\&amp;#34;: \&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$SOURCE_INDEX&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;\&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      \&amp;#34;size\&amp;#34;: &lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$BATCH_SIZE&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      \&amp;#34;query\&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;        \&amp;#34;range\&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;          \&amp;#34;id\&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;            \&amp;#34;gte\&amp;#34;: &lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$from&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;            \&amp;#34;lt\&amp;#34;: &lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$to&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;          }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;    },
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;    \&amp;#34;dest\&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      \&amp;#34;index\&amp;#34;: \&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$TARGET_INDEX&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;\&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;  }&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a2f&#34;&gt;echo&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;done&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;Reindex completed.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>ES 数据插入速度优化，从 4.5h -&gt; 1h</title>
+      <link>https://blog.wukaige.com/post/es-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E4%BB%8E-4-5h-1h/</link>
+      <pubDate>Fri, 04 Aug 2023 09:19:10 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/post/es-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E4%BB%8E-4-5h-1h/</guid>
+      
+      <description>&lt;blockquote&gt;
+&lt;p&gt;写了个脚本把数据库里面的 content 字段转换为向量插入到 ES， 100w 数据需要 4.5 小时，太慢了！！！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;一慢速度脚本45h&#34;&gt;一、慢速度脚本（4.5h）&lt;/h2&gt;
+&lt;p&gt;只用 aiomysql 对数据库进行异步请求，ES 更新则是一条一更新。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;os&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;asyncio&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;aiomysql&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;requests&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;text2vec&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; SentenceModel
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;requests.auth&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; HTTPBasicAuth
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# tidb&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;host &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;127.0.0.1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;port &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;3306&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;database &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[database]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;user &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;root&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;password &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[password]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;batch_size &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;10000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# es&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;es_url &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;http://127.0.0.1:9200&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# es_user = &amp;#34;[elastic]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# es_user = &amp;#34;[password]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# load model&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; SentenceModel(&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;shibing624/text2vec-base-chinese&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;query_mysql&lt;/span&gt;(start, end, cursor):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    sql_query &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;select id,content from [table] where id &amp;gt; &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;start&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt; and id &amp;lt;= &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;end&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; cursor&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute(sql_query)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; cursor&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;fetchall()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;update_es&lt;/span&gt;(data):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    _id &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; data&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    url &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;es_url&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;/[INDEX]/_doc/&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;_id&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 如果 ES 开启了安全验证&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# response = requests.put(url, json=data，auth=HTTPBasicAuth(es_username, es_password))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    response &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;put(url, json&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;data)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 检查响应状态码&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;if&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;status_code &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; [&lt;span style=&#34;color:#666&#34;&gt;200&lt;/span&gt;, &lt;span style=&#34;color:#666&#34;&gt;201&lt;/span&gt;]:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        msg &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;_id&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;] 插入成功&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;else&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        msg &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;] 插入失败: &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;text&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        os&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;system(&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;echo &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#39; &amp;gt;&amp;gt; ./error.log&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(msg))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f&#34;&gt;print&lt;/span&gt;(msg)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;process_batch&lt;/span&gt;(start, end, pool):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;with&lt;/span&gt; pool&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;acquire() &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;as&lt;/span&gt; conn:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;with&lt;/span&gt; conn&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;cursor() &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;as&lt;/span&gt; cursor:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            rows &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; query_mysql(start, end, cursor)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            ids &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; [row[&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; row &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; rows]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            contents &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; [row[&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; row &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; rows]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            vector &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; model&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;encode(contents, show_progress_bar&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; _id, vec &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;zip&lt;/span&gt;(ids, vector&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;tolist()):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                data &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;: _id,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;content_vector&amp;#34;&lt;/span&gt;: vec
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; update_es(data)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;main&lt;/span&gt;(batches):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    pool &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; aiomysql&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;create_pool(host&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;host, port&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;port, user&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;user, password&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;password, db&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;database)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    tasks &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; []
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;range&lt;/span&gt;(batches):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        start &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; batch_size
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        end &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; (i &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; batch_size
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        tasks&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;append(process_batch(start, end, pool))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; asyncio&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;gather(&lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt;tasks)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    pool&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; pool&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;wait_closed()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    asyncio&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;run(main(&lt;span style=&#34;color:#666&#34;&gt;100&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行截图(4h 30m 21s)：
+&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230804092603804.png&#34; alt=&#34;image-20230804092603804&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;二初步优化1h&#34;&gt;二、初步优化（1h）&lt;/h2&gt;
+&lt;p&gt;安装 elasticsearch[async] 模块&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pip3 install &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;elasticsearch[async]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用 es bulk 批量更新数据，加速数据插入。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;os&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;asyncio&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;aiomysql&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;text2vec&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; SentenceModel
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;elasticsearch&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; AsyncElasticsearch
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;elasticsearch.helpers&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; async_bulk
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;host &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;127.0.0.1&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;port &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;3306&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;database &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;[database]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;user &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;root&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;password &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;[password]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;batch_size &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;10000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# load model&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; SentenceModel(&lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;shibing624/text2vec-base-chinese&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# es client&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 如果加了安全验证机制：&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# es = AsyncElasticsearch([&amp;#34;http://127.0.0.1:9200&amp;#34;], basic_auth=(&amp;#34;elastic&amp;#34;, &amp;#34;[password]&amp;#34;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;es &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; AsyncElasticsearch([&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;http://127.0.0.1:9200&amp;#34;&lt;/span&gt;])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;build_bulk_data&lt;/span&gt;(ids, vectors):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  	&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; _id, vec &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;zip&lt;/span&gt;(ids, vectors):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    	data &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      		&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;_index&amp;#34;&lt;/span&gt;: index,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      		&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;_id&amp;#34;&lt;/span&gt;: _id,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      		&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;_source&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        		&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;: _id, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        		&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;content_vector&amp;#34;&lt;/span&gt;: vec
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;yield&lt;/span&gt; data
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;query_mysql&lt;/span&gt;(start, end, cursor):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    sql_query &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;select id,content from [table] where id &amp;gt; &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;start&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt; and id &amp;lt;= &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;end&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; cursor&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute(sql_query)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; cursor&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;fetchall()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;process_batch&lt;/span&gt;(start, end, pool):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;with&lt;/span&gt; pool&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;acquire() &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;as&lt;/span&gt; conn:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;with&lt;/span&gt; conn&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;cursor() &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;as&lt;/span&gt; cursor:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# query mysql&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            rows &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; query_mysql(start, end, cursor)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            ids &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; [row[&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; row &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; rows]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            contents &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; [row[&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; row &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; rows]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# encode content&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            vectors &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; model&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;encode(contents, show_progress_bar&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# build bulk data&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 内存不足的情况下，可以用生成器代替列表:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# bulk_data = build_bulk_data(ids, vectors)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            bulk_data &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; [{&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;_index&amp;#34;&lt;/span&gt;: index, &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;_id&amp;#34;&lt;/span&gt;: _id, &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;_source&amp;#34;&lt;/span&gt;: {&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;: _id, &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;content_vector&amp;#34;&lt;/span&gt;: vec}} &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; _id, vec &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;zip&lt;/span&gt;(ids, vectors)]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;try&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                resp &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; async_bulk(es, bulk_data, chunk_size&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;500&lt;/span&gt;, max_retries&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;3&lt;/span&gt;, request_timeout&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;60&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;3&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;except&lt;/span&gt; &lt;span style=&#34;color:#d2413a;font-weight:bold&#34;&gt;Exception&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;as&lt;/span&gt; e:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#a2f&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#b44&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;start&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;end&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;] Error: &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;e&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;else&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#a2f&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#b44&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;start&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;end&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;] SUCCESS: &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;resp[&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;]&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;main&lt;/span&gt;(batches, offset&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# mysql pool&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    pool &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; aiomysql&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;create_pool(host&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;host, port&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;port, user&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;user, password&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;password, db&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;database)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# create task list&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    tasks &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; []
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;range&lt;/span&gt;(offset, offset &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; batches):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        start &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; batch_size
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        end &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; (i &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; batch_size
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        tasks&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;append(process_batch(start, end, pool))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; asyncio&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;gather(&lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt;tasks)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    pool&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; pool&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;wait_closed()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    asyncio&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;run(main(&lt;span style=&#34;color:#666&#34;&gt;100&lt;/span&gt;, offset&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;100&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行截图(1h 3m 9s)：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230804112915854.png&#34; alt=&#34;image-20230804112915854&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;三内存优化&#34;&gt;三、内存优化&lt;/h2&gt;
+&lt;p&gt;优化目的：减少内存使用&lt;/p&gt;
+&lt;p&gt;优化策略：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用 async_streaming_bulk 代替 async_bulk&lt;/li&gt;
+&lt;li&gt;使用 asyncio.as_completed 代替 asyncio.gather&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;async_streaming_bulk 和 async_bulk 的区别：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;async_bulk 会将所有请求收集到一个列表中，然后一次性发送给 Elasticsearch，它会等待所有的请求完成，然后返回结果。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;async_streaming_bulk 则是一边收集请求，一边流式地发送给 Elasticsearch，不需要等待所有的请求收集完成，它会实时返回每个请求的结果。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;async_bulk 适用于需要等待所有请求完成才返回的场景，但是需要消耗更多内存来 hold 住所有请求。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;async_streaming_bulk 适用于对实时返回每个结果更敏感的场景，它消耗的内存更少。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;sync_bulk 的性能会比 async_streaming_bulk 好，因为它是批量发送请求。但是 async_streaming_bulk 更适合处理大量请求，不会因为内存消耗太大而出问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;asyncio.as_completed 和 asyncio.gather 的区别：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;asyncio.gather 会同时启动所有的异步任务，等待它们全部完成后才返回结果。&lt;/li&gt;
+&lt;li&gt;asyncio.as_completed 会按任务完成的顺序返回结果，不会等待所有的任务完成。&lt;/li&gt;
+&lt;li&gt;asyncio.gather 如果有一个任务 raise 异常会立即停止其它任务。asyncio.as_completed 不会，会继续返回其它已经完成的任务的结果。&lt;/li&gt;
+&lt;li&gt;asyncio.gather 的结果顺序和传入的任务顺序一致。asyncio.as_completed 的结果顺序依赖于任务完成的时间，与传入顺序无关。&lt;/li&gt;
+&lt;li&gt;asyncio.gather 更适合需要同时开始执行多个任务，并需要所有任务结果才能继续的场景。asyncio.as_completed 更适合只关心任务完成就使用结果的场景。&lt;/li&gt;
+&lt;li&gt;asyncio.gather 的性能和资源消耗可能更高，因为同时启动和跟踪更多任务。&lt;/li&gt;
+&lt;li&gt;asyncio.as_completed 可以通过返回完成任务来提早优化或发出决策。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;优化后的代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;os&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;json&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;asyncio&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;aiomysql&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;aiohttp&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;text2vec&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; SentenceModel
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;elasticsearch&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; AsyncElasticsearch
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;elasticsearch.helpers&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; async_streaming_bulk
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;host &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;127.0.0.1&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;port &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;3306&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;database &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;[DATABASE]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;user &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;root&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;password &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;[PASSWD]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;batch_size &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;10000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# load model&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; SentenceModel(&lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;shibing624/text2vec-base-chinese&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# es client&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;es &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; AsyncElasticsearch([&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;http://127.0.0.1:9220&amp;#34;&lt;/span&gt;])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;build_bulk_data&lt;/span&gt;(ids, vectors):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; _id, vec &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;zip&lt;/span&gt;(ids, vectors):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        data &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;_index&amp;#34;&lt;/span&gt;: index,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;_id&amp;#34;&lt;/span&gt;: _id,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;_source&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;: _id, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;content_vector&amp;#34;&lt;/span&gt;: vec
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;yield&lt;/span&gt; data
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;query_mysql&lt;/span&gt;(start, end, cursor):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    sql_query &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;select id,content from [table] where id &amp;gt; &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;start&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt; and id &amp;lt;= &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;end&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; cursor&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute(sql_query)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; cursor&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;fetchall()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;process_batch&lt;/span&gt;(start, end, pool):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;with&lt;/span&gt; pool&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;acquire() &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;as&lt;/span&gt; conn:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;with&lt;/span&gt; conn&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;cursor() &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;as&lt;/span&gt; cursor:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# query mysql&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            rows &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; query_mysql(start, end, cursor)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            ids &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; [row[&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; row &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; rows]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            contents &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; [row[&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; row &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; rows]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# encode content&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            vectors &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; model&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;encode(contents, show_progress_bar&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# build bulk data&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# bulk_data = [{&amp;#34;_index&amp;#34;: index, &amp;#34;_id&amp;#34;: _id, &amp;#34;_source&amp;#34;: {&amp;#34;id&amp;#34;: _id, &amp;#34;content_vector&amp;#34;: vec}} for _id, vec in zip(ids, vectors)]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            bulk_data &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; build_bulk_data(ids, vectors)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; ok, result &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; async_streaming_bulk(es, bulk_data, chunk_size&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;5000&lt;/span&gt;, max_retries&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;3&lt;/span&gt;, request_timeout&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;60&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;3&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;not&lt;/span&gt; ok:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    os&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;systemd(&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;echo &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#39; &amp;gt;&amp;gt; ./error.log&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(result))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;else&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#a2f&#34;&gt;print&lt;/span&gt;(result)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;main&lt;/span&gt;(batches, offset&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# mysql pool&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    pool &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; aiomysql&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;create_pool(host&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;host, port&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;port, user&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;user, password&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;password, db&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;database)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# task list&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    tasks &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; [process_batch(i &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; batch_size, (i &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; batch_size, pool) &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;range&lt;/span&gt;(offset, offset &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; batches)]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# wait task completed&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; completed &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; asyncio&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;as_completed(tasks):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; completed
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    pool&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;close()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;await&lt;/span&gt; pool&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;wait_closed()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    asyncio&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;run(main(&lt;span style=&#34;color:#666&#34;&gt;100&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行截图(59m 28s)：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230814172629394.png&#34; alt=&#34;image-20230814172629394&#34;&gt;&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>ES 数据导入之 tidb lightning</title>
+      <link>https://blog.wukaige.com/post/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-tidb-lightning/</link>
+      <pubDate>Mon, 17 Jul 2023 11:28:03 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/post/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-tidb-lightning/</guid>
+      
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.pingcap.com/zh/tidb/stable/tidb-lightning-overview&#34;&gt;TiDB Lightning&lt;/a&gt; 是用于从静态文件导入 TB 级数据到 TiDB 集群的工具，常用于 TiDB 集群的初始化数据导入。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;前情提要&#34;&gt;前情提要&lt;/h2&gt;
+&lt;p&gt;突然发现初始化 TIDB 数据库的时候漏掉了一个表，还好有备份，现在需要从静态备份里面导入漏掉的那个表。&lt;/p&gt;
+&lt;h2 id=&#34;编辑-tidb-lightning-配置文件&#34;&gt;编辑 tidb-lightning 配置文件&lt;/h2&gt;
+&lt;p&gt;&lt;u&gt;tidb-lightning.toml&lt;/u&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[lightning]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 日志&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;level = &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;info&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;file = &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;log/tidb-lightning.log&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[tikv-importer]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 选择使用的导入模式&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;backend = &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;tidb&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 设置排序的键值对的临时存放地址，目标路径需要是一个空目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sorted-kv-dir = &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;/tmp/sorted-kv-dir&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[mydumper]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 源数据目录。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data-source-dir = &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;/path/to/data/exported/&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 配置通配符规则，默认规则会过滤 mysql、sys、INFORMATION_SCHEMA、PERFORMANCE_SCHEMA、METRICS_SCHEMA、INSPECTION_SCHEMA 系统数据库下的所有表&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 若不配置该项，导入系统表时会出现“找不到 schema”的异常&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filter = [&lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;*.*&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;!mysql.*&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;!sys.*&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;!INFORMATION_SCHEMA.*&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;!PERFORMANCE_SCHEMA.*&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;!METRICS_SCHEMA.*&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;!INSPECTION_SCHEMA.*&amp;#39;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[mydumper.csv]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 字段分隔符，支持一个或多个字符，默认值为 &amp;#39;,&amp;#39;。如果数据中可能有逗号，建议源文件导出时分隔符使用非常见组合字符例如&amp;#39;|+|&amp;#39;。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;separator = &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;|+|&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 引用定界符，设置为空表示字符串未加引号。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;delimiter = &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 行尾定界字符，支持一个或多个字符。设置为空（默认值）表示 &amp;#34;\n&amp;#34;（换行）和 &amp;#34;\r\n&amp;#34; （回车+换行），均表示行尾。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;terminator = &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# CSV 文件是否包含表头。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 如果为 true，首行将会被跳过，且基于首行映射目标表的列。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;header = &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# CSV 是否包含 NULL。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 如果为 true，CSV 文件的任何列都不能解析为 NULL。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;not-null = &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 如果 `not-null` 为 false（即 CSV 可以包含 NULL），&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 为以下值的字段将会被解析为 NULL。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;null = &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;\N&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 是否解析字段内的反斜线转义符。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;backslash-escape = &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 是否移除以分隔符结束的行。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;trim-last-separator = &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[tidb]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 目标集群的信息&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;host = &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;127.0.0.1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;port = &lt;span style=&#34;color:#666&#34;&gt;4011&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;user = &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;root&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;password = &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[your password]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 表架构信息在从 TiDB 的“状态端口”获取。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;status-port = &lt;span style=&#34;color:#666&#34;&gt;15080&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 集群 pd 的地址&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pd-addr = &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;127.0.0.1:2079&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;启动-tidb-lightning&#34;&gt;启动 tidb-lightning&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tiup tidb-lightning -config tidb-lightning.toml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;导入成功你会看到下面的输出：
+&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230717113854601.png&#34; alt=&#34;image-20230717113854601&#34;&gt;&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>ES 数据导入之 logstash</title>
+      <link>https://blog.wukaige.com/post/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/</link>
+      <pubDate>Fri, 14 Jul 2023 17:36:30 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/post/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/</guid>
+      
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/cn/logstash/&#34;&gt;Logstash&lt;/a&gt; 是免费且开放的服务器端数据处理管道，能够从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;前情提要&#34;&gt;前情提要&lt;/h2&gt;
+&lt;p&gt;新建了一个 ES 索引，需要从 TIDB 导入一些数据到 ES 索引中。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ES 索引名： index_test&lt;/li&gt;
+&lt;li&gt;tidb 地址： 127.0.0.1:4000&lt;/li&gt;
+&lt;li&gt;es 地址： 127.0.0.1:9200, 127.0.0.1:9201, 127.0.0.1:9202&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;下载-mysql-connector-java-8021jar-包&#34;&gt;下载 mysql-connector-java-8.0.21.jar 包&lt;/h2&gt;
+&lt;p&gt;下载链接： &lt;a href=&#34;https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.21/mysql-connector-java-8.0.21.jar&#34;&gt;https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.21/mysql-connector-java-8.0.21.jar&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;创建-logstash-configuration-文件&#34;&gt;创建 Logstash configuration 文件&lt;/h2&gt;
+&lt;p&gt;&lt;u&gt;tidb-to-es.tml&lt;/u&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;input {
+    jdbc {
+      jdbc_driver_library =&amp;gt; &amp;#39;/path/to/mysql-connector-java-8.0.21.jar&amp;#39;
+      jdbc_driver_class =&amp;gt; &amp;#39;com.mysql.cj.jdbc.Driver&amp;#39;
+        jdbc_connection_string =&amp;gt; &amp;#39;jdbc:mysql://127.0.0.1:4000/LawDB?useSSL=false&amp;amp;serverTimezone=UTC&amp;amp;rewriteBatchedStatements=true&amp;amp;autoReconnect=true&amp;#39;
+        jdbc_user =&amp;gt; &amp;#39;root&amp;#39;
+        jdbc_password =&amp;gt; &amp;#39;[password]&amp;#39;
+        jdbc_validate_connection =&amp;gt; true
+        # jdbc_paging_enabled =&amp;gt; &amp;#39;true&amp;#39;
+        # jdbc_page_size =&amp;gt; &amp;#39;100&amp;#39;
+        jdbc_default_timezone =&amp;gt; &amp;#39;Asia/Shanghai&amp;#39;
+      statement =&amp;gt; &amp;#39;select id,title,content from [your table] where id &amp;lt;= 10000&amp;#39;
+    }
+}
+
+filter {
+  mutate {
+    remove_field =&amp;gt; [&amp;#39;@version&amp;#39;, &amp;#39;@timestamp&amp;#39;]
+  }
+}
+
+output {
+    stdout {
+      codec =&amp;gt; rubydebug
+    }
+    elasticsearch {
+      hosts =&amp;gt; [ &amp;#39;http://127.0.0.1:9200&amp;#39;, &amp;#39;http://127.0.0.1:9201&amp;#39;, &amp;#39;http://127.0.0.1:9202&amp;#39; ]
+      index =&amp;gt; &amp;#39;index_test&amp;#39;
+      action =&amp;gt; &amp;#39;create&amp;#39;
+      document_id =&amp;gt; &amp;#39;%{id}&amp;#39;
+      cacert =&amp;gt; &amp;#39;/home/[USER]/elasticsearch-8.5.3/config/certs/http_ca.crt&amp;#39;
+      user =&amp;gt; &amp;#34;elastic&amp;#34;
+      password =&amp;gt; &amp;#34;[elastic password]&amp;#34;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;开始导入数据&#34;&gt;开始导入数据&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;logstash -f /path/to/tidb-to-es.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;分页处理&#34;&gt;分页处理&lt;/h2&gt;
+&lt;p&gt;当数据量很大的时候，Logstash 可自动分页导入数据&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-conf&#34; data-lang=&#34;conf&#34;&gt;jdbc_paging_enabled =&amp;gt; &amp;#39;true&amp;#39;
+jdbc_page_size =&amp;gt; &amp;#39;100&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;但是 ES 分页语句效率极其低下，于是自己写了个脚本分页&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;paging.sh&lt;/u&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080&#34;&gt;#!/usr/bin/env zsh
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;table_name&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[your table]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;index_name&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[your index]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;limit&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;10000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; i in &lt;span style=&#34;color:#666&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$1&lt;/span&gt;..&lt;span style=&#34;color:#b8860b&#34;&gt;$2&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;}&lt;/span&gt;; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#666&#34;&gt;[[&lt;/span&gt; -e &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;./stop&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;]]&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$0&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$i&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$2&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;./stop&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;exit&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#b8860b&#34;&gt;offset&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;$((&lt;/span&gt; &lt;span style=&#34;color:#b8860b&#34;&gt;$i&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#b8860b&#34;&gt;$limit&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#b8860b&#34;&gt;text&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;input {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;    jdbc {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      jdbc_driver_library =&amp;gt; &amp;#39;/path/to/mysql-connector-java-8.0.21.jar&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      jdbc_driver_class =&amp;gt; &amp;#39;com.mysql.cj.jdbc.Driver&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      jdbc_connection_string =&amp;gt; &amp;#39;jdbc:mysql://127.0.0.1:4000/LawDB?useSSL=false&amp;amp;serverTimezone=UTC&amp;amp;rewriteBatchedStatements=true&amp;amp;autoReconnect=true&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      jdbc_user =&amp;gt; &amp;#39;root&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      jdbc_password =&amp;gt; &amp;#39;[passwd]&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      jdbc_validate_connection =&amp;gt; true
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      # jdbc_paging_enabled =&amp;gt; &amp;#39;true&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      # jdbc_page_size =&amp;gt; &amp;#39;10000&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      jdbc_default_timezone =&amp;gt; &amp;#39;Asia/Shanghai&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      statement =&amp;gt; &amp;#39;select id,section_head,section_party,section_litigation,section_truth,section_reason,section_result from &lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$table_name&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt; where id &amp;gt; &lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$offset&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt; order by id limit &lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$limit&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;  filter {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;    mutate {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      remove_field =&amp;gt; [&amp;#39;@version&amp;#39;, &amp;#39;@timestamp&amp;#39;]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;  output {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      stdout {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;        codec =&amp;gt; rubydebug
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;      }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;  	elasticsearch {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;        hosts =&amp;gt; [ &amp;#39;http://127.0.0.1:9200&amp;#39;, &amp;#39;http://127.0.0.1:9201&amp;#39;, &amp;#39;http://127.0.0.1:9202&amp;#39; ]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;        index =&amp;gt; &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$index_name&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;        action =&amp;gt; &amp;#39;create&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;        document_id =&amp;gt; &amp;#39;%{id}&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;  	}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;  &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  /path/to/logstash -w &lt;span style=&#34;color:#666&#34;&gt;10&lt;/span&gt; --path.data &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;/tmp/logstash-&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$1&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$2&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt; -e &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$text&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;done&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;导入 100W 数据&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;paging.sh &lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;想暂停 logstash，只需在脚本目录建立一个 stop 空文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;touch stop
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>文本转向量并插入到 ES 中</title>
+      <link>https://blog.wukaige.com/post/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/</link>
+      <pubDate>Mon, 03 Jul 2023 17:52:05 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/post/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/</guid>
+      
+      <description>&lt;h2 id=&#34;es-中创建索引&#34;&gt;ES 中创建索引&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;PUT vector-index
+{
+  &amp;#34;mappings&amp;#34;: {
+    &amp;#34;properties&amp;#34;: {
+      &amp;#34;title&amp;#34;: {
+        &amp;#34;type&amp;#34;: &amp;#34;text&amp;#34;
+      },
+      &amp;#34;content_vector&amp;#34;: {
+        &amp;#34;type&amp;#34;: &amp;#34;dense_vector&amp;#34;,
+        &amp;#34;dims&amp;#34;: 768,
+        &amp;#34;index&amp;#34;: true,
+        &amp;#34;similarity&amp;#34;: &amp;#34;l2_norm&amp;#34;
+      }
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;导入一些数据&#34;&gt;导入一些数据&lt;/h2&gt;
+&lt;p&gt;使用 logstash 工具从 mysql 数据库导入数据&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;input {
+    jdbc {
+      jdbc_driver_library =&amp;gt; &amp;#39;path/to/mysql-connector-java-8.0.21.jar&amp;#39;
+      jdbc_driver_class =&amp;gt; &amp;#39;com.mysql.cj.jdbc.Driver&amp;#39;
+        jdbc_connection_string =&amp;gt; &amp;#39;jdbc:mysql://[IP ADDR]:[POST]/[DATABASE]?useSSL=false&amp;amp;serverTimezone=UTC&amp;amp;rewriteBatchedStatements=true&amp;amp;autoReconnect=true&amp;#39;
+        jdbc_user =&amp;gt; &amp;#39;root&amp;#39;
+		jdbc_password =&amp;gt; &amp;#39;password&amp;#39;
+        jdbc_validate_connection =&amp;gt; true
+        # jdbc_paging_enabled =&amp;gt; &amp;#39;true&amp;#39;
+        # jdbc_page_size =&amp;gt; &amp;#39;100&amp;#39;
+        jdbc_default_timezone =&amp;gt; &amp;#39;Asia/Shanghai&amp;#39;
+      statement =&amp;gt; &amp;#39;select id,title from [your table] limit 10000&amp;#39;
+    }
+}
+
+filter {
+  mutate {
+    remove_field =&amp;gt; [&amp;#39;@version&amp;#39;, &amp;#39;@timestamp&amp;#39;]
+  }
+}
+
+output {
+    stdout {
+      codec =&amp;gt; rubydebug
+    }
+	elasticsearch {
+      hosts =&amp;gt; [ &amp;#39;https://[ES IP ADDR]:[ES POST]&amp;#39; ]
+      index =&amp;gt; &amp;#39;[INDEX NAME]&amp;#39;
+      action =&amp;gt; &amp;#39;create&amp;#39;
+      document_id =&amp;gt; &amp;#39;%{id}&amp;#39;
+      cacert =&amp;gt; &amp;#39;/path/to/http_ca.crt&amp;#39;
+      user =&amp;gt; &amp;#34;elastic&amp;#34;
+      password =&amp;gt; &amp;#34;[elastic password]&amp;#34;
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;文本转向量并插入-es&#34;&gt;文本转向量并插入 ES&lt;/h2&gt;
+&lt;p&gt;python 脚本&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;os&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;pymysql&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;pandas&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;pd&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;rich.progress&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; Progress, TextColumn, BarColumn, TimeElapsedColumn, TimeRemainingColumn, MofNCompleteColumn
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;text2vec&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; SentenceModel
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;requests&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;requests.auth&lt;/span&gt; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;import&lt;/span&gt; HTTPBasicAuth
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;es_url &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;https://[ES IPADDR]:[ES POST]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;es_username &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;elastic&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 替换为实际的用户名&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;es_password &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[password]&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 替换为实际的密码&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;conn &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; pymysql&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;connect(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    host&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[MYSQL HOST]&amp;#34;&lt;/span&gt;, user&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[user]&amp;#34;&lt;/span&gt;, password&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[password]&amp;#34;&lt;/span&gt;, database&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[DATABASE]&amp;#34;&lt;/span&gt;, port&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;[your post],
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cursorclass&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;pymysql&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;cursors&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;DictCursor
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cursor &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; conn&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;cursor()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# load model&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; SentenceModel(&lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;shibing624/text2vec-base-chinese&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# insert func&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#00a000&#34;&gt;to_es&lt;/span&gt;(_id, vector):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    data &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;doc&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;content_vector&amp;#34;&lt;/span&gt;: vector&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;tolist()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    url &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;es_url&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;/precedent_vector/_update/&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;_id&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# crt 证书生成 pem 证书：openssl x509 -in http_ca.crt -out http_ca.pem&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    response &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;post(url, json&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;data, auth&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;HTTPBasicAuth(es_username, es_password), verify&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;http_ca.pem&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# 检查响应状态码&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;if&lt;/span&gt; response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;status_code &lt;span style=&#34;color:#666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;200&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        msg &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(_id, response&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;text)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        os&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;system(&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;echo &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#39; &amp;gt;&amp;gt; error.log&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(msg))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f&#34;&gt;print&lt;/span&gt;(msg)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;with&lt;/span&gt; Progress(TextColumn(&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[progress.description]&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{task.description}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              MofNCompleteColumn(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              BarColumn(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              TextColumn(&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;[progress.percentage]&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{task.percentage:&amp;gt;3.0f}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;%&amp;#34;&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              TimeRemainingColumn(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              TimeElapsedColumn()) &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;as&lt;/span&gt; progress:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    start &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    end &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    batch_size &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    batch &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; progress&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;add_task(description&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;Batch&amp;#34;&lt;/span&gt;, total&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;end &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt; start)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    task &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; progress&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;add_task(description&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;Text Embedding&amp;#34;&lt;/span&gt;, total&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;3&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    insert &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; progress&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;add_task(description&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;Insert To ES&amp;#34;&lt;/span&gt;, total&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;batch_size)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;range&lt;/span&gt;(start, end):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        start &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; batch_size
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# step one&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        progress&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;update(task, advance&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;, description&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;Query Data&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        sql &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#b44&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;select id,section_head,section_party,section_litigation,section_truth,section_reason,section_result from precedent where id &amp;gt; &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;start&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt; order by id limit &lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{&lt;/span&gt;batch_size&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        os&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;system(&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;echo &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#b68;font-weight:bold&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#39; &amp;gt; ./query.sql&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;format(sql))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        cursor&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;execute(sql)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        results &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; cursor&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;fetchall()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# step two&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        progress&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;update(task, advance&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;, description&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;Create DataFrame&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        df &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;DataFrame(results)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        df[&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;content&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; df[&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;section_head&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;str&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;cat(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            [df[&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;section_party&amp;#34;&lt;/span&gt;], df[&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;section_litigation&amp;#34;&lt;/span&gt;], df[&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;section_truth&amp;#34;&lt;/span&gt;], df[&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;section_reason&amp;#34;&lt;/span&gt;],
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;             df[&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;section_result&amp;#34;&lt;/span&gt;]], sep&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#b62;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# step three&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        progress&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;update(task, advance&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;, description&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;Text Embedding&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        vectors &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; model&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;encode(df[&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;content&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;tolist(), show_progress_bar&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# insert to es&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;for&lt;/span&gt; _id, vector &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#a2f&#34;&gt;zip&lt;/span&gt;(df&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;id&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;tolist(), vectors):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            progress&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;update(insert, advance&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            to_es(_id, vector)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        progress&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;reset(insert)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        progress&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;update(batch, advance&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        progress&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;reset(task)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    progress&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;reset(batch)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;数据量不大，并且希望可以实时看到插入进度，可以用上面的代码，追求 ES 更新速度，请移步: &lt;a href=&#34;https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-40min/&#34;&gt;ES 数据插入速度优化，从 4.5h -&amp;gt; 40min&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+</description>
+      
+    </item>
+    
+  </channel>
+</rss>

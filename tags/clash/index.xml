@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>clash on TeXify</title>
+    <link>https://blog.wukaige.com/tags/clash/</link>
+    <description>Recent content in clash on TeXify</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Thu, 10 Aug 2023 14:49:26 +0000</lastBuildDate><atom:link href="https://blog.wukaige.com/tags/clash/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ubuntu &#43; clash &#43; 双网卡搭建透明网关实现全家科学上网自由</title>
+      <link>https://blog.wukaige.com/post/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/</link>
+      <pubDate>Thu, 10 Aug 2023 14:49:26 +0000</pubDate>
+      <author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/post/ubuntu-clash-%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/</guid>
+      
+      <description>&lt;h2 id=&#34;前情提要&#34;&gt;前情提要&lt;/h2&gt;
+&lt;p&gt;手机科学上网需要打开 clash 软件，手动开启代理，非常不爽，我想搭建一个无感科学上网环境，连上 WIFI 就能科学上网。&lt;/p&gt;
+&lt;h2 id=&#34;硬件配置&#34;&gt;硬件配置&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;台式主机，连接网线 enp3s0&lt;/li&gt;
+&lt;li&gt;一个 USB 无线网卡 wlan0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;软件环境&#34;&gt;软件环境&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Ubuntu 22.04&lt;/li&gt;
+&lt;li&gt;clash&lt;/li&gt;
+&lt;li&gt;nftables&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;配置网卡&#34;&gt;配置网卡&lt;/h2&gt;
+&lt;p&gt;配置思路：enp3s0 连接有线网，wlan0 开启热点，供手机连接。&lt;/p&gt;
+&lt;p&gt;使用 nmcli 命令，在 wlan0 上创建热点。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmcli dev wifi hotspot ifname wlan0 con-name hotspot ssid &lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt;WIFI 名称&lt;span style=&#34;color:#666&#34;&gt;]&lt;/span&gt; password &lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;12345678&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;开启热点&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmcli con up hotspot
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查看设备上的网络连接&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmcli dev
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一切正常的话，可以看到以下输出：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230810153406140.png&#34; alt=&#34;image-20230810153406140&#34;&gt;&lt;/p&gt;
+&lt;p&gt;手机用密码 &lt;code&gt;12345678&lt;/code&gt; 连接创建的 WIFI，此时可以正常上网，但是不可共享台式机的 clash 代理。&lt;/p&gt;
+&lt;h2 id=&#34;开启-ubuntu-ip-转发&#34;&gt;开启 Ubuntu ip 转发&lt;/h2&gt;
+&lt;p&gt;把文件 &lt;code&gt;/etc/sysctl.conf&lt;/code&gt; 中 &lt;code&gt;net.ipv4.ip_forward=1&lt;/code&gt; 的注释删除&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230810151615005.png&#34; alt=&#34;image-20230810151615005&#34;&gt;&lt;/p&gt;
+&lt;p&gt;加载并应用配置文件中的参数&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo sysctl -p
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;配置-clash-重定向端口&#34;&gt;配置 clash 重定向端口&lt;/h2&gt;
+&lt;p&gt;安装 clash: &lt;a href=&#34;https://github.com/Dreamacro/clash&#34;&gt;https://github.com/Dreamacro/clash&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;clash 配置文件加上下面配置：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-conf&#34; data-lang=&#34;conf&#34;&gt;redir-port: 7892
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;配置-nftables-转发流量&#34;&gt;配置 nftables 转发流量&lt;/h2&gt;
+&lt;p&gt;安装 nftables&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt install -y nftables
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;nftables 配置文件: &lt;u&gt;/etc/nftables.conf&lt;/u&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-conf&#34; data-lang=&#34;conf&#34;&gt;#!/usr/sbin/nft -f
+
+flush ruleset
+
+define private_list = {
+    0.0.0.0/8,
+    10.0.0.0/8,
+    127.0.0.0/8,
+    169.254.0.0/16,
+    172.16.0.0/12,
+    192.168.0.0/16,
+    224.0.0.0/4,
+    240.0.0.0/4
+}
+
+table inet filter {
+    chain input {
+        type filter hook input priority 0;
+    }
+    chain forward {
+        type filter hook forward priority 0;
+    }
+    chain output {
+        type filter hook output priority 0;
+    }
+}
+
+table ip nat {
+    chain proxy {
+        ip daddr $private_list return
+        ip protocol tcp redirect to :7892
+    }
+    chain prerouting {
+        type nat hook prerouting priority 0; policy accept;
+        jump proxy
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重启 nftables 以重载配置&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl restart nftables.service
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这些配置无误后，手机连上 WIFI，直接就可科学上网。&lt;/p&gt;
+</description>
+      
+    </item>
+    
+  </channel>
+</rss>

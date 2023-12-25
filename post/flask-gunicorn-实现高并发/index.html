@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  
+  <meta name="author" content="wukaige">
+
+  
+  
+  <meta name="description" content="基于 flask 写了一个 hanlp 分词 api，想提高 api 的并发量。 分词 api 编写 app.py import os import hanlp import json import logging from flask import Flask, request, jsonify, current_app as app, Response app = Flask(__name__) os.environ[&#34;CUDA_VISIBLE_DEVICES&#34;] = &#34;0,1&#34; tokenizer = hanlp.load(hanlp.pretrained.tok.COARSE_ELECTRA_SMALL_ZH) tok_fine = hanlp.load(hanlp.pretrained.tok.FINE_ELECTRA_SMALL_ZH) @app.route(&#34;/hanlp&#34;, methods=[&#34;GET&#34;, &#34;POST&#34;]) def hlp(): if request.method == &#34;GET&#34;: return jsonify({">
+  
+
+  
+  <link rel="icon" href="https://blog.wukaige.com/favicon.ico">
+
+  
+  
+  <meta name="keywords" content=" hugo  latex  theme ">
+  
+
+  
+  
+
+  
+  <meta property="og:title" content="flask &#43; gunicorn 实现高并发" />
+<meta property="og:description" content="基于 flask 写了一个 hanlp 分词 api，想提高 api 的并发量。 分词 api 编写 app.py import os import hanlp import json import logging from flask import Flask, request, jsonify, current_app as app, Response app = Flask(__name__) os.environ[&#34;CUDA_VISIBLE_DEVICES&#34;] = &#34;0,1&#34; tokenizer = hanlp.load(hanlp.pretrained.tok.COARSE_ELECTRA_SMALL_ZH) tok_fine = hanlp.load(hanlp.pretrained.tok.FINE_ELECTRA_SMALL_ZH) @app.route(&#34;/hanlp&#34;, methods=[&#34;GET&#34;, &#34;POST&#34;]) def hlp(): if request.method == &#34;GET&#34;: return jsonify({" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.wukaige.com/post/flask-gunicorn-%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%B9%B6%E5%8F%91/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-07-24T11:24:43+00:00" />
+<meta property="article:modified_time" content="2023-07-24T11:24:43+00:00" />
+
+
+
+
+  
+  <link rel="canonical" href="https://blog.wukaige.com/post/flask-gunicorn-%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%B9%B6%E5%8F%91/">
+
+  
+  
+  <meta itemprop="name" content="flask &#43; gunicorn 实现高并发">
+<meta itemprop="description" content="基于 flask 写了一个 hanlp 分词 api，想提高 api 的并发量。 分词 api 编写 app.py import os import hanlp import json import logging from flask import Flask, request, jsonify, current_app as app, Response app = Flask(__name__) os.environ[&#34;CUDA_VISIBLE_DEVICES&#34;] = &#34;0,1&#34; tokenizer = hanlp.load(hanlp.pretrained.tok.COARSE_ELECTRA_SMALL_ZH) tok_fine = hanlp.load(hanlp.pretrained.tok.FINE_ELECTRA_SMALL_ZH) @app.route(&#34;/hanlp&#34;, methods=[&#34;GET&#34;, &#34;POST&#34;]) def hlp(): if request.method == &#34;GET&#34;: return jsonify({"><meta itemprop="datePublished" content="2023-07-24T11:24:43+00:00" />
+<meta itemprop="dateModified" content="2023-07-24T11:24:43+00:00" />
+<meta itemprop="wordCount" content="179">
+<meta itemprop="keywords" content="flask," />
+
+  
+  <link media="screen" rel="stylesheet" href='https://blog.wukaige.com/css/common.css'>
+  <link media="screen" rel="stylesheet" href='https://blog.wukaige.com/css/content.css'>
+
+  
+  
+  <title>flask &#43; gunicorn 实现高并发 - TeXify</title>
+  
+
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="flask &#43; gunicorn 实现高并发"/>
+<meta name="twitter:description" content="基于 flask 写了一个 hanlp 分词 api，想提高 api 的并发量。 分词 api 编写 app.py import os import hanlp import json import logging from flask import Flask, request, jsonify, current_app as app, Response app = Flask(__name__) os.environ[&#34;CUDA_VISIBLE_DEVICES&#34;] = &#34;0,1&#34; tokenizer = hanlp.load(hanlp.pretrained.tok.COARSE_ELECTRA_SMALL_ZH) tok_fine = hanlp.load(hanlp.pretrained.tok.FINE_ELECTRA_SMALL_ZH) @app.route(&#34;/hanlp&#34;, methods=[&#34;GET&#34;, &#34;POST&#34;]) def hlp(): if request.method == &#34;GET&#34;: return jsonify({"/>
+
+
+  
+<link rel="stylesheet" href='https://blog.wukaige.com/css/single.css'>
+
+</head>
+
+<body>
+  <div id="wrapper">
+    <header id="header">
+  <h1>
+    <a href="https://blog.wukaige.com/">TeXify</a>
+  </h1>
+
+  <nav>
+    
+    <span class="nav-bar-item">
+      <a class="link" href="/">Post</a>
+    </span>
+    
+    <span class="nav-bar-item">
+      <a class="link" href="/post/">Archives</a>
+    </span>
+    
+    <span class="nav-bar-item">
+      <a class="link" href="/about/">About</a>
+    </span>
+    
+  </nav>
+</header>
+
+    
+<main id="main" class="post">
+  
+  
+  <h1>flask &#43; gunicorn 实现高并发</h1>
+  
+  <div>
+    <b>Keywords: </b>
+    
+    <a class="link" href='https://blog.wukaige.com/tags/flask'>#flask</a>
+    
+  </div>
+  
+  
+  <article class="content">
+    
+    <blockquote>
+<p>基于 flask 写了一个 hanlp 分词 api，想提高 api 的并发量。</p>
+</blockquote>
+<h2 id="分词-api-编写">分词 api 编写</h2>
+<p><u>app.py</u></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">os</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">hanlp</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">json</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">logging</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">flask</span> <span style="color:#a2f;font-weight:bold">import</span> Flask, request, jsonify, current_app <span style="color:#a2f;font-weight:bold">as</span> app, Response
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>app <span style="color:#666">=</span> Flask(__name__)
+</span></span><span style="display:flex;"><span>os<span style="color:#666">.</span>environ[<span style="color:#b44">&#34;CUDA_VISIBLE_DEVICES&#34;</span>] <span style="color:#666">=</span> <span style="color:#b44">&#34;0,1&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tokenizer <span style="color:#666">=</span> hanlp<span style="color:#666">.</span>load(hanlp<span style="color:#666">.</span>pretrained<span style="color:#666">.</span>tok<span style="color:#666">.</span>COARSE_ELECTRA_SMALL_ZH)
+</span></span><span style="display:flex;"><span>tok_fine <span style="color:#666">=</span> hanlp<span style="color:#666">.</span>load(hanlp<span style="color:#666">.</span>pretrained<span style="color:#666">.</span>tok<span style="color:#666">.</span>FINE_ELECTRA_SMALL_ZH)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">@app.route</span>(<span style="color:#b44">&#34;/hanlp&#34;</span>, methods<span style="color:#666">=</span>[<span style="color:#b44">&#34;GET&#34;</span>, <span style="color:#b44">&#34;POST&#34;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">hlp</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">if</span> request<span style="color:#666">.</span>method <span style="color:#666">==</span> <span style="color:#b44">&#34;GET&#34;</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">return</span> jsonify({
+</span></span><span style="display:flex;"><span>            <span style="color:#b44">&#34;status&#34;</span>: <span style="color:#b44">&#34;not ok&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#b44">&#34;message&#34;</span>: <span style="color:#b44">&#34;Get Method Is Not Allowed.&#34;</span>
+</span></span><span style="display:flex;"><span>        }), <span style="color:#666">405</span>  <span style="color:#080;font-style:italic"># HTTP status code for Method Not Allowed</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># Retrieve options</span>
+</span></span><span style="display:flex;"><span>    options <span style="color:#666">=</span> request<span style="color:#666">.</span>get_json(silent<span style="color:#666">=</span><span style="color:#a2f;font-weight:bold">True</span>) <span style="color:#a2f;font-weight:bold">or</span> {}
+</span></span><span style="display:flex;"><span>    text <span style="color:#666">=</span> options<span style="color:#666">.</span>get(<span style="color:#b44">&#34;text&#34;</span>, <span style="color:#b44">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>    method <span style="color:#666">=</span> options<span style="color:#666">.</span>get(<span style="color:#b44">&#34;method&#34;</span>, <span style="color:#b44">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    app<span style="color:#666">.</span>logger<span style="color:#666">.</span>debug(text)
+</span></span><span style="display:flex;"><span>    HanLP <span style="color:#666">=</span> hanlp<span style="color:#666">.</span>pipeline()<span style="color:#666">.</span>append(hanlp<span style="color:#666">.</span>utils<span style="color:#666">.</span>rules<span style="color:#666">.</span>split_sentence)<span style="color:#666">.</span>append(
+</span></span><span style="display:flex;"><span>                tok_fine <span style="color:#a2f;font-weight:bold">if</span> method <span style="color:#666">==</span> <span style="color:#b44">&#34;fine&#34;</span> <span style="color:#a2f;font-weight:bold">else</span> tokenizer
+</span></span><span style="display:flex;"><span>            )<span style="color:#666">.</span>append(<span style="color:#a2f;font-weight:bold">lambda</span> sents: <span style="color:#a2f">sum</span>(sents, []))
+</span></span><span style="display:flex;"><span>    result <span style="color:#666">=</span> HanLP(text)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">return</span> Response(
+</span></span><span style="display:flex;"><span>        response<span style="color:#666">=</span>json<span style="color:#666">.</span>dumps(result, ensure_ascii<span style="color:#666">=</span><span style="color:#a2f;font-weight:bold">False</span>),
+</span></span><span style="display:flex;"><span>        status<span style="color:#666">=</span><span style="color:#666">200</span>, mimetype<span style="color:#666">=</span><span style="color:#b44">&#34;application/json; charset=utf-8&#34;</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">@app.after_request</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">after_request</span>(response):
+</span></span><span style="display:flex;"><span>    app<span style="color:#666">.</span>logger<span style="color:#666">.</span>debug(response<span style="color:#666">.</span>get_json(silent<span style="color:#666">=</span><span style="color:#a2f;font-weight:bold">True</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">return</span> response
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">if</span> __name__ <span style="color:#666">==</span> <span style="color:#b44">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    app<span style="color:#666">.</span>run(host<span style="color:#666">=</span><span style="color:#b44">&#34;0.0.0.0&#34;</span>, port<span style="color:#666">=</span><span style="color:#666">5000</span>, debug<span style="color:#666">=</span><span style="color:#a2f;font-weight:bold">True</span>)
+</span></span></code></pre></div><h2 id="安装-gunicorn-库">安装 gunicorn 库</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install gunicorn
+</span></span></code></pre></div><h2 id="使用-gunicorn-启动-flask-app">使用 gunicorn 启动 flask app</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gunicorn -w <span style="color:#666">10</span> -b <span style="color:#b44">&#34;0.0.0.0:5000&#34;</span> <span style="color:#b44">&#34;app:app&#34;</span>
+</span></span></code></pre></div><p>参数解释：</p>
+<p><code>-w</code> worker, 并发数</p>
+<p><code>-b</code> 监听地址</p>
+
+    
+  </article>
+  <div class="paginator">
+    
+    <a class="link" href="https://blog.wukaige.com/post/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/">← prev</a>
+    
+    
+    <a class="link" href="https://blog.wukaige.com/post/python-%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0-mysql-%E6%95%B0%E6%8D%AE%E5%BA%93-asyncio-aiomysql/">next →</a>
+    
+  </div>
+  <div class="comment">
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</main>
+
+    <footer id="footer">
+  <div>
+    <span>© 2019</span> - <span>2023</span>
+  </div>
+
+  <div>
+    <span>Powered by </span>
+    <a class="link" href="https://gohugo.io/">Hugo</a>
+    <span> 🍦 Theme </span>
+    <a class="link" href="https://github.com/queensferryme/hugo-theme-texify">TeXify</a>
+  </div>
+
+  <div class="footnote">
+    <span>Follow me on <a class=link href=https://github.com/queensferryme>GitHub</a>,
+<a class=link href=https://twitter.com/queensferryme>Twitter</a> or
+<a class=link href=/index.xml>RSS</a> |
+<a class=link href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh target=_blank rel=noopener>CC BY-NC-SA 4.0</a>
+</span>
+  </div>
+</footer>
+
+  </div>
+
+  
+  
+
+  
+  
+
+  
+  
+
+</body>
+
+</html>
