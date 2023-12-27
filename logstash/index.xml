@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>logstash on Hugo</title>
+    <link>https://blog.wukaige.com/logstash/</link>
+    <description>Recent content in logstash on Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Tue, 15 Aug 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.wukaige.com/logstash/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>logstash 导出 ES 数据到 csv 文件</title>
+      <link>https://blog.wukaige.com/logstash-%E5%AF%BC%E5%87%BA-es-%E6%95%B0%E6%8D%AE%E5%88%B0-csv-%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/logstash-%E5%AF%BC%E5%87%BA-es-%E6%95%B0%E6%8D%AE%E5%88%B0-csv-%E6%96%87%E4%BB%B6/</guid>
+      <description>&lt;p&gt;有一个需求，把 ES 索引里面的某个字段导入 csv 文件里面。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>logstash 拼接字段</title>
+      <link>https://blog.wukaige.com/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/</link>
+      <pubDate>Wed, 19 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/</guid>
+      <description>&lt;p&gt;ES 数据的 content 字段是 html 格式的内容，现在想用纯文本内容代替 html。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ES 数据导入之 logstash</title>
+      <link>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/</link>
+      <pubDate>Fri, 14 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/cn/logstash/&#34;&gt;Logstash&lt;/a&gt; 是免费且开放的服务器端数据处理管道，能够从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

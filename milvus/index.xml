@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Milvus on Hugo</title>
+    <link>https://blog.wukaige.com/milvus/</link>
+    <description>Recent content in Milvus on Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Wed, 06 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.wukaige.com/milvus/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Milvus 安装 - Docker GPU 版</title>
+      <link>https://blog.wukaige.com/milvus-%E5%AE%89%E8%A3%85-docker-gpu-%E7%89%88/</link>
+      <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/milvus-%E5%AE%89%E8%A3%85-docker-gpu-%E7%89%88/</guid>
+      <description>&lt;p&gt;记录一下 Milvus 安装过程。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hugo/posts/es-数据导入之-logstash/</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/terminal-0.7.2.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/animate-4.1.1.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/console.css">
+    
+      <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+       <meta property="og:title" content="ES 数据导入之 logstash" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.wukaige.com/posts/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/" /><meta property="article:published_time" content="2023-07-14T00:00:00+00:00" />
+
+
+
+<meta name="twitter:title" content="ES 数据导入之 logstash"/>
+<meta name="twitter:description" content="Logstash 是免费且开放的服务器端数据处理管道，能够从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。"/>
+
+</head>
+<body class="terminal">
+    <div class="container">
+        <div class="terminal-nav">
+          <header class="terminal-logo">
+            <div class="logo terminal-prompt">
+              
+              
+              <a href="https://blog.wukaige.com/" class="no-style site-name">Hugo</a>:~# 
+              <a href='https://blog.wukaige.com/posts'>posts</a>/<a href='https://blog.wukaige.com/posts/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash'>es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash</a>/</div></header>
+          <nav class="terminal-menu">
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                <li><a href="https://blog.wukaige.com/about/" typeof="ListItem">about/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/posts/" typeof="ListItem">posts/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/photos/" typeof="ListItem">photos/</a></li>
+                
+            </ul>
+          </nav>
+        </div>
+    </div>
+
+    <div class="container animated zoomIn fast" >
+        
+<h1>ES 数据导入之 logstash</h1>
+
+Jul. 14, 2023
+
+
+<br/><br/>
+<p><a href="https://www.elastic.co/cn/logstash/">Logstash</a> 是免费且开放的服务器端数据处理管道，能够从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。</p>
+<h2 id="前情提要">前情提要</h2>
+<p>新建了一个 ES 索引，需要从 TIDB 导入一些数据到 ES 索引中。</p>
+<ul>
+<li>ES 索引名： index_test</li>
+<li>tidb 地址： 127.0.0.1:4000</li>
+<li>es 地址： 127.0.0.1:9200, 127.0.0.1:9201, 127.0.0.1:9202</li>
+</ul>
+<h2 id="下载-mysql-connector-java-8021jar-包">下载 mysql-connector-java-8.0.21.jar 包</h2>
+<p>下载链接： <a href="https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.21/mysql-connector-java-8.0.21.jar">https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.21/mysql-connector-java-8.0.21.jar</a></p>
+<h2 id="创建-logstash-configuration-文件">创建 Logstash configuration 文件</h2>
+<p><!-- raw HTML omitted -->tidb-to-es.tml<!-- raw HTML omitted --></p>
+<pre tabindex="0"><code>input {
+    jdbc {
+      jdbc_driver_library =&gt; &#39;/path/to/mysql-connector-java-8.0.21.jar&#39;
+      jdbc_driver_class =&gt; &#39;com.mysql.cj.jdbc.Driver&#39;
+        jdbc_connection_string =&gt; &#39;jdbc:mysql://127.0.0.1:4000/LawDB?useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true&amp;autoReconnect=true&#39;
+        jdbc_user =&gt; &#39;root&#39;
+        jdbc_password =&gt; &#39;[password]&#39;
+        jdbc_validate_connection =&gt; true
+        # jdbc_paging_enabled =&gt; &#39;true&#39;
+        # jdbc_page_size =&gt; &#39;100&#39;
+        jdbc_default_timezone =&gt; &#39;Asia/Shanghai&#39;
+      statement =&gt; &#39;select id,title,content from [your table] where id &lt;= 10000&#39;
+    }
+}
+
+filter {
+  mutate {
+    remove_field =&gt; [&#39;@version&#39;, &#39;@timestamp&#39;]
+  }
+}
+
+output {
+    stdout {
+      codec =&gt; rubydebug
+    }
+    elasticsearch {
+      hosts =&gt; [ &#39;http://127.0.0.1:9200&#39;, &#39;http://127.0.0.1:9201&#39;, &#39;http://127.0.0.1:9202&#39; ]
+      index =&gt; &#39;index_test&#39;
+      action =&gt; &#39;create&#39;
+      document_id =&gt; &#39;%{id}&#39;
+      cacert =&gt; &#39;/home/[USER]/elasticsearch-8.5.3/config/certs/http_ca.crt&#39;
+      user =&gt; &#34;elastic&#34;
+      password =&gt; &#34;[elastic password]&#34;
+    }
+}
+</code></pre><h2 id="开始导入数据">开始导入数据</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>logstash -f /path/to/tidb-to-es.conf
+</span></span></code></pre></div><h2 id="分页处理">分页处理</h2>
+<p>当数据量很大的时候，Logstash 可自动分页导入数据</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">jdbc_paging_enabled =&gt; &#39;true&#39;
+jdbc_page_size =&gt; &#39;100&#39;
+</code></pre><p>但是 ES 分页语句效率极其低下，于是自己写了个脚本分页</p>
+<p><!-- raw HTML omitted -->paging.sh<!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env zsh
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>table_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[your table]&#34;</span>
+</span></span><span style="display:flex;"><span>index_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[your index]&#34;</span>
+</span></span><span style="display:flex;"><span>limit<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>$1..$2<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">[[</span> -e <span style="color:#e6db74">&#34;./stop&#34;</span> <span style="color:#f92672">]]</span> <span style="color:#f92672">&amp;&amp;</span> echo <span style="color:#e6db74">&#34;</span>$0<span style="color:#e6db74"> </span>$i<span style="color:#e6db74"> </span>$2<span style="color:#e6db74">&#34;</span> &gt;&gt; <span style="color:#e6db74">&#34;./stop&#34;</span> <span style="color:#f92672">&amp;&amp;</span> exit <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>  offset<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span> $i <span style="color:#f92672">*</span> $limit <span style="color:#66d9ef">))</span>
+</span></span><span style="display:flex;"><span>  text<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;input {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    jdbc {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      jdbc_driver_library =&gt; &#39;/path/to/mysql-connector-java-8.0.21.jar&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      jdbc_driver_class =&gt; &#39;com.mysql.cj.jdbc.Driver&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      jdbc_connection_string =&gt; &#39;jdbc:mysql://127.0.0.1:4000/LawDB?useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true&amp;autoReconnect=true&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      jdbc_user =&gt; &#39;root&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      jdbc_password =&gt; &#39;[passwd]&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      jdbc_validate_connection =&gt; true
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      # jdbc_paging_enabled =&gt; &#39;true&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      # jdbc_page_size =&gt; &#39;10000&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      jdbc_default_timezone =&gt; &#39;Asia/Shanghai&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      statement =&gt; &#39;select id,section_head,section_party,section_litigation,section_truth,section_reason,section_result from </span>$table_name<span style="color:#e6db74"> where id &gt; </span>$offset<span style="color:#e6db74"> order by id limit </span>$limit<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  filter {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    mutate {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      remove_field =&gt; [&#39;@version&#39;, &#39;@timestamp&#39;]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  output {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      stdout {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        codec =&gt; rubydebug
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  	elasticsearch {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        hosts =&gt; [ &#39;http://127.0.0.1:9200&#39;, &#39;http://127.0.0.1:9201&#39;, &#39;http://127.0.0.1:9202&#39; ]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        index =&gt; &#39;</span>$index_name<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        action =&gt; &#39;create&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        document_id =&gt; &#39;%{id}&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  	}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;</span>
+</span></span><span style="display:flex;"><span>  /path/to/logstash -w <span style="color:#ae81ff">10</span> --path.data <span style="color:#e6db74">&#34;/tmp/logstash-</span>$1<span style="color:#e6db74">-</span>$2<span style="color:#e6db74">&#34;</span> -e <span style="color:#e6db74">&#34;</span>$text<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span></code></pre></div><p>导入 100W 数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>paging.sh <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">100</span>
+</span></span></code></pre></div><p>想暂停 logstash，只需在脚本目录建立一个 stop 空文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>touch stop
+</span></span></code></pre></div>
+
+
+        <div class="footer">
+    Powered by <a href="https://gohugo.io/">Hugo</a> with
+    <a href="https://github.com/mrmierzejewski/hugo-theme-console/">Console Theme</a>. 
+</div>
+
+    </div>
+  </body>
+</html>

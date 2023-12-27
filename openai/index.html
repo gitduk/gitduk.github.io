@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hugo/openai/</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/terminal-0.7.2.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/animate-4.1.1.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/console.css">
+    
+      <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+       
+      <link href="https://blog.wukaige.com/openai/index.xml" rel="alternate" type="application/rss+xml" title="Hugo" />
+    <meta property="og:title" content="openai" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://blog.wukaige.com/openai/" />
+
+
+<meta name="twitter:title" content="openai"/>
+<meta name="twitter:description" content=""/>
+
+</head>
+<body class="terminal">
+    <div class="container">
+        <div class="terminal-nav">
+          <header class="terminal-logo">
+            <div class="logo terminal-prompt">
+              
+              
+              <a href="https://blog.wukaige.com/" class="no-style site-name">Hugo</a>:~# 
+              <a href='https://blog.wukaige.com/openai'>openai</a>/</div></header>
+          <nav class="terminal-menu">
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                <li><a href="https://blog.wukaige.com/about/" typeof="ListItem">about/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/posts/" typeof="ListItem">posts/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/tags/" typeof="ListItem">tags/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/categories/leetcode" typeof="ListItem">leetcode/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/photos/" typeof="ListItem">photos/</a></li>
+                
+            </ul>
+          </nav>
+        </div>
+    </div>
+
+    <div class="container animated zoomIn fast" >
+        
+<h1>openai</h1>
+<br/>
+
+
+<div class="posts-list">
+
+    
+        <div class="post">
+            <p>
+                <div class="date">Jul. 4, 2023</div>    
+                <h1><a href="https://blog.wukaige.com/nginx-%E4%BB%A3%E7%90%86-openai-api/" title="Nginx 代理 openai api">Nginx 代理 openai api</a></h1>
+                安装 Nginx ubuntu: sudo apt install nginx 配置 Openai 反向代理 在目录 /etc/nginx/conf.d 下创建文件 openai.conf /etc/nginx/conf.d/openai.conf server { listen 8000; location /v1/ { proxy_pass https://api.openai.com/v1/; # OpenAI API URL proxy_ssl_server_name on; # 避免出现反代https域名出现502错误 proxy_buffering off; # 关闭缓存实
+            </p>
+        </div>
+    
+
+</div>
+
+
+        <div class="footer">
+    Powered by <a href="https://gohugo.io/">Hugo</a> with
+    <a href="https://github.com/mrmierzejewski/hugo-theme-console/">Console Theme</a>. 
+</div>
+
+    </div>
+  </body>
+</html>

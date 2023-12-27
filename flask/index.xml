@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>flask on Hugo</title>
+    <link>https://blog.wukaige.com/flask/</link>
+    <description>Recent content in flask on Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Mon, 24 Jul 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.wukaige.com/flask/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>flask &#43; gunicorn 实现高并发</title>
+      <link>https://blog.wukaige.com/flask--gunicorn-%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%B9%B6%E5%8F%91/</link>
+      <pubDate>Mon, 24 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/flask--gunicorn-%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%B9%B6%E5%8F%91/</guid>
+      <description>&lt;p&gt;基于 flask 写了一个 hanlp 分词 api，想提高 api 的并发量。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

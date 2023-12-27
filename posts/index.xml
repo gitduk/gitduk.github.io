@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Hugo</title>
+    <link>https://blog.wukaige.com/posts/</link>
+    <description>Recent content in Posts on Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Fri, 15 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.wukaige.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>两数之和</title>
+      <link>https://blog.wukaige.com/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</link>
+      <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</guid>
+      <description>&lt;p&gt;给定一个整数数组 &lt;code&gt;nums&lt;/code&gt; 和一个整数目标值 &lt;code&gt;target&lt;/code&gt;，请你在该数组中找出 &lt;strong&gt;和为目标值&lt;/strong&gt; &lt;em&gt;&lt;code&gt;target&lt;/code&gt;&lt;/em&gt; 的那 &lt;strong&gt;两个&lt;/strong&gt; 整数，并返回它们的数组下标。&lt;/p&gt;
+&lt;p&gt;你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。&lt;/p&gt;
+&lt;p&gt;你可以按任意顺序返回答案。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Milvus 安装 - Docker GPU 版</title>
+      <link>https://blog.wukaige.com/milvus-%E5%AE%89%E8%A3%85-docker-gpu-%E7%89%88/</link>
+      <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/milvus-%E5%AE%89%E8%A3%85-docker-gpu-%E7%89%88/</guid>
+      <description>&lt;p&gt;记录一下 Milvus 安装过程。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ES 集群恢复</title>
+      <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/</link>
+      <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/</guid>
+      <description>&lt;p&gt;强制关机导致 ES 集群丢失 &lt;code&gt;.security-7&lt;/code&gt; 索引，无法进行安全验证，尝试恢复的过程中，导致 ES 集群彻底不可用。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ES 集群缩容</title>
+      <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E7%BC%A9%E5%AE%B9/</link>
+      <pubDate>Fri, 24 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E7%BC%A9%E5%AE%B9/</guid>
+      <description>&lt;p&gt;想通过增加 ES 节点达到提高 ES 吞吐量的目的，但是发现效果并不好。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ES 集群扩容</title>
+      <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%89%A9%E5%AE%B9/</link>
+      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%89%A9%E5%AE%B9/</guid>
+      <description>&lt;p&gt;想通过增加 ES 节点达到提高 ES 吞吐量的目的。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>TiDB-Lightning 基础使用</title>
+      <link>https://blog.wukaige.com/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</guid>
+      <description>&lt;p&gt;前提是已经用 &lt;a href=&#34;https://docs.pingcap.com/tidb/stable/dumpling-overview&#34;&gt;Dumpling&lt;/a&gt; 将数据从上游数据库导出。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ES 集群压测</title>
+      <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/</link>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/</guid>
+      <description>&lt;p&gt;新进了一台高性能服务器，准备把旧的 ES 集群迁移到新服务器，需要对比两个 ES 集群的性能。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hugo 搭建个人博客</title>
+      <link>https://blog.wukaige.com/hugo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/hugo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
+      <description>安装 Hugo brew install hugo 建立网站 hugo new site hugo 运行 Hugo 服务 cd hugo/ hugo server 上传到 github.io cd blog/public</description>
+    </item>
+    <item>
+      <title>TiDB 扩容</title>
+      <link>https://blog.wukaige.com/tidb-%E6%89%A9%E5%AE%B9/</link>
+      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/tidb-%E6%89%A9%E5%AE%B9/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>TiDB-Lightning 错误排查</title>
+      <link>https://blog.wukaige.com/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</link>
+      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</guid>
+      <description>raft entry is too large 修改 TiDB 配置 tiup cluster edit-config tidb tikv: raftstore.raft-entry-max-siz: 128MB 重启 tikv 节点 tiup cluster reload tidb-cluster -R tikv Referencing column &amp;rsquo;table&amp;rsquo; and referenced column &amp;lsquo;id&amp;rsquo; in foreign key constraint &amp;lsquo;fk_1&amp;rsquo; are incompatible 外键约束错误 查找引用 table 的表 SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = &amp;#39;table&amp;#39;; 删除引用 table 的表</description>
+    </item>
+  </channel>
+</rss>

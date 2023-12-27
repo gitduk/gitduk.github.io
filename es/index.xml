@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ES on Hugo</title>
+    <link>https://blog.wukaige.com/es/</link>
+    <description>Recent content in ES on Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Fri, 01 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.wukaige.com/es/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ES 集群恢复</title>
+      <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/</link>
+      <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/</guid>
+      <description>&lt;p&gt;强制关机导致 ES 集群丢失 &lt;code&gt;.security-7&lt;/code&gt; 索引，无法进行安全验证，尝试恢复的过程中，导致 ES 集群彻底不可用。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ES 集群缩容</title>
+      <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E7%BC%A9%E5%AE%B9/</link>
+      <pubDate>Fri, 24 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E7%BC%A9%E5%AE%B9/</guid>
+      <description>&lt;p&gt;想通过增加 ES 节点达到提高 ES 吞吐量的目的，但是发现效果并不好。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ES 集群扩容</title>
+      <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%89%A9%E5%AE%B9/</link>
+      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%89%A9%E5%AE%B9/</guid>
+      <description>&lt;p&gt;想通过增加 ES 节点达到提高 ES 吞吐量的目的。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ES 集群压测</title>
+      <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/</link>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/</guid>
+      <description>&lt;p&gt;新进了一台高性能服务器，准备把旧的 ES 集群迁移到新服务器，需要对比两个 ES 集群的性能。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ES 数据迁移</title>
+      <link>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</link>
+      <pubDate>Thu, 24 Aug 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</guid>
+      <description>&lt;p&gt;老板有一个需求，把旧索引里面的数据全部迁移到新索引，ES 内置的 reindex 可以快速进行数据迁移。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ES 数据插入速度优化，从 4.5h -&gt; 1h</title>
+      <link>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E4%BB%8E-4.5h-1h/</link>
+      <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E4%BB%8E-4.5h-1h/</guid>
+      <description>&lt;p&gt;写了个脚本把数据库里面的 content 字段转换为向量插入到 ES， 100w 数据需要 4.5 小时，太慢了！！！&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ES 数据导入之 tidb lightning</title>
+      <link>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-tidb-lightning/</link>
+      <pubDate>Mon, 17 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-tidb-lightning/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://docs.pingcap.com/zh/tidb/stable/tidb-lightning-overview&#34;&gt;TiDB Lightning&lt;/a&gt; 是用于从静态文件导入 TB 级数据到 TiDB 集群的工具，常用于 TiDB 集群的初始化数据导入。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ES 数据导入之 logstash</title>
+      <link>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/</link>
+      <pubDate>Fri, 14 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/cn/logstash/&#34;&gt;Logstash&lt;/a&gt; 是免费且开放的服务器端数据处理管道，能够从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>文本转向量并插入到 ES 中</title>
+      <link>https://blog.wukaige.com/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/</link>
+      <pubDate>Mon, 03 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/</guid>
+      <description>ES 中创建索引 PUT vector-index { &amp;#34;mappings&amp;#34;: { &amp;#34;properties&amp;#34;: { &amp;#34;title&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;text&amp;#34; }, &amp;#34;content_vector&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;dense_vector&amp;#34;, &amp;#34;dims&amp;#34;: 768, &amp;#34;index&amp;#34;: true, &amp;#34;similarity&amp;#34;: &amp;#34;l2_norm&amp;#34; } } } } 导入一些数据 使用 logstash 工具从 mysql 数据库导入数据 input { jdbc { jdbc_driver_library =&amp;gt; &amp;#39;path/to/mysql-connector-java-8.0.21.jar&amp;#39; jdbc_driver_class =&amp;gt; &amp;#39;com.mysql.cj.jdbc.Driver&amp;#39; jdbc_connection_string =&amp;gt; &amp;#39;jdbc:mysql://[IP ADDR]:[POST]/[DATABASE]?useSSL=false&amp;amp;serverTimezone=UTC&amp;amp;rewriteBatchedStatements=true&amp;amp;autoReconnect=true&amp;#39; jdbc_user =&amp;gt; &amp;#39;root&amp;#39; jdbc_password</description>
+    </item>
+  </channel>
+</rss>

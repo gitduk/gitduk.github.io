@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hugo/posts/logstash-拼接字段/</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/terminal-0.7.2.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/animate-4.1.1.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/console.css">
+    
+      <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+       <meta property="og:title" content="logstash 拼接字段" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.wukaige.com/posts/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/" /><meta property="article:published_time" content="2023-07-19T00:00:00+00:00" />
+
+
+
+<meta name="twitter:title" content="logstash 拼接字段"/>
+<meta name="twitter:description" content="ES 数据的 content 字段是 html 格式的内容，现在想用纯文本内容代替 html。"/>
+
+</head>
+<body class="terminal">
+    <div class="container">
+        <div class="terminal-nav">
+          <header class="terminal-logo">
+            <div class="logo terminal-prompt">
+              
+              
+              <a href="https://blog.wukaige.com/" class="no-style site-name">Hugo</a>:~# 
+              <a href='https://blog.wukaige.com/posts'>posts</a>/<a href='https://blog.wukaige.com/posts/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5'>logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5</a>/</div></header>
+          <nav class="terminal-menu">
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                <li><a href="https://blog.wukaige.com/about/" typeof="ListItem">about/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/posts/" typeof="ListItem">posts/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/photos/" typeof="ListItem">photos/</a></li>
+                
+            </ul>
+          </nav>
+        </div>
+    </div>
+
+    <div class="container animated zoomIn fast" >
+        
+<h1>logstash 拼接字段</h1>
+
+Jul. 19, 2023
+
+
+<br/><br/>
+<p>ES 数据的 content 字段是 html 格式的内容，现在想用纯文本内容代替 html。</p>
+<h2 id="方案一">方案一</h2>
+<p>用 ES reindex API 的 script 功能去除 html 标签。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>SOURCE_INDEX<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[source index]&#34;</span>
+</span></span><span style="display:flex;"><span>TARGET_INDEX<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[target index]&#34;</span>
+</span></span><span style="display:flex;"><span>START<span style="color:#f92672">=</span>$1
+</span></span><span style="display:flex;"><span>END<span style="color:#f92672">=</span>$2
+</span></span><span style="display:flex;"><span>BATCH_SIZE<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Elasticsearch 集群的 SSL 配置</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># CERT_FILE=&#34;/path/to/your/es/http_ca.crt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 执行 reindex 操作</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#f92672">((</span>i <span style="color:#f92672">=</span> $START; i &lt; $END; i++<span style="color:#f92672">))</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  from<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>i <span style="color:#f92672">*</span> BATCH_SIZE<span style="color:#66d9ef">))</span>
+</span></span><span style="display:flex;"><span>  to<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>from <span style="color:#f92672">+</span> BATCH_SIZE<span style="color:#66d9ef">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  printf <span style="color:#e6db74">&#34;Processing batch </span><span style="color:#66d9ef">$((</span>i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#66d9ef">))</span><span style="color:#e6db74"> of </span>$END<span style="color:#e6db74"> ...\n&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 发起 reindex 请求</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># curl -s -X POST &#34;https://127.0.0.1:9555/_reindex?refresh=false&#34; -H &#39;Content-Type: application/json&#39; --cacert $CERT_FILE -u &#34;elastic:[passwd]&#34; -d &#34;</span>
+</span></span><span style="display:flex;"><span>  curl -s -X POST <span style="color:#e6db74">&#34;http://127.0.0.1:9220/_reindex?refresh=false&#34;</span> -H <span style="color:#e6db74">&#39;Content-Type: application/json&#39;</span> -d <span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    \&#34;source\&#34;: {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      \&#34;index\&#34;: \&#34;</span>$SOURCE_INDEX<span style="color:#e6db74">\&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      \&#34;size\&#34;: </span>$BATCH_SIZE<span style="color:#e6db74">,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      \&#34;query\&#34;: {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        \&#34;range\&#34;: {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          \&#34;id\&#34;: {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            \&#34;gte\&#34;: </span>$from<span style="color:#e6db74">,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            \&#34;lt\&#34;: </span>$to<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    },
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    \&#34;dest\&#34;: {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      \&#34;index\&#34;: \&#34;</span>$TARGET_INDEX<span style="color:#e6db74">\&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    },
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    \&#34;script\&#34;: { \&#34;source\&#34;: \&#34;ctx._source.content = /&lt;[^&gt;]+&gt;/ .matcher(ctx._source.content).replaceAll(&#39;&#39;)\&#34; }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  }&#34;</span>
+</span></span><span style="display:flex;"><span>  echo
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Reindex completed.&#34;</span>
+</span></span></code></pre></div><p>发现去掉了很多原文内容，舍弃。</p>
+<h2 id="方案二">方案二</h2>
+<p>从原始数据库查询 content 字段的各个部分（text 版本的 content 被分成了 section_1, section_2, section_3）并更新 ES 的 content 字段。</p>
+<p>logstash 配置文件： <!-- raw HTML omitted -->update-content.conf<!-- raw HTML omitted --></p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">input {
+    jdbc {
+      jdbc_driver_library =&gt; &#39;/path/to/mysql-connector-java-8.0.21.jar&#39;
+      jdbc_driver_class =&gt; &#39;com.mysql.cj.jdbc.Driver&#39;
+      jdbc_connection_string =&gt; &#39;jdbc:mysql://127.0.0.1:4011/LawDB?useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true&amp;autoReconnect=true&#39;
+      jdbc_user =&gt; &#39;root&#39;
+      jdbc_password =&gt; &#39;[passwd]&#39;
+      jdbc_validate_connection =&gt; true
+      jdbc_paging_enabled =&gt; &#39;true&#39;
+      jdbc_page_size =&gt; &#39;1000&#39;
+      jdbc_default_timezone =&gt; &#39;Asia/Shanghai&#39;
+      statement =&gt; &#39;select id,section_1,section_2,section_3 from [your table]&#39;
+    }
+}
+
+filter {
+  mutate {
+    add_field =&gt; {
+      &#34;content&#34; =&gt; &#34;%{section_1} %{section_2} %{section_3}&#34;
+    }
+  }
+  mutate {
+    remove_field =&gt; [&#34;@version&#34;, &#34;@timestamp&#34;, &#34;section_1&#34;, &#34;section_2&#34;, &#34;section_3&#34;]
+  }
+}
+
+output {
+    stdout {
+      codec =&gt; rubydebug
+    }
+    elasticsearch {
+      hosts =&gt; [ &#39;http://127.0.0.1:9220&#39; ]
+      index =&gt; &#39;[your index]&#39;
+      action =&gt; &#39;update&#39;
+      document_id =&gt; &#39;%{id}&#39;
+    }
+}
+</code></pre><p>运行 logstash</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>logstash -w <span style="color:#ae81ff">10</span> --path.data <span style="color:#e6db74">&#34;/tmp/logstash-data&#34;</span> -f /path/to/update-content.conf
+</span></span></code></pre></div>
+
+
+        <div class="footer">
+    Powered by <a href="https://gohugo.io/">Hugo</a> with
+    <a href="https://github.com/mrmierzejewski/hugo-theme-console/">Console Theme</a>. 
+</div>
+
+    </div>
+  </body>
+</html>

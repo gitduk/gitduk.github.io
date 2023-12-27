@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>redhat on Hugo</title>
+    <link>https://blog.wukaige.com/redhat/</link>
+    <description>Recent content in redhat on Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Fri, 13 Oct 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.wukaige.com/redhat/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>rust &amp; sqlserver</title>
+      <link>https://blog.wukaige.com/rust-sqlserver/</link>
+      <pubDate>Fri, 13 Oct 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/rust-sqlserver/</guid>
+      <description>&lt;p&gt;公司购买了一张 4090 显卡，需要安装到服务器上。&lt;/p&gt;
+&lt;p&gt;服务器 OS 版本：redhat9&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

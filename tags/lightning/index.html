@@ -1,293 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
-    <title>Lightning :: Home</title>
-  
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-
-  <meta name="robots" content="noodp" />
-
-<link rel="canonical" href="https://blog.wukaige.com/tags/lightning/" />
-
-
-
-
-
-
-  
-  
-  
-  
-  
-  <link rel="stylesheet" href="https://blog.wukaige.com/styles.css">
-
-
-
-
-
-
-
-  <link rel="shortcut icon" href="https://blog.wukaige.com/favicon.ico">
-
-
-
-<meta name="twitter:card" content="summary" />
-
-  
-    <meta name="twitter:site" content="" />
-  
-    <meta name="twitter:creator" content="" />
-
-
-
-<meta property="og:locale" content="en" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Lightning">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hugo/tags/lightning/</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/terminal-0.7.2.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/animate-4.1.1.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/console.css">
+    
+      <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+       
+      <link href="https://blog.wukaige.com/tags/lightning/index.xml" rel="alternate" type="application/rss+xml" title="Hugo" />
+    <meta property="og:title" content="Lightning" />
 <meta property="og:description" content="" />
+<meta property="og:type" content="website" />
 <meta property="og:url" content="https://blog.wukaige.com/tags/lightning/" />
-<meta property="og:site_name" content="Home" />
-
-  
-    <meta property="og:image" content="https://blog.wukaige.com/favicon.ico">
-  
-
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="627">
 
 
-
-
-
-  <link href="/tags/lightning/index.xml" rel="alternate" type="application/rss+xml" title="Home" />
-
-
-
-
-
-
-
-
+<meta name="twitter:title" content="Lightning"/>
+<meta name="twitter:description" content=""/>
 
 </head>
-<body class="blue">
+<body class="terminal">
+    <div class="container">
+        <div class="terminal-nav">
+          <header class="terminal-logo">
+            <div class="logo terminal-prompt">
+              
+              
+              <a href="https://blog.wukaige.com/" class="no-style site-name">Hugo</a>:~# 
+              <a href='https://blog.wukaige.com/tags'>tags</a>/<a href='https://blog.wukaige.com/tags/lightning'>lightning</a>/</div></header>
+          <nav class="terminal-menu">
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                <li><a href="https://blog.wukaige.com/about/" typeof="ListItem">about/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/posts/" typeof="ListItem">posts/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/photos/" typeof="ListItem">photos/</a></li>
+                
+            </ul>
+          </nav>
+        </div>
+    </div>
+
+    <div class="container animated zoomIn fast" >
+        
+<h1>Lightning</h1>
+<br/>
 
 
-<div class="container center headings--one-size">
+<div class="posts-list">
 
-  <header class="header">
-  <div class="header__inner">
-    <div class="header__logo">
-      <a href="/">
-  <div class="logo">
-    Home
-  </div>
-</a>
+    
+        <div class="post">
+            <p>
+                <div class="date">Nov. 23, 2023</div>    
+                <h1><a href="https://blog.wukaige.com/posts/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" title="TiDB-Lightning 基础使用">TiDB-Lightning 基础使用</a></h1>
+                <p>前提是已经用 <a href="https://docs.pingcap.com/tidb/stable/dumpling-overview">Dumpling</a> 将数据从上游数据库导出。</p>
+            </p>
+        </div>
+    
+
+    
+        <div class="post">
+            <p>
+                <div class="date">Nov. 17, 2023</div>    
+                <h1><a href="https://blog.wukaige.com/posts/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/" title="TiDB-Lightning 错误排查">TiDB-Lightning 错误排查</a></h1>
+                raft entry is too large 修改 TiDB 配置 tiup cluster edit-config tidb tikv: raftstore.raft-entry-max-siz: 128MB 重启 tikv 节点 tiup cluster reload tidb-cluster -R tikv Referencing column &rsquo;table&rsquo; and referenced column &lsquo;id&rsquo; in foreign key constraint &lsquo;fk_1&rsquo; are incompatible 外键约束错误 查找引用 table 的表 SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = &#39;table&#39;; 删除引用 table 的表
+            </p>
+        </div>
+    
+
+</div>
+
+
+        <div class="footer">
+    Powered by <a href="https://gohugo.io/">Hugo</a> with
+    <a href="https://github.com/mrmierzejewski/hugo-theme-console/">Console Theme</a>. 
+</div>
 
     </div>
-    
-      <ul class="menu menu--mobile">
-  <li class="menu__trigger">Menu&nbsp;▾</li>
-  <li>
-    <ul class="menu__dropdown">
-      
-        
-          <li><a href="/post/">Post</a></li>
-        
-      
-        
-          <li><a href="/tags/">Tags</a></li>
-        
-      
-        
-          <li><a href="/categories/">Categories</a></li>
-        
-      
-        
-          <li><a href="/categories/leetcode">Leetcode</a></li>
-        
-      
-        
-          <li><a href="/about">About</a></li>
-        
-      
-      
-        <hr />
-        
-          <li>
-            <a href="https://blog.wukaige.com/cn/">简体中文</a>
-          </li>
-        
-          <li>
-            <a href="https://blog.wukaige.com/">English</a>
-          </li>
-        
-      
-    </ul>
-  </li>
-</ul>
-
-    
-    
-      <ul class="menu menu--desktop menu--language-selector">
-  <li class="menu__trigger">English&nbsp;▾</li>
-  <li>
-    <ul class="menu__dropdown">
-      
-        <li><a href="https://blog.wukaige.com/cn/">简体中文</a></li>
-      
-        <li><a href="https://blog.wukaige.com/">English</a></li>
-      
-    </ul>
-  </li>
-</ul>
-
-    
-  </div>
-  
-    <nav class="navigation-menu">
-  <ul class="navigation-menu__inner menu--desktop">
-    
-      
-        
-          <li><a href="/post/" >Post</a></li>
-        
-      
-        
-          <li><a href="/tags/" >Tags</a></li>
-        
-      
-        
-          <li><a href="/categories/" >Categories</a></li>
-        
-      
-        
-          <li><a href="/categories/leetcode" >Leetcode</a></li>
-        
-      
-        
-          <li><a href="/about" >About</a></li>
-        
-      
-      
-    
-  </ul>
-</nav>
-
-  
-</header>
-
-
-  <div class="content">
-    
-  <h1>Posts for: #Lightning</h1>
-  
-  <div class="posts">
-    
-      <article class="post on-list">
-        <h1 class="post-title">
-          <a href="https://blog.wukaige.com/post/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/">TiDB-Lightning 基础使用</a>
-        </h1>
-        <div class="post-meta"><time class="post-date">2023-11-23</time></div>
-
-        
-          <span class="post-tags">
-            
-            #<a href="https://blog.wukaige.com/tags/tidb/">TiDB</a>&nbsp;
-            
-            #<a href="https://blog.wukaige.com/tags/lightning/">Lightning</a>&nbsp;
-            
-          </span>
-        
-
-        
-
-
-        <div class="post-content">
-          
-            <p>前提是已经用 <a href="https://docs.pingcap.com/tidb/stable/dumpling-overview">Dumpling</a> 将数据从上游数据库导出。</p>
-          
-        </div>
-
-        
-          <div>
-            <a class="read-more button" href="/post/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/">Read more →</a>
-          </div>
-        
-      </article>
-    
-      <article class="post on-list">
-        <h1 class="post-title">
-          <a href="https://blog.wukaige.com/post/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/">TiDB-Lightning 错误排查</a>
-        </h1>
-        <div class="post-meta"><time class="post-date">2023-11-17</time></div>
-
-        
-          <span class="post-tags">
-            
-            #<a href="https://blog.wukaige.com/tags/tidb/">TiDB</a>&nbsp;
-            
-            #<a href="https://blog.wukaige.com/tags/lightning/">Lightning</a>&nbsp;
-            
-          </span>
-        
-
-        
-
-
-        <div class="post-content">
-          
-            raft entry is too large 修改 TiDB 配置 tiup cluster edit-config tidb tikv: raftstore.raft-entry-max-siz: 128MB 重启 tikv 节点 tiup cluster reload tidb-cluster -R tikv Referencing column &rsquo;table&rsquo; and referenced column &lsquo;id&rsquo; in foreign key constraint &lsquo;fk_1&rsquo; are incompatible 外键约束错误 查找引用 table 的表 SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = &#39;table&#39;; 删除引用 table 的表
-          
-        </div>
-
-        
-          <div>
-            <a class="read-more button" href="/post/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/">Read more →</a>
-          </div>
-        
-      </article>
-    
-
-    <div class="pagination">
-  <div class="pagination__buttons">
-    
-    
-  </div>
-</div>
-
-  </div>
-
-  </div>
-
-  
-    <footer class="footer">
-  <div class="footer__inner">
-    
-      <div class="copyright">
-        <span>© 2023 Powered by <a href="https://gohugo.io">Hugo</a></span>
-    
-      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
-      </div>
-  </div>
-</footer>
-
-
-
-
-
-
-<script type="text/javascript" src="/bundle.min.js"></script>
-
-
-
-
-
-  
-</div>
-
-</body>
+  </body>
 </html>

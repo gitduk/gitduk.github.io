@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hugo/rust/</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/terminal-0.7.2.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/animate-4.1.1.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/console.css">
+    
+      <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+       
+      <link href="https://blog.wukaige.com/rust/index.xml" rel="alternate" type="application/rss+xml" title="Hugo" />
+    <meta property="og:title" content="Rust" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://blog.wukaige.com/rust/" />
+
+
+<meta name="twitter:title" content="Rust"/>
+<meta name="twitter:description" content=""/>
+
+</head>
+<body class="terminal">
+    <div class="container">
+        <div class="terminal-nav">
+          <header class="terminal-logo">
+            <div class="logo terminal-prompt">
+              
+              
+              <a href="https://blog.wukaige.com/" class="no-style site-name">Hugo</a>:~# 
+              <a href='https://blog.wukaige.com/rust'>rust</a>/</div></header>
+          <nav class="terminal-menu">
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                <li><a href="https://blog.wukaige.com/about/" typeof="ListItem">about/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/posts/" typeof="ListItem">posts/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/tags/" typeof="ListItem">tags/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/categories/leetcode" typeof="ListItem">leetcode/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/photos/" typeof="ListItem">photos/</a></li>
+                
+            </ul>
+          </nav>
+        </div>
+    </div>
+
+    <div class="container animated zoomIn fast" >
+        
+<h1>Rust</h1>
+<br/>
+
+
+<div class="posts-list">
+
+    
+        <div class="post">
+            <p>
+                <div class="date">Oct. 17, 2023</div>    
+                <h1><a href="https://blog.wukaige.com/rust-%E6%93%8D%E4%BD%9C-mysql-%E6%95%B0%E6%8D%AE%E5%BA%93/" title="Rust 操作 mysql 数据库">Rust 操作 mysql 数据库</a></h1>
+                安装所需要的包 cargo add mysql 连接数据库 use mysql::{prelude::Queryable, *}; use std::fs; fn my_conn(url: &amp;str) -&gt; Result&lt;PooledConn, mysql::Error&gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &#34;mysql://user:password@127.0.0.1:3306/DB&#34;; let mut conn = my_conn(url).unwrap(); } 建表 use mysql::{prelude::Queryable, *}; fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; { let url = &#34;mysql://user:password@127.0.0.1:3306/DB&#34;; let mut conn =
+            </p>
+        </div>
+    
+
+    
+        <div class="post">
+            <p>
+                <div class="date">Oct. 13, 2023</div>    
+                <h1><a href="https://blog.wukaige.com/rust-sqlserver/" title="rust &amp; sqlserver">rust &amp; sqlserver</a></h1>
+                Rust 操作 sqlserver 数据库代码示例 下载所需要的依赖 cargo add tiberius cargo add tokio cargo add tokio_util --features=compat cargo add futures Rust Code: use futures::TryStreamExt; use tiberius::{AuthMethod, Client, Config, Query, QueryItem}; use tokio::net::TcpStream; use tokio_util::compat::{Compat, TokioAsyncWriteCompatExt}; struct Conn { host: String, port: u16, user: String, password: String, } #[derive(Debug)] struct Data { id: Option&lt;i32&gt;, title: Option&lt;String&gt;, } async fn
+            </p>
+        </div>
+    
+
+    
+        <div class="post">
+            <p>
+                <div class="date">Sep. 22, 2023</div>    
+                <h1><a href="https://blog.wukaige.com/rust-%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/" title="Rust 代码片段">Rust 代码片段</a></h1>
+                mysql https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html use mysql::{Pool, PooledConn, from_row}; fn my_conn(url: &amp;str) -&gt; Result&lt;PooledConn, mysql::Error&gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &#34;mysql://xxx:xxx@127.0.0.1:3306/DB&#34;; let conn = my_conn(url).unwrap(); let sql = &#34;select title from table;&#34;; // query map let _books = conn.query_map(sql, |title: String| { title })?; // query iter let sql = &#34;select id,title,date from table2;&#34;; conn.query_iter(query)?.for_each(|row| { let r: (i32, String, String)
+            </p>
+        </div>
+    
+
+</div>
+
+
+        <div class="footer">
+    Powered by <a href="https://gohugo.io/">Hugo</a> with
+    <a href="https://github.com/mrmierzejewski/hugo-theme-console/">Console Theme</a>. 
+</div>
+
+    </div>
+  </body>
+</html>

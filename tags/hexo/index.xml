@@ -1,81 +1,28 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>hexo on Home</title>
+    <title>hexo on Hugo</title>
     <link>https://blog.wukaige.com/tags/hexo/</link>
-    <description>Recent content in hexo on Home</description>
+    <description>Recent content in hexo on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-US</language>
+    <language>en</language>
     <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
     <webMaster>wdkany@gmail.com (wukaige)</webMaster>
-    <lastBuildDate>Tue, 04 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.wukaige.com/tags/hexo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 04 Jul 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.wukaige.com/tags/hexo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>hexo 自建博客如何被 google 收录？</title>
-      <link>https://blog.wukaige.com/post/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95/</link>
-      <pubDate>Tue, 04 Jul 2023 00:00:00 +0000</pubDate>
-      <author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/post/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95/</guid>
+      <link>https://blog.wukaige.com/posts/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95/</link>
+      <pubDate>Tue, 04 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/posts/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95/</guid>
       <description>测试站点是否被 google 收录 测试方法：打开 google 主页，在搜索框键入 site:blog.wukaige.com 未被收录： 被收录： 安装 hexo-generator-sitemap 插件 hexo-generator-sitemap 可自动在根目录生成 sitemap.xml 文件 安装： npm install hexo-generator-sitemap --save 在 _config.yaml 文件中添加：</description>
-      <content>&lt;h2 id=&#34;测试站点是否被-google-收录&#34;&gt;测试站点是否被 google 收录&lt;/h2&gt;
-&lt;p&gt;测试方法：打开 google 主页，在搜索框键入 &lt;code&gt;site:blog.wukaige.com&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;未被收录：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704153416648.png&#34; alt=&#34;image-20230704153416648&#34;&gt;&lt;/p&gt;
-&lt;p&gt;被收录：
-&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704153457622.png&#34; alt=&#34;image-20230704153457622&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;安装-hexo-generator-sitemap-插件&#34;&gt;安装 hexo-generator-sitemap 插件&lt;/h2&gt;
-&lt;p&gt;hexo-generator-sitemap 可自动在根目录生成 sitemap.xml 文件&lt;/p&gt;
-&lt;p&gt;安装： &lt;code&gt;npm install hexo-generator-sitemap --save&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;在 &lt;!-- raw HTML omitted --&gt;_config.yaml&lt;!-- raw HTML omitted --&gt; 文件中添加：&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# https://github.com/hexojs/hexo-generator-sitemap
-sitemap:
-  path: 
-    - sitemap.xml
-    - sitemap.txt
-  rel: false
-  tags: true
-  categories: true
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;提交站点-url-到-google-search-console&#34;&gt;提交站点 URL 到 Google Search Console&lt;/h2&gt;
-&lt;p&gt;打开 &lt;a href=&#34;https://www.google.com/webmasters/tools/home#utm_source=en-wmxmsg&amp;amp;utm_medium=wmxmsg&amp;amp;utm_campaign=bm&amp;amp;authuser=0&#34;&gt;Google Search Console&lt;/a&gt; 并添加网站资源&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704153836019.png&#34; alt=&#34;image-20230704153836019&#34;&gt;&lt;/p&gt;
-&lt;p&gt;在下面添加你的博客 url 链接，并点击 CONTINUE，根据提示授权 Google 访问你的网站。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704153924857.png&#34; alt=&#34;image-20230704153924857&#34;&gt;&lt;/p&gt;
-&lt;p&gt;这里填入自动生成的 &lt;strong&gt;sitemap.xml&lt;/strong&gt; ，状态为 Success 代表添加成功。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704154016411.png&#34; alt=&#34;image-20230704154016411&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;测试-google-search-console-是否配置完成&#34;&gt;测试 Google Search Console 是否配置完成&lt;/h2&gt;
-&lt;p&gt;在这里填入你的博客地址：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704155013177.png&#34; alt=&#34;image-20230704155013177&#34;&gt;&lt;/p&gt;
-&lt;p&gt;下面是你的网站状态：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704155054178.png&#34; alt=&#34;image-20230704155054178&#34;&gt;&lt;/p&gt;
-&lt;p&gt;URL is not on Google，问题不大，可能是刚刚收录还没来得及抓取你的网站。&lt;/p&gt;
-&lt;p&gt;点击右上角的 &lt;strong&gt;TEST LIVE URL&lt;/strong&gt; 测试配置是否成功：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230704155337684.png&#34; alt=&#34;image-20230704155337684&#34;&gt;&lt;/p&gt;
-&lt;p&gt;出现这个页面代表配置没问题。&lt;/p&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/129022264&#34;&gt;https://zhuanlan.zhihu.com/p/129022264&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
     </item>
-    
     <item>
       <title>hexo cactus 外链图片无法显示解决办法</title>
-      <link>https://blog.wukaige.com/post/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
-      <pubDate>Thu, 29 Jun 2023 00:00:00 +0000</pubDate>
-      <author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/post/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
+      <link>https://blog.wukaige.com/posts/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
+      <pubDate>Thu, 29 Jun 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/posts/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
       <description>修复外链 cactus 主题目录结构 在 /layout/_partial/head.ejs 文件中加一行代码 &amp;lt;meta name=&amp;#34;referrer&amp;#34; content=&amp;#34;no-referrer&amp;#34; /&amp;gt; 参考链接 https://zhuanlan.zhihu.com/p/577256660</description>
-      <content>&lt;h2 id=&#34;修复外链&#34;&gt;修复外链&lt;/h2&gt;
-&lt;p&gt;cactus 主题目录结构&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;在 &lt;!-- raw HTML omitted --&gt;/layout/_partial/head.ejs&lt;!-- raw HTML omitted --&gt; 文件中加一行代码&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;meta name=&amp;#34;referrer&amp;#34; content=&amp;#34;no-referrer&amp;#34; /&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://gitee.com/gitduk/typora-image/raw/master/image/image-20230629181145010.png&#34; alt=&#34;image-20230629181145010&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/577256660&#34;&gt;https://zhuanlan.zhihu.com/p/577256660&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
     </item>
-    
   </channel>
 </rss>

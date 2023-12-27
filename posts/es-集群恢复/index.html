@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hugo/posts/es-集群恢复/</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/terminal-0.7.2.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/animate-4.1.1.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/console.css">
+    
+      <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+       <meta property="og:title" content="ES 集群恢复" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.wukaige.com/posts/es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/" /><meta property="article:published_time" content="2023-12-01T00:00:00+00:00" />
+
+
+
+<meta name="twitter:title" content="ES 集群恢复"/>
+<meta name="twitter:description" content="强制关机导致 ES 集群丢失 .security-7 索引，无法进行安全验证，尝试恢复的过程中，导致 ES 集群彻底不可用。"/>
+
+</head>
+<body class="terminal">
+    <div class="container">
+        <div class="terminal-nav">
+          <header class="terminal-logo">
+            <div class="logo terminal-prompt">
+              
+              
+              <a href="https://blog.wukaige.com/" class="no-style site-name">Hugo</a>:~# 
+              <a href='https://blog.wukaige.com/posts'>posts</a>/<a href='https://blog.wukaige.com/posts/es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D'>es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D</a>/</div></header>
+          <nav class="terminal-menu">
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                <li><a href="https://blog.wukaige.com/about/" typeof="ListItem">about/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/posts/" typeof="ListItem">posts/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/photos/" typeof="ListItem">photos/</a></li>
+                
+            </ul>
+          </nav>
+        </div>
+    </div>
+
+    <div class="container animated zoomIn fast" >
+        
+<h1>ES 集群恢复</h1>
+
+Dec. 1, 2023
+
+
+<br/><br/>
+<p>强制关机导致 ES 集群丢失 <code>.security-7</code> 索引，无法进行安全验证，尝试恢复的过程中，导致 ES 集群彻底不可用。</p>
+<h4 id="配置新集群">配置新集群</h4>
+<p>策略：复制 ES 根目录下的 data 目录到新集群，让新集群自动恢复索引。</p>
+<p>node-01 配置文件 <!-- raw HTML omitted -->elasticsearch.yml<!-- raw HTML omitted --> :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">cluster.name</span>: <span style="color:#ae81ff">es-cluster</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------ Node ------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">node.name</span>: <span style="color:#ae81ff">node-01</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># node.roles: [&#34;master&#34;, &#34;data&#34;]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add custom attributes to the node:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#node.attr.rack: r1</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ----------------------------------- Paths ------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Path to directory where to store the data (separate multiple locations by comma):</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#path.data: /path/to/data</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Path to log files:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#path.logs: /path/to/logs</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ----------------------------------- Memory -----------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Lock the memory on startup:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">bootstrap.memory_lock</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Make sure that the heap size is set to about half the memory available</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># on the system and that the owner of the process is allowed to use this</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># limit.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Elasticsearch performs poorly when the system is swapping the memory.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ---------------------------------- Network -----------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># By default Elasticsearch is only accessible on localhost. Set a different</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># address here to expose this node on the network:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># network.host: localhost</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># By default Elasticsearch listens for HTTP traffic on the first free port it</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># finds starting at 9200. Set a specific HTTP port here:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">http.host</span>: <span style="color:#ae81ff">0.0.0.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">http.port</span>: <span style="color:#ae81ff">9201</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">http.cors.enabled</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">http.cors.allow-origin</span>: <span style="color:#e6db74">&#34;*&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">http.cors.allow-headers</span>: <span style="color:#ae81ff">Authorization,X-Requested-With,Content-Type,Content-Length</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Allow other nodes to join the cluster from anywhere</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Connections are encrypted and mutually authenticated</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">transport.host</span>: <span style="color:#ae81ff">0.0.0.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">transport.port</span>: <span style="color:#ae81ff">9301</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------- Discovery ----------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Pass an initial list of hosts to perform discovery when this node is started:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># The default list of hosts is [&#34;127.0.0.1&#34;, &#34;[::1]&#34;]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">discovery.seed_hosts</span>: [<span style="color:#e6db74">&#34;127.0.0.1:9302&#34;</span>, <span style="color:#e6db74">&#34;127.0.0.1:9303&#34;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Bootstrap the cluster using an initial set of master-eligible nodes:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># cluster.initial_master_nodes: [&#34;node-01&#34;, &#34;node-02&#34;]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">cluster.routing.allocation.enable</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># For more information, consult the discovery and cluster formation module documentation.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------- Readiness ----------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enable an unauthenticated TCP readiness endpoint on localhost</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#readiness.port: 9399</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ---------------------------------- Various -----------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Allow wildcard deletion of indices:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#action.destructive_requires_name: false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#----------------------- BEGIN SECURITY AUTO CONFIGURATION -----------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># The following settings, TLS certificates, and keys have been automatically      </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># generated to configure Elasticsearch security features on 06-11-2023 09:44:41</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enable security features</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">xpack.security.enabled</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">xpack.security.enrollment.enabled</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">xpack.security.http.ssl</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">keystore.path</span>: <span style="color:#ae81ff">certs/http.p12</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enable encryption and mutual authentication between cluster nodes</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">xpack.security.transport.ssl</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">verification_mode</span>: <span style="color:#ae81ff">certificate</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">keystore.path</span>: <span style="color:#ae81ff">certs/transport.p12</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">truststore.path</span>: <span style="color:#ae81ff">certs/transport.p12</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#----------------------- END SECURITY AUTO CONFIGURATION -------------------------</span>
+</span></span></code></pre></div><p>node-02 配置文件 <!-- raw HTML omitted -->elasticsearch.yml<!-- raw HTML omitted --> :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">node.name</span>: <span style="color:#ae81ff">node-02</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">http.port</span>: <span style="color:#ae81ff">9202</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">transport.port</span>: <span style="color:#ae81ff">9302</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">discovery.seed_hosts</span>: [<span style="color:#e6db74">&#34;127.0.0.1:9301&#34;</span>, <span style="color:#e6db74">&#34;127.0.0.1:9303&#34;</span>]
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>node-03 配置文件 <!-- raw HTML omitted -->elasticsearch.yml<!-- raw HTML omitted --> :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">node.name</span>: <span style="color:#ae81ff">node-03</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">http.port</span>: <span style="color:#ae81ff">9203</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">transport.port</span>: <span style="color:#ae81ff">9303</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">discovery.seed_hosts</span>: [<span style="color:#e6db74">&#34;127.0.0.1:9301&#34;</span>, <span style="color:#e6db74">&#34;127.0.0.1:9302&#34;</span>]
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>由于前一个集群的 <code>.security-7</code> 索引丢失，怕新集群安全验证出现意外，关闭所有安全验证。</p>
+<h4 id="开始恢复">开始恢复</h4>
+<p>复制旧集群的 data 目录到新集群后，配置文件写好，就可以启动集群。</p>
+<p>集群正常启动后，可在 kibana 的 console 里面查看恢复进度。</p>
+<pre tabindex="0"><code># 集群健康状态，不出意外，是 red
+GET /_cluster/health
+
+# 查看集群分片状态
+GET /_cat/shards?v
+
+# 允许分片自动分配
+PUT _cluster/settings
+{
+  &#34;persistent&#34;: {  
+    &#34;cluster.routing.allocation.enable&#34;: &#34;all&#34;
+  }
+}
+
+# 查看正在恢复的分片
+GET /_cat/recovery
+
+# 查看特定索引恢复状态
+GET /your_index/_recovery?human
+
+# 增加恢复线程，persistent 是永久修改配置，transient 是临时修改配置
+PUT /_cluster/settings
+{
+  &#34;persistent&#34;: {
+    &#34;cluster.routing.allocation.node_concurrent_recoveries&#34;: 50
+  },
+  &#34;transient&#34;: {
+    &#34;cluster.routing.allocation.node_initial_primaries_recoveries&#34;: 50
+  }
+}
+
+# 调用分片分配解释 API 找到无法分配副本的具体原因
+GET /_cluster/allocation/explain
+
+# 如果分配副本的原因是 max_retry, 可手动强制集群重试分配
+POST /_cluster/reroute?retry_failed=true
+</code></pre><p>等待索引状态变绿，开启集群的安全验证。</p>
+
+
+        <div class="footer">
+    Powered by <a href="https://gohugo.io/">Hugo</a> with
+    <a href="https://github.com/mrmierzejewski/hugo-theme-console/">Console Theme</a>. 
+</div>
+
+    </div>
+  </body>
+</html>

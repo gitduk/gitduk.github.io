@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hugo/posts/frp-nginx-实现不同子域名访问同一主机不同服务/</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/terminal-0.7.2.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/animate-4.1.1.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/console.css">
+    
+      <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+       <meta property="og:title" content="frp &#43; nginx 实现不同子域名访问同一主机不同服务" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.wukaige.com/posts/frp-nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/" /><meta property="article:published_time" content="2023-07-04T00:00:00+00:00" />
+
+
+
+<meta name="twitter:title" content="frp &#43; nginx 实现不同子域名访问同一主机不同服务"/>
+<meta name="twitter:description" content="前置条件 运行在内网的多个服务 一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案） 一个域名 域名解析 到 cloudflare 解析配置你的域名解析 Frps, Nginx 服务配置 frps"/>
+
+</head>
+<body class="terminal">
+    <div class="container">
+        <div class="terminal-nav">
+          <header class="terminal-logo">
+            <div class="logo terminal-prompt">
+              
+              
+              <a href="https://blog.wukaige.com/" class="no-style site-name">Hugo</a>:~# 
+              <a href='https://blog.wukaige.com/posts'>posts</a>/<a href='https://blog.wukaige.com/posts/frp-nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1'>frp-nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1</a>/</div></header>
+          <nav class="terminal-menu">
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                <li><a href="https://blog.wukaige.com/about/" typeof="ListItem">about/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/posts/" typeof="ListItem">posts/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/photos/" typeof="ListItem">photos/</a></li>
+                
+            </ul>
+          </nav>
+        </div>
+    </div>
+
+    <div class="container animated zoomIn fast" >
+        
+<h1>frp &#43; nginx 实现不同子域名访问同一主机不同服务</h1>
+
+Jul. 4, 2023
+
+
+<br/><br/>
+<h2 id="前置条件">前置条件</h2>
+<ul>
+<li>运行在内网的多个服务</li>
+<li>一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案）</li>
+<li>一个域名</li>
+</ul>
+<h2 id="域名解析">域名解析</h2>
+<p>到 cloudflare 解析配置你的域名解析</p>
+<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230629164727654.png" alt="image-20230629164727654"></p>
+<h2 id="frps-nginx-服务配置">Frps, Nginx 服务配置</h2>
+<p>frps 部署 - <a href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p>
+<p>Nginx 安装 - <code>sudo apt install nginx</code></p>
+<p>frps 配置文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-t" data-lang="t"><span style="display:flex;"><span>[common]
+</span></span><span style="display:flex;"><span>bind_port <span style="color:#f92672">=</span> <span style="color:#ae81ff">7000</span>
+</span></span><span style="display:flex;"><span>bind_addr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0.0.0</span>
+</span></span><span style="display:flex;"><span>vhost_http_port <span style="color:#f92672">=</span> <span style="color:#ae81ff">7080</span>
+</span></span><span style="display:flex;"><span>token <span style="color:#f92672">=</span> [custom token]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dashboard_port <span style="color:#f92672">=</span> <span style="color:#ae81ff">7050</span>
+</span></span><span style="display:flex;"><span>dashboard_user <span style="color:#f92672">=</span> admin
+</span></span><span style="display:flex;"><span>dashboard_pwd <span style="color:#f92672">=</span> changeme
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>subdomain_host <span style="color:#f92672">=</span> wukaige<span style="color:#f92672">.</span>com
+</span></span></code></pre></div><p>nginx 配置 <!-- raw HTML omitted -->/etc/nginx/conf.d/frp.conf<!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#66d9ef">server</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">listen</span> <span style="color:#ae81ff">80</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">server_name</span> <span style="color:#e6db74">alist.wukaige.com</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">location</span> <span style="color:#e6db74">/</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">proxy_pass</span> <span style="color:#e6db74">http://127.0.0.1:7080</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">proxy_set_header</span>   <span style="color:#e6db74">Host</span>             $host;
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">proxy_set_header</span>   <span style="color:#e6db74">X-Real-IP</span>        $remote_addr;
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">proxy_set_header</span>   <span style="color:#e6db74">X-Forwarded-For</span>  $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>重启 frps 和 nginx 服务</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart nginx.service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 以服务方式安装的 frps</span>
+</span></span><span style="display:flex;"><span>sudo systemctl restart frps.service
+</span></span></code></pre></div><h2 id="frpc-配置">Frpc 配置</h2>
+<p>frpc 配置文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[common]
+</span></span><span style="display:flex;"><span>server_addr = [ip to frps server]
+</span></span><span style="display:flex;"><span>server_port = 7000
+</span></span><span style="display:flex;"><span>token = [custom token]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[alist]
+</span></span><span style="display:flex;"><span>type = http
+</span></span><span style="display:flex;"><span>local_port = 5244
+</span></span><span style="display:flex;"><span>subdomain = alist
+</span></span></code></pre></div><p>重启 frpc 服务</p>
+<pre tabindex="0"><code># 以服务方式安装的 frpc
+sudo systemctl restart frpc.service
+</code></pre><p>没有例外的话，访问 <code>alist.wukaige.com</code> 即可访问本地 alist 服务。
+有例外的话，看看服务器和本地防火墙，是否开放需要开放的端口。</p>
+
+
+
+        <div class="footer">
+    Powered by <a href="https://gohugo.io/">Hugo</a> with
+    <a href="https://github.com/mrmierzejewski/hugo-theme-console/">Console Theme</a>. 
+</div>
+
+    </div>
+  </body>
+</html>

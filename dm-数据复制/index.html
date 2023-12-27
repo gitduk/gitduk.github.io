@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hugo/dm-数据复制/</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/terminal-0.7.2.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/animate-4.1.1.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/console.css">
+    
+      <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+       <meta property="og:title" content="DM 数据复制" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.wukaige.com/dm-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6/" /><meta property="article:published_time" content="2023-07-10T00:00:00+00:00" />
+
+
+
+<meta name="twitter:title" content="DM 数据复制"/>
+<meta name="twitter:description" content="TiDB Data Migration (DM) 是一款便捷的数据迁移工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的全量数据迁移和增量数据同步。使用 DM 工具有利于简化数据迁移过程，降低数据迁移运维成本。"/>
+
+</head>
+<body class="terminal">
+    <div class="container">
+        <div class="terminal-nav">
+          <header class="terminal-logo">
+            <div class="logo terminal-prompt">
+              
+              
+              <a href="https://blog.wukaige.com/" class="no-style site-name">Hugo</a>:~# 
+              <a href='https://blog.wukaige.com/dm-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6'>dm-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6</a>/</div></header>
+          <nav class="terminal-menu">
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                <li><a href="https://blog.wukaige.com/about/" typeof="ListItem">about/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/posts/" typeof="ListItem">posts/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/tags/" typeof="ListItem">tags/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/categories/leetcode" typeof="ListItem">leetcode/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/photos/" typeof="ListItem">photos/</a></li>
+                
+            </ul>
+          </nav>
+        </div>
+    </div>
+
+    <div class="container animated zoomIn fast" >
+        
+<h1>DM 数据复制</h1>
+
+Jul. 10, 2023
+
+
+<br/><br/>
+<p><a href="https://docs.pingcap.com/zh/tidb/stable/dm-overview">TiDB Data Migration</a> (DM) 是一款便捷的数据迁移工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的全量数据迁移和增量数据同步。使用 DM 工具有利于简化数据迁移过程，降低数据迁移运维成本。</p>
+<h2 id="前情提要">前情提要</h2>
+<p>新建立了一个 tidb 多节点集群，现在需要从 tidb 单节点集群迁移数据到新集群。</p>
+<h2 id="部署-dm-集群">部署 DM 集群</h2>
+<p>安装 dmctl</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl --proto <span style="color:#e6db74">&#39;=https&#39;</span> --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
+</span></span><span style="display:flex;"><span>tiup install dm dmctl
+</span></span></code></pre></div><p>生成 DM 集群最小拓扑文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup dm template
+</span></span></code></pre></div><p>复制输出的配置信息，修改 IP 地址后保存为 <!-- raw HTML omitted -->topology.yaml<!-- raw HTML omitted --> 文件，使用 TiUP 部署 DM 集群</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup dm deploy dm-test 6.0.0 topology.yaml -p
+</span></span></code></pre></div><h2 id="准备数据源">准备数据源</h2>
+<p>创建数据源文件 <!-- raw HTML omitted -->mysql-01.yaml<!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># 数据源 ID，在数据迁移任务配置和 dmctl 命令行中引用该 source-id 可以关联到对应的数据源</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">source-id</span>: <span style="color:#e6db74">&#34;mysql-01&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">host</span>: <span style="color:#e6db74">&#34;127.0.0.1&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">port</span>: <span style="color:#ae81ff">3306</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">user</span>: <span style="color:#e6db74">&#34;root&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">password</span>: <span style="color:#e6db74">&#34;fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=&#34;</span> 	 <span style="color:#75715e"># 使用 tiup dmctl --encrypt &#34;123456&#34; 加密。</span>
+</span></span></code></pre></div><p>使用如下命令将数据源增加至 DM 集群</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># tiup dm display dm-main -R dm-master 命令可查看 --master-addr 地址</span>
+</span></span><span style="display:flex;"><span>tiup dmctl --master-addr http://127.0.0.1:8761 operate-source create mysql-01.yaml
+</span></span></code></pre></div><h2 id="创建数据同步任务">创建数据同步任务</h2>
+<p>创建任务的配置文件 <!-- raw HTML omitted -->mysql-to-tidb.yaml<!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">## ********* 任务信息配置 *********</span>
+</span></span><span style="display:flex;"><span>name: mysql-to-tidb
+</span></span><span style="display:flex;"><span>shard-mode: <span style="color:#e6db74">&#34;&#34;</span>                       <span style="color:#75715e"># 默认值为 &#34;&#34; 即无需协调。如果为分库分表合并任务，请设置为悲观协调模式 &#34;pessimistic&#34;。在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 &#34;optimistic&#34;</span>
+</span></span><span style="display:flex;"><span>task-mode: <span style="color:#e6db74">&#34;full&#34;</span>                    <span style="color:#75715e"># 任务模式，可设为 &#34;full&#34; - &#34;只进行全量数据迁移&#34;、&#34;incremental&#34; - &#34;Binlog 实时同步&#34;、&#34;all&#34; - &#34;全量 + Binlog 迁移&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># timezone: &#34;UTC&#34;                    # 指定数据迁移任务时 SQL Session 使用的时区。DM 默认使用目标库的全局时区配置进行数据迁移，并且自动确保同步数据的正确性。使用自定义时区依然可以确保整个流程的正确性，但一般不需要手动指定。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## ******** 数据源配置 **********</span>
+</span></span><span style="display:flex;"><span>mysql-instances:
+</span></span><span style="display:flex;"><span>  - source-id: <span style="color:#e6db74">&#34;mysql-01&#34;</span>           <span style="color:#75715e"># 从数据源 mysql-01 迁移数据</span>
+</span></span><span style="display:flex;"><span>    block-allow-list:  <span style="color:#e6db74">&#34;bw-rule-1&#34;</span>
+</span></span><span style="display:flex;"><span>    filter-rules: <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;filter-rule-1&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>    route-rules: <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;route-rule-1&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    mydumper-config-name: <span style="color:#e6db74">&#34;global&#34;</span>   <span style="color:#75715e"># mydumpers 配置的名称</span>
+</span></span><span style="display:flex;"><span>    loader-config-name: <span style="color:#e6db74">&#34;global&#34;</span>     <span style="color:#75715e"># loaders 配置的名称</span>
+</span></span><span style="display:flex;"><span>    syncer-config-name: <span style="color:#e6db74">&#34;global&#34;</span>     <span style="color:#75715e"># syncers 配置的名称</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## ******** 目标 TiDB 配置 **********</span>
+</span></span><span style="display:flex;"><span>target-database:       <span style="color:#75715e"># 目标 TiDB 配置</span>
+</span></span><span style="display:flex;"><span>  host: <span style="color:#e6db74">&#34;127.0.0.1&#34;</span>
+</span></span><span style="display:flex;"><span>  port: <span style="color:#ae81ff">3306</span>
+</span></span><span style="display:flex;"><span>  user: <span style="color:#e6db74">&#34;root&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 如果密码不为空，则推荐使用经过 dmctl 加密的密文</span>
+</span></span><span style="display:flex;"><span>  password: <span style="color:#e6db74">&#34;fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=&#34;</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## ******** 功能配置 **********</span>
+</span></span><span style="display:flex;"><span>mydumpers:                           <span style="color:#75715e"># dump 处理单元的运行配置参数</span>
+</span></span><span style="display:flex;"><span>  global:                            <span style="color:#75715e"># 配置名称</span>
+</span></span><span style="display:flex;"><span>    threads: <span style="color:#ae81ff">4</span>                       <span style="color:#75715e"># dump 处理单元从上游数据库实例导出数据和 check-task 访问上游的线程数量，默认值为 4</span>
+</span></span><span style="display:flex;"><span>    chunk-filesize: <span style="color:#ae81ff">64</span>               <span style="color:#75715e"># dump 处理单元生成的数据文件大小，默认值为 64，单位为 MB</span>
+</span></span><span style="display:flex;"><span>    extra-args: <span style="color:#e6db74">&#34;--consistency none&#34;</span> <span style="color:#75715e"># dump 处理单元的其他参数，不需要在 extra-args 中配置 table-list，DM 会自动生成</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>loaders:                             <span style="color:#75715e"># load 处理单元的运行配置参数</span>
+</span></span><span style="display:flex;"><span>  global:                            <span style="color:#75715e"># 配置名称</span>
+</span></span><span style="display:flex;"><span>    pool-size: <span style="color:#ae81ff">16</span>                    <span style="color:#75715e"># load 处理单元并发执行 dump 处理单元的 SQL 文件的线程数量，默认值为 16，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 保存上游全量导出数据的目录。该配置项的默认值为 &#34;./dumped_data&#34;。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 支持配置为本地文件系统路径，也支持配置为 Amazon S3 路径，如: s3://dm_bucket/dumped_data?endpoint=s3-website.us-east-2.amazonaws.com&amp;access_key=s3accesskey&amp;secret_access_key=s3secretkey&amp;force_path_style=true</span>
+</span></span><span style="display:flex;"><span>    dir: <span style="color:#e6db74">&#34;./dumped_data&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 全量阶段数据导入的模式。可以设置为如下几种模式：</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># - &#34;sql&#34;(默认)。使用 [TiDB Lightning](/tidb-lightning/tidb-lightning-overview.md) TiDB-backend 进行导入。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># - &#34;loader&#34;。使用 Loader 导入。此模式仅作为兼容模式保留，目前用于支持 TiDB Lightning 尚未包含的功能，预计会在后续的版本废弃。</span>
+</span></span><span style="display:flex;"><span>    import-mode: <span style="color:#e6db74">&#34;sql&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 全量导入阶段针对冲突数据的解决方式：</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># - &#34;replace&#34;（默认值）。仅支持 import-mode 为 &#34;sql&#34;，表示用最新数据替代已有数据。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># - &#34;ignore&#34;。仅支持 import-mode 为 &#34;sql&#34;，保留已有数据，忽略新数据。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># - &#34;error&#34;。仅支持 import-mode 为 &#34;loader&#34;。插入重复数据时报错并停止同步任务。</span>
+</span></span><span style="display:flex;"><span>    on-duplicate: <span style="color:#e6db74">&#34;replace&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>syncers:                             <span style="color:#75715e"># sync 处理单元的运行配置参数</span>
+</span></span><span style="display:flex;"><span>  global:                            <span style="color:#75715e"># 配置名称</span>
+</span></span><span style="display:flex;"><span>    worker-count: <span style="color:#ae81ff">16</span>                 <span style="color:#75715e"># 应用已传输到本地的 binlog 的并发线程数量，默认值为 16。调整此参数不会影响上游拉取日志的并发，但会对下游产生显著压力。</span>
+</span></span><span style="display:flex;"><span>    batch: <span style="color:#ae81ff">100</span>                       <span style="color:#75715e"># sync 迁移到下游数据库的一个事务批次 SQL 语句数，默认值为 100，建议一般不超过 500。</span>
+</span></span><span style="display:flex;"><span>    enable-ansi-quotes: true         <span style="color:#75715e"># 若 `session` 中设置 `sql-mode: &#34;ANSI_QUOTES&#34;`，则需开启此项</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 设置为 true，则将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。</span>
+</span></span><span style="display:flex;"><span>    safe-mode: false
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 自动安全模式的持续时间</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 如不设置或者设置为 &#34;&#34;，则默认为 `checkpoint-flush-interval`（默认为 30s）的两倍，即 60s。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 如设置为 &#34;0s&#34;，则在 DM 自动进入安全模式的时候报错。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 如设置为正常值，例如 &#34;1m30s&#34;，则在该任务异常暂停、记录 `safemode_exit_point` 失败、或是 DM 进程异常退出时，把安全模式持续时间调整为 1 分 30 秒。详情可见[自动开启安全模式](https://docs.pingcap.com/zh/tidb/stable/dm-safe-mode#自动开启)。</span>
+</span></span><span style="display:flex;"><span>    safe-mode-duration: <span style="color:#e6db74">&#34;60s&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 设置为 true，DM 会在不增加延迟的情况下，尽可能地将上游对同一条数据的多次操作压缩成一次操作。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 如 INSERT INTO tb(a,b) VALUES(1,1); UPDATE tb SET b=11 WHERE a=1; 会被压缩成 INSERT INTO tb(a,b) VALUES(1,11); 其中 a 为主键</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 如 UPDATE tb SET b=1 WHERE a=1; UPDATE tb(a,b) SET b=2 WHERE a=1; 会被压缩成 UPDATE tb(a,b) SET b=2 WHERE a=1; 其中 a 为主键</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 如 DELETE FROM tb WHERE a=1; INSERT INTO tb(a,b) VALUES(1,1); 会被压缩成 REPLACE INTO tb(a,b) VALUES(1,1); 其中 a 为主键</span>
+</span></span><span style="display:flex;"><span>    compact: false
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 设置为 true，DM 会尽可能地将多条同类型的语句合并到一条语句中，生成一条带多行数据的 SQL 语句。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 如 INSERT INTO tb(a,b) VALUES(1,1); INSERT INTO tb(a,b) VALUES(2,2); 会变成 INSERT INTO tb(a,b) VALUES(1,1),(2,2);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 如 UPDATE tb SET b=11 WHERE a=1; UPDATE tb(a,b) set b=22 WHERE a=2; 会变成 INSERT INTO tb(a,b) VALUES(1,11),(2,22) ON DUPLICATE KEY UPDATE a=VALUES(a), b=VALUES(b); 其中 a 为主键</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 如 DELETE FROM tb WHERE a=1; DELETE FROM tb WHERE a=2 会变成 DELETE FROM tb WHERE (a) IN (1),(2)；其中 a 为主键</span>
+</span></span><span style="display:flex;"><span>    multiple-rows: false
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>block-allow-list:
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 规则名称</span>
+</span></span><span style="display:flex;"><span>  bw-rule-1:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 迁移哪些库，支持通配符 &#34;*&#34; 和 &#34;?&#34;，do-dbs 和 ignore-dbs 只需要配置一个，如果两者同时配置只有 do-dbs 会生效</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">do</span>-dbs: <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;DATABASE&#34;</span><span style="color:#f92672">]</span>         
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># ignore-dbs: [&#34;mysql&#34;, &#34;account&#34;] # 忽略哪些库，支持通配符 &#34;*&#34; 和 &#34;?&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">do</span>-tables:                                  <span style="color:#75715e"># 迁移哪些表，do-tables 和 ignore-tables 只需要配置一个，如果两者同时配置只有 do-tables 会生效</span>
+</span></span><span style="display:flex;"><span>    - db-name: <span style="color:#e6db74">&#34;DATABASE&#34;</span>
+</span></span><span style="display:flex;"><span>      tbl-name: <span style="color:#e6db74">&#34;YOUR TABLE&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>filters:                                        <span style="color:#75715e"># 定义过滤数据源特定操作的规则，可以定义多个规则</span>
+</span></span><span style="display:flex;"><span>  filter-rule-1:                                <span style="color:#75715e"># 规则名称</span>
+</span></span><span style="display:flex;"><span>    schema-pattern: <span style="color:#e6db74">&#34;DATABASE&#34;</span>                     <span style="color:#75715e"># 匹配数据源的库名，支持通配符 &#34;*&#34; 和 &#34;?&#34;</span>
+</span></span><span style="display:flex;"><span>    table-pattern: <span style="color:#e6db74">&#34;YOUR TABLE&#34;</span>                  <span style="color:#75715e"># 匹配数据源的表名，支持通配符 &#34;*&#34; 和 &#34;?&#34;</span>
+</span></span><span style="display:flex;"><span>    events: <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;truncate table&#34;</span>, <span style="color:#e6db74">&#34;drop table&#34;</span><span style="color:#f92672">]</span>    <span style="color:#75715e"># 匹配上 schema-pattern 和 table-pattern 的库或者表的操作类型</span>
+</span></span><span style="display:flex;"><span>    action: Ignore                              <span style="color:#75715e"># 迁移（Do）还是忽略(Ignore)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>routes:                                         <span style="color:#75715e"># 定义数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则</span>
+</span></span><span style="display:flex;"><span>  route-rule-1:                                 <span style="color:#75715e"># 规则名称</span>
+</span></span><span style="display:flex;"><span>    schema-pattern: <span style="color:#e6db74">&#34;DATABASE&#34;</span>                     <span style="color:#75715e"># 匹配数据源的库名，支持通配符 &#34;*&#34; 和 &#34;?&#34;</span>
+</span></span><span style="display:flex;"><span>    table-pattern: <span style="color:#e6db74">&#34;YOUR TABLE&#34;</span>                  <span style="color:#75715e"># 匹配数据源的表名，支持通配符 &#34;*&#34; 和 &#34;?&#34;</span>
+</span></span><span style="display:flex;"><span>    target-schema: <span style="color:#e6db74">&#34;DATABASE&#34;</span>                      <span style="color:#75715e"># 目标 TiDB 库名</span>
+</span></span><span style="display:flex;"><span>    target-table: <span style="color:#e6db74">&#34;YOUR TABLE&#34;</span>                   <span style="color:#75715e"># 目标 TiDB 表名</span>
+</span></span></code></pre></div><p>启动任务</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup dmctl --master-addr http://127.0.0.1:8761 start-task mysql-to-tidb.yaml
+</span></span></code></pre></div><p>查询任务</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup dmctl --master-addr http://127.0.0.1:8761 query-status
+</span></span></code></pre></div>
+
+
+        <div class="footer">
+    Powered by <a href="https://gohugo.io/">Hugo</a> with
+    <a href="https://github.com/mrmierzejewski/hugo-theme-console/">Console Theme</a>. 
+</div>
+
+    </div>
+  </body>
+</html>

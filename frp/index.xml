@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>frp on Hugo</title>
+    <link>https://blog.wukaige.com/frp/</link>
+    <description>Recent content in frp on Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
+    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
+    <lastBuildDate>Tue, 04 Jul 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.wukaige.com/frp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>frp &#43; nginx 实现不同子域名访问同一主机不同服务</title>
+      <link>https://blog.wukaige.com/frp--nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/</link>
+      <pubDate>Tue, 04 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <guid>https://blog.wukaige.com/frp--nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/</guid>
+      <description>前置条件 运行在内网的多个服务 一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案） 一个域名 域名解析 到 cloudflare 解析配置你的域名解析 Frps, Nginx 服务配置 frps</description>
+    </item>
+  </channel>
+</rss>

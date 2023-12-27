@@ -1,331 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="referrer" content="no-referrer" />
-    <meta name="description" content="前情提要通过 http 访问 alist，地址栏那个感叹号看起来有点丑。 申请 Cloudflare 证书看这里 把 Origin Certificate 保存为： your-domain.pem 把 Private Key 保存为： your-domain.key 配置 nginx 转发规则12345678910111213141516171819202122server &amp;#123;    l">
-<meta property="og:type" content="article">
-<meta property="og:title" content="使用 https 访问 alist">
-<meta property="og:url" content="https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前情提要通过 http 访问 alist，地址栏那个感叹号看起来有点丑。 申请 Cloudflare 证书看这里 把 Origin Certificate 保存为： your-domain.pem 把 Private Key 保存为： your-domain.key 配置 nginx 转发规则12345678910111213141516171819202122server &amp;#123;    l">
-<meta property="og:locale">
-<meta property="article:published_time" content="2023-07-17T08:29:58.000Z">
-<meta property="article:modified_time" content="2023-07-17T08:43:25.489Z">
-<meta property="article:author" content="wukaige">
-<meta property="article:tag" content="nginx">
-<meta property="article:tag" content="alist">
-<meta name="twitter:card" content="summary">
+    <title>Hugo/使用-https-访问-alist/</title>
     
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/terminal-0.7.2.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/animate-4.1.1.min.css">
+    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/console.css">
     
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>使用 https 访问 alist</title>
-    <!-- async scripts -->
-    <!-- Google Analytics -->
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-06LZ6HJ4BH"></script>
-  <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-06LZ6HJ4BH');
-  </script>
-
-
-    <!-- Umami Analytics -->
-
-
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-<meta name="generator" content="Hexo 6.3.0"></head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a href="/tags/">Tag</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/ES-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-tidb-lightning/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&text=使用 https 访问 alist"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&title=使用 https 访问 alist"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&is_video=false&description=使用 https 访问 alist"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 https 访问 alist&body=Check out this article: https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&title=使用 https 访问 alist"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&title=使用 https 访问 alist"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&title=使用 https 访问 alist"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&title=使用 https 访问 alist"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&name=使用 https 访问 alist&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&t=使用 https 访问 alist"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    
-    
-      <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">前情提要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B3%E8%AF%B7-Cloudflare-%E8%AF%81%E4%B9%A6"><span class="toc-number">2.</span> <span class="toc-text">申请 Cloudflare 证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-nginx-%E8%BD%AC%E5%8F%91%E8%A7%84%E5%88%99"><span class="toc-number">3.</span> <span class="toc-text">配置 nginx 转发规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%90%AF-nginx-%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.</span> <span class="toc-text">重启 nginx 服务</span></a></li></ol>
-      </div>
-    
-  </span>
-</div>
-
-    
-    <div class="content index py4 ">
-        
-        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle p-name" itemprop="name headline">
-        使用 https 访问 alist
-    </h1>
+      <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+       <meta property="og:title" content="使用 https 访问 alist" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/" /><meta property="article:published_time" content="2023-07-17T00:00:00+00:00" />
 
 
 
-    <div class="meta">
-      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span class="p-name" itemprop="name">wukaige</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2023-07-17T08:29:58.000Z" class="dt-published" itemprop="datePublished">2023-07-17</time>
-        
-      
+<meta name="twitter:title" content="使用 https 访问 alist"/>
+<meta name="twitter:description" content="通过 http 访问 alist，地址栏那个感叹号看起来有点丑。"/>
+
+</head>
+<body class="terminal">
+    <div class="container">
+        <div class="terminal-nav">
+          <header class="terminal-logo">
+            <div class="logo terminal-prompt">
+              
+              
+              <a href="https://blog.wukaige.com/" class="no-style site-name">Hugo</a>:~# 
+              <a href='https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist'>%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist</a>/</div></header>
+          <nav class="terminal-menu">
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                <li><a href="https://blog.wukaige.com/about/" typeof="ListItem">about/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/posts/" typeof="ListItem">posts/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/tags/" typeof="ListItem">tags/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/categories/leetcode" typeof="ListItem">leetcode/</a></li>
+                
+                <li><a href="https://blog.wukaige.com/photos/" typeof="ListItem">photos/</a></li>
+                
+            </ul>
+          </nav>
+        </div>
     </div>
 
+    <div class="container animated zoomIn fast" >
+        
+<h1>使用 https 访问 alist</h1>
 
-      
-
-      
-    <div class="article-tag">
-        <i class="fa-solid fa-tag"></i>
-        <a class="p-category" href="/tags/alist/" rel="tag">alist</a>, <a class="p-category" href="/tags/nginx/" rel="tag">nginx</a>
-    </div>
+Jul. 17, 2023
 
 
-    </div>
-  </header>
-  
-
-  <div class="content e-content" itemprop="articleBody">
-    <h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>通过 http 访问 alist，地址栏那个感叹号看起来有点丑。</p>
-<h2 id="申请-Cloudflare-证书"><a href="#申请-Cloudflare-证书" class="headerlink" title="申请 Cloudflare 证书"></a>申请 Cloudflare 证书</h2><p><a target="_blank" rel="noopener" href="https://www.google.com.hk/search?q=%E7%94%B3%E8%AF%B7+Cloudflare+%E8%AF%81%E4%B9%A6&oq=%E7%94%B3%E8%AF%B7+Cloudflare+%E8%AF%81%E4%B9%A6&aqs=chrome..69i57.630j0j7&sourceid=chrome&ie=UTF-8">看这里</a></p>
+<br/><br/>
+<p>通过 http 访问 alist，地址栏那个感叹号看起来有点丑。</p>
+<h2 id="申请-cloudflare-证书">申请 Cloudflare 证书</h2>
+<p><a href="https://www.google.com.hk/search?q=%E7%94%B3%E8%AF%B7+Cloudflare+%E8%AF%81%E4%B9%A6&amp;oq=%E7%94%B3%E8%AF%B7+Cloudflare+%E8%AF%81%E4%B9%A6&amp;aqs=chrome..69i57.630j0j7&amp;sourceid=chrome&amp;ie=UTF-8">看这里</a></p>
 <p>把 Origin Certificate 保存为： your-domain.pem</p>
 <p>把 Private Key 保存为： your-domain.key</p>
-<h2 id="配置-nginx-转发规则"><a href="#配置-nginx-转发规则" class="headerlink" title="配置 nginx 转发规则"></a>配置 nginx 转发规则</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span> alist.wukaige.com;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_certificate</span> /path/to/your-domain.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /path/to/your-domain.key;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$scheme</span> != <span class="string">&quot;https&quot;</span>) &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$server_name</span><span class="variable">$request_uri</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">client_max_body_size</span> <span class="number">10000m</span>;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:7080;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto https;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="配置-nginx-转发规则">配置 nginx 转发规则</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#66d9ef">server</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">listen</span> <span style="color:#ae81ff">80</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">listen</span> <span style="color:#ae81ff">443</span> <span style="color:#e6db74">ssl</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">server_name</span> <span style="color:#e6db74">alist.wukaige.com</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_certificate</span> <span style="color:#e6db74">/path/to/your-domain.pem</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_certificate_key</span> <span style="color:#e6db74">/path/to/your-domain.key</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">if</span> <span style="color:#e6db74">(</span>$scheme <span style="color:#e6db74">!=</span> <span style="color:#e6db74">&#34;https&#34;)</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">return</span> <span style="color:#ae81ff">301</span> <span style="color:#e6db74">https://</span>$server_name$request_uri;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">client_max_body_size</span> <span style="color:#ae81ff">10000m</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">location</span> <span style="color:#e6db74">/</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_pass</span> <span style="color:#e6db74">http://127.0.0.1:7080</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">Host</span> $host;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Real-IP</span> $remote_addr;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-For</span> $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-Proto</span> <span style="color:#e6db74">https</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="重启-nginx-服务">重启 nginx 服务</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart nginx.service
+</span></span></code></pre></div>
 
 
-
-<h2 id="重启-nginx-服务"><a href="#重启-nginx-服务" class="headerlink" title="重启 nginx 服务"></a>重启 nginx 服务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart nginx.service</span><br></pre></td></tr></table></figure>
-
-
-
-
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-        
-          <li><a href="/">Home</a></li>
-        
-          <li><a href="/archives/">Writing</a></li>
-        
-          <li><a href="/tags/">Tag</a></li>
-        
-          <li><a href="/search/">Search</a></li>
-        
-          <li><a href="/about/">About</a></li>
-        
-      </ul>
-    </div>
-
-    
-    
-      <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">前情提要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B3%E8%AF%B7-Cloudflare-%E8%AF%81%E4%B9%A6"><span class="toc-number">2.</span> <span class="toc-text">申请 Cloudflare 证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-nginx-%E8%BD%AC%E5%8F%91%E8%A7%84%E5%88%99"><span class="toc-number">3.</span> <span class="toc-text">配置 nginx 转发规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%90%AF-nginx-%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.</span> <span class="toc-text">重启 nginx 服务</span></a></li></ol>
-      </div>
-    
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&text=使用 https 访问 alist"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&title=使用 https 访问 alist"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&is_video=false&description=使用 https 访问 alist"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 https 访问 alist&body=Check out this article: https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&title=使用 https 访问 alist"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&title=使用 https 访问 alist"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&title=使用 https 访问 alist"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&title=使用 https 访问 alist"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&name=使用 https 访问 alist&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/&t=使用 https 访问 alist"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        
-          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
+        <div class="footer">
+    Powered by <a href="https://gohugo.io/">Hugo</a> with
+    <a href="https://github.com/mrmierzejewski/hugo-theme-console/">Console Theme</a>. 
 </div>
 
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2023
-    wukaige
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a href="/tags/">Tag</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
-
     </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="fa-regular fa-clone"></i>';
-    btn += '</span>';
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-</body>
+  </body>
 </html>
