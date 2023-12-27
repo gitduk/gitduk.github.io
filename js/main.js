@@ -33,7 +33,7 @@ $(document).ready(function() {
      * Display the menu on hi-res laptops and desktops.
      */
     if ($(document).width() >= 1440) {
-      menu.show();
+      menu.css("visibility", "visible");
       menuIcon.addClass("active");
     }
 
@@ -41,12 +41,12 @@ $(document).ready(function() {
      * Display the menu if the menu icon is clicked.
      */
     menuIcon.click(function() {
-      if (menu.is(":hidden")) {
-        menu.show();
+      if (menu.css("visibility") === "hidden") {
+        menu.css("visibility", "visible");
         nav.show();
         menuIcon.addClass("active");
       } else {
-        menu.hide();
+        menu.css("visibility", "hidden");
         menuIcon.removeClass("active");
       }
       return false;
@@ -57,7 +57,7 @@ $(document).ready(function() {
      */
     if (menu.length) {
       $(window).on("scroll", function() {
-        /* var topDistance = menu.offset().top; */
+        / * var topDistance = menu.offset().top; * /
         var topDistance = $(window).scrollTop();
 
         // hide only the navigation links on desktop

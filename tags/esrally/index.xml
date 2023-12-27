@@ -12,10 +12,10 @@
     <atom:link href="https://blog.wukaige.com/tags/esrally/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ES 集群压测</title>
-      <link>https://blog.wukaige.com/posts/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/</link>
+      <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/</link>
       <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/</guid>
-      <description>&lt;p&gt;新进了一台高性能服务器，准备把旧的 ES 集群迁移到新服务器，需要对比两个 ES 集群的性能。&lt;/p&gt;</description>
+      <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/</guid>
+      <description>新进了一台高性能服务器，准备把旧的 ES 集群迁移到新服务器，需要对比两个 ES 集群的性能。 一些信息 旧服务器 ES 地址: 192.168.0.1:9200 新服务器 ES 地址: 192.168.0.2:9200 测试工具 esrally 是 elastic</description>
     </item>
   </channel>
 </rss>

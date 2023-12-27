@@ -12,10 +12,10 @@
     <atom:link href="https://blog.wukaige.com/tags/alist/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>使用 https 访问 alist</title>
-      <link>https://blog.wukaige.com/posts/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/</link>
+      <link>https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/</link>
       <pubDate>Mon, 17 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/</guid>
-      <description>&lt;p&gt;通过 http 访问 alist，地址栏那个感叹号看起来有点丑。&lt;/p&gt;</description>
+      <guid>https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/</guid>
+      <description>通过 http 访问 alist，地址栏那个感叹号看起来有点丑。 申请 Cloudflare 证书 看这里 把 Origin Certificate 保存为： your-domain.pem 把 Private Key 保存为： your-domain.key 配置 nginx 转发规则 server { listen 80; listen 443 ssl; server_name alist.wukaige.com; ssl_certificate /path/to/your-domain.pem; ssl_certificate_key /path/to/your-domain.key;</description>
     </item>
   </channel>
 </rss>

@@ -1,469 +1,588 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Hugo/posts/</title>
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="all,follow">
-    <meta name="googlebot" content="index,follow,snippet,archive">
-    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/terminal-0.7.2.min.css">
-    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/animate-4.1.1.min.css">
-    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/console.css">
-    
-      <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-      <![endif]-->
-       
-      <link href="https://blog.wukaige.com/posts/index.xml" rel="alternate" type="application/rss+xml" title="Hugo" />
-    <meta property="og:title" content="Posts" />
+  <link rel="preload" href="/%20lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2"
+    crossorigin="anonymous">
+  <link rel="preload" href="/%20lib/font-awesome/webfonts/fa-regular-400.woff2" as="font"
+    type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/%20lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2"
+    crossorigin="anonymous">
+  <link rel="preload" href="/%20lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font"
+    type="font/woff2" crossorigin="anonymous">
+  <script type="text/javascript" src="https://latest.cactus.chat/cactus.js"></script>
+  <link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Hugo</title>
+  <link rel='canonical' href='https://blog.wukaige.com/posts/'>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Posts" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://blog.wukaige.com/posts/" />
 
 
+  <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content=""/>
 
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.5f33eedd7dd50a1fc3f871334d863a84994bd83b603213b32f9620176bc867e5072d802898792f193c0942490192c2b63f2b3e289cb26cc29bb41f88cd2831aa.css" integrity="sha512-XzPu3X3VCh/D&#43;HEzTYY6hJlL2DtgMhOzL5YgF2vIZ&#43;UHLYAomHkvGTwJQkkBksK2Pys&#43;KJyybMKbtB&#43;IzSgxqg==">
+
+  
+  
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/custom.css"> 
+  
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://blog.wukaige.com/images/favicon.ico" />
+
+  
+  
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-PWF07XQSY3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
 </head>
-<body class="terminal">
-    <div class="container">
-        <div class="terminal-nav">
-          <header class="terminal-logo">
-            <div class="logo terminal-prompt">
-              
-              
-              <a href="https://blog.wukaige.com/" class="no-style site-name">Hugo</a>:~# 
-              <a href='https://blog.wukaige.com/posts'>posts</a>/</div></header>
-          <nav class="terminal-menu">
-            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
-                
-                <li><a href="https://blog.wukaige.com/about/" typeof="ListItem">about/</a></li>
-                
-                <li><a href="https://blog.wukaige.com/posts/" typeof="ListItem">posts/</a></li>
-                
-                <li><a href="https://blog.wukaige.com/tags/" typeof="ListItem">tags/</a></li>
-                
-                <li><a href="https://blog.wukaige.com/categories/leetcode" typeof="ListItem">leetcode/</a></li>
-                
-                <li><a href="https://blog.wukaige.com/photos/" typeof="ListItem">photos/</a></li>
-                
-            </ul>
-          </nav>
-        </div>
-    </div>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
 
-    <div class="container animated zoomIn fast" >
+    <header id="header">
+  <a href="https://blog.wukaige.com/">
+  
+    <div id="logo" style="background-image: url(https://blog.wukaige.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Hugo</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/posts">Posts</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+    </ul>
+  </div>
+</header>
+
+
+
+    
+<div id="archive">
+  <ul class="post-list">
+
+  
+  
+    
+  
+
+  
+    
+    
+    
+    <h2>2023</h2>
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-12-27 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-12-27</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/%E5%9B%9E%E6%96%87%E6%95%B0/"> 回文数 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-12-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-12-15</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/"> 两数之和 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-12-06 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-12-06</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/milvus-%E5%AE%89%E8%A3%85-docker-gpu-%E7%89%88/"> Milvus 安装 - Docker GPU 版 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-12-01 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-12-01</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/"> ES 集群恢复 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-11-24 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-11-24</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E7%BC%A9%E5%AE%B9/"> ES 集群缩容 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-11-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-11-23</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%89%A9%E5%AE%B9/"> ES 集群扩容 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-11-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-11-23</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/"> TiDB-Lightning 基础使用 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-11-21 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-11-21</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/"> ES 集群压测 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-11-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-11-17</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/hugo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"> Hugo 搭建个人博客 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-11-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-11-17</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/tidb-%E6%89%A9%E5%AE%B9/"> TiDB 扩容 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-11-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-11-17</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/"> TiDB-Lightning 错误排查 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-10-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-10-23</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2/"> TiDB 单机部署 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-10-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-10-23</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/tidb-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/"> TiDB 错误排查 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-10-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-10-17</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/rust-%E6%93%8D%E4%BD%9C-mysql-%E6%95%B0%E6%8D%AE%E5%BA%93/"> Rust 操作 mysql 数据库 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-10-13 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-10-13</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/rust-sqlserver/"> rust &amp; sqlserver </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-10-13 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-10-13</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/rust-sqlserver/"> rust &amp; sqlserver </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-09-22 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-09-22</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/rust-%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/"> Rust 代码片段 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-08-24 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-08-24</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/"> ES 数据迁移 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-08-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-08-15</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/logstash-%E5%AF%BC%E5%87%BA-es-%E6%95%B0%E6%8D%AE%E5%88%B0-csv-%E6%96%87%E4%BB%B6/"> logstash 导出 ES 数据到 csv 文件 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-08-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-08-10</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/ubuntu--clash--%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/"> ubuntu &#43; clash &#43; 双网卡搭建透明网关实现全家科学上网自由 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-08-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-08-04</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E4%BB%8E-4.5h-1h/"> ES 数据插入速度优化，从 4.5h -&gt; 1h </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-08-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-08-03</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/python-%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0-mysql-%E6%95%B0%E6%8D%AE%E5%BA%93-asyncio--aiomysql/"> Python 异步更新 mysql 数据库 (asyncio &#43; aiomysql) </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-24 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-24</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/flask--gunicorn-%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%B9%B6%E5%8F%91/"> flask &#43; gunicorn 实现高并发 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-19 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-19</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/"> logstash 拼接字段 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-17</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-tidb-lightning/"> ES 数据导入之 tidb lightning </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-17</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/"> 使用 https 访问 alist </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-14 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-14</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/"> ES 数据导入之 logstash </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-11 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-11</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/linux-%E5%8F%8C%E7%BD%91%E5%8D%A1%E5%81%9A-bond0/"> linux 双网卡做 bond0 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-10</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/dm-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6/"> DM 数据复制 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-10</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/tidb-%E5%A4%9A%E7%89%A9%E7%90%86%E6%9C%BA%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/"> TiDB 多物理机集群部署 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-05</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/"> TiDB 快照恢复 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-05</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/tikv-%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E6%8E%92%E6%9F%A5/"> TIKV 内存占用过高排查 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-04</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/frp--nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/"> frp &#43; nginx 实现不同子域名访问同一主机不同服务 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-04</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95/"> hexo 自建博客如何被 google 收录？ </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-04</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/nginx-%E4%BB%A3%E7%90%86-openai-api/"> Nginx 代理 openai api </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-04</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/tidb-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/"> TiDB 集群节点损坏修复 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-07-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-03</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/"> 文本转向量并插入到 ES 中 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-06-29 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-06-29</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"> hexo cactus 外链图片无法显示解决办法 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-06-29 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-06-29</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/"> Ubuntu 显卡配置 </a>
+      </span>
+    </li>
+    
+    
+    
+    <li class="post-item">
+      <div class="meta">
+        <time datetime="2023-06-27 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-06-27</time>
+      </div>
+      <span>    
+        <a class="" href="https://blog.wukaige.com/tidb-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/"> TiDB 用户管理 </a>
+      </span>
+    </li>
+    
+  </ul>
+  
+</div>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2023  Hugo 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Posts</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
         
-<h1>Posts</h1>
-<br/>
+      </ul>
+    </nav>
+  </div>
+</footer>
 
 
-<div class="posts-list">
+  </div>
+</body>
 
-    
-        <div class="post">
-            <p>
-                <div class="date">Dec. 15, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/" title="两数之和">两数之和</a></h1>
-                <p>给定一个整数数组 <code>nums</code> 和一个整数目标值 <code>target</code>，请你在该数组中找出 <strong>和为目标值</strong> <em><code>target</code></em> 的那 <strong>两个</strong> 整数，并返回它们的数组下标。</p>
-<p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。</p>
-<p>你可以按任意顺序返回答案。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Dec. 6, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/milvus-%E5%AE%89%E8%A3%85-docker-gpu-%E7%89%88/" title="Milvus 安装 - Docker GPU 版">Milvus 安装 - Docker GPU 版</a></h1>
-                <p>记录一下 Milvus 安装过程。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Dec. 1, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/" title="ES 集群恢复">ES 集群恢复</a></h1>
-                <p>强制关机导致 ES 集群丢失 <code>.security-7</code> 索引，无法进行安全验证，尝试恢复的过程中，导致 ES 集群彻底不可用。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Nov. 24, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E7%BC%A9%E5%AE%B9/" title="ES 集群缩容">ES 集群缩容</a></h1>
-                <p>想通过增加 ES 节点达到提高 ES 吞吐量的目的，但是发现效果并不好。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Nov. 23, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%89%A9%E5%AE%B9/" title="ES 集群扩容">ES 集群扩容</a></h1>
-                <p>想通过增加 ES 节点达到提高 ES 吞吐量的目的。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Nov. 23, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" title="TiDB-Lightning 基础使用">TiDB-Lightning 基础使用</a></h1>
-                <p>前提是已经用 <a href="https://docs.pingcap.com/tidb/stable/dumpling-overview">Dumpling</a> 将数据从上游数据库导出。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Nov. 21, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/" title="ES 集群压测">ES 集群压测</a></h1>
-                <p>新进了一台高性能服务器，准备把旧的 ES 集群迁移到新服务器，需要对比两个 ES 集群的性能。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Nov. 17, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/hugo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="Hugo 搭建个人博客">Hugo 搭建个人博客</a></h1>
-                安装 Hugo brew install hugo 建立网站 hugo new site hugo 运行 Hugo 服务 cd hugo/ hugo server 上传到 github.io cd blog/public
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Nov. 17, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/tidb-%E6%89%A9%E5%AE%B9/" title="TiDB 扩容">TiDB 扩容</a></h1>
-                
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Nov. 17, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/" title="TiDB-Lightning 错误排查">TiDB-Lightning 错误排查</a></h1>
-                raft entry is too large 修改 TiDB 配置 tiup cluster edit-config tidb tikv: raftstore.raft-entry-max-siz: 128MB 重启 tikv 节点 tiup cluster reload tidb-cluster -R tikv Referencing column &rsquo;table&rsquo; and referenced column &lsquo;id&rsquo; in foreign key constraint &lsquo;fk_1&rsquo; are incompatible 外键约束错误 查找引用 table 的表 SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = &#39;table&#39;; 删除引用 table 的表
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Oct. 23, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2/" title="TiDB 单机部署">TiDB 单机部署</a></h1>
-                机器配置 OS: Ubuntu 23.04 CPU: 20 核 Mem: 32 G 安装 tiup 组件 # 安装 tiup 命令 curl --proto &#39;=https&#39; --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh # 升级 cluster 组件 tiup update --self &amp;&amp; tiup update cluster # 验证 tiup 版本信息 tiup --binary cluster 准备集群拓扑文件 topo.yaml # # Global variables are
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Oct. 23, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/tidb-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/" title="TiDB 错误排查">TiDB 错误排查</a></h1>
-                entry too large, the max entry size is 6291456, the size of data is 7254170 查看 performance.txn-entry-size-limit 大小： show config where type=&#39;tidb&#39; and name like &#39;%txn-entry-size-limit&#39;; ++++++++++++++++++++++++++--++++++++++++++++++++++++++++++++++-+++++++++++ | Type | Instance | Name | Value | ++++++++++++++++++++++++++--++++++++++++++++++++++++++++++++++-+++++++++++ | tidb | 192.168.70.46:4000 | performance.txn-entry-size-limit | 6291456 | ++++++++++++++++++++++++++--++++++++++++++++++++++++++++++++++-+++++++++++ 1 row in set (0.01 sec) 修改 performance.txn-entry-size-limit 大小： tiup cluster edit-config &lt;cluster-name&gt; server_configs: tidb: txn-entry-size-limit: 62914560
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Oct. 17, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/rust-%E6%93%8D%E4%BD%9C-mysql-%E6%95%B0%E6%8D%AE%E5%BA%93/" title="Rust 操作 mysql 数据库">Rust 操作 mysql 数据库</a></h1>
-                安装所需要的包 cargo add mysql 连接数据库 use mysql::{prelude::Queryable, *}; use std::fs; fn my_conn(url: &amp;str) -&gt; Result&lt;PooledConn, mysql::Error&gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &#34;mysql://user:password@127.0.0.1:3306/DB&#34;; let mut conn = my_conn(url).unwrap(); } 建表 use mysql::{prelude::Queryable, *}; fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; { let url = &#34;mysql://user:password@127.0.0.1:3306/DB&#34;; let mut conn =
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Oct. 13, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/rust-sqlserver/" title="rust &amp; sqlserver">rust &amp; sqlserver</a></h1>
-                <p>公司购买了一张 4090 显卡，需要安装到服务器上。</p>
-<p>服务器 OS 版本：redhat9</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Oct. 13, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/rust-sqlserver/" title="rust &amp; sqlserver">rust &amp; sqlserver</a></h1>
-                Rust 操作 sqlserver 数据库代码示例 下载所需要的依赖 cargo add tiberius cargo add tokio cargo add tokio_util --features=compat cargo add futures Rust Code: use futures::TryStreamExt; use tiberius::{AuthMethod, Client, Config, Query, QueryItem}; use tokio::net::TcpStream; use tokio_util::compat::{Compat, TokioAsyncWriteCompatExt}; struct Conn { host: String, port: u16, user: String, password: String, } #[derive(Debug)] struct Data { id: Option&lt;i32&gt;, title: Option&lt;String&gt;, } async fn
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Sep. 22, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/rust-%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/" title="Rust 代码片段">Rust 代码片段</a></h1>
-                mysql https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html use mysql::{Pool, PooledConn, from_row}; fn my_conn(url: &amp;str) -&gt; Result&lt;PooledConn, mysql::Error&gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &#34;mysql://xxx:xxx@127.0.0.1:3306/DB&#34;; let conn = my_conn(url).unwrap(); let sql = &#34;select title from table;&#34;; // query map let _books = conn.query_map(sql, |title: String| { title })?; // query iter let sql = &#34;select id,title,date from table2;&#34;; conn.query_iter(query)?.for_each(|row| { let r: (i32, String, String)
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Aug. 24, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/" title="ES 数据迁移">ES 数据迁移</a></h1>
-                <p>老板有一个需求，把旧索引里面的数据全部迁移到新索引，ES 内置的 reindex 可以快速进行数据迁移。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Aug. 15, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/logstash-%E5%AF%BC%E5%87%BA-es-%E6%95%B0%E6%8D%AE%E5%88%B0-csv-%E6%96%87%E4%BB%B6/" title="logstash 导出 ES 数据到 csv 文件">logstash 导出 ES 数据到 csv 文件</a></h1>
-                <p>有一个需求，把 ES 索引里面的某个字段导入 csv 文件里面。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Aug. 10, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/ubuntu--clash--%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/" title="ubuntu &#43; clash &#43; 双网卡搭建透明网关实现全家科学上网自由">ubuntu &#43; clash &#43; 双网卡搭建透明网关实现全家科学上网自由</a></h1>
-                <p>手机科学上网需要打开 clash 软件，手动开启代理，非常不爽，我想搭建一个无感科学上网环境，连上 WIFI 就能科学上网。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Aug. 4, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E4%BB%8E-4.5h-1h/" title="ES 数据插入速度优化，从 4.5h -&gt; 1h">ES 数据插入速度优化，从 4.5h -&gt; 1h</a></h1>
-                <p>写了个脚本把数据库里面的 content 字段转换为向量插入到 ES， 100w 数据需要 4.5 小时，太慢了！！！</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Aug. 3, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/python-%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0-mysql-%E6%95%B0%E6%8D%AE%E5%BA%93-asyncio--aiomysql/" title="Python 异步更新 mysql 数据库 (asyncio &#43; aiomysql)">Python 异步更新 mysql 数据库 (asyncio &#43; aiomysql)</a></h1>
-                <p>数据库有一亿数据，需要写一个垃圾脚本更新某个字段，需要 6+ 小时，太慢了！！！</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 24, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/flask--gunicorn-%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%B9%B6%E5%8F%91/" title="flask &#43; gunicorn 实现高并发">flask &#43; gunicorn 实现高并发</a></h1>
-                <p>基于 flask 写了一个 hanlp 分词 api，想提高 api 的并发量。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 19, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/" title="logstash 拼接字段">logstash 拼接字段</a></h1>
-                <p>ES 数据的 content 字段是 html 格式的内容，现在想用纯文本内容代替 html。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 17, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-tidb-lightning/" title="ES 数据导入之 tidb lightning">ES 数据导入之 tidb lightning</a></h1>
-                <p><a href="https://docs.pingcap.com/zh/tidb/stable/tidb-lightning-overview">TiDB Lightning</a> 是用于从静态文件导入 TB 级数据到 TiDB 集群的工具，常用于 TiDB 集群的初始化数据导入。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 17, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/" title="使用 https 访问 alist">使用 https 访问 alist</a></h1>
-                <p>通过 http 访问 alist，地址栏那个感叹号看起来有点丑。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 14, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/" title="ES 数据导入之 logstash">ES 数据导入之 logstash</a></h1>
-                <p><a href="https://www.elastic.co/cn/logstash/">Logstash</a> 是免费且开放的服务器端数据处理管道，能够从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 11, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/linux-%E5%8F%8C%E7%BD%91%E5%8D%A1%E5%81%9A-bond0/" title="linux 双网卡做 bond0">linux 双网卡做 bond0</a></h1>
-                <p>为了提供网络的高可用性，我们可能需要将多块网卡绑定成一块虚拟网卡对外提供服务，这样即使其中的一块物理网卡出现故障，也不会导致连接中断。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 10, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/dm-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6/" title="DM 数据复制">DM 数据复制</a></h1>
-                <p><a href="https://docs.pingcap.com/zh/tidb/stable/dm-overview">TiDB Data Migration</a> (DM) 是一款便捷的数据迁移工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的全量数据迁移和增量数据同步。使用 DM 工具有利于简化数据迁移过程，降低数据迁移运维成本。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 10, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/tidb-%E5%A4%9A%E7%89%A9%E7%90%86%E6%9C%BA%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/" title="TiDB 多物理机集群部署">TiDB 多物理机集群部署</a></h1>
-                前情提要 买了三台服务器，内网 IP 如下： 192.168.70.50 192.168.70.51 192.168.70.52 OS: RedHat 想搭建一个 TIDB 集群，只要有一台机器存活就能正常对外提供服务。 服务器环境准备 关闭系统 SWAP echo &#34;vm.swappiness = 0&#34; | sudo
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 5, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/" title="TiDB 快照恢复">TiDB 快照恢复</a></h1>
-                <p>TiDB 使用周期性运行的 GC（Garbage Collection，垃圾回收）来进行清理，默认情况下每 10 分钟一次。每次 GC 时，TiDB 会计算一个称为 safe point 的时间戳（默认为上次运行 GC 的时间减去 10 分钟），接下来 TiDB 会在保证在 safe point 之后的快照都能够读取到正确数据的前提下，删除更早的过期数据。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 5, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/tikv-%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E6%8E%92%E6%9F%A5/" title="TIKV 内存占用过高排查">TIKV 内存占用过高排查</a></h1>
-                <p>tidb 集群（tidb-cluster）的 tikv 节点，占用内存高达 30/50 G，内存不够用。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 4, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/frp--nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/" title="frp &#43; nginx 实现不同子域名访问同一主机不同服务">frp &#43; nginx 实现不同子域名访问同一主机不同服务</a></h1>
-                前置条件 运行在内网的多个服务 一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案） 一个域名 域名解析 到 cloudflare 解析配置你的域名解析 Frps, Nginx 服务配置 frps
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 4, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95/" title="hexo 自建博客如何被 google 收录？">hexo 自建博客如何被 google 收录？</a></h1>
-                测试站点是否被 google 收录 测试方法：打开 google 主页，在搜索框键入 site:blog.wukaige.com 未被收录： 被收录： 安装 hexo-generator-sitemap 插件 hexo-generator-sitemap 可自动在根目录生成 sitemap.xml 文件 安装： npm install hexo-generator-sitemap --save 在 _config.yaml 文件中添加：
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 4, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/nginx-%E4%BB%A3%E7%90%86-openai-api/" title="Nginx 代理 openai api">Nginx 代理 openai api</a></h1>
-                安装 Nginx ubuntu: sudo apt install nginx 配置 Openai 反向代理 在目录 /etc/nginx/conf.d 下创建文件 openai.conf /etc/nginx/conf.d/openai.conf server { listen 8000; location /v1/ { proxy_pass https://api.openai.com/v1/; # OpenAI API URL proxy_ssl_server_name on; # 避免出现反代https域名出现502错误 proxy_buffering off; # 关闭缓存实
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 4, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/tidb-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/" title="TiDB 集群节点损坏修复">TiDB 集群节点损坏修复</a></h1>
-                <p>tidb 某个节点的数据目录被删除，导致节点损坏。</p>
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jul. 3, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/" title="文本转向量并插入到 ES 中">文本转向量并插入到 ES 中</a></h1>
-                ES 中创建索引 PUT vector-index { &#34;mappings&#34;: { &#34;properties&#34;: { &#34;title&#34;: { &#34;type&#34;: &#34;text&#34; }, &#34;content_vector&#34;: { &#34;type&#34;: &#34;dense_vector&#34;, &#34;dims&#34;: 768, &#34;index&#34;: true, &#34;similarity&#34;: &#34;l2_norm&#34; } } } } 导入一些数据 使用 logstash 工具从 mysql 数据库导入数据 input { jdbc { jdbc_driver_library =&gt; &#39;path/to/mysql-connector-java-8.0.21.jar&#39; jdbc_driver_class =&gt; &#39;com.mysql.cj.jdbc.Driver&#39; jdbc_connection_string =&gt; &#39;jdbc:mysql://[IP ADDR]:[POST]/[DATABASE]?useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true&amp;autoReconnect=true&#39; jdbc_user =&gt; &#39;root&#39; jdbc_password
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jun. 29, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="hexo cactus 外链图片无法显示解决办法">hexo cactus 外链图片无法显示解决办法</a></h1>
-                修复外链 cactus 主题目录结构 在 /layout/_partial/head.ejs 文件中加一行代码 &lt;meta name=&#34;referrer&#34; content=&#34;no-referrer&#34; /&gt; 参考链接 https://zhuanlan.zhihu.com/p/577256660
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jun. 29, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/" title="Ubuntu 显卡配置">Ubuntu 显卡配置</a></h1>
-                系统环境 系统: Ubuntu 22.04 内核: 5.19.0-32-generic 显卡: AD102 [GeForce RTX 4090] 前期准备 # 查看显卡设备 lshw -numeric -C display # 查看显卡 lsmod | grep -E &#34;nvidia|nouveau&#34; # 添加显卡 ppa sudo add-apt-repository ppa:graphics-drivers sudo apt update # 禁用 nouveau echo &#34; blacklist nouveau blacklist lbm-nouveau alias nouveau off
-            </p>
-        </div>
-    
-
-    
-        <div class="post">
-            <p>
-                <div class="date">Jun. 27, 2023</div>    
-                <h1><a href="https://blog.wukaige.com/tidb-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/" title="TiDB 用户管理">TiDB 用户管理</a></h1>
-                创建新用户 CREATE USER &#39;user&#39;@&#39;%&#39; IDENTIFIED BY &#39;password&#39;; 设置用户权限 -- 部分权限 GRANT SELECT,INSERT ON database.* TO &#39;user&#39;@&#39;%&#39;; -- 所有权限 GRANT ALL PRIVILEGES ON database.* TO &#39;user&#39;@&#39;%&#39;; 修改用户密码 SET PASSWORD FOR &#39;root&#39;@&#39;%&#39; = &#39;xxx&#39;; 刷新权限 FLUSH PRIVILEGES; 删除用户 DROP USER &#39;user&#39;@&#39;host&#39;;
-            </p>
-        </div>
-    
-
-</div>
-
-
-        <div class="footer">
-    Powered by <a href="https://gohugo.io/">Hugo</a> with
-    <a href="https://github.com/mrmierzejewski/hugo-theme-console/">Console Theme</a>. 
-</div>
-
-    </div>
-  </body>
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
 </html>

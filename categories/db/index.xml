@@ -15,7 +15,7 @@
       <link>https://blog.wukaige.com/dm-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6/</link>
       <pubDate>Mon, 10 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
       <guid>https://blog.wukaige.com/dm-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://docs.pingcap.com/zh/tidb/stable/dm-overview&#34;&gt;TiDB Data Migration&lt;/a&gt; (DM) 是一款便捷的数据迁移工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的全量数据迁移和增量数据同步。使用 DM 工具有利于简化数据迁移过程，降低数据迁移运维成本。&lt;/p&gt;</description>
+      <description>TiDB Data Migration (DM) 是一款便捷的数据迁移工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的全量数据迁移和增量数</description>
     </item>
   </channel>
 </rss>

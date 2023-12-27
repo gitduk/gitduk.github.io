@@ -12,73 +12,73 @@
     <atom:link href="https://blog.wukaige.com/tags/tidb/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>TiDB-Lightning 基础使用</title>
-      <link>https://blog.wukaige.com/posts/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</link>
+      <link>https://blog.wukaige.com/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</guid>
-      <description>&lt;p&gt;前提是已经用 &lt;a href=&#34;https://docs.pingcap.com/tidb/stable/dumpling-overview&#34;&gt;Dumpling&lt;/a&gt; 将数据从上游数据库导出。&lt;/p&gt;</description>
+      <guid>https://blog.wukaige.com/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</guid>
+      <description>前提是已经用 Dumpling 将数据从上游数据库导出。 创建配置文件 tidb-lightning.toml tidb-lightning.toml [lightning] # 日志 level = &amp;#34;info&amp;#34; file = &amp;#34;log/tidb-lightning.log&amp;#34; [tikv-importer] # 选择使用的导入模式 backend = &amp;#34;tidb&amp;#34; # 设置排序的键值对的临时存放地址，目标</description>
     </item>
     <item>
       <title>TiDB 扩容</title>
-      <link>https://blog.wukaige.com/posts/tidb-%E6%89%A9%E5%AE%B9/</link>
+      <link>https://blog.wukaige.com/tidb-%E6%89%A9%E5%AE%B9/</link>
       <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/tidb-%E6%89%A9%E5%AE%B9/</guid>
-      <description></description>
+      <guid>https://blog.wukaige.com/tidb-%E6%89%A9%E5%AE%B9/</guid>
+      <description>编写扩容配置文件 scale-out.yml tidb_servers: - host: 127.0.0.1 ssh_port: 22 port: 4001 status_port: 10081 numa_node: &amp;#34;1&amp;#34; # suggest numa node bindings. 扩容命令 检查配置文件 tiup cluster check tidb scale-out.yml --cluster --user root -p 自动修复配置文件 tiup cluster check tidb scale-out.yml --cluster --apply --user root -p 扩容 tiup cluster scale-out tidb scale-out.yml</description>
     </item>
     <item>
       <title>TiDB-Lightning 错误排查</title>
-      <link>https://blog.wukaige.com/posts/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</link>
+      <link>https://blog.wukaige.com/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</link>
       <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</guid>
+      <guid>https://blog.wukaige.com/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</guid>
       <description>raft entry is too large 修改 TiDB 配置 tiup cluster edit-config tidb tikv: raftstore.raft-entry-max-siz: 128MB 重启 tikv 节点 tiup cluster reload tidb-cluster -R tikv Referencing column &amp;rsquo;table&amp;rsquo; and referenced column &amp;lsquo;id&amp;rsquo; in foreign key constraint &amp;lsquo;fk_1&amp;rsquo; are incompatible 外键约束错误 查找引用 table 的表 SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = &amp;#39;table&amp;#39;; 删除引用 table 的表</description>
     </item>
     <item>
       <title>TiDB 单机部署</title>
-      <link>https://blog.wukaige.com/posts/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2/</link>
+      <link>https://blog.wukaige.com/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2/</link>
       <pubDate>Mon, 23 Oct 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2/</guid>
+      <guid>https://blog.wukaige.com/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2/</guid>
       <description>机器配置 OS: Ubuntu 23.04 CPU: 20 核 Mem: 32 G 安装 tiup 组件 # 安装 tiup 命令 curl --proto &amp;#39;=https&amp;#39; --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh # 升级 cluster 组件 tiup update --self &amp;amp;&amp;amp; tiup update cluster # 验证 tiup 版本信息 tiup --binary cluster 准备集群拓扑文件 topo.yaml # # Global variables are</description>
     </item>
     <item>
       <title>TiDB 错误排查</title>
-      <link>https://blog.wukaige.com/posts/tidb-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</link>
+      <link>https://blog.wukaige.com/tidb-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</link>
       <pubDate>Mon, 23 Oct 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/tidb-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</guid>
+      <guid>https://blog.wukaige.com/tidb-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</guid>
       <description>entry too large, the max entry size is 6291456, the size of data is 7254170 查看 performance.txn-entry-size-limit 大小： show config where type=&amp;#39;tidb&amp;#39; and name like &amp;#39;%txn-entry-size-limit&amp;#39;; ++++++++++++++++++++++++++--++++++++++++++++++++++++++++++++++-+++++++++++ | Type | Instance | Name | Value | ++++++++++++++++++++++++++--++++++++++++++++++++++++++++++++++-+++++++++++ | tidb | 192.168.70.46:4000 | performance.txn-entry-size-limit | 6291456 | ++++++++++++++++++++++++++--++++++++++++++++++++++++++++++++++-+++++++++++ 1 row in set (0.01 sec) 修改 performance.txn-entry-size-limit 大小： tiup cluster edit-config &amp;lt;cluster-name&amp;gt; server_configs: tidb: txn-entry-size-limit: 62914560</description>
     </item>
     <item>
       <title>DM 数据复制</title>
-      <link>https://blog.wukaige.com/posts/dm-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6/</link>
+      <link>https://blog.wukaige.com/dm-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6/</link>
       <pubDate>Mon, 10 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/dm-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://docs.pingcap.com/zh/tidb/stable/dm-overview&#34;&gt;TiDB Data Migration&lt;/a&gt; (DM) 是一款便捷的数据迁移工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的全量数据迁移和增量数据同步。使用 DM 工具有利于简化数据迁移过程，降低数据迁移运维成本。&lt;/p&gt;</description>
+      <guid>https://blog.wukaige.com/dm-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6/</guid>
+      <description>TiDB Data Migration (DM) 是一款便捷的数据迁移工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的全量数据迁移和增量数</description>
     </item>
     <item>
       <title>TiDB 多物理机集群部署</title>
-      <link>https://blog.wukaige.com/posts/tidb-%E5%A4%9A%E7%89%A9%E7%90%86%E6%9C%BA%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/</link>
+      <link>https://blog.wukaige.com/tidb-%E5%A4%9A%E7%89%A9%E7%90%86%E6%9C%BA%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/</link>
       <pubDate>Mon, 10 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/tidb-%E5%A4%9A%E7%89%A9%E7%90%86%E6%9C%BA%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/</guid>
+      <guid>https://blog.wukaige.com/tidb-%E5%A4%9A%E7%89%A9%E7%90%86%E6%9C%BA%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/</guid>
       <description>前情提要 买了三台服务器，内网 IP 如下： 192.168.70.50 192.168.70.51 192.168.70.52 OS: RedHat 想搭建一个 TIDB 集群，只要有一台机器存活就能正常对外提供服务。 服务器环境准备 关闭系统 SWAP echo &amp;#34;vm.swappiness = 0&amp;#34; | sudo</description>
     </item>
     <item>
       <title>TiDB 快照恢复</title>
-      <link>https://blog.wukaige.com/posts/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/</link>
+      <link>https://blog.wukaige.com/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/</link>
       <pubDate>Wed, 05 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/</guid>
-      <description>&lt;p&gt;TiDB 使用周期性运行的 GC（Garbage Collection，垃圾回收）来进行清理，默认情况下每 10 分钟一次。每次 GC 时，TiDB 会计算一个称为 safe point 的时间戳（默认为上次运行 GC 的时间减去 10 分钟），接下来 TiDB 会在保证在 safe point 之后的快照都能够读取到正确数据的前提下，删除更早的过期数据。&lt;/p&gt;</description>
+      <guid>https://blog.wukaige.com/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/</guid>
+      <description>TiDB 使用周期性运行的 GC（Garbage Collection，垃圾回收）来进行清理，默认情况下每 10 分钟一次。每次 GC 时，TiDB 会计算一个称为 safe</description>
     </item>
     <item>
       <title>TIKV 内存占用过高排查</title>
-      <link>https://blog.wukaige.com/posts/tikv-%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E6%8E%92%E6%9F%A5/</link>
+      <link>https://blog.wukaige.com/tikv-%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E6%8E%92%E6%9F%A5/</link>
       <pubDate>Wed, 05 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/tikv-%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E6%8E%92%E6%9F%A5/</guid>
-      <description>&lt;p&gt;tidb 集群（tidb-cluster）的 tikv 节点，占用内存高达 30/50 G，内存不够用。&lt;/p&gt;</description>
+      <guid>https://blog.wukaige.com/tikv-%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E9%AB%98%E6%8E%92%E6%9F%A5/</guid>
+      <description>tidb 集群（tidb-cluster）的 tikv 节点，占用内存高达 30/50 G，内存不够用。 排查 登录 grafana 监控面板，发现 tidb-cluster-TiKV-Details 下面的 Block cache size 面板疑似有点问题。 遂去查看 tidb-cluster</description>
     </item>
     <item>
       <title>TiDB 集群节点损坏修复</title>
-      <link>https://blog.wukaige.com/posts/tidb-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/</link>
+      <link>https://blog.wukaige.com/tidb-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/</link>
       <pubDate>Tue, 04 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/tidb-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/</guid>
-      <description>&lt;p&gt;tidb 某个节点的数据目录被删除，导致节点损坏。&lt;/p&gt;</description>
+      <guid>https://blog.wukaige.com/tidb-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/</guid>
+      <description>tidb 某个节点的数据目录被删除，导致节点损坏。 删除损坏节点 # 损坏节点 IP 为：192.168.70.51 端口为：27161 tiup cluster scale-in tidb-cluster --node 192.168.70.51:27161 添加新的节点 scale-out.yaml</description>
     </item>
   </channel>
 </rss>

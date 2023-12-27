@@ -12,16 +12,16 @@
     <atom:link href="https://blog.wukaige.com/tags/hexo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>hexo 自建博客如何被 google 收录？</title>
-      <link>https://blog.wukaige.com/posts/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95/</link>
+      <link>https://blog.wukaige.com/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95/</link>
       <pubDate>Tue, 04 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95/</guid>
+      <guid>https://blog.wukaige.com/hexo-%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A6%82%E4%BD%95%E8%A2%AB-google-%E6%94%B6%E5%BD%95/</guid>
       <description>测试站点是否被 google 收录 测试方法：打开 google 主页，在搜索框键入 site:blog.wukaige.com 未被收录： 被收录： 安装 hexo-generator-sitemap 插件 hexo-generator-sitemap 可自动在根目录生成 sitemap.xml 文件 安装： npm install hexo-generator-sitemap --save 在 _config.yaml 文件中添加：</description>
     </item>
     <item>
       <title>hexo cactus 外链图片无法显示解决办法</title>
-      <link>https://blog.wukaige.com/posts/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
+      <link>https://blog.wukaige.com/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
       <pubDate>Thu, 29 Jun 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
+      <guid>https://blog.wukaige.com/hexo-cactus-%E5%A4%96%E9%93%BE%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
       <description>修复外链 cactus 主题目录结构 在 /layout/_partial/head.ejs 文件中加一行代码 &amp;lt;meta name=&amp;#34;referrer&amp;#34; content=&amp;#34;no-referrer&amp;#34; /&amp;gt; 参考链接 https://zhuanlan.zhihu.com/p/577256660</description>
     </item>
   </channel>

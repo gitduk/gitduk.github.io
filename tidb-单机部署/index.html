@@ -1,68 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Hugo/tidb-单机部署/</title>
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="all,follow">
-    <meta name="googlebot" content="index,follow,snippet,archive">
-    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/terminal-0.7.2.min.css">
-    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/animate-4.1.1.min.css">
-    <link rel="stylesheet" href="https://blog.wukaige.com/hugo-theme-console/css/console.css">
-    
-      <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-      <![endif]-->
-       <meta property="og:title" content="TiDB 单机部署" />
-<meta property="og:description" content="" />
+  <link rel="preload" href="/%20lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2"
+    crossorigin="anonymous">
+  <link rel="preload" href="/%20lib/font-awesome/webfonts/fa-regular-400.woff2" as="font"
+    type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/%20lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2"
+    crossorigin="anonymous">
+  <link rel="preload" href="/%20lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font"
+    type="font/woff2" crossorigin="anonymous">
+  <script type="text/javascript" src="https://latest.cactus.chat/cactus.js"></script>
+  <link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> TiDB 单机部署 | Hugo</title>
+  <link rel='canonical' href='https://blog.wukaige.com/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2/'>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="TiDB 单机部署" />
+<meta property="og:description" content="机器配置 OS: Ubuntu 23.04 CPU: 20 核 Mem: 32 G 安装 tiup 组件 # 安装 tiup 命令 curl --proto &#39;=https&#39; --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh # 升级 cluster 组件 tiup update --self &amp;&amp; tiup update cluster # 验证 tiup 版本信息 tiup --binary cluster 准备集群拓扑文件 topo.yaml # # Global variables are" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.wukaige.com/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2/" /><meta property="article:published_time" content="2023-10-23T00:00:00+00:00" />
+<meta property="og:url" content="https://blog.wukaige.com/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-10-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-10-23T00:00:00+00:00" />
 
 
-
+  <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="TiDB 单机部署"/>
 <meta name="twitter:description" content="机器配置 OS: Ubuntu 23.04 CPU: 20 核 Mem: 32 G 安装 tiup 组件 # 安装 tiup 命令 curl --proto &#39;=https&#39; --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh # 升级 cluster 组件 tiup update --self &amp;&amp; tiup update cluster # 验证 tiup 版本信息 tiup --binary cluster 准备集群拓扑文件 topo.yaml # # Global variables are"/>
 
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.5f33eedd7dd50a1fc3f871334d863a84994bd83b603213b32f9620176bc867e5072d802898792f193c0942490192c2b63f2b3e289cb26cc29bb41f88cd2831aa.css" integrity="sha512-XzPu3X3VCh/D&#43;HEzTYY6hJlL2DtgMhOzL5YgF2vIZ&#43;UHLYAomHkvGTwJQkkBksK2Pys&#43;KJyybMKbtB&#43;IzSgxqg==">
+
+  
+  
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/custom.css"> 
+  
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://blog.wukaige.com/images/favicon.ico" />
+
+  
+  
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-PWF07XQSY3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
 </head>
-<body class="terminal">
-    <div class="container">
-        <div class="terminal-nav">
-          <header class="terminal-logo">
-            <div class="logo terminal-prompt">
-              
-              
-              <a href="https://blog.wukaige.com/" class="no-style site-name">Hugo</a>:~# 
-              <a href='https://blog.wukaige.com/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2'>tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2</a>/</div></header>
-          <nav class="terminal-menu">
-            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
-                
-                <li><a href="https://blog.wukaige.com/about/" typeof="ListItem">about/</a></li>
-                
-                <li><a href="https://blog.wukaige.com/posts/" typeof="ListItem">posts/</a></li>
-                
-                <li><a href="https://blog.wukaige.com/tags/" typeof="ListItem">tags/</a></li>
-                
-                <li><a href="https://blog.wukaige.com/categories/leetcode" typeof="ListItem">leetcode/</a></li>
-                
-                <li><a href="https://blog.wukaige.com/photos/" typeof="ListItem">photos/</a></li>
-                
-            </ul>
-          </nav>
-        </div>
-    </div>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
 
-    <div class="container animated zoomIn fast" >
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
+    aria-label="Top of Page"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
         
-<h1>TiDB 单机部署</h1>
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/posts">Posts</a></li>
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </span>
+    <br />
+    <span id="actions">
+      <ul>
+        
+        <li>
+          <a class="icon" href=" https://blog.wukaige.com/tidb-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/" aria-label="Previous">
+            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();"
+              onmouseout="$('#i-prev').toggle();"></i>
+          </a>
+        </li>
+        
+        
+        <li>
+          <a class="icon" href="https://blog.wukaige.com/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/" aria-label="Next">
+            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();"
+              onmouseout="$('#i-next').toggle();"></i>
+          </a>
+        </li>
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
+            aria-label="Top of Page">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();"
+              onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#" aria-label="Share">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();"
+              onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br />
+    <div id="share" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f" aria-label="Facebook">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&text=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Twitter">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&title=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Linkedin">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&is_video=false&description=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Pinterest">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2&body=Check out this article: https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f" aria-label="Email">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&title=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Pocket">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&title=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="reddit">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&name=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2&description=%e6%9c%ba%e5%99%a8%e9%85%8d%e7%bd%ae%20OS%3a%20Ubuntu%2023.04%20CPU%3a%2020%20%e6%a0%b8%20Mem%3a%2032%20G%20%e5%ae%89%e8%a3%85%20tiup%20%e7%bb%84%e4%bb%b6%20%23%20%e5%ae%89%e8%a3%85%20tiup%20%e5%91%bd%e4%bb%a4%20curl%20--proto%20%26%2339%3b%3dhttps%26%2339%3b%20--tlsv1.2%20-sSf%20https%3a%2f%2ftiup-mirrors.pingcap.com%2finstall.sh%20%7c%20sh%20%23%20%e5%8d%87%e7%ba%a7%20cluster%20%e7%bb%84%e4%bb%b6%20tiup%20update%20--self%20%26amp%3b%26amp%3b%20tiup%20update%20cluster%20%23%20%e9%aa%8c%e8%af%81%20tiup%20%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af%20tiup%20--binary%20cluster%20%e5%87%86%e5%a4%87%e9%9b%86%e7%be%a4%e6%8b%93%e6%89%91%e6%96%87%e4%bb%b6%20topo.yaml%20%23%20%23%20Global%20variables%20are" aria-label="Tumblr">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&t=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Hacker News">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
 
-Oct. 23, 2023
+    </div>
+    
+    <div id="toc">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#机器配置">机器配置</a></li>
+    <li><a href="#安装-tiup-组件">安装 tiup 组件</a></li>
+    <li><a href="#准备集群拓扑文件">准备集群拓扑文件</a></li>
+    <li><a href="#配置系统环境">配置系统环境</a></li>
+    <li><a href="#部署集群">部署集群</a></li>
+  </ul>
+</nav>
+    </div>
+    
+  </span>
+</div>
 
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        TiDB 单机部署
+      </h1>
+      <div class="meta">
+        
+        <div class="postdate">
+          
+          <time datetime="2023-10-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-10-23</time>
+          
+        </div>
+        
+        
+        
+        
+        <div class="article-tag">
+            <i class="fas fa-tag"></i>
+            
+            
+            <a class="tag-link" href="/tags/tidb" rel="tag">TiDB</a>
+            
+        </div>
+        
+      </div>
+    </header>
 
-<br/><br/>
-<h2 id="机器配置">机器配置</h2>
+  
+    
+    <div class="content" itemprop="articleBody">
+      <h2 id="机器配置">机器配置</h2>
 <ul>
 <li>
 <p>OS: Ubuntu 23.04</p>
@@ -203,13 +373,155 @@ The generated password can NOT be get and shown again.
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysql -h 127.0.0.1 -P <span style="color:#ae81ff">4000</span> -u root -p<span style="color:#e6db74">&#39;j7yz516-bRm*8XY+@9&#39;</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> PASSWORD <span style="color:#66d9ef">FOR</span> <span style="color:#e6db74">&#39;root&#39;</span><span style="color:#f92672">@</span><span style="color:#e6db74">&#39;%&#39;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;xxxxxx&#39;</span>;
 </span></span></code></pre></div>
+    </div>
+  </article>
+
+  
+  
 
 
-        <div class="footer">
-    Powered by <a href="https://gohugo.io/">Hugo</a> with
-    <a href="https://github.com/mrmierzejewski/hugo-theme-console/">Console Theme</a>. 
-</div>
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/posts">Posts</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#机器配置">机器配置</a></li>
+    <li><a href="#安装-tiup-组件">安装 tiup 组件</a></li>
+    <li><a href="#准备集群拓扑文件">准备集群拓扑文件</a></li>
+    <li><a href="#配置系统环境">配置系统环境</a></li>
+    <li><a href="#部署集群">部署集群</a></li>
+  </ul>
+</nav>
+    </div>
+    
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f" aria-label="Facebook">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&text=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Twitter">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&title=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Linkedin">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&is_video=false&description=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Pinterest">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2&body=Check out this article: https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f" aria-label="Email">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&title=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Pocket">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&title=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="reddit">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&name=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2&description=%e6%9c%ba%e5%99%a8%e9%85%8d%e7%bd%ae%20OS%3a%20Ubuntu%2023.04%20CPU%3a%2020%20%e6%a0%b8%20Mem%3a%2032%20G%20%e5%ae%89%e8%a3%85%20tiup%20%e7%bb%84%e4%bb%b6%20%23%20%e5%ae%89%e8%a3%85%20tiup%20%e5%91%bd%e4%bb%a4%20curl%20--proto%20%26%2339%3b%3dhttps%26%2339%3b%20--tlsv1.2%20-sSf%20https%3a%2f%2ftiup-mirrors.pingcap.com%2finstall.sh%20%7c%20sh%20%23%20%e5%8d%87%e7%ba%a7%20cluster%20%e7%bb%84%e4%bb%b6%20tiup%20update%20--self%20%26amp%3b%26amp%3b%20tiup%20update%20cluster%20%23%20%e9%aa%8c%e8%af%81%20tiup%20%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af%20tiup%20--binary%20cluster%20%e5%87%86%e5%a4%87%e9%9b%86%e7%be%a4%e6%8b%93%e6%89%91%e6%96%87%e4%bb%b6%20topo.yaml%20%23%20%23%20Global%20variables%20are" aria-label="Tumblr">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&t=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Hacker News">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
 
     </div>
-  </body>
+
+    <div id="actions-footer">
+      
+        <a id="menu-toggle" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;" aria-label="Menu">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="toc-toggle" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;" aria-label="TOC">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share-toggle" class="icon" href="#" onclick="$('#share-footer').toggle();return false;" aria-label="Share">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" aria-label="Top of Page">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+
+  <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2023  Hugo 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Posts</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+
+<script src=/js/code-copy.js></script>
+
+
+
+
 </html>

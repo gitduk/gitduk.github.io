@@ -12,10 +12,10 @@
     <atom:link href="https://blog.wukaige.com/tags/milvus/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Milvus 安装 - Docker GPU 版</title>
-      <link>https://blog.wukaige.com/posts/milvus-%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/</link>
+      <link>https://blog.wukaige.com/milvus-%E5%AE%89%E8%A3%85-docker-gpu-%E7%89%88/</link>
       <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
-      <guid>https://blog.wukaige.com/posts/milvus-%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/</guid>
-      <description>&lt;p&gt;记录一下 Milvus 安装过程。&lt;/p&gt;</description>
+      <guid>https://blog.wukaige.com/milvus-%E5%AE%89%E8%A3%85-docker-gpu-%E7%89%88/</guid>
+      <description>记录一下 Milvus 安装过程。 安装参考文档 安装 docker-compose 安装 nvidia-container-toolkit 配置 docker : https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#configuring-docker 安装 Milvus : https://milvus.io/docs/install_standalone-gpu-docker.md 配置文件 docker-compose.yml version: &amp;#39;3.5&amp;#39; services: etcd: container_name: milvus-etcd image: quay.io/coreos/etcd:v3.5.5 environment: - ETCD_AUTO_COMPACTION_MODE=revision - ETCD_AUTO_COMPACTION_RETENTION=1000 - ETCD_QUOTA_BACKEND_BYTES=4294967296 - ETCD_SNAPSHOT_COUNT=50000 volumes: - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/etcd:/etcd command: etcd -advertise-client-urls=http://127.0.0.1:2397 -listen-client-urls http://0.0.0.0:2397 --data-dir /etcd healthcheck: test: [&amp;#34;CMD&amp;#34;, &amp;#34;etcdctl&amp;#34;, &amp;#34;endpoint&amp;#34;, &amp;#34;health&amp;#34;]</description>
     </item>
   </channel>
 </rss>
