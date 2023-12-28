@@ -53,26 +53,12 @@
 
   
   
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-PWF07XQSY3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
 </head>
+
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
 
-  <div id="header-post">
+    <div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
@@ -200,37 +186,45 @@ if (!doNotTrack) {
   </span>
 </div>
 
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <h1 class="posttitle" itemprop="name headline">
-        TiDB 集群节点损坏修复
-      </h1>
-      <div class="meta">
-        
-        <div class="postdate">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <h1 class="posttitle" itemprop="name headline">
+          TiDB 集群节点损坏修复
+        </h1>
+        <div class="meta">
           
-          <time datetime="2023-07-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-04</time>
           
-        </div>
-        
-        
-        
-        
-        <div class="article-tag">
+          <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span itemprop="name">Hugo</span>
+          </span>
+          
+          
+          <div class="postdate">
+            
+            <time datetime="2023-07-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-04</time>
+            
+          </div>
+          
+          
+
+          
+          
+          <div class="article-tag">
             <i class="fas fa-tag"></i>
             
             
-            <a class="tag-link" href="/tags/tidb" rel="tag">TiDB</a>
+            <a class="tag-link" href="/%20/tags/tidb" rel="tag">TiDB</a>
             
+          </div>
+          
+          
         </div>
-        
-      </div>
-    </header>
+      </header>
 
-  
-    
-    <div class="content" itemprop="articleBody">
-      <p>tidb 某个节点的数据目录被删除，导致节点损坏。</p>
+      
+      
+      <div class="content" itemprop="articleBody">
+        <p>tidb 某个节点的数据目录被删除，导致节点损坏。</p>
 <h2 id="删除损坏节点">删除损坏节点</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 损坏节点 IP 为：192.168.70.51 端口为：27161</span>
 </span></span><span style="display:flex;"><span>tiup cluster scale-in tidb-cluster --node 192.168.70.51:27161
@@ -252,18 +246,19 @@ if (!doNotTrack) {
 </span></span></code></pre></div><h2 id="验证集群状态">验证集群状态</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup cluster display tidb-cluster
 </span></span></code></pre></div>
-    </div>
-  </article>
+      </div>
+    </article>
 
-  
-  
-
+    
 
 
 
 
 
-  <div id="footer-post-container">
+
+
+
+    <div id="footer-post-container">
   <div id="footer-post">
 
     <div id="nav-footer" style="display: none">
@@ -367,7 +362,7 @@ if (!doNotTrack) {
 </div>
 
 
-  <footer id="footer">
+    <footer id="footer">
   <div class="footer-left">
     Copyright  &copy; 2023  Hugo 
   </div>
@@ -397,6 +392,11 @@ if (!doNotTrack) {
 <script src=/js/main.js></script>
 
 <script src=/js/code-copy.js></script>
+
+
+
+
+
 
 
 

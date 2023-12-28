@@ -6,28 +6,26 @@
     <description>Recent content in Rust on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
-    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
     <lastBuildDate>Tue, 17 Oct 2023 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/tags/rust/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Rust 操作 mysql 数据库</title>
       <link>https://blog.wukaige.com/rust-%E6%93%8D%E4%BD%9C-mysql-%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
-      <pubDate>Tue, 17 Oct 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Tue, 17 Oct 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/rust-%E6%93%8D%E4%BD%9C-mysql-%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
       <description>安装所需要的包 cargo add mysql 连接数据库 use mysql::{prelude::Queryable, *}; use std::fs; fn my_conn(url: &amp;amp;str) -&amp;gt; Result&amp;lt;PooledConn, mysql::Error&amp;gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &amp;#34;mysql://user:password@127.0.0.1:3306/DB&amp;#34;; let mut conn = my_conn(url).unwrap(); } 建表 use mysql::{prelude::Queryable, *}; fn main() -&amp;gt; Result&amp;lt;(), Box&amp;lt;dyn std::error::Error&amp;gt;&amp;gt; { let url = &amp;#34;mysql://user:password@127.0.0.1:3306/DB&amp;#34;; let mut conn =</description>
     </item>
     <item>
       <title>rust &amp; sqlserver</title>
       <link>https://blog.wukaige.com/rust-sqlserver/</link>
-      <pubDate>Fri, 13 Oct 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Fri, 13 Oct 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/rust-sqlserver/</guid>
       <description>Rust 操作 sqlserver 数据库代码示例 下载所需要的依赖 cargo add tiberius cargo add tokio cargo add tokio_util --features=compat cargo add futures Rust Code: use futures::TryStreamExt; use tiberius::{AuthMethod, Client, Config, Query, QueryItem}; use tokio::net::TcpStream; use tokio_util::compat::{Compat, TokioAsyncWriteCompatExt}; struct Conn { host: String, port: u16, user: String, password: String, } #[derive(Debug)] struct Data { id: Option&amp;lt;i32&amp;gt;, title: Option&amp;lt;String&amp;gt;, } async fn</description>
     </item>
     <item>
       <title>Rust 代码片段</title>
       <link>https://blog.wukaige.com/rust-%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/</link>
-      <pubDate>Fri, 22 Sep 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Fri, 22 Sep 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/rust-%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/</guid>
       <description>mysql https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html use mysql::{Pool, PooledConn, from_row}; fn my_conn(url: &amp;amp;str) -&amp;gt; Result&amp;lt;PooledConn, mysql::Error&amp;gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &amp;#34;mysql://xxx:xxx@127.0.0.1:3306/DB&amp;#34;; let conn = my_conn(url).unwrap(); let sql = &amp;#34;select title from table;&amp;#34;; // query map let _books = conn.query_map(sql, |title: String| { title })?; // query iter let sql = &amp;#34;select id,title,date from table2;&amp;#34;; conn.query_iter(query)?.for_each(|row| { let r: (i32, String, String)</description>
     </item>

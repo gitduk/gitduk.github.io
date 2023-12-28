@@ -53,26 +53,12 @@
 
   
   
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-PWF07XQSY3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
 </head>
+
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
 
-  <div id="header-post">
+    <div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
@@ -199,37 +185,45 @@ if (!doNotTrack) {
   </span>
 </div>
 
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <h1 class="posttitle" itemprop="name headline">
-        TiDB 错误排查
-      </h1>
-      <div class="meta">
-        
-        <div class="postdate">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <h1 class="posttitle" itemprop="name headline">
+          TiDB 错误排查
+        </h1>
+        <div class="meta">
           
-          <time datetime="2023-10-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-10-23</time>
           
-        </div>
-        
-        
-        
-        
-        <div class="article-tag">
+          <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span itemprop="name">Hugo</span>
+          </span>
+          
+          
+          <div class="postdate">
+            
+            <time datetime="2023-10-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-10-23</time>
+            
+          </div>
+          
+          
+
+          
+          
+          <div class="article-tag">
             <i class="fas fa-tag"></i>
             
             
-            <a class="tag-link" href="/tags/tidb" rel="tag">TiDB</a>
+            <a class="tag-link" href="/%20/tags/tidb" rel="tag">TiDB</a>
             
+          </div>
+          
+          
         </div>
-        
-      </div>
-    </header>
+      </header>
 
-  
-    
-    <div class="content" itemprop="articleBody">
-      <h2 id="entry-too-large-the-max-entry-size-is-6291456-the-size-of-data-is-7254170">entry too large, the max entry size is 6291456, the size of data is 7254170</h2>
+      
+      
+      <div class="content" itemprop="articleBody">
+        <h2 id="entry-too-large-the-max-entry-size-is-6291456-the-size-of-data-is-7254170">entry too large, the max entry size is 6291456, the size of data is 7254170</h2>
 <p>查看 <code>performance.txn-entry-size-limit</code> 大小：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#66d9ef">show</span> config <span style="color:#66d9ef">where</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;tidb&#39;</span> <span style="color:#66d9ef">and</span> name <span style="color:#66d9ef">like</span> <span style="color:#e6db74">&#39;%txn-entry-size-limit&#39;</span>;
 </span></span></code></pre></div><pre tabindex="0"><code class="language-output" data-lang="output">++++++++++++++++++++++++++--++++++++++++++++++++++++++++++++++-+++++++++++
@@ -265,18 +259,19 @@ if (!doNotTrack) {
 </span></span></code></pre></div><p>检查修改是否生效：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#66d9ef">show</span> config <span style="color:#66d9ef">where</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;tikv&#39;</span> <span style="color:#66d9ef">and</span> name <span style="color:#66d9ef">like</span> <span style="color:#e6db74">&#39;%entry-max-size&#39;</span>;
 </span></span></code></pre></div>
-    </div>
-  </article>
+      </div>
+    </article>
 
-  
-  
-
+    
 
 
 
 
 
-  <div id="footer-post-container">
+
+
+
+    <div id="footer-post-container">
   <div id="footer-post">
 
     <div id="nav-footer" style="display: none">
@@ -379,7 +374,7 @@ if (!doNotTrack) {
 </div>
 
 
-  <footer id="footer">
+    <footer id="footer">
   <div class="footer-left">
     Copyright  &copy; 2023  Hugo 
   </div>
@@ -409,6 +404,11 @@ if (!doNotTrack) {
 <script src=/js/main.js></script>
 
 <script src=/js/code-copy.js></script>
+
+
+
+
+
 
 
 

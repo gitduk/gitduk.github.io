@@ -53,26 +53,12 @@
 
   
   
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-PWF07XQSY3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
 </head>
+
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
 
-  <div id="header-post">
+    <div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
@@ -202,40 +188,48 @@ if (!doNotTrack) {
   </span>
 </div>
 
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <h1 class="posttitle" itemprop="name headline">
-        ES 数据导入之 logstash
-      </h1>
-      <div class="meta">
-        
-        <div class="postdate">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <h1 class="posttitle" itemprop="name headline">
+          ES 数据导入之 logstash
+        </h1>
+        <div class="meta">
           
-          <time datetime="2023-07-14 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-14</time>
           
-        </div>
-        
-        
-        
-        
-        <div class="article-tag">
+          <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span itemprop="name">Hugo</span>
+          </span>
+          
+          
+          <div class="postdate">
+            
+            <time datetime="2023-07-14 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-14</time>
+            
+          </div>
+          
+          
+
+          
+          
+          <div class="article-tag">
             <i class="fas fa-tag"></i>
             
             
-            <a class="tag-link" href="/tags/es" rel="tag">ES</a>
+            <a class="tag-link" href="/%20/tags/es" rel="tag">ES</a>
             
              ,  
-            <a class="tag-link" href="/tags/logstash" rel="tag">logstash</a>
+            <a class="tag-link" href="/%20/tags/logstash" rel="tag">logstash</a>
             
+          </div>
+          
+          
         </div>
-        
-      </div>
-    </header>
+      </header>
 
-  
-    
-    <div class="content" itemprop="articleBody">
-      <p><a href="https://www.elastic.co/cn/logstash/">Logstash</a> 是免费且开放的服务器端数据处理管道，能够从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。</p>
+      
+      
+      <div class="content" itemprop="articleBody">
+        <p><a href="https://www.elastic.co/cn/logstash/">Logstash</a> 是免费且开放的服务器端数据处理管道，能够从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。</p>
 <h2 id="前情提要">前情提要</h2>
 <p>新建了一个 ES 索引，需要从 TIDB 导入一些数据到 ES 索引中。</p>
 <ul>
@@ -339,18 +333,19 @@ jdbc_page_size =&gt; &#39;100&#39;
 </span></span></code></pre></div><p>想暂停 logstash，只需在脚本目录建立一个 stop 空文件</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>touch stop
 </span></span></code></pre></div>
-    </div>
-  </article>
+      </div>
+    </article>
 
-  
-  
-
+    
 
 
 
 
 
-  <div id="footer-post-container">
+
+
+
+    <div id="footer-post-container">
   <div id="footer-post">
 
     <div id="nav-footer" style="display: none">
@@ -456,7 +451,7 @@ jdbc_page_size =&gt; &#39;100&#39;
 </div>
 
 
-  <footer id="footer">
+    <footer id="footer">
   <div class="footer-left">
     Copyright  &copy; 2023  Hugo 
   </div>
@@ -486,6 +481,11 @@ jdbc_page_size =&gt; &#39;100&#39;
 <script src=/js/main.js></script>
 
 <script src=/js/code-copy.js></script>
+
+
+
+
+
 
 
 

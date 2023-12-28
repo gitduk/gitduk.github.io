@@ -6,28 +6,26 @@
     <description>Recent content in logstash on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
-    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
     <lastBuildDate>Tue, 15 Aug 2023 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/tags/logstash/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>logstash 导出 ES 数据到 csv 文件</title>
       <link>https://blog.wukaige.com/logstash-%E5%AF%BC%E5%87%BA-es-%E6%95%B0%E6%8D%AE%E5%88%B0-csv-%E6%96%87%E4%BB%B6/</link>
-      <pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/logstash-%E5%AF%BC%E5%87%BA-es-%E6%95%B0%E6%8D%AE%E5%88%B0-csv-%E6%96%87%E4%BB%B6/</guid>
       <description>有一个需求，把 ES 索引里面的某个字段导入 csv 文件里面。 logstash 配置文件 input { elasticsearch { hosts =&amp;gt; [ &amp;#39;http://127.0.0.1:9200&amp;#39; ] index =&amp;gt; &amp;#39;[index]&amp;#39; user =&amp;gt; &amp;#34;[user]&amp;#34; password =&amp;gt; &amp;#34;[password]&amp;#34; query =&amp;gt; &amp;#39;{ &amp;#34;query&amp;#34;: { &amp;#34;range&amp;#34;: { &amp;#34;id&amp;#34;: { &amp;#34;gte&amp;#34;:0, &amp;#34;lte&amp;#34;:100 } } }, &amp;#34;_source&amp;#34;: [&amp;#34;content&amp;#34;] }&amp;#39; } } output { csv</description>
     </item>
     <item>
       <title>logstash 拼接字段</title>
       <link>https://blog.wukaige.com/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/</link>
-      <pubDate>Wed, 19 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Wed, 19 Jul 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/</guid>
       <description>ES 数据的 content 字段是 html 格式的内容，现在想用纯文本内容代替 html。 方案一 用 ES reindex API 的 script 功能去除 html 标签。 #!/bin/bash SOURCE_INDEX=&amp;#34;[source index]&amp;#34; TARGET_INDEX=&amp;#34;[target index]&amp;#34; START=$1 END=$2 BATCH_SIZE=10000 # Elasticsearch 集群的 SSL 配置 # CERT_FILE=&amp;#34;/path/to/your/es/http_ca.crt&amp;#34; # 执行 reindex</description>
     </item>
     <item>
       <title>ES 数据导入之 logstash</title>
       <link>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/</link>
-      <pubDate>Fri, 14 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Fri, 14 Jul 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/</guid>
       <description>Logstash 是免费且开放的服务器端数据处理管道，能够从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。 前情提要 新建了一个 ES 索引，需</description>
     </item>

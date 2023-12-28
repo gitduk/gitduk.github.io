@@ -53,26 +53,12 @@
 
   
   
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-PWF07XQSY3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
 </head>
+
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
 
-  <div id="header-post">
+    <div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
@@ -202,37 +188,45 @@ if (!doNotTrack) {
   </span>
 </div>
 
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <h1 class="posttitle" itemprop="name headline">
-        TiDB 快照恢复
-      </h1>
-      <div class="meta">
-        
-        <div class="postdate">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <h1 class="posttitle" itemprop="name headline">
+          TiDB 快照恢复
+        </h1>
+        <div class="meta">
           
-          <time datetime="2023-07-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-05</time>
           
-        </div>
-        
-        
-        
-        
-        <div class="article-tag">
+          <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span itemprop="name">Hugo</span>
+          </span>
+          
+          
+          <div class="postdate">
+            
+            <time datetime="2023-07-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-05</time>
+            
+          </div>
+          
+          
+
+          
+          
+          <div class="article-tag">
             <i class="fas fa-tag"></i>
             
             
-            <a class="tag-link" href="/tags/tidb" rel="tag">TiDB</a>
+            <a class="tag-link" href="/%20/tags/tidb" rel="tag">TiDB</a>
             
+          </div>
+          
+          
         </div>
-        
-      </div>
-    </header>
+      </header>
 
-  
-    
-    <div class="content" itemprop="articleBody">
-      <p>TiDB 使用周期性运行的 GC（Garbage Collection，垃圾回收）来进行清理，默认情况下每 10 分钟一次。每次 GC 时，TiDB 会计算一个称为 safe point 的时间戳（默认为上次运行 GC 的时间减去 10 分钟），接下来 TiDB 会在保证在 safe point 之后的快照都能够读取到正确数据的前提下，删除更早的过期数据。</p>
+      
+      
+      <div class="content" itemprop="articleBody">
+        <p>TiDB 使用周期性运行的 GC（Garbage Collection，垃圾回收）来进行清理，默认情况下每 10 分钟一次。每次 GC 时，TiDB 会计算一个称为 safe point 的时间戳（默认为上次运行 GC 的时间减去 10 分钟），接下来 TiDB 会在保证在 safe point 之后的快照都能够读取到正确数据的前提下，删除更早的过期数据。</p>
 <h2 id="前情提要">前情提要</h2>
 <p>公司小萌新误操作，把数据表清空。</p>
 <h2 id="修改-gc-的生存时间">修改 GC 的生存时间</h2>
@@ -288,18 +282,19 @@ if (!doNotTrack) {
 </span></span></code></pre></div><p>导入数据到 TIDB 数据库：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup tidb-lightning -config tidb-lightning.toml
 </span></span></code></pre></div>
-    </div>
-  </article>
+      </div>
+    </article>
 
-  
-  
-
+    
 
 
 
 
 
-  <div id="footer-post-container">
+
+
+
+    <div id="footer-post-container">
   <div id="footer-post">
 
     <div id="nav-footer" style="display: none">
@@ -405,7 +400,7 @@ if (!doNotTrack) {
 </div>
 
 
-  <footer id="footer">
+    <footer id="footer">
   <div class="footer-left">
     Copyright  &copy; 2023  Hugo 
   </div>
@@ -435,6 +430,11 @@ if (!doNotTrack) {
 <script src=/js/main.js></script>
 
 <script src=/js/code-copy.js></script>
+
+
+
+
+
 
 
 

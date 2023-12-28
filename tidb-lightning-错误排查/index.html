@@ -53,26 +53,12 @@
 
   
   
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-PWF07XQSY3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
 </head>
+
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
 
-  <div id="header-post">
+    <div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
@@ -199,40 +185,48 @@ if (!doNotTrack) {
   </span>
 </div>
 
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <h1 class="posttitle" itemprop="name headline">
-        TiDB-Lightning 错误排查
-      </h1>
-      <div class="meta">
-        
-        <div class="postdate">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <h1 class="posttitle" itemprop="name headline">
+          TiDB-Lightning 错误排查
+        </h1>
+        <div class="meta">
           
-          <time datetime="2023-11-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-11-17</time>
           
-        </div>
-        
-        
-        
-        
-        <div class="article-tag">
+          <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span itemprop="name">Hugo</span>
+          </span>
+          
+          
+          <div class="postdate">
+            
+            <time datetime="2023-11-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-11-17</time>
+            
+          </div>
+          
+          
+
+          
+          
+          <div class="article-tag">
             <i class="fas fa-tag"></i>
             
             
-            <a class="tag-link" href="/tags/tidb" rel="tag">TiDB</a>
+            <a class="tag-link" href="/%20/tags/tidb" rel="tag">TiDB</a>
             
              ,  
-            <a class="tag-link" href="/tags/lightning" rel="tag">Lightning</a>
+            <a class="tag-link" href="/%20/tags/lightning" rel="tag">Lightning</a>
             
+          </div>
+          
+          
         </div>
-        
-      </div>
-    </header>
+      </header>
 
-  
-    
-    <div class="content" itemprop="articleBody">
-      <h2 id="raft-entry-is-too-large">raft entry is too large</h2>
+      
+      
+      <div class="content" itemprop="articleBody">
+        <h2 id="raft-entry-is-too-large">raft entry is too large</h2>
 <p>修改 TiDB 配置</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup cluster edit-config tidb
 </span></span></code></pre></div><pre tabindex="0"><code class="language-conf" data-lang="conf">  tikv:
@@ -247,18 +241,19 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> information_schema.KEY_COLUMN_USAGE <span style="color:#66d9ef">WHERE</span> REFERENCED_TABLE_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;table&#39;</span>;
 </span></span></code></pre></div><p>删除引用 <code>table</code> 的表，先导入 <code>table</code>，再导入引用 <code>table</code> 的表。</p>
 
-    </div>
-  </article>
+      </div>
+    </article>
 
-  
-  
-
+    
 
 
 
 
 
-  <div id="footer-post-container">
+
+
+
+    <div id="footer-post-container">
   <div id="footer-post">
 
     <div id="nav-footer" style="display: none">
@@ -361,7 +356,7 @@ if (!doNotTrack) {
 </div>
 
 
-  <footer id="footer">
+    <footer id="footer">
   <div class="footer-left">
     Copyright  &copy; 2023  Hugo 
   </div>
@@ -391,6 +386,11 @@ if (!doNotTrack) {
 <script src=/js/main.js></script>
 
 <script src=/js/code-copy.js></script>
+
+
+
+
+
 
 
 

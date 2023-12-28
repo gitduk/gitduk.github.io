@@ -53,26 +53,12 @@
 
   
   
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-PWF07XQSY3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
 </head>
+
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
 
-  <div id="header-post">
+    <div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
@@ -201,48 +187,58 @@ if (!doNotTrack) {
   </span>
 </div>
 
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <h1 class="posttitle" itemprop="name headline">
-        DM 数据复制
-      </h1>
-      <div class="meta">
-        
-        <div class="postdate">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <h1 class="posttitle" itemprop="name headline">
+          DM 数据复制
+        </h1>
+        <div class="meta">
           
-          <time datetime="2023-07-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-10</time>
           
-        </div>
-        
-        
-        
-        <div class="article-category">
+          <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span itemprop="name">Hugo</span>
+          </span>
+          
+          
+          <div class="postdate">
+            
+            <time datetime="2023-07-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-10</time>
+            
+          </div>
+          
+          
+          
+          <div class="article-category">
             <i class="fas fa-archive"></i>
             
             
-            <a class="category-link" href="/categories/db">DB</a>
+            <a class="category-link" href="/%20/categories/db">DB</a>
             
-        </div>
-        
-        
-        <div class="article-tag">
+          </div>
+          
+          
+
+          
+          
+          <div class="article-tag">
             <i class="fas fa-tag"></i>
             
             
-            <a class="tag-link" href="/tags/tidb" rel="tag">TiDB</a>
+            <a class="tag-link" href="/%20/tags/tidb" rel="tag">TiDB</a>
             
              ,  
-            <a class="tag-link" href="/tags/dm" rel="tag">DM</a>
+            <a class="tag-link" href="/%20/tags/dm" rel="tag">DM</a>
             
+          </div>
+          
+          
         </div>
-        
-      </div>
-    </header>
+      </header>
 
-  
-    
-    <div class="content" itemprop="articleBody">
-      <p><a href="https://docs.pingcap.com/zh/tidb/stable/dm-overview">TiDB Data Migration</a> (DM) 是一款便捷的数据迁移工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的全量数据迁移和增量数据同步。使用 DM 工具有利于简化数据迁移过程，降低数据迁移运维成本。</p>
+      
+      
+      <div class="content" itemprop="articleBody">
+        <p><a href="https://docs.pingcap.com/zh/tidb/stable/dm-overview">TiDB Data Migration</a> (DM) 是一款便捷的数据迁移工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的全量数据迁移和增量数据同步。使用 DM 工具有利于简化数据迁移过程，降低数据迁移运维成本。</p>
 <h2 id="前情提要">前情提要</h2>
 <p>新建立了一个 tidb 多节点集群，现在需要从 tidb 单节点集群迁移数据到新集群。</p>
 <h2 id="部署-dm-集群">部署 DM 集群</h2>
@@ -370,18 +366,19 @@ if (!doNotTrack) {
 </span></span></code></pre></div><p>查询任务</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup dmctl --master-addr http://127.0.0.1:8761 query-status
 </span></span></code></pre></div>
-    </div>
-  </article>
+      </div>
+    </article>
 
-  
-  
-
+    
 
 
 
 
 
-  <div id="footer-post-container">
+
+
+
+    <div id="footer-post-container">
   <div id="footer-post">
 
     <div id="nav-footer" style="display: none">
@@ -486,7 +483,7 @@ if (!doNotTrack) {
 </div>
 
 
-  <footer id="footer">
+    <footer id="footer">
   <div class="footer-left">
     Copyright  &copy; 2023  Hugo 
   </div>
@@ -516,6 +513,11 @@ if (!doNotTrack) {
 <script src=/js/main.js></script>
 
 <script src=/js/code-copy.js></script>
+
+
+
+
+
 
 
 

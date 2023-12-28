@@ -53,26 +53,12 @@
 
   
   
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-PWF07XQSY3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
 </head>
+
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
 
-  <div id="header-post">
+    <div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
@@ -200,37 +186,45 @@ if (!doNotTrack) {
   </span>
 </div>
 
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <h1 class="posttitle" itemprop="name headline">
-        文本转向量并插入到 ES 中
-      </h1>
-      <div class="meta">
-        
-        <div class="postdate">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <h1 class="posttitle" itemprop="name headline">
+          文本转向量并插入到 ES 中
+        </h1>
+        <div class="meta">
           
-          <time datetime="2023-07-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-03</time>
           
-        </div>
-        
-        
-        
-        
-        <div class="article-tag">
+          <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span itemprop="name">Hugo</span>
+          </span>
+          
+          
+          <div class="postdate">
+            
+            <time datetime="2023-07-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-03</time>
+            
+          </div>
+          
+          
+
+          
+          
+          <div class="article-tag">
             <i class="fas fa-tag"></i>
             
             
-            <a class="tag-link" href="/tags/es" rel="tag">ES</a>
+            <a class="tag-link" href="/%20/tags/es" rel="tag">ES</a>
             
+          </div>
+          
+          
         </div>
-        
-      </div>
-    </header>
+      </header>
 
-  
-    
-    <div class="content" itemprop="articleBody">
-      <h2 id="es-中创建索引">ES 中创建索引</h2>
+      
+      
+      <div class="content" itemprop="articleBody">
+        <h2 id="es-中创建索引">ES 中创建索引</h2>
 <pre tabindex="0"><code>PUT vector-index
 {
   &#34;mappings&#34;: {
@@ -368,18 +362,19 @@ output {
 </span></span><span style="display:flex;"><span>    progress<span style="color:#f92672">.</span>reset(batch)
 </span></span></code></pre></div><p><strong>数据量不大，并且希望可以实时看到插入进度，可以用上面的代码，追求 ES 更新速度，请移步: <a href="https://blog.wukaige.com/ES-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%EF%BC%8C%E4%BB%8E-4-5h-40min/">ES 数据插入速度优化，从 4.5h -&gt; 40min</a></strong></p>
 
-    </div>
-  </article>
+      </div>
+    </article>
 
-  
-  
-
+    
 
 
 
 
 
-  <div id="footer-post-container">
+
+
+
+    <div id="footer-post-container">
   <div id="footer-post">
 
     <div id="nav-footer" style="display: none">
@@ -483,7 +478,7 @@ output {
 </div>
 
 
-  <footer id="footer">
+    <footer id="footer">
   <div class="footer-left">
     Copyright  &copy; 2023  Hugo 
   </div>
@@ -513,6 +508,11 @@ output {
 <script src=/js/main.js></script>
 
 <script src=/js/code-copy.js></script>
+
+
+
+
+
 
 
 

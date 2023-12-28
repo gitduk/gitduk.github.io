@@ -6,14 +6,12 @@
     <description>Recent content in clash on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
-    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
     <lastBuildDate>Thu, 10 Aug 2023 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/tags/clash/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ubuntu &#43; clash &#43; 双网卡搭建透明网关实现全家科学上网自由</title>
       <link>https://blog.wukaige.com/ubuntu--clash--%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/</link>
-      <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/ubuntu--clash--%E5%8F%8C%E7%BD%91%E5%8D%A1%E6%90%AD%E5%BB%BA%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%AE%B6%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E8%87%AA%E7%94%B1/</guid>
       <description>手机科学上网需要打开 clash 软件，手动开启代理，非常不爽，我想搭建一个无感科学上网环境，连上 WIFI 就能科学上网。 硬件配置 台式主机，连接网线 enp3s0 一个 USB 无线</description>
     </item>

@@ -53,26 +53,12 @@
 
   
   
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-PWF07XQSY3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
 </head>
+
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
 
-  <div id="header-post">
+    <div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
@@ -201,40 +187,48 @@ if (!doNotTrack) {
   </span>
 </div>
 
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <h1 class="posttitle" itemprop="name headline">
-        frp &#43; nginx 实现不同子域名访问同一主机不同服务
-      </h1>
-      <div class="meta">
-        
-        <div class="postdate">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <h1 class="posttitle" itemprop="name headline">
+          frp &#43; nginx 实现不同子域名访问同一主机不同服务
+        </h1>
+        <div class="meta">
           
-          <time datetime="2023-07-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-04</time>
           
-        </div>
-        
-        
-        
-        
-        <div class="article-tag">
+          <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span itemprop="name">Hugo</span>
+          </span>
+          
+          
+          <div class="postdate">
+            
+            <time datetime="2023-07-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-04</time>
+            
+          </div>
+          
+          
+
+          
+          
+          <div class="article-tag">
             <i class="fas fa-tag"></i>
             
             
-            <a class="tag-link" href="/tags/frp" rel="tag">frp</a>
+            <a class="tag-link" href="/%20/tags/frp" rel="tag">frp</a>
             
              ,  
-            <a class="tag-link" href="/tags/nginx" rel="tag">nginx</a>
+            <a class="tag-link" href="/%20/tags/nginx" rel="tag">nginx</a>
             
+          </div>
+          
+          
         </div>
-        
-      </div>
-    </header>
+      </header>
 
-  
-    
-    <div class="content" itemprop="articleBody">
-      <h2 id="前置条件">前置条件</h2>
+      
+      
+      <div class="content" itemprop="articleBody">
+        <h2 id="前置条件">前置条件</h2>
 <ul>
 <li>运行在内网的多个服务</li>
 <li>一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案）</li>
@@ -291,18 +285,19 @@ sudo systemctl restart frpc.service
 </code></pre><p>没有例外的话，访问 <code>alist.wukaige.com</code> 即可访问本地 alist 服务。
 有例外的话，看看服务器和本地防火墙，是否开放需要开放的端口。</p>
 
-    </div>
-  </article>
+      </div>
+    </article>
 
-  
-  
-
+    
 
 
 
 
 
-  <div id="footer-post-container">
+
+
+
+    <div id="footer-post-container">
   <div id="footer-post">
 
     <div id="nav-footer" style="display: none">
@@ -407,7 +402,7 @@ sudo systemctl restart frpc.service
 </div>
 
 
-  <footer id="footer">
+    <footer id="footer">
   <div class="footer-left">
     Copyright  &copy; 2023  Hugo 
   </div>
@@ -437,6 +432,11 @@ sudo systemctl restart frpc.service
 <script src=/js/main.js></script>
 
 <script src=/js/code-copy.js></script>
+
+
+
+
+
 
 
 

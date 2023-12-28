@@ -6,21 +6,19 @@
     <description>Recent content in async on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
-    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
     <lastBuildDate>Fri, 04 Aug 2023 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/tags/async/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ES 数据插入速度优化，从 4.5h -&gt; 1h</title>
       <link>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E4%BB%8E-4.5h-1h/</link>
-      <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96%E4%BB%8E-4.5h-1h/</guid>
       <description>写了个脚本把数据库里面的 content 字段转换为向量插入到 ES， 100w 数据需要 4.5 小时，太慢了！！！ 一、慢速度脚本（4.5h） 只用 aiomysql 对数据库进行异步请求，ES</description>
     </item>
     <item>
       <title>Python 异步更新 mysql 数据库 (asyncio &#43; aiomysql)</title>
       <link>https://blog.wukaige.com/python-%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0-mysql-%E6%95%B0%E6%8D%AE%E5%BA%93-asyncio--aiomysql/</link>
-      <pubDate>Thu, 03 Aug 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Thu, 03 Aug 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/python-%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0-mysql-%E6%95%B0%E6%8D%AE%E5%BA%93-asyncio--aiomysql/</guid>
       <description>数据库有一亿数据，需要写一个垃圾脚本更新某个字段，需要 6+ 小时，太慢了！！！ 一、下载依赖 pip3 install asyncio aiomysql 二、优化脚本 import os import re import asyncio import aiomysql # Replace these values with your actual MySQL database</description>
     </item>

@@ -6,14 +6,12 @@
     <description>Recent content in redhat on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
-    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
     <lastBuildDate>Fri, 13 Oct 2023 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/tags/redhat/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>rust &amp; sqlserver</title>
       <link>https://blog.wukaige.com/rust-sqlserver/</link>
-      <pubDate>Fri, 13 Oct 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Fri, 13 Oct 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/rust-sqlserver/</guid>
       <description>公司购买了一张 4090 显卡，需要安装到服务器上。 服务器 OS 版本：redhat9 安装前的配置工作 重启到文本模式 sudo systemctl set-default multi-user.target reboot 查看显卡是否被识别 lspci | egrep &amp;#39;VGA|3D&amp;#39; 禁用</description>
     </item>

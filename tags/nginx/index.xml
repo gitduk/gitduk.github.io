@@ -6,28 +6,26 @@
     <description>Recent content in nginx on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
-    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
     <lastBuildDate>Mon, 17 Jul 2023 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>使用 https 访问 alist</title>
       <link>https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/</link>
-      <pubDate>Mon, 17 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Mon, 17 Jul 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/%E4%BD%BF%E7%94%A8-https-%E8%AE%BF%E9%97%AE-alist/</guid>
       <description>通过 http 访问 alist，地址栏那个感叹号看起来有点丑。 申请 Cloudflare 证书 看这里 把 Origin Certificate 保存为： your-domain.pem 把 Private Key 保存为： your-domain.key 配置 nginx 转发规则 server { listen 80; listen 443 ssl; server_name alist.wukaige.com; ssl_certificate /path/to/your-domain.pem; ssl_certificate_key /path/to/your-domain.key;</description>
     </item>
     <item>
       <title>frp &#43; nginx 实现不同子域名访问同一主机不同服务</title>
       <link>https://blog.wukaige.com/frp--nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/</link>
-      <pubDate>Tue, 04 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Tue, 04 Jul 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/frp--nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/</guid>
       <description>前置条件 运行在内网的多个服务 一台带有公网 IP 的云服务器（如果是国内服务器，域名需要备案） 一个域名 域名解析 到 cloudflare 解析配置你的域名解析 Frps, Nginx 服务配置 frps</description>
     </item>
     <item>
       <title>Nginx 代理 openai api</title>
       <link>https://blog.wukaige.com/nginx-%E4%BB%A3%E7%90%86-openai-api/</link>
-      <pubDate>Tue, 04 Jul 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Tue, 04 Jul 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/nginx-%E4%BB%A3%E7%90%86-openai-api/</guid>
       <description>安装 Nginx ubuntu: sudo apt install nginx 配置 Openai 反向代理 在目录 /etc/nginx/conf.d 下创建文件 openai.conf /etc/nginx/conf.d/openai.conf server { listen 8000; location /v1/ { proxy_pass https://api.openai.com/v1/; # OpenAI API URL proxy_ssl_server_name on; # 避免出现反代https域名出现502错误 proxy_buffering off; # 关闭缓存实</description>
     </item>

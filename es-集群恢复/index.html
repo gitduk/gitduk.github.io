@@ -53,26 +53,12 @@
 
   
   
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-PWF07XQSY3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
 </head>
+
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
 
-  <div id="header-post">
+    <div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
@@ -202,37 +188,45 @@ if (!doNotTrack) {
   </span>
 </div>
 
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <h1 class="posttitle" itemprop="name headline">
-        ES 集群恢复
-      </h1>
-      <div class="meta">
-        
-        <div class="postdate">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <h1 class="posttitle" itemprop="name headline">
+          ES 集群恢复
+        </h1>
+        <div class="meta">
           
-          <time datetime="2023-12-01 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-12-01</time>
           
-        </div>
-        
-        
-        
-        
-        <div class="article-tag">
+          <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span itemprop="name">Hugo</span>
+          </span>
+          
+          
+          <div class="postdate">
+            
+            <time datetime="2023-12-01 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-12-01</time>
+            
+          </div>
+          
+          
+
+          
+          
+          <div class="article-tag">
             <i class="fas fa-tag"></i>
             
             
-            <a class="tag-link" href="/tags/es" rel="tag">ES</a>
+            <a class="tag-link" href="/%20/tags/es" rel="tag">ES</a>
             
+          </div>
+          
+          
         </div>
-        
-      </div>
-    </header>
+      </header>
 
-  
-    
-    <div class="content" itemprop="articleBody">
-      <p>强制关机导致 ES 集群丢失 <code>.security-7</code> 索引，无法进行安全验证，尝试恢复的过程中，导致 ES 集群彻底不可用。</p>
+      
+      
+      <div class="content" itemprop="articleBody">
+        <p>强制关机导致 ES 集群丢失 <code>.security-7</code> 索引，无法进行安全验证，尝试恢复的过程中，导致 ES 集群彻底不可用。</p>
 <h4 id="配置新集群">配置新集群</h4>
 <p>策略：复制 ES 根目录下的 data 目录到新集群，让新集群自动恢复索引。</p>
 <p>node-01 配置文件 <!-- raw HTML omitted -->elasticsearch.yml<!-- raw HTML omitted --> :</p>
@@ -400,18 +394,19 @@ GET /_cluster/allocation/explain
 POST /_cluster/reroute?retry_failed=true
 </code></pre><p>等待索引状态变绿，开启集群的安全验证。</p>
 
-    </div>
-  </article>
+      </div>
+    </article>
 
-  
-  
-
+    
 
 
 
 
 
-  <div id="footer-post-container">
+
+
+
+    <div id="footer-post-container">
   <div id="footer-post">
 
     <div id="nav-footer" style="display: none">
@@ -517,7 +512,7 @@ POST /_cluster/reroute?retry_failed=true
 </div>
 
 
-  <footer id="footer">
+    <footer id="footer">
   <div class="footer-left">
     Copyright  &copy; 2023  Hugo 
   </div>
@@ -547,6 +542,11 @@ POST /_cluster/reroute?retry_failed=true
 <script src=/js/main.js></script>
 
 <script src=/js/code-copy.js></script>
+
+
+
+
+
 
 
 

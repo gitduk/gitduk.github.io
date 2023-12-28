@@ -6,77 +6,75 @@
     <description>Recent content in Posts on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
-    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
     <lastBuildDate>Wed, 27 Dec 2023 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>回文数</title>
       <link>https://blog.wukaige.com/%E5%9B%9E%E6%96%87%E6%95%B0/</link>
-      <pubDate>Wed, 27 Dec 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Wed, 27 Dec 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/%E5%9B%9E%E6%96%87%E6%95%B0/</guid>
       <description>给你一个整数 x ，如果 x 是一个回文整数，返回 true ；否则，返回 false 。 回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。 例如，121 是回文</description>
     </item>
     <item>
       <title>两数之和</title>
       <link>https://blog.wukaige.com/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</link>
-      <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</guid>
       <description>给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target 的那 两个 整数，并返回它们的数组下标。 你可以假设每种输入只会对应</description>
     </item>
     <item>
       <title>Milvus 安装 - Docker GPU 版</title>
       <link>https://blog.wukaige.com/milvus-%E5%AE%89%E8%A3%85-docker-gpu-%E7%89%88/</link>
-      <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/milvus-%E5%AE%89%E8%A3%85-docker-gpu-%E7%89%88/</guid>
       <description>记录一下 Milvus 安装过程。 安装参考文档 安装 docker-compose 安装 nvidia-container-toolkit 配置 docker : https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#configuring-docker 安装 Milvus : https://milvus.io/docs/install_standalone-gpu-docker.md 配置文件 docker-compose.yml version: &amp;#39;3.5&amp;#39; services: etcd: container_name: milvus-etcd image: quay.io/coreos/etcd:v3.5.5 environment: - ETCD_AUTO_COMPACTION_MODE=revision - ETCD_AUTO_COMPACTION_RETENTION=1000 - ETCD_QUOTA_BACKEND_BYTES=4294967296 - ETCD_SNAPSHOT_COUNT=50000 volumes: - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/etcd:/etcd command: etcd -advertise-client-urls=http://127.0.0.1:2397 -listen-client-urls http://0.0.0.0:2397 --data-dir /etcd healthcheck: test: [&amp;#34;CMD&amp;#34;, &amp;#34;etcdctl&amp;#34;, &amp;#34;endpoint&amp;#34;, &amp;#34;health&amp;#34;]</description>
     </item>
     <item>
       <title>ES 集群恢复</title>
       <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/</link>
-      <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/</guid>
       <description>强制关机导致 ES 集群丢失 .security-7 索引，无法进行安全验证，尝试恢复的过程中，导致 ES 集群彻底不可用。 配置新集群 策略：复制 ES 根目录下的 data 目录到新集群，让新</description>
     </item>
     <item>
       <title>ES 集群缩容</title>
       <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E7%BC%A9%E5%AE%B9/</link>
-      <pubDate>Fri, 24 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Fri, 24 Nov 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E7%BC%A9%E5%AE%B9/</guid>
       <description>想通过增加 ES 节点达到提高 ES 吞吐量的目的，但是发现效果并不好。 Es 版本： 8.5.3 在 kibana 的 Dev Tools &amp;gt; Console 里运行： PUT /_cluster/settings { &amp;#34;transient&amp;#34;: { &amp;#34;cluster.routing.allocation.exclude._name&amp;#34;: &amp;#34;node-04&amp;#34; } } #! [xpack.monitoring.collection.enabled] setting was deprecated in Elasticsearch and will be removed in a future release.</description>
     </item>
     <item>
       <title>ES 集群扩容</title>
       <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%89%A9%E5%AE%B9/</link>
-      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%89%A9%E5%AE%B9/</guid>
       <description>想通过增加 ES 节点达到提高 ES 吞吐量的目的。 Es 版本： 8.5.3 在同一台机器上扩展节点 在 ES 某个节点的目录运行: bin/elasticsearch-create-enrollment-token -s node # 得到一个 token eyJ2ZXIiOiI4LjUuMyIsImFkciI6WyIxOTIuMTY4LjcwLjM0OjkyMDAiXSwiZmdyIjoiNjMzODIyZDE3NTEzMGRhNDI5NDNlZTkxMGU4NTQ2OTg4MWY5M2VlMjQ3ZmYyMmVkN2QyZjg1Nzk3MTcxYTYzYyIsImtleSI6IkZQTDgtWXNCMDhPMkVOcUFqcEtaOkJPUnhuYnNtU3kyRURtZDc3YnQ0VWcifQ== 在新的 ES 节点目录下运行:</description>
     </item>
     <item>
       <title>TiDB-Lightning 基础使用</title>
       <link>https://blog.wukaige.com/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</link>
-      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</guid>
       <description>前提是已经用 Dumpling 将数据从上游数据库导出。 创建配置文件 tidb-lightning.toml tidb-lightning.toml [lightning] # 日志 level = &amp;#34;info&amp;#34; file = &amp;#34;log/tidb-lightning.log&amp;#34; [tikv-importer] # 选择使用的导入模式 backend = &amp;#34;tidb&amp;#34; # 设置排序的键值对的临时存放地址，目标</description>
     </item>
     <item>
       <title>ES 集群压测</title>
       <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/</link>
-      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/</guid>
       <description>新进了一台高性能服务器，准备把旧的 ES 集群迁移到新服务器，需要对比两个 ES 集群的性能。 一些信息 旧服务器 ES 地址: 192.168.0.1:9200 新服务器 ES 地址: 192.168.0.2:9200 测试工具 esrally 是 elastic</description>
     </item>
     <item>
       <title>Hugo 搭建个人博客</title>
       <link>https://blog.wukaige.com/hugo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
-      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/hugo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
       <description>安装 Hugo brew install hugo 建立网站 hugo new site hugo 运行 Hugo 服务 cd hugo/ hugo server 上传到 github.io cd blog/public</description>
     </item>
     <item>
       <title>TiDB 扩容</title>
       <link>https://blog.wukaige.com/tidb-%E6%89%A9%E5%AE%B9/</link>
-      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tidb-%E6%89%A9%E5%AE%B9/</guid>
       <description>编写扩容配置文件 scale-out.yml tidb_servers: - host: 127.0.0.1 ssh_port: 22 port: 4001 status_port: 10081 numa_node: &amp;#34;1&amp;#34; # suggest numa node bindings. 扩容命令 检查配置文件 tiup cluster check tidb scale-out.yml --cluster --user root -p 自动修复配置文件 tiup cluster check tidb scale-out.yml --cluster --apply --user root -p 扩容 tiup cluster scale-out tidb scale-out.yml</description>
     </item>

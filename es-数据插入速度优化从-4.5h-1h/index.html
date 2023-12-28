@@ -53,26 +53,12 @@
 
   
   
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-PWF07XQSY3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
 </head>
+
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
 
-  <div id="header-post">
+    <div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
@@ -200,40 +186,48 @@ if (!doNotTrack) {
   </span>
 </div>
 
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <h1 class="posttitle" itemprop="name headline">
-        ES 数据插入速度优化，从 4.5h -&gt; 1h
-      </h1>
-      <div class="meta">
-        
-        <div class="postdate">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <h1 class="posttitle" itemprop="name headline">
+          ES 数据插入速度优化，从 4.5h -&gt; 1h
+        </h1>
+        <div class="meta">
           
-          <time datetime="2023-08-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-08-04</time>
           
-        </div>
-        
-        
-        
-        
-        <div class="article-tag">
+          <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span itemprop="name">Hugo</span>
+          </span>
+          
+          
+          <div class="postdate">
+            
+            <time datetime="2023-08-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-08-04</time>
+            
+          </div>
+          
+          
+
+          
+          
+          <div class="article-tag">
             <i class="fas fa-tag"></i>
             
             
-            <a class="tag-link" href="/tags/es" rel="tag">ES</a>
+            <a class="tag-link" href="/%20/tags/es" rel="tag">ES</a>
             
              ,  
-            <a class="tag-link" href="/tags/async" rel="tag">async</a>
+            <a class="tag-link" href="/%20/tags/async" rel="tag">async</a>
             
+          </div>
+          
+          
         </div>
-        
-      </div>
-    </header>
+      </header>
 
-  
-    
-    <div class="content" itemprop="articleBody">
-      <p>写了个脚本把数据库里面的 content 字段转换为向量插入到 ES， 100w 数据需要 4.5 小时，太慢了！！！</p>
+      
+      
+      <div class="content" itemprop="articleBody">
+        <p>写了个脚本把数据库里面的 content 字段转换为向量插入到 ES， 100w 数据需要 4.5 小时，太慢了！！！</p>
 <h2 id="一慢速度脚本45h">一、慢速度脚本（4.5h）</h2>
 <p>只用 aiomysql 对数据库进行异步请求，ES 更新则是一条一更新。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
@@ -523,18 +517,19 @@ if (!doNotTrack) {
 </span></span></code></pre></div><p>运行截图(59m 28s)：</p>
 <p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230814172629394.png" alt="image-20230814172629394"></p>
 
-    </div>
-  </article>
+      </div>
+    </article>
 
-  
-  
-
+    
 
 
 
 
 
-  <div id="footer-post-container">
+
+
+
+    <div id="footer-post-container">
   <div id="footer-post">
 
     <div id="nav-footer" style="display: none">
@@ -638,7 +633,7 @@ if (!doNotTrack) {
 </div>
 
 
-  <footer id="footer">
+    <footer id="footer">
   <div class="footer-left">
     Copyright  &copy; 2023  Hugo 
   </div>
@@ -668,6 +663,11 @@ if (!doNotTrack) {
 <script src=/js/main.js></script>
 
 <script src=/js/code-copy.js></script>
+
+
+
+
+
 
 
 

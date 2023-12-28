@@ -6,14 +6,12 @@
     <description>Recent content in sqlserver on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <managingEditor>wdkany@gmail.com (wukaige)</managingEditor>
-    <webMaster>wdkany@gmail.com (wukaige)</webMaster>
     <lastBuildDate>Fri, 13 Oct 2023 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/tags/sqlserver/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>rust &amp; sqlserver</title>
       <link>https://blog.wukaige.com/rust-sqlserver/</link>
-      <pubDate>Fri, 13 Oct 2023 00:00:00 +0000</pubDate><author>wdkany@gmail.com (wukaige)</author>
+      <pubDate>Fri, 13 Oct 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/rust-sqlserver/</guid>
       <description>Rust 操作 sqlserver 数据库代码示例 下载所需要的依赖 cargo add tiberius cargo add tokio cargo add tokio_util --features=compat cargo add futures Rust Code: use futures::TryStreamExt; use tiberius::{AuthMethod, Client, Config, Query, QueryItem}; use tokio::net::TcpStream; use tokio_util::compat::{Compat, TokioAsyncWriteCompatExt}; struct Conn { host: String, port: u16, user: String, password: String, } #[derive(Debug)] struct Data { id: Option&amp;lt;i32&amp;gt;, title: Option&amp;lt;String&amp;gt;, } async fn</description>
     </item>
