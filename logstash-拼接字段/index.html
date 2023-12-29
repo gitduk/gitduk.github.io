@@ -36,7 +36,7 @@
   
   
   
-  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.c2b2009d8156afa16b79f42d84700331b958c42bf66fde0b45a75106ab8b5cd3ab96abe7ffc05e3e6943a6ab0b48661a98ef7735ebc828e06e6c9c2aab0e6f9a.css" integrity="sha512-wrIAnYFWr6FrefQthHADMblYxCv2b94LRadRBquLXNOrlqvn/8BePmlDpqsLSGYamO93NevIKOBubJwqqw5vmg==">
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.dd4d17d9783c03b29719e4980556950e626d74f8681a51d45b49aeaa2bd8d7ac69c89ac00bae0b244505c90fd6d2a9eec110ade701f34c11d44d44dab412f7dd.css" integrity="sha512-3U0X2Xg8A7KXGeSYBVaVDmJtdPhoGlHUW0muqivY16xpyJrAC64LJEUFyQ/W0qnuwRCt5wHzTBHUTUTatBL33Q==">
 
   
   
@@ -58,134 +58,54 @@
 
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
-
-    <div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
-    aria-label="Top of Page"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/posts">Posts</a></li>
-        
-        <li><a href="/tags">Tags</a></li>
-        
-        <li><a href="/about">About</a></li>
-        
-      </ul>
-    </span>
-    <br />
-    <span id="actions">
-      <ul>
-        
-        <li>
-          <a class="icon" href=" https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-tidb-lightning/" aria-label="Previous">
-            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();"
-              onmouseout="$('#i-prev').toggle();"></i>
-          </a>
-        </li>
-        
-        
-        <li>
-          <a class="icon" href="https://blog.wukaige.com/flask--gunicorn-%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%B9%B6%E5%8F%91/" aria-label="Next">
-            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();"
-              onmouseout="$('#i-next').toggle();"></i>
-          </a>
-        </li>
-        
-        <li>
-          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
-            aria-label="Top of Page">
-            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();"
-              onmouseout="$('#i-top').toggle();"></i>
-          </a>
-        </li>
-        <li>
-          <a class="icon" href="#" aria-label="Share">
-            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();"
-              onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
-          </a>
-        </li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br />
-    <div id="share" style="display: none">
-      
-      <ul>
-  
-  
+    <header id="header">
+  <a href="https://blog.wukaige.com/">
     
-  
-  
-  <li>
-    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fblog.wukaige.com%2flogstash-%25E6%258B%25BC%25E6%258E%25A5%25E5%25AD%2597%25E6%25AE%25B5%2f" aria-label="Facebook">
-      <i class="fab fa-facebook " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fblog.wukaige.com%2flogstash-%25E6%258B%25BC%25E6%258E%25A5%25E5%25AD%2597%25E6%25AE%25B5%2f&text=logstash%20%e6%8b%bc%e6%8e%a5%e5%ad%97%e6%ae%b5" aria-label="Twitter">
-      <i class="fab fa-twitter " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.wukaige.com%2flogstash-%25E6%258B%25BC%25E6%258E%25A5%25E5%25AD%2597%25E6%25AE%25B5%2f&title=logstash%20%e6%8b%bc%e6%8e%a5%e5%ad%97%e6%ae%b5" aria-label="Linkedin">
-      <i class="fab fa-linkedin " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fblog.wukaige.com%2flogstash-%25E6%258B%25BC%25E6%258E%25A5%25E5%25AD%2597%25E6%25AE%25B5%2f&is_video=false&description=logstash%20%e6%8b%bc%e6%8e%a5%e5%ad%97%e6%ae%b5" aria-label="Pinterest">
-      <i class="fab fa-pinterest " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="mailto:?subject=logstash%20%e6%8b%bc%e6%8e%a5%e5%ad%97%e6%ae%b5&body=Check out this article: https%3a%2f%2fblog.wukaige.com%2flogstash-%25E6%258B%25BC%25E6%258E%25A5%25E5%25AD%2597%25E6%25AE%25B5%2f" aria-label="Email">
-      <i class="fas fa-envelope " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fblog.wukaige.com%2flogstash-%25E6%258B%25BC%25E6%258E%25A5%25E5%25AD%2597%25E6%25AE%25B5%2f&title=logstash%20%e6%8b%bc%e6%8e%a5%e5%ad%97%e6%ae%b5" aria-label="Pocket">
-      <i class="fab fa-get-pocket " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fblog.wukaige.com%2flogstash-%25E6%258B%25BC%25E6%258E%25A5%25E5%25AD%2597%25E6%25AE%25B5%2f&title=logstash%20%e6%8b%bc%e6%8e%a5%e5%ad%97%e6%ae%b5" aria-label="reddit">
-      <i class="fab fa-reddit " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.wukaige.com%2flogstash-%25E6%258B%25BC%25E6%258E%25A5%25E5%25AD%2597%25E6%25AE%25B5%2f&name=logstash%20%e6%8b%bc%e6%8e%a5%e5%ad%97%e6%ae%b5&description=ES%20%e6%95%b0%e6%8d%ae%e7%9a%84%20content%20%e5%ad%97%e6%ae%b5%e6%98%af%20html%20%e6%a0%bc%e5%bc%8f%e7%9a%84%e5%86%85%e5%ae%b9%ef%bc%8c%e7%8e%b0%e5%9c%a8%e6%83%b3%e7%94%a8%e7%ba%af%e6%96%87%e6%9c%ac%e5%86%85%e5%ae%b9%e4%bb%a3%e6%9b%bf%20html%e3%80%82%20%e6%96%b9%e6%a1%88%e4%b8%80%20%e7%94%a8%20ES%20reindex%20API%20%e7%9a%84%20script%20%e5%8a%9f%e8%83%bd%e5%8e%bb%e9%99%a4%20html%20%e6%a0%87%e7%ad%be%e3%80%82%20%23%21%2fbin%2fbash%20SOURCE_INDEX%3d%26%2334%3b%5bsource%20index%5d%26%2334%3b%20TARGET_INDEX%3d%26%2334%3b%5btarget%20index%5d%26%2334%3b%20START%3d%241%20END%3d%242%20BATCH_SIZE%3d10000%20%23%20Elasticsearch%20%e9%9b%86%e7%be%a4%e7%9a%84%20SSL%20%e9%85%8d%e7%bd%ae%20%23%20CERT_FILE%3d%26%2334%3b%2fpath%2fto%2fyour%2fes%2fhttp_ca.crt%26%2334%3b%20%23%20%e6%89%a7%e8%a1%8c%20reindex" aria-label="Tumblr">
-      <i class="fab fa-tumblr " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.wukaige.com%2flogstash-%25E6%258B%25BC%25E6%258E%25A5%25E5%25AD%2597%25E6%25AE%25B5%2f&t=logstash%20%e6%8b%bc%e6%8e%a5%e5%ad%97%e6%ae%b5" aria-label="Hacker News">
-      <i class="fab fa-hacker-news " aria-hidden="true"></i>
-    </a>
-  </li>
-</ul>
-
+    
+    <div id="logo" style="background-image: url(https://blog.wukaige.com/images/logo.png)"></div>
+    
+    
+    <div id="title">
+      <h1>Hugo</h1>
     </div>
-    
-    <div id="toc">
-      <nav id="TableOfContents">
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/posts">Posts</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+  </div>
+</header>
+<script>
+function adjustForScrollbar() {
+  const autoWidth = window.innerWidth;
+  document.documentElement.style.setProperty('--auto-width', `${autoWidth}px`);
+}
+adjustForScrollbar();
+window.addEventListener('resize', adjustForScrollbar);
+</script>
+
+    <br>
+    <div id="header-post">
+  
+  <div id="toc">
+    <nav id="TableOfContents">
   <ul>
     <li><a href="#方案一">方案一</a></li>
     <li><a href="#方案二">方案二</a></li>
   </ul>
 </nav>
-    </div>
-    
-  </span>
+  </div>
+  
 </div>
-
 
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
@@ -337,8 +257,6 @@ output {
          
           <li><a href="/posts">Posts</a></li>
          
-          <li><a href="/tags">Tags</a></li>
-         
           <li><a href="/about">About</a></li>
         
       </ul>
@@ -441,8 +359,6 @@ output {
         <li><a href="/">Home</a></li>
          
         <li><a href="/posts">Posts</a></li>
-         
-        <li><a href="/tags">Tags</a></li>
          
         <li><a href="/about">About</a></li>
         

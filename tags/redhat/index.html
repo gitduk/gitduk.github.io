@@ -34,7 +34,7 @@
   
   
   
-  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.c2b2009d8156afa16b79f42d84700331b958c42bf66fde0b45a75106ab8b5cd3ab96abe7ffc05e3e6943a6ab0b48661a98ef7735ebc828e06e6c9c2aab0e6f9a.css" integrity="sha512-wrIAnYFWr6FrefQthHADMblYxCv2b94LRadRBquLXNOrlqvn/8BePmlDpqsLSGYamO93NevIKOBubJwqqw5vmg==">
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.dd4d17d9783c03b29719e4980556950e626d74f8681a51d45b49aeaa2bd8d7ac69c89ac00bae0b244505c90fd6d2a9eec110ade701f34c11d44d44dab412f7dd.css" integrity="sha512-3U0X2Xg8A7KXGeSYBVaVDmJtdPhoGlHUW0muqivY16xpyJrAC64LJEUFyQ/W0qnuwRCt5wHzTBHUTUTatBL33Q==">
 
   
   
@@ -77,13 +77,19 @@
       
       <li><a href="/posts">Posts</a></li>
       
-      <li><a href="/tags">Tags</a></li>
-      
       <li><a href="/about">About</a></li>
       
     </ul>
   </div>
 </header>
+<script>
+function adjustForScrollbar() {
+  const autoWidth = window.innerWidth;
+  document.documentElement.style.setProperty('--auto-width', `${autoWidth}px`);
+}
+adjustForScrollbar();
+window.addEventListener('resize', adjustForScrollbar);
+</script>
 
 
     
@@ -126,8 +132,6 @@
         <li><a href="/">Home</a></li>
          
         <li><a href="/posts">Posts</a></li>
-         
-        <li><a href="/tags">Tags</a></li>
          
         <li><a href="/about">About</a></li>
         

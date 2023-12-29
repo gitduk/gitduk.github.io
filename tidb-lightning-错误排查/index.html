@@ -36,7 +36,7 @@
   
   
   
-  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.c2b2009d8156afa16b79f42d84700331b958c42bf66fde0b45a75106ab8b5cd3ab96abe7ffc05e3e6943a6ab0b48661a98ef7735ebc828e06e6c9c2aab0e6f9a.css" integrity="sha512-wrIAnYFWr6FrefQthHADMblYxCv2b94LRadRBquLXNOrlqvn/8BePmlDpqsLSGYamO93NevIKOBubJwqqw5vmg==">
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.dd4d17d9783c03b29719e4980556950e626d74f8681a51d45b49aeaa2bd8d7ac69c89ac00bae0b244505c90fd6d2a9eec110ade701f34c11d44d44dab412f7dd.css" integrity="sha512-3U0X2Xg8A7KXGeSYBVaVDmJtdPhoGlHUW0muqivY16xpyJrAC64LJEUFyQ/W0qnuwRCt5wHzTBHUTUTatBL33Q==">
 
   
   
@@ -58,134 +58,54 @@
 
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
-
-    <div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
-    aria-label="Top of Page"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/posts">Posts</a></li>
-        
-        <li><a href="/tags">Tags</a></li>
-        
-        <li><a href="/about">About</a></li>
-        
-      </ul>
-    </span>
-    <br />
-    <span id="actions">
-      <ul>
-        
-        <li>
-          <a class="icon" href=" https://blog.wukaige.com/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2/" aria-label="Previous">
-            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();"
-              onmouseout="$('#i-prev').toggle();"></i>
-          </a>
-        </li>
-        
-        
-        <li>
-          <a class="icon" href="https://blog.wukaige.com/tidb-%E6%89%A9%E5%AE%B9/" aria-label="Next">
-            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();"
-              onmouseout="$('#i-next').toggle();"></i>
-          </a>
-        </li>
-        
-        <li>
-          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
-            aria-label="Top of Page">
-            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();"
-              onmouseout="$('#i-top').toggle();"></i>
-          </a>
-        </li>
-        <li>
-          <a class="icon" href="#" aria-label="Share">
-            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();"
-              onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
-          </a>
-        </li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br />
-    <div id="share" style="display: none">
-      
-      <ul>
-  
-  
+    <header id="header">
+  <a href="https://blog.wukaige.com/">
     
-  
-  
-  <li>
-    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fblog.wukaige.com%2ftidb-lightning-%25E9%2594%2599%25E8%25AF%25AF%25E6%258E%2592%25E6%259F%25A5%2f" aria-label="Facebook">
-      <i class="fab fa-facebook " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fblog.wukaige.com%2ftidb-lightning-%25E9%2594%2599%25E8%25AF%25AF%25E6%258E%2592%25E6%259F%25A5%2f&text=TiDB-Lightning%20%e9%94%99%e8%af%af%e6%8e%92%e6%9f%a5" aria-label="Twitter">
-      <i class="fab fa-twitter " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.wukaige.com%2ftidb-lightning-%25E9%2594%2599%25E8%25AF%25AF%25E6%258E%2592%25E6%259F%25A5%2f&title=TiDB-Lightning%20%e9%94%99%e8%af%af%e6%8e%92%e6%9f%a5" aria-label="Linkedin">
-      <i class="fab fa-linkedin " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fblog.wukaige.com%2ftidb-lightning-%25E9%2594%2599%25E8%25AF%25AF%25E6%258E%2592%25E6%259F%25A5%2f&is_video=false&description=TiDB-Lightning%20%e9%94%99%e8%af%af%e6%8e%92%e6%9f%a5" aria-label="Pinterest">
-      <i class="fab fa-pinterest " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="mailto:?subject=TiDB-Lightning%20%e9%94%99%e8%af%af%e6%8e%92%e6%9f%a5&body=Check out this article: https%3a%2f%2fblog.wukaige.com%2ftidb-lightning-%25E9%2594%2599%25E8%25AF%25AF%25E6%258E%2592%25E6%259F%25A5%2f" aria-label="Email">
-      <i class="fas fa-envelope " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fblog.wukaige.com%2ftidb-lightning-%25E9%2594%2599%25E8%25AF%25AF%25E6%258E%2592%25E6%259F%25A5%2f&title=TiDB-Lightning%20%e9%94%99%e8%af%af%e6%8e%92%e6%9f%a5" aria-label="Pocket">
-      <i class="fab fa-get-pocket " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fblog.wukaige.com%2ftidb-lightning-%25E9%2594%2599%25E8%25AF%25AF%25E6%258E%2592%25E6%259F%25A5%2f&title=TiDB-Lightning%20%e9%94%99%e8%af%af%e6%8e%92%e6%9f%a5" aria-label="reddit">
-      <i class="fab fa-reddit " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.wukaige.com%2ftidb-lightning-%25E9%2594%2599%25E8%25AF%25AF%25E6%258E%2592%25E6%259F%25A5%2f&name=TiDB-Lightning%20%e9%94%99%e8%af%af%e6%8e%92%e6%9f%a5&description=raft%20entry%20is%20too%20large%20%e4%bf%ae%e6%94%b9%20TiDB%20%e9%85%8d%e7%bd%ae%20tiup%20cluster%20edit-config%20tidb%20tikv%3a%20raftstore.raft-entry-max-siz%3a%20128MB%20%e9%87%8d%e5%90%af%20tikv%20%e8%8a%82%e7%82%b9%20tiup%20cluster%20reload%20tidb-cluster%20-R%20tikv%20Referencing%20column%20%26rsquo%3btable%26rsquo%3b%20and%20referenced%20column%20%26lsquo%3bid%26rsquo%3b%20in%20foreign%20key%20constraint%20%26lsquo%3bfk_1%26rsquo%3b%20are%20incompatible%20%e5%a4%96%e9%94%ae%e7%ba%a6%e6%9d%9f%e9%94%99%e8%af%af%20%e6%9f%a5%e6%89%be%e5%bc%95%e7%94%a8%20table%20%e7%9a%84%e8%a1%a8%20SELECT%20%2a%20FROM%20information_schema.KEY_COLUMN_USAGE%20WHERE%20REFERENCED_TABLE_NAME%20%3d%20%26%2339%3btable%26%2339%3b%3b%20%e5%88%a0%e9%99%a4%e5%bc%95%e7%94%a8%20table%20%e7%9a%84%e8%a1%a8" aria-label="Tumblr">
-      <i class="fab fa-tumblr " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.wukaige.com%2ftidb-lightning-%25E9%2594%2599%25E8%25AF%25AF%25E6%258E%2592%25E6%259F%25A5%2f&t=TiDB-Lightning%20%e9%94%99%e8%af%af%e6%8e%92%e6%9f%a5" aria-label="Hacker News">
-      <i class="fab fa-hacker-news " aria-hidden="true"></i>
-    </a>
-  </li>
-</ul>
-
+    
+    <div id="logo" style="background-image: url(https://blog.wukaige.com/images/logo.png)"></div>
+    
+    
+    <div id="title">
+      <h1>Hugo</h1>
     </div>
-    
-    <div id="toc">
-      <nav id="TableOfContents">
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/posts">Posts</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+  </div>
+</header>
+<script>
+function adjustForScrollbar() {
+  const autoWidth = window.innerWidth;
+  document.documentElement.style.setProperty('--auto-width', `${autoWidth}px`);
+}
+adjustForScrollbar();
+window.addEventListener('resize', adjustForScrollbar);
+</script>
+
+    <br>
+    <div id="header-post">
+  
+  <div id="toc">
+    <nav id="TableOfContents">
   <ul>
     <li><a href="#raft-entry-is-too-large">raft entry is too large</a></li>
     <li><a href="#referencing-column-table-and-referenced-column-id-in-foreign-key-constraint-fk_1-are-incompatible">Referencing column &rsquo;table&rsquo; and referenced column &lsquo;id&rsquo; in foreign key constraint &lsquo;fk_1&rsquo; are incompatible</a></li>
   </ul>
 </nav>
-    </div>
-    
-  </span>
+  </div>
+  
 </div>
-
 
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
@@ -264,8 +184,6 @@
           <li><a href="/">Home</a></li>
          
           <li><a href="/posts">Posts</a></li>
-         
-          <li><a href="/tags">Tags</a></li>
          
           <li><a href="/about">About</a></li>
         
@@ -369,8 +287,6 @@
         <li><a href="/">Home</a></li>
          
         <li><a href="/posts">Posts</a></li>
-         
-        <li><a href="/tags">Tags</a></li>
          
         <li><a href="/about">About</a></li>
         

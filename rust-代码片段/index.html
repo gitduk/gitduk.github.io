@@ -36,7 +36,7 @@
   
   
   
-  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.c2b2009d8156afa16b79f42d84700331b958c42bf66fde0b45a75106ab8b5cd3ab96abe7ffc05e3e6943a6ab0b48661a98ef7735ebc828e06e6c9c2aab0e6f9a.css" integrity="sha512-wrIAnYFWr6FrefQthHADMblYxCv2b94LRadRBquLXNOrlqvn/8BePmlDpqsLSGYamO93NevIKOBubJwqqw5vmg==">
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.dd4d17d9783c03b29719e4980556950e626d74f8681a51d45b49aeaa2bd8d7ac69c89ac00bae0b244505c90fd6d2a9eec110ade701f34c11d44d44dab412f7dd.css" integrity="sha512-3U0X2Xg8A7KXGeSYBVaVDmJtdPhoGlHUW0muqivY16xpyJrAC64LJEUFyQ/W0qnuwRCt5wHzTBHUTUTatBL33Q==">
 
   
   
@@ -58,124 +58,46 @@
 
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
-
-    <div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
-    aria-label="Top of Page"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/posts">Posts</a></li>
-        
-        <li><a href="/tags">Tags</a></li>
-        
-        <li><a href="/about">About</a></li>
-        
-      </ul>
-    </span>
-    <br />
-    <span id="actions">
-      <ul>
-        
-        <li>
-          <a class="icon" href=" https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/" aria-label="Previous">
-            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();"
-              onmouseout="$('#i-prev').toggle();"></i>
-          </a>
-        </li>
-        
-        
-        <li>
-          <a class="icon" href="https://blog.wukaige.com/rust-sqlserver/" aria-label="Next">
-            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();"
-              onmouseout="$('#i-next').toggle();"></i>
-          </a>
-        </li>
-        
-        <li>
-          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
-            aria-label="Top of Page">
-            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();"
-              onmouseout="$('#i-top').toggle();"></i>
-          </a>
-        </li>
-        <li>
-          <a class="icon" href="#" aria-label="Share">
-            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();"
-              onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
-          </a>
-        </li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br />
-    <div id="share" style="display: none">
-      
-      <ul>
-  
-  
+    <header id="header">
+  <a href="https://blog.wukaige.com/">
     
-  
-  
-  <li>
-    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fblog.wukaige.com%2frust-%25E4%25BB%25A3%25E7%25A0%2581%25E7%2589%2587%25E6%25AE%25B5%2f" aria-label="Facebook">
-      <i class="fab fa-facebook " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fblog.wukaige.com%2frust-%25E4%25BB%25A3%25E7%25A0%2581%25E7%2589%2587%25E6%25AE%25B5%2f&text=Rust%20%e4%bb%a3%e7%a0%81%e7%89%87%e6%ae%b5" aria-label="Twitter">
-      <i class="fab fa-twitter " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.wukaige.com%2frust-%25E4%25BB%25A3%25E7%25A0%2581%25E7%2589%2587%25E6%25AE%25B5%2f&title=Rust%20%e4%bb%a3%e7%a0%81%e7%89%87%e6%ae%b5" aria-label="Linkedin">
-      <i class="fab fa-linkedin " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fblog.wukaige.com%2frust-%25E4%25BB%25A3%25E7%25A0%2581%25E7%2589%2587%25E6%25AE%25B5%2f&is_video=false&description=Rust%20%e4%bb%a3%e7%a0%81%e7%89%87%e6%ae%b5" aria-label="Pinterest">
-      <i class="fab fa-pinterest " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="mailto:?subject=Rust%20%e4%bb%a3%e7%a0%81%e7%89%87%e6%ae%b5&body=Check out this article: https%3a%2f%2fblog.wukaige.com%2frust-%25E4%25BB%25A3%25E7%25A0%2581%25E7%2589%2587%25E6%25AE%25B5%2f" aria-label="Email">
-      <i class="fas fa-envelope " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fblog.wukaige.com%2frust-%25E4%25BB%25A3%25E7%25A0%2581%25E7%2589%2587%25E6%25AE%25B5%2f&title=Rust%20%e4%bb%a3%e7%a0%81%e7%89%87%e6%ae%b5" aria-label="Pocket">
-      <i class="fab fa-get-pocket " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fblog.wukaige.com%2frust-%25E4%25BB%25A3%25E7%25A0%2581%25E7%2589%2587%25E6%25AE%25B5%2f&title=Rust%20%e4%bb%a3%e7%a0%81%e7%89%87%e6%ae%b5" aria-label="reddit">
-      <i class="fab fa-reddit " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.wukaige.com%2frust-%25E4%25BB%25A3%25E7%25A0%2581%25E7%2589%2587%25E6%25AE%25B5%2f&name=Rust%20%e4%bb%a3%e7%a0%81%e7%89%87%e6%ae%b5&description=mysql%20https%3a%2f%2frustmagazine.github.io%2frust_magazine_2021%2fchapter_3%2frust-mysql.html%20use%20mysql%3a%3a%7bPool%2c%20PooledConn%2c%20from_row%7d%3b%20fn%20my_conn%28url%3a%20%26amp%3bstr%29%20-%26gt%3b%20Result%26lt%3bPooledConn%2c%20mysql%3a%3aError%26gt%3b%20%7b%20let%20pool%20%3d%20Pool%3a%3anew%28url%29%3f%3b%20let%20conn%20%3d%20pool.get_conn%28%29%3f%3b%20Ok%28conn%29%20%7d%20fn%20main%28%29%20%7b%20let%20url%20%3d%20%26%2334%3bmysql%3a%2f%2fxxx%3axxx%40127.0.0.1%3a3306%2fDB%26%2334%3b%3b%20let%20conn%20%3d%20my_conn%28url%29.unwrap%28%29%3b%20let%20sql%20%3d%20%26%2334%3bselect%20title%20from%20table%3b%26%2334%3b%3b%20%2f%2f%20query%20map%20let%20_books%20%3d%20conn.query_map%28sql%2c%20%7ctitle%3a%20String%7c%20%7b%20title%20%7d%29%3f%3b%20%2f%2f%20query%20iter%20let%20sql%20%3d%20%26%2334%3bselect%20id%2ctitle%2cdate%20from%20table2%3b%26%2334%3b%3b%20conn.query_iter%28query%29%3f.for_each%28%7crow%7c%20%7b%20let%20r%3a%20%28i32%2c%20String%2c%20String%29" aria-label="Tumblr">
-      <i class="fab fa-tumblr " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.wukaige.com%2frust-%25E4%25BB%25A3%25E7%25A0%2581%25E7%2589%2587%25E6%25AE%25B5%2f&t=Rust%20%e4%bb%a3%e7%a0%81%e7%89%87%e6%ae%b5" aria-label="Hacker News">
-      <i class="fab fa-hacker-news " aria-hidden="true"></i>
-    </a>
-  </li>
-</ul>
-
+    
+    <div id="logo" style="background-image: url(https://blog.wukaige.com/images/logo.png)"></div>
+    
+    
+    <div id="title">
+      <h1>Hugo</h1>
     </div>
-    
-    <div id="toc">
-      <nav id="TableOfContents">
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/posts">Posts</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+  </div>
+</header>
+<script>
+function adjustForScrollbar() {
+  const autoWidth = window.innerWidth;
+  document.documentElement.style.setProperty('--auto-width', `${autoWidth}px`);
+}
+adjustForScrollbar();
+window.addEventListener('resize', adjustForScrollbar);
+</script>
+
+    <br>
+    <div id="header-post">
+  
+  <div id="toc">
+    <nav id="TableOfContents">
   <ul>
     <li><a href="#mysql">mysql</a></li>
     <li><a href="#system-command">system command</a></li>
@@ -186,11 +108,9 @@
     <li><a href="#string-to-vecstr">String to Vec&lt;&amp;str&gt;</a></li>
   </ul>
 </nav>
-    </div>
-    
-  </span>
+  </div>
+  
 </div>
-
 
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
@@ -334,8 +254,6 @@
          
           <li><a href="/posts">Posts</a></li>
          
-          <li><a href="/tags">Tags</a></li>
-         
           <li><a href="/about">About</a></li>
         
       </ul>
@@ -443,8 +361,6 @@
         <li><a href="/">Home</a></li>
          
         <li><a href="/posts">Posts</a></li>
-         
-        <li><a href="/tags">Tags</a></li>
          
         <li><a href="/about">About</a></li>
         

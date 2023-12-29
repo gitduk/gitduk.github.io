@@ -36,7 +36,7 @@
   
   
   
-  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.c2b2009d8156afa16b79f42d84700331b958c42bf66fde0b45a75106ab8b5cd3ab96abe7ffc05e3e6943a6ab0b48661a98ef7735ebc828e06e6c9c2aab0e6f9a.css" integrity="sha512-wrIAnYFWr6FrefQthHADMblYxCv2b94LRadRBquLXNOrlqvn/8BePmlDpqsLSGYamO93NevIKOBubJwqqw5vmg==">
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.dd4d17d9783c03b29719e4980556950e626d74f8681a51d45b49aeaa2bd8d7ac69c89ac00bae0b244505c90fd6d2a9eec110ade701f34c11d44d44dab412f7dd.css" integrity="sha512-3U0X2Xg8A7KXGeSYBVaVDmJtdPhoGlHUW0muqivY16xpyJrAC64LJEUFyQ/W0qnuwRCt5wHzTBHUTUTatBL33Q==">
 
   
   
@@ -58,135 +58,55 @@
 
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
-
-    <div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
-    aria-label="Top of Page"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/posts">Posts</a></li>
-        
-        <li><a href="/tags">Tags</a></li>
-        
-        <li><a href="/about">About</a></li>
-        
-      </ul>
-    </span>
-    <br />
-    <span id="actions">
-      <ul>
-        
-        <li>
-          <a class="icon" href=" https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/" aria-label="Previous">
-            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();"
-              onmouseout="$('#i-prev').toggle();"></i>
-          </a>
-        </li>
-        
-        
-        <li>
-          <a class="icon" href="https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-tidb-lightning/" aria-label="Next">
-            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();"
-              onmouseout="$('#i-next').toggle();"></i>
-          </a>
-        </li>
-        
-        <li>
-          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
-            aria-label="Top of Page">
-            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();"
-              onmouseout="$('#i-top').toggle();"></i>
-          </a>
-        </li>
-        <li>
-          <a class="icon" href="#" aria-label="Share">
-            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();"
-              onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
-          </a>
-        </li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br />
-    <div id="share" style="display: none">
-      
-      <ul>
-  
-  
+    <header id="header">
+  <a href="https://blog.wukaige.com/">
     
-  
-  
-  <li>
-    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fblog.wukaige.com%2f%25E4%25BD%25BF%25E7%2594%25A8-https-%25E8%25AE%25BF%25E9%2597%25AE-alist%2f" aria-label="Facebook">
-      <i class="fab fa-facebook " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fblog.wukaige.com%2f%25E4%25BD%25BF%25E7%2594%25A8-https-%25E8%25AE%25BF%25E9%2597%25AE-alist%2f&text=%e4%bd%bf%e7%94%a8%20https%20%e8%ae%bf%e9%97%ae%20alist" aria-label="Twitter">
-      <i class="fab fa-twitter " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.wukaige.com%2f%25E4%25BD%25BF%25E7%2594%25A8-https-%25E8%25AE%25BF%25E9%2597%25AE-alist%2f&title=%e4%bd%bf%e7%94%a8%20https%20%e8%ae%bf%e9%97%ae%20alist" aria-label="Linkedin">
-      <i class="fab fa-linkedin " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fblog.wukaige.com%2f%25E4%25BD%25BF%25E7%2594%25A8-https-%25E8%25AE%25BF%25E9%2597%25AE-alist%2f&is_video=false&description=%e4%bd%bf%e7%94%a8%20https%20%e8%ae%bf%e9%97%ae%20alist" aria-label="Pinterest">
-      <i class="fab fa-pinterest " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="mailto:?subject=%e4%bd%bf%e7%94%a8%20https%20%e8%ae%bf%e9%97%ae%20alist&body=Check out this article: https%3a%2f%2fblog.wukaige.com%2f%25E4%25BD%25BF%25E7%2594%25A8-https-%25E8%25AE%25BF%25E9%2597%25AE-alist%2f" aria-label="Email">
-      <i class="fas fa-envelope " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fblog.wukaige.com%2f%25E4%25BD%25BF%25E7%2594%25A8-https-%25E8%25AE%25BF%25E9%2597%25AE-alist%2f&title=%e4%bd%bf%e7%94%a8%20https%20%e8%ae%bf%e9%97%ae%20alist" aria-label="Pocket">
-      <i class="fab fa-get-pocket " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fblog.wukaige.com%2f%25E4%25BD%25BF%25E7%2594%25A8-https-%25E8%25AE%25BF%25E9%2597%25AE-alist%2f&title=%e4%bd%bf%e7%94%a8%20https%20%e8%ae%bf%e9%97%ae%20alist" aria-label="reddit">
-      <i class="fab fa-reddit " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.wukaige.com%2f%25E4%25BD%25BF%25E7%2594%25A8-https-%25E8%25AE%25BF%25E9%2597%25AE-alist%2f&name=%e4%bd%bf%e7%94%a8%20https%20%e8%ae%bf%e9%97%ae%20alist&description=%e9%80%9a%e8%bf%87%20http%20%e8%ae%bf%e9%97%ae%20alist%ef%bc%8c%e5%9c%b0%e5%9d%80%e6%a0%8f%e9%82%a3%e4%b8%aa%e6%84%9f%e5%8f%b9%e5%8f%b7%e7%9c%8b%e8%b5%b7%e6%9d%a5%e6%9c%89%e7%82%b9%e4%b8%91%e3%80%82%20%e7%94%b3%e8%af%b7%20Cloudflare%20%e8%af%81%e4%b9%a6%20%e7%9c%8b%e8%bf%99%e9%87%8c%20%e6%8a%8a%20Origin%20Certificate%20%e4%bf%9d%e5%ad%98%e4%b8%ba%ef%bc%9a%20your-domain.pem%20%e6%8a%8a%20Private%20Key%20%e4%bf%9d%e5%ad%98%e4%b8%ba%ef%bc%9a%20your-domain.key%20%e9%85%8d%e7%bd%ae%20nginx%20%e8%bd%ac%e5%8f%91%e8%a7%84%e5%88%99%20server%20%7b%20listen%2080%3b%20listen%20443%20ssl%3b%20server_name%20alist.wukaige.com%3b%20ssl_certificate%20%2fpath%2fto%2fyour-domain.pem%3b%20ssl_certificate_key%20%2fpath%2fto%2fyour-domain.key%3b" aria-label="Tumblr">
-      <i class="fab fa-tumblr " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.wukaige.com%2f%25E4%25BD%25BF%25E7%2594%25A8-https-%25E8%25AE%25BF%25E9%2597%25AE-alist%2f&t=%e4%bd%bf%e7%94%a8%20https%20%e8%ae%bf%e9%97%ae%20alist" aria-label="Hacker News">
-      <i class="fab fa-hacker-news " aria-hidden="true"></i>
-    </a>
-  </li>
-</ul>
-
+    
+    <div id="logo" style="background-image: url(https://blog.wukaige.com/images/logo.png)"></div>
+    
+    
+    <div id="title">
+      <h1>Hugo</h1>
     </div>
-    
-    <div id="toc">
-      <nav id="TableOfContents">
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/posts">Posts</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+  </div>
+</header>
+<script>
+function adjustForScrollbar() {
+  const autoWidth = window.innerWidth;
+  document.documentElement.style.setProperty('--auto-width', `${autoWidth}px`);
+}
+adjustForScrollbar();
+window.addEventListener('resize', adjustForScrollbar);
+</script>
+
+    <br>
+    <div id="header-post">
+  
+  <div id="toc">
+    <nav id="TableOfContents">
   <ul>
     <li><a href="#申请-cloudflare-证书">申请 Cloudflare 证书</a></li>
     <li><a href="#配置-nginx-转发规则">配置 nginx 转发规则</a></li>
     <li><a href="#重启-nginx-服务">重启 nginx 服务</a></li>
   </ul>
 </nav>
-    </div>
-    
-  </span>
+  </div>
+  
 </div>
-
 
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
@@ -281,8 +201,6 @@
           <li><a href="/">Home</a></li>
          
           <li><a href="/posts">Posts</a></li>
-         
-          <li><a href="/tags">Tags</a></li>
          
           <li><a href="/about">About</a></li>
         
@@ -387,8 +305,6 @@
         <li><a href="/">Home</a></li>
          
         <li><a href="/posts">Posts</a></li>
-         
-        <li><a href="/tags">Tags</a></li>
          
         <li><a href="/about">About</a></li>
         

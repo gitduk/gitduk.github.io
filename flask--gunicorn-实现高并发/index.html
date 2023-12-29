@@ -36,7 +36,7 @@
   
   
   
-  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.c2b2009d8156afa16b79f42d84700331b958c42bf66fde0b45a75106ab8b5cd3ab96abe7ffc05e3e6943a6ab0b48661a98ef7735ebc828e06e6c9c2aab0e6f9a.css" integrity="sha512-wrIAnYFWr6FrefQthHADMblYxCv2b94LRadRBquLXNOrlqvn/8BePmlDpqsLSGYamO93NevIKOBubJwqqw5vmg==">
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.dd4d17d9783c03b29719e4980556950e626d74f8681a51d45b49aeaa2bd8d7ac69c89ac00bae0b244505c90fd6d2a9eec110ade701f34c11d44d44dab412f7dd.css" integrity="sha512-3U0X2Xg8A7KXGeSYBVaVDmJtdPhoGlHUW0muqivY16xpyJrAC64LJEUFyQ/W0qnuwRCt5wHzTBHUTUTatBL33Q==">
 
   
   
@@ -58,135 +58,55 @@
 
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
-
-    <div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
-    aria-label="Top of Page"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/posts">Posts</a></li>
-        
-        <li><a href="/tags">Tags</a></li>
-        
-        <li><a href="/about">About</a></li>
-        
-      </ul>
-    </span>
-    <br />
-    <span id="actions">
-      <ul>
-        
-        <li>
-          <a class="icon" href=" https://blog.wukaige.com/logstash-%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5/" aria-label="Previous">
-            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();"
-              onmouseout="$('#i-prev').toggle();"></i>
-          </a>
-        </li>
-        
-        
-        <li>
-          <a class="icon" href="https://blog.wukaige.com/python-%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0-mysql-%E6%95%B0%E6%8D%AE%E5%BA%93-asyncio--aiomysql/" aria-label="Next">
-            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();"
-              onmouseout="$('#i-next').toggle();"></i>
-          </a>
-        </li>
-        
-        <li>
-          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
-            aria-label="Top of Page">
-            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();"
-              onmouseout="$('#i-top').toggle();"></i>
-          </a>
-        </li>
-        <li>
-          <a class="icon" href="#" aria-label="Share">
-            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();"
-              onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
-          </a>
-        </li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br />
-    <div id="share" style="display: none">
-      
-      <ul>
-  
-  
+    <header id="header">
+  <a href="https://blog.wukaige.com/">
     
-  
-  
-  <li>
-    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fblog.wukaige.com%2fflask--gunicorn-%25E5%25AE%259E%25E7%258E%25B0%25E9%25AB%2598%25E5%25B9%25B6%25E5%258F%2591%2f" aria-label="Facebook">
-      <i class="fab fa-facebook " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fblog.wukaige.com%2fflask--gunicorn-%25E5%25AE%259E%25E7%258E%25B0%25E9%25AB%2598%25E5%25B9%25B6%25E5%258F%2591%2f&text=flask%20%2b%20gunicorn%20%e5%ae%9e%e7%8e%b0%e9%ab%98%e5%b9%b6%e5%8f%91" aria-label="Twitter">
-      <i class="fab fa-twitter " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.wukaige.com%2fflask--gunicorn-%25E5%25AE%259E%25E7%258E%25B0%25E9%25AB%2598%25E5%25B9%25B6%25E5%258F%2591%2f&title=flask%20%2b%20gunicorn%20%e5%ae%9e%e7%8e%b0%e9%ab%98%e5%b9%b6%e5%8f%91" aria-label="Linkedin">
-      <i class="fab fa-linkedin " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fblog.wukaige.com%2fflask--gunicorn-%25E5%25AE%259E%25E7%258E%25B0%25E9%25AB%2598%25E5%25B9%25B6%25E5%258F%2591%2f&is_video=false&description=flask%20%2b%20gunicorn%20%e5%ae%9e%e7%8e%b0%e9%ab%98%e5%b9%b6%e5%8f%91" aria-label="Pinterest">
-      <i class="fab fa-pinterest " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="mailto:?subject=flask%20%2b%20gunicorn%20%e5%ae%9e%e7%8e%b0%e9%ab%98%e5%b9%b6%e5%8f%91&body=Check out this article: https%3a%2f%2fblog.wukaige.com%2fflask--gunicorn-%25E5%25AE%259E%25E7%258E%25B0%25E9%25AB%2598%25E5%25B9%25B6%25E5%258F%2591%2f" aria-label="Email">
-      <i class="fas fa-envelope " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fblog.wukaige.com%2fflask--gunicorn-%25E5%25AE%259E%25E7%258E%25B0%25E9%25AB%2598%25E5%25B9%25B6%25E5%258F%2591%2f&title=flask%20%2b%20gunicorn%20%e5%ae%9e%e7%8e%b0%e9%ab%98%e5%b9%b6%e5%8f%91" aria-label="Pocket">
-      <i class="fab fa-get-pocket " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fblog.wukaige.com%2fflask--gunicorn-%25E5%25AE%259E%25E7%258E%25B0%25E9%25AB%2598%25E5%25B9%25B6%25E5%258F%2591%2f&title=flask%20%2b%20gunicorn%20%e5%ae%9e%e7%8e%b0%e9%ab%98%e5%b9%b6%e5%8f%91" aria-label="reddit">
-      <i class="fab fa-reddit " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.wukaige.com%2fflask--gunicorn-%25E5%25AE%259E%25E7%258E%25B0%25E9%25AB%2598%25E5%25B9%25B6%25E5%258F%2591%2f&name=flask%20%2b%20gunicorn%20%e5%ae%9e%e7%8e%b0%e9%ab%98%e5%b9%b6%e5%8f%91&description=%e5%9f%ba%e4%ba%8e%20flask%20%e5%86%99%e4%ba%86%e4%b8%80%e4%b8%aa%20hanlp%20%e5%88%86%e8%af%8d%20api%ef%bc%8c%e6%83%b3%e6%8f%90%e9%ab%98%20api%20%e7%9a%84%e5%b9%b6%e5%8f%91%e9%87%8f%e3%80%82%20%e5%88%86%e8%af%8d%20api%20%e7%bc%96%e5%86%99%20app.py%20import%20os%20import%20hanlp%20import%20json%20import%20logging%20from%20flask%20import%20Flask%2c%20request%2c%20jsonify%2c%20current_app%20as%20app%2c%20Response%20app%20%3d%20Flask%28__name__%29%20os.environ%5b%26%2334%3bCUDA_VISIBLE_DEVICES%26%2334%3b%5d%20%3d%20%26%2334%3b0%2c1%26%2334%3b%20tokenizer%20%3d%20hanlp.load%28hanlp.pretrained.tok.COARSE_ELECTRA_SMALL_ZH%29%20tok_fine%20%3d%20hanlp.load%28hanlp.pretrained.tok.FINE_ELECTRA_SMALL_ZH%29%20%40app.route%28%26%2334%3b%2fhanlp%26%2334%3b%2c%20methods%3d%5b%26%2334%3bGET%26%2334%3b%2c%20%26%2334%3bPOST%26%2334%3b%5d%29%20def%20hlp%28%29%3a%20if%20request.method%20%3d%3d%20%26%2334%3bGET%26%2334%3b%3a%20return%20jsonify%28%7b" aria-label="Tumblr">
-      <i class="fab fa-tumblr " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.wukaige.com%2fflask--gunicorn-%25E5%25AE%259E%25E7%258E%25B0%25E9%25AB%2598%25E5%25B9%25B6%25E5%258F%2591%2f&t=flask%20%2b%20gunicorn%20%e5%ae%9e%e7%8e%b0%e9%ab%98%e5%b9%b6%e5%8f%91" aria-label="Hacker News">
-      <i class="fab fa-hacker-news " aria-hidden="true"></i>
-    </a>
-  </li>
-</ul>
-
+    
+    <div id="logo" style="background-image: url(https://blog.wukaige.com/images/logo.png)"></div>
+    
+    
+    <div id="title">
+      <h1>Hugo</h1>
     </div>
-    
-    <div id="toc">
-      <nav id="TableOfContents">
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/posts">Posts</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+  </div>
+</header>
+<script>
+function adjustForScrollbar() {
+  const autoWidth = window.innerWidth;
+  document.documentElement.style.setProperty('--auto-width', `${autoWidth}px`);
+}
+adjustForScrollbar();
+window.addEventListener('resize', adjustForScrollbar);
+</script>
+
+    <br>
+    <div id="header-post">
+  
+  <div id="toc">
+    <nav id="TableOfContents">
   <ul>
     <li><a href="#分词-api-编写">分词 api 编写</a></li>
     <li><a href="#安装-gunicorn-库">安装 gunicorn 库</a></li>
     <li><a href="#使用-gunicorn-启动-flask-app">使用 gunicorn 启动 flask app</a></li>
   </ul>
 </nav>
-    </div>
-    
-  </span>
+  </div>
+  
 </div>
-
 
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
@@ -302,8 +222,6 @@
          
           <li><a href="/posts">Posts</a></li>
          
-          <li><a href="/tags">Tags</a></li>
-         
           <li><a href="/about">About</a></li>
         
       </ul>
@@ -407,8 +325,6 @@
         <li><a href="/">Home</a></li>
          
         <li><a href="/posts">Posts</a></li>
-         
-        <li><a href="/tags">Tags</a></li>
          
         <li><a href="/about">About</a></li>
         

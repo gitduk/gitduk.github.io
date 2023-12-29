@@ -36,7 +36,7 @@
   
   
   
-  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.c2b2009d8156afa16b79f42d84700331b958c42bf66fde0b45a75106ab8b5cd3ab96abe7ffc05e3e6943a6ab0b48661a98ef7735ebc828e06e6c9c2aab0e6f9a.css" integrity="sha512-wrIAnYFWr6FrefQthHADMblYxCv2b94LRadRBquLXNOrlqvn/8BePmlDpqsLSGYamO93NevIKOBubJwqqw5vmg==">
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.dd4d17d9783c03b29719e4980556950e626d74f8681a51d45b49aeaa2bd8d7ac69c89ac00bae0b244505c90fd6d2a9eec110ade701f34c11d44d44dab412f7dd.css" integrity="sha512-3U0X2Xg8A7KXGeSYBVaVDmJtdPhoGlHUW0muqivY16xpyJrAC64LJEUFyQ/W0qnuwRCt5wHzTBHUTUTatBL33Q==">
 
   
   
@@ -58,134 +58,54 @@
 
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
-
-    <div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
-    aria-label="Top of Page"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/posts">Posts</a></li>
-        
-        <li><a href="/tags">Tags</a></li>
-        
-        <li><a href="/about">About</a></li>
-        
-      </ul>
-    </span>
-    <br />
-    <span id="actions">
-      <ul>
-        
-        <li>
-          <a class="icon" href=" https://blog.wukaige.com/frp--nginx-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E5%AD%90%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%90%8C%E4%B8%80%E4%B8%BB%E6%9C%BA%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1/" aria-label="Previous">
-            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();"
-              onmouseout="$('#i-prev').toggle();"></i>
-          </a>
-        </li>
-        
-        
-        <li>
-          <a class="icon" href="https://blog.wukaige.com/tidb-%E5%BF%AB%E7%85%A7%E6%81%A2%E5%A4%8D/" aria-label="Next">
-            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();"
-              onmouseout="$('#i-next').toggle();"></i>
-          </a>
-        </li>
-        
-        <li>
-          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
-            aria-label="Top of Page">
-            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();"
-              onmouseout="$('#i-top').toggle();"></i>
-          </a>
-        </li>
-        <li>
-          <a class="icon" href="#" aria-label="Share">
-            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();"
-              onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
-          </a>
-        </li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br />
-    <div id="share" style="display: none">
-      
-      <ul>
-  
-  
+    <header id="header">
+  <a href="https://blog.wukaige.com/">
     
-  
-  
-  <li>
-    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fblog.wukaige.com%2ftikv-%25E5%2586%2585%25E5%25AD%2598%25E5%258D%25A0%25E7%2594%25A8%25E8%25BF%2587%25E9%25AB%2598%25E6%258E%2592%25E6%259F%25A5%2f" aria-label="Facebook">
-      <i class="fab fa-facebook " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fblog.wukaige.com%2ftikv-%25E5%2586%2585%25E5%25AD%2598%25E5%258D%25A0%25E7%2594%25A8%25E8%25BF%2587%25E9%25AB%2598%25E6%258E%2592%25E6%259F%25A5%2f&text=TIKV%20%e5%86%85%e5%ad%98%e5%8d%a0%e7%94%a8%e8%bf%87%e9%ab%98%e6%8e%92%e6%9f%a5" aria-label="Twitter">
-      <i class="fab fa-twitter " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.wukaige.com%2ftikv-%25E5%2586%2585%25E5%25AD%2598%25E5%258D%25A0%25E7%2594%25A8%25E8%25BF%2587%25E9%25AB%2598%25E6%258E%2592%25E6%259F%25A5%2f&title=TIKV%20%e5%86%85%e5%ad%98%e5%8d%a0%e7%94%a8%e8%bf%87%e9%ab%98%e6%8e%92%e6%9f%a5" aria-label="Linkedin">
-      <i class="fab fa-linkedin " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fblog.wukaige.com%2ftikv-%25E5%2586%2585%25E5%25AD%2598%25E5%258D%25A0%25E7%2594%25A8%25E8%25BF%2587%25E9%25AB%2598%25E6%258E%2592%25E6%259F%25A5%2f&is_video=false&description=TIKV%20%e5%86%85%e5%ad%98%e5%8d%a0%e7%94%a8%e8%bf%87%e9%ab%98%e6%8e%92%e6%9f%a5" aria-label="Pinterest">
-      <i class="fab fa-pinterest " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="mailto:?subject=TIKV%20%e5%86%85%e5%ad%98%e5%8d%a0%e7%94%a8%e8%bf%87%e9%ab%98%e6%8e%92%e6%9f%a5&body=Check out this article: https%3a%2f%2fblog.wukaige.com%2ftikv-%25E5%2586%2585%25E5%25AD%2598%25E5%258D%25A0%25E7%2594%25A8%25E8%25BF%2587%25E9%25AB%2598%25E6%258E%2592%25E6%259F%25A5%2f" aria-label="Email">
-      <i class="fas fa-envelope " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fblog.wukaige.com%2ftikv-%25E5%2586%2585%25E5%25AD%2598%25E5%258D%25A0%25E7%2594%25A8%25E8%25BF%2587%25E9%25AB%2598%25E6%258E%2592%25E6%259F%25A5%2f&title=TIKV%20%e5%86%85%e5%ad%98%e5%8d%a0%e7%94%a8%e8%bf%87%e9%ab%98%e6%8e%92%e6%9f%a5" aria-label="Pocket">
-      <i class="fab fa-get-pocket " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fblog.wukaige.com%2ftikv-%25E5%2586%2585%25E5%25AD%2598%25E5%258D%25A0%25E7%2594%25A8%25E8%25BF%2587%25E9%25AB%2598%25E6%258E%2592%25E6%259F%25A5%2f&title=TIKV%20%e5%86%85%e5%ad%98%e5%8d%a0%e7%94%a8%e8%bf%87%e9%ab%98%e6%8e%92%e6%9f%a5" aria-label="reddit">
-      <i class="fab fa-reddit " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.wukaige.com%2ftikv-%25E5%2586%2585%25E5%25AD%2598%25E5%258D%25A0%25E7%2594%25A8%25E8%25BF%2587%25E9%25AB%2598%25E6%258E%2592%25E6%259F%25A5%2f&name=TIKV%20%e5%86%85%e5%ad%98%e5%8d%a0%e7%94%a8%e8%bf%87%e9%ab%98%e6%8e%92%e6%9f%a5&description=tidb%20%e9%9b%86%e7%be%a4%ef%bc%88tidb-cluster%ef%bc%89%e7%9a%84%20tikv%20%e8%8a%82%e7%82%b9%ef%bc%8c%e5%8d%a0%e7%94%a8%e5%86%85%e5%ad%98%e9%ab%98%e8%be%be%2030%2f50%20G%ef%bc%8c%e5%86%85%e5%ad%98%e4%b8%8d%e5%a4%9f%e7%94%a8%e3%80%82%20%e6%8e%92%e6%9f%a5%20%e7%99%bb%e5%bd%95%20grafana%20%e7%9b%91%e6%8e%a7%e9%9d%a2%e6%9d%bf%ef%bc%8c%e5%8f%91%e7%8e%b0%20tidb-cluster-TiKV-Details%20%e4%b8%8b%e9%9d%a2%e7%9a%84%20Block%20cache%20size%20%e9%9d%a2%e6%9d%bf%e7%96%91%e4%bc%bc%e6%9c%89%e7%82%b9%e9%97%ae%e9%a2%98%e3%80%82%20%e9%81%82%e5%8e%bb%e6%9f%a5%e7%9c%8b%20tidb-cluster" aria-label="Tumblr">
-      <i class="fab fa-tumblr " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.wukaige.com%2ftikv-%25E5%2586%2585%25E5%25AD%2598%25E5%258D%25A0%25E7%2594%25A8%25E8%25BF%2587%25E9%25AB%2598%25E6%258E%2592%25E6%259F%25A5%2f&t=TIKV%20%e5%86%85%e5%ad%98%e5%8d%a0%e7%94%a8%e8%bf%87%e9%ab%98%e6%8e%92%e6%9f%a5" aria-label="Hacker News">
-      <i class="fab fa-hacker-news " aria-hidden="true"></i>
-    </a>
-  </li>
-</ul>
-
+    
+    <div id="logo" style="background-image: url(https://blog.wukaige.com/images/logo.png)"></div>
+    
+    
+    <div id="title">
+      <h1>Hugo</h1>
     </div>
-    
-    <div id="toc">
-      <nav id="TableOfContents">
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/posts">Posts</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+  </div>
+</header>
+<script>
+function adjustForScrollbar() {
+  const autoWidth = window.innerWidth;
+  document.documentElement.style.setProperty('--auto-width', `${autoWidth}px`);
+}
+adjustForScrollbar();
+window.addEventListener('resize', adjustForScrollbar);
+</script>
+
+    <br>
+    <div id="header-post">
+  
+  <div id="toc">
+    <nav id="TableOfContents">
   <ul>
     <li><a href="#排查">排查</a></li>
     <li><a href="#解决">解决</a></li>
   </ul>
 </nav>
-    </div>
-    
-  </span>
+  </div>
+  
 </div>
-
 
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
@@ -257,8 +177,6 @@
           <li><a href="/">Home</a></li>
          
           <li><a href="/posts">Posts</a></li>
-         
-          <li><a href="/tags">Tags</a></li>
          
           <li><a href="/about">About</a></li>
         
@@ -362,8 +280,6 @@
         <li><a href="/">Home</a></li>
          
         <li><a href="/posts">Posts</a></li>
-         
-        <li><a href="/tags">Tags</a></li>
          
         <li><a href="/about">About</a></li>
         

@@ -34,7 +34,7 @@
   
   
   
-  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.c2b2009d8156afa16b79f42d84700331b958c42bf66fde0b45a75106ab8b5cd3ab96abe7ffc05e3e6943a6ab0b48661a98ef7735ebc828e06e6c9c2aab0e6f9a.css" integrity="sha512-wrIAnYFWr6FrefQthHADMblYxCv2b94LRadRBquLXNOrlqvn/8BePmlDpqsLSGYamO93NevIKOBubJwqqw5vmg==">
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.dd4d17d9783c03b29719e4980556950e626d74f8681a51d45b49aeaa2bd8d7ac69c89ac00bae0b244505c90fd6d2a9eec110ade701f34c11d44d44dab412f7dd.css" integrity="sha512-3U0X2Xg8A7KXGeSYBVaVDmJtdPhoGlHUW0muqivY16xpyJrAC64LJEUFyQ/W0qnuwRCt5wHzTBHUTUTatBL33Q==">
 
   
   
@@ -77,101 +77,207 @@
       
       <li><a href="/posts">Posts</a></li>
       
-      <li><a href="/tags">Tags</a></li>
-      
       <li><a href="/about">About</a></li>
       
     </ul>
   </div>
 </header>
+<script>
+function adjustForScrollbar() {
+  const autoWidth = window.innerWidth;
+  document.documentElement.style.setProperty('--auto-width', `${autoWidth}px`);
+}
+adjustForScrollbar();
+window.addEventListener('resize', adjustForScrollbar);
+</script>
 
 
     
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <div class="content" itemprop="articleBody">
     
-    <div id="tag-cloud">
-      
-      <div class="tag-cloud-tags">
+      <div id="tags">
+        
+        <div class="tag-list">
         
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/alist/">alist</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/alist">
+          alist
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 1.5142857142857142rem;"
-          href="https://blog.wukaige.com/tags/async/">async</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/async">
+          async
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            2
+          </span> 
+        </a>
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/clash/">clash</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/clash">
+          clash
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/dm/">DM</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/dm">
+          dm
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/docker/">Docker</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/docker">
+          docker
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 4.014285714285714rem;"
-          href="https://blog.wukaige.com/tags/es/">ES</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/es">
+          es
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            9
+          </span> 
+        </a>
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/esrally/">esrally</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/esrally">
+          esrally
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/flask/">flask</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/flask">
+          flask
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/frp/">frp</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/frp">
+          frp
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 1.5142857142857142rem;"
-          href="https://blog.wukaige.com/tags/hexo/">hexo</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/hexo">
+          hexo
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            2
+          </span> 
+        </a>
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/hugo/">hugo</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/hugo">
+          hugo
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 1.5142857142857142rem;"
-          href="https://blog.wukaige.com/tags/leetcode/">leetcode</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/leetcode">
+          leetcode
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            2
+          </span> 
+        </a>
         
-        <a style="font-size: 1.5142857142857142rem;"
-          href="https://blog.wukaige.com/tags/lightning/">Lightning</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/lightning">
+          lightning
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            2
+          </span> 
+        </a>
         
-        <a style="font-size: 1.5142857142857142rem;"
-          href="https://blog.wukaige.com/tags/linux/">linux</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/linux">
+          linux
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            2
+          </span> 
+        </a>
         
-        <a style="font-size: 1.8714285714285714rem;"
-          href="https://blog.wukaige.com/tags/logstash/">logstash</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/logstash">
+          logstash
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            3
+          </span> 
+        </a>
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/milvus/">Milvus</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/milvus">
+          milvus
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/mysql/">mysql</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/mysql">
+          mysql
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 1.8714285714285714rem;"
-          href="https://blog.wukaige.com/tags/nginx/">nginx</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/nginx">
+          nginx
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            3
+          </span> 
+        </a>
         
-        <a style="font-size: 1.5142857142857142rem;"
-          href="https://blog.wukaige.com/tags/nvidia/">nvidia</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/nvidia">
+          nvidia
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            2
+          </span> 
+        </a>
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/openai/">openai</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/openai">
+          openai
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/python/">python</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/python">
+          python
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/redhat/">redhat</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/redhat">
+          redhat
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 1.8714285714285714rem;"
-          href="https://blog.wukaige.com/tags/rust/">Rust</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/rust">
+          rust
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            3
+          </span> 
+        </a>
         
-        <a style="font-size: 1.157142857142857rem;"
-          href="https://blog.wukaige.com/tags/sqlserver/">sqlserver</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/sqlserver">
+          sqlserver
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            1
+          </span> 
+        </a>
         
-        <a style="font-size: 4.728571428571429rem;"
-          href="https://blog.wukaige.com/tags/tidb/">TiDB</a>
+        <a class="tag-list-link" style="position: relative; font-size: 0.9rem;" href="/tags/tidb">
+          tidb
+          <span style="position: absolute; top: 0px; right: -12px; color: gray; font-size: 0.6rem;">
+            11
+          </span> 
+        </a>
         
+        </div>
       </div>
-    </div>
     
   </div>
 </article>
@@ -188,8 +294,6 @@
         <li><a href="/">Home</a></li>
          
         <li><a href="/posts">Posts</a></li>
-         
-        <li><a href="/tags">Tags</a></li>
          
         <li><a href="/about">About</a></li>
         

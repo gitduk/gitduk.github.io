@@ -36,7 +36,7 @@
   
   
   
-  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.c2b2009d8156afa16b79f42d84700331b958c42bf66fde0b45a75106ab8b5cd3ab96abe7ffc05e3e6943a6ab0b48661a98ef7735ebc828e06e6c9c2aab0e6f9a.css" integrity="sha512-wrIAnYFWr6FrefQthHADMblYxCv2b94LRadRBquLXNOrlqvn/8BePmlDpqsLSGYamO93NevIKOBubJwqqw5vmg==">
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.dd4d17d9783c03b29719e4980556950e626d74f8681a51d45b49aeaa2bd8d7ac69c89ac00bae0b244505c90fd6d2a9eec110ade701f34c11d44d44dab412f7dd.css" integrity="sha512-3U0X2Xg8A7KXGeSYBVaVDmJtdPhoGlHUW0muqivY16xpyJrAC64LJEUFyQ/W0qnuwRCt5wHzTBHUTUTatBL33Q==">
 
   
   
@@ -58,124 +58,46 @@
 
 <body class="max-width mx-auto px3 ltr">
   <div class="content index py4">
-
-    <div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"
-    aria-label="Top of Page"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/posts">Posts</a></li>
-        
-        <li><a href="/tags">Tags</a></li>
-        
-        <li><a href="/about">About</a></li>
-        
-      </ul>
-    </span>
-    <br />
-    <span id="actions">
-      <ul>
-        
-        <li>
-          <a class="icon" href=" https://blog.wukaige.com/tidb-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/" aria-label="Previous">
-            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();"
-              onmouseout="$('#i-prev').toggle();"></i>
-          </a>
-        </li>
-        
-        
-        <li>
-          <a class="icon" href="https://blog.wukaige.com/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/" aria-label="Next">
-            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();"
-              onmouseout="$('#i-next').toggle();"></i>
-          </a>
-        </li>
-        
-        <li>
-          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
-            aria-label="Top of Page">
-            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();"
-              onmouseout="$('#i-top').toggle();"></i>
-          </a>
-        </li>
-        <li>
-          <a class="icon" href="#" aria-label="Share">
-            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();"
-              onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
-          </a>
-        </li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br />
-    <div id="share" style="display: none">
-      
-      <ul>
-  
-  
+    <header id="header">
+  <a href="https://blog.wukaige.com/">
     
-  
-  
-  <li>
-    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f" aria-label="Facebook">
-      <i class="fab fa-facebook " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&text=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Twitter">
-      <i class="fab fa-twitter " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&title=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Linkedin">
-      <i class="fab fa-linkedin " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&is_video=false&description=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Pinterest">
-      <i class="fab fa-pinterest " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="mailto:?subject=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2&body=Check out this article: https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f" aria-label="Email">
-      <i class="fas fa-envelope " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&title=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Pocket">
-      <i class="fab fa-get-pocket " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&title=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="reddit">
-      <i class="fab fa-reddit " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&name=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2&description=%e6%9c%ba%e5%99%a8%e9%85%8d%e7%bd%ae%20OS%3a%20Ubuntu%2023.04%20CPU%3a%2020%20%e6%a0%b8%20Mem%3a%2032%20G%20%e5%ae%89%e8%a3%85%20tiup%20%e7%bb%84%e4%bb%b6%20%23%20%e5%ae%89%e8%a3%85%20tiup%20%e5%91%bd%e4%bb%a4%20curl%20--proto%20%26%2339%3b%3dhttps%26%2339%3b%20--tlsv1.2%20-sSf%20https%3a%2f%2ftiup-mirrors.pingcap.com%2finstall.sh%20%7c%20sh%20%23%20%e5%8d%87%e7%ba%a7%20cluster%20%e7%bb%84%e4%bb%b6%20tiup%20update%20--self%20%26amp%3b%26amp%3b%20tiup%20update%20cluster%20%23%20%e9%aa%8c%e8%af%81%20tiup%20%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af%20tiup%20--binary%20cluster%20%e5%87%86%e5%a4%87%e9%9b%86%e7%be%a4%e6%8b%93%e6%89%91%e6%96%87%e4%bb%b6%20topo.yaml%20%23%20%23%20Global%20variables%20are" aria-label="Tumblr">
-      <i class="fab fa-tumblr " aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&t=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2" aria-label="Hacker News">
-      <i class="fab fa-hacker-news " aria-hidden="true"></i>
-    </a>
-  </li>
-</ul>
-
+    
+    <div id="logo" style="background-image: url(https://blog.wukaige.com/images/logo.png)"></div>
+    
+    
+    <div id="title">
+      <h1>Hugo</h1>
     </div>
-    
-    <div id="toc">
-      <nav id="TableOfContents">
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/posts">Posts</a></li>
+      
+      <li><a href="/about">About</a></li>
+      
+    </ul>
+  </div>
+</header>
+<script>
+function adjustForScrollbar() {
+  const autoWidth = window.innerWidth;
+  document.documentElement.style.setProperty('--auto-width', `${autoWidth}px`);
+}
+adjustForScrollbar();
+window.addEventListener('resize', adjustForScrollbar);
+</script>
+
+    <br>
+    <div id="header-post">
+  
+  <div id="toc">
+    <nav id="TableOfContents">
   <ul>
     <li><a href="#机器配置">机器配置</a></li>
     <li><a href="#安装-tiup-组件">安装 tiup 组件</a></li>
@@ -184,11 +106,9 @@
     <li><a href="#部署集群">部署集群</a></li>
   </ul>
 </nav>
-    </div>
-    
-  </span>
+  </div>
+  
 </div>
-
 
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
@@ -391,8 +311,6 @@ The generated password can NOT be get and shown again.
          
           <li><a href="/posts">Posts</a></li>
          
-          <li><a href="/tags">Tags</a></li>
-         
           <li><a href="/about">About</a></li>
         
       </ul>
@@ -498,8 +416,6 @@ The generated password can NOT be get and shown again.
         <li><a href="/">Home</a></li>
          
         <li><a href="/posts">Posts</a></li>
-         
-        <li><a href="/tags">Tags</a></li>
          
         <li><a href="/about">About</a></li>
         
