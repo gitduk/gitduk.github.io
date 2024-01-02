@@ -36,7 +36,7 @@
   
   
   
-  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.dd4d17d9783c03b29719e4980556950e626d74f8681a51d45b49aeaa2bd8d7ac69c89ac00bae0b244505c90fd6d2a9eec110ade701f34c11d44d44dab412f7dd.css" integrity="sha512-3U0X2Xg8A7KXGeSYBVaVDmJtdPhoGlHUW0muqivY16xpyJrAC64LJEUFyQ/W0qnuwRCt5wHzTBHUTUTatBL33Q==">
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.445a0b435ffb1e213d6772fb27ea26509950da22cc22fbe318a3cbc4acdb59b694addcad497c91acba2f080d94b5a59a0bac7217cfc495a10ea4f2a4cd7aa1e7.css" integrity="sha512-RFoLQ1/7HiE9Z3L7J&#43;omUJlQ2iLMIvvjGKPLxKzbWbaUrdytSXyRrLovCA2UtaWaC6xyF8/ElaEOpPKkzXqh5w==">
 
   
   
@@ -86,8 +86,9 @@
 </header>
 <script>
 function adjustForScrollbar() {
-  const autoWidth = window.innerWidth;
-  document.documentElement.style.setProperty('--auto-width', `${autoWidth}px`);
+  const rootFontSize = window.getComputedStyle(document.documentElement).fontSize;
+  const autoMargin = Math.max(0, (window.innerWidth - 800) / 2);
+  document.documentElement.style.setProperty('--auto-margin', `${autoMargin}px`);
 }
 adjustForScrollbar();
 window.addEventListener('resize', adjustForScrollbar);
@@ -150,7 +151,7 @@ window.addEventListener('resize', adjustForScrollbar);
 <!-- raw HTML omitted -->
 <p>在 <!-- raw HTML omitted -->/layout/_partial/head.ejs<!-- raw HTML omitted --> 文件中加一行代码</p>
 <pre tabindex="0"><code>&lt;meta name=&#34;referrer&#34; content=&#34;no-referrer&#34; /&gt;
-</code></pre><p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230629181145010.png" alt="image-20230629181145010"></p>
+</code></pre><p><img src="/img/image-20230629181145010.png" alt="image-20230629181145010"></p>
 <h2 id="参考链接">参考链接</h2>
 <ul>
 <li><a href="https://zhuanlan.zhihu.com/p/577256660">https://zhuanlan.zhihu.com/p/577256660</a></li>
