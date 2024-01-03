@@ -36,7 +36,7 @@
   
   
   
-  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.445a0b435ffb1e213d6772fb27ea26509950da22cc22fbe318a3cbc4acdb59b694addcad497c91acba2f080d94b5a59a0bac7217cfc495a10ea4f2a4cd7aa1e7.css" integrity="sha512-RFoLQ1/7HiE9Z3L7J&#43;omUJlQ2iLMIvvjGKPLxKzbWbaUrdytSXyRrLovCA2UtaWaC6xyF8/ElaEOpPKkzXqh5w==">
+  <link rel="stylesheet" href="https://blog.wukaige.com/css/styles.3d55aed843a94320a3f4dd446b28b392aff5b2dc0f43cb6e8496babb4199c75fba4417ac3a1eae5507589dfeff1b5512dc02eb1de8cf20f0e91d79b7ebbe5862.css" integrity="sha512-PVWu2EOpQyCj9N1Eayizkq/1stwPQ8tuhJa6u0GZx1&#43;6RBesOh6uVQdYnf7/G1US3ALrHejPIPDpHXm3675YYg==">
 
   
   
@@ -108,7 +108,18 @@ window.addEventListener('resize', adjustForScrollbar);
 </nav>
   </div>
   
+  <div id="actions">
+    <span id="i-top" class="info" style="display:none;">Back to top</span>
+    <ul>
+      <li>
+        <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" aria-label="Top of Page">
+          <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
+
 
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
@@ -159,7 +170,7 @@ window.addEventListener('resize', adjustForScrollbar);
 </ul>
 <h2 id="域名解析">域名解析</h2>
 <p>到 cloudflare 解析配置你的域名解析</p>
-<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230629164727654.png" alt="image-20230629164727654"></p>
+<p><img src="/img/image-20230629164727654.png" alt="image-20230629164727654"></p>
 <h2 id="frps-nginx-服务配置">Frps, Nginx 服务配置</h2>
 <p>frps 部署 - <a href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p>
 <p>Nginx 安装 - <code>sudo apt install nginx</code></p>
