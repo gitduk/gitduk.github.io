@@ -177,11 +177,11 @@ window.addEventListener('resize', adjustForScrollbar);
 </span></span></code></pre></div><p>查看设备上的网络连接</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmcli dev
 </span></span></code></pre></div><p>一切正常的话，可以看到以下输出：</p>
-<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230810153406140.png" alt="image-20230810153406140"></p>
+<p><img src="/img/image-20230810153406140.png" alt="image-20230810153406140"></p>
 <p>手机用密码 <code>12345678</code> 连接创建的 WIFI，此时可以正常上网，但是不可共享台式机的 clash 代理。</p>
 <h2 id="开启-ubuntu-ip-转发">开启 Ubuntu ip 转发</h2>
 <p>把文件 <code>/etc/sysctl.conf</code> 中 <code>net.ipv4.ip_forward=1</code> 的注释删除</p>
-<p><img src="https://gitee.com/gitduk/typora-image/raw/master/image/image-20230810151615005.png" alt="image-20230810151615005"></p>
+<p><img src="/img/image-20230810151615005.png" alt="image-20230810151615005"></p>
 <p>加载并应用配置文件中的参数</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo sysctl -p
 </span></span></code></pre></div><h2 id="配置-clash-重定向端口">配置 clash 重定向端口</h2>
