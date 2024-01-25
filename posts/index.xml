@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 12 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jan 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust reqwest 同步客户端</title>
+      <link>https://blog.wukaige.com/rust-reqwest-%E5%90%8C%E6%AD%A5%E5%AE%A2%E6%88%B7%E7%AB%AF/</link>
+      <pubDate>Thu, 25 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.wukaige.com/rust-reqwest-%E5%90%8C%E6%AD%A5%E5%AE%A2%E6%88%B7%E7%AB%AF/</guid>
+      <description>环境准备 # 初始化项目 cargo init my_reqwest # 安装 reqwest cargo add reqwest --features=blocking # 进入 src 目录 cd my_reqwest/src main.rs use reqwest::blocking::Client fn main() { }</description>
+    </item>
     <item>
       <title>人体调优总结</title>
       <link>https://blog.wukaige.com/%E4%BA%BA%E4%BD%93%E8%B0%83%E4%BC%98%E6%80%BB%E7%BB%93/</link>
@@ -70,13 +77,6 @@
       <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B/</guid>
       <description>新进了一台高性能服务器，准备把旧的 ES 集群迁移到新服务器，需要对比两个 ES 集群的性能。 一些信息 旧服务器 ES 地址: 192.168.0.1:9200 新服务器 ES 地址: 192.168.0.2:9200 测试工具 esrally 是 elastic</description>
-    </item>
-    <item>
-      <title>Hugo 搭建个人博客</title>
-      <link>https://blog.wukaige.com/hugo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
-      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>https://blog.wukaige.com/hugo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
-      <description>安装 Hugo brew install hugo 建立网站 hugo new site hugo 运行 Hugo 服务 cd hugo/ hugo server 上传到 github.io cd blog/public</description>
     </item>
   </channel>
 </rss>
