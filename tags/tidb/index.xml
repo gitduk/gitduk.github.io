@@ -23,18 +23,11 @@
       <description>编写扩容配置文件 scale-out.yml tidb_servers: - host: 127.0.0.1 ssh_port: 22 port: 4001 status_port: 10081 numa_node: &amp;#34;1&amp;#34; # suggest numa node bindings. 扩容命令 检查配置文件 tiup cluster check tidb scale-out.yml --cluster --user root -p 自动修复配置文件 tiup cluster check tidb scale-out.yml --cluster --apply --user root -p 扩容 tiup cluster scale-out tidb scale-out.yml</description>
     </item>
     <item>
-      <title>TiDB-Lightning 错误排查</title>
-      <link>https://blog.wukaige.com/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</link>
-      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>https://blog.wukaige.com/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</guid>
-      <description>raft entry is too large 修改 TiDB 配置 tiup cluster edit-config tidb tikv: raftstore.raft-entry-max-siz: 128MB 重启 tikv 节点 tiup cluster reload tidb-cluster -R tikv Referencing column &amp;rsquo;table&amp;rsquo; and referenced column &amp;lsquo;id&amp;rsquo; in foreign key constraint &amp;lsquo;fk_1&amp;rsquo; are incompatible 外键约束错误 查找引用 table 的表 SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = &amp;#39;table&amp;#39;; 删除引用 table 的表</description>
-    </item>
-    <item>
       <title>TiDB 单机部署</title>
       <link>https://blog.wukaige.com/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2/</link>
       <pubDate>Mon, 23 Oct 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2/</guid>
-      <description>机器配置 OS: Ubuntu 23.04 CPU: 20 核 Mem: 32 G 安装 tiup 组件 # 安装 tiup 命令 curl --proto &amp;#39;=https&amp;#39; --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh # 升级 cluster 组件 tiup update --self &amp;amp;&amp;amp; tiup update cluster # 验证 tiup 版本信息 tiup --binary cluster 准备集群拓扑文件 topo.yaml # # Global variables are</description>
+      <description>机器配置 OS: Ubuntu 23.04 CPU: 20 核 Mem: 32 G 安装 tiup 组件 # 安装 tiup 命令 curl --proto &amp;#39;=https&amp;#39; --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh # 升级 cluster 组件 tiup update --self &amp;amp;&amp;amp; tiup update cluster # 验证 tiup 版本信息 tiup --binary cluster 准备集群拓扑文件 topo.yaml # 拓扑文件</description>
     </item>
     <item>
       <title>TiDB 错误排查</title>
@@ -77,6 +70,13 @@
       <pubDate>Tue, 04 Jul 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tidb-%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D/</guid>
       <description>tidb 某个节点的数据目录被删除，导致节点损坏。 删除损坏节点 # 损坏节点 IP 为：192.168.70.51 端口为：27161 tiup cluster scale-in tidb-cluster --node 192.168.70.51:27161 添加新的节点 scale-out.yaml</description>
+    </item>
+    <item>
+      <title>TiDB 用户管理</title>
+      <link>https://blog.wukaige.com/tidb-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.wukaige.com/tidb-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/</guid>
+      <description>创建新用户 CREATE USER &amp;#39;user&amp;#39;@&amp;#39;%&amp;#39; IDENTIFIED BY &amp;#39;password&amp;#39;; 设置用户权限 -- 部分权限 GRANT SELECT,INSERT ON database.* TO &amp;#39;user&amp;#39;@&amp;#39;%&amp;#39;; -- 所有权限 GRANT ALL PRIVILEGES ON database.* TO &amp;#39;user&amp;#39;@&amp;#39;%&amp;#39;; 修改用户密码 SET PASSWORD FOR &amp;#39;root&amp;#39;@&amp;#39;%&amp;#39; = &amp;#39;xxx&amp;#39;; 刷新权限 FLUSH PRIVILEGES; 删除用户 DROP USER &amp;#39;user&amp;#39;@&amp;#39;host&amp;#39;;</description>
     </item>
   </channel>
 </rss>

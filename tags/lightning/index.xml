@@ -15,12 +15,5 @@
       <guid>https://blog.wukaige.com/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</guid>
       <description>前提是已经用 Dumpling 将数据从上游数据库导出。 创建配置文件 tidb-lightning.toml tidb-lightning.toml [lightning] # 日志 level = &amp;#34;info&amp;#34; file = &amp;#34;log/tidb-lightning.log&amp;#34; [tikv-importer] # 选择使用的导入模式 backend = &amp;#34;tidb&amp;#34; # 设置排序的键值对的临时存放地址，目标</description>
     </item>
-    <item>
-      <title>TiDB-Lightning 错误排查</title>
-      <link>https://blog.wukaige.com/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</link>
-      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>https://blog.wukaige.com/tidb-lightning-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5/</guid>
-      <description>raft entry is too large 修改 TiDB 配置 tiup cluster edit-config tidb tikv: raftstore.raft-entry-max-siz: 128MB 重启 tikv 节点 tiup cluster reload tidb-cluster -R tikv Referencing column &amp;rsquo;table&amp;rsquo; and referenced column &amp;lsquo;id&amp;rsquo; in foreign key constraint &amp;lsquo;fk_1&amp;rsquo; are incompatible 外键约束错误 查找引用 table 的表 SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = &amp;#39;table&amp;#39;; 删除引用 table 的表</description>
-    </item>
   </channel>
 </rss>

@@ -102,6 +102,7 @@ window.addEventListener('resize', adjustForScrollbar);
   <ul>
     <li><a href="#entry-too-large-the-max-entry-size-is-6291456-the-size-of-data-is-7254170">entry too large, the max entry size is 6291456, the size of data is 7254170</a></li>
     <li><a href="#raft-entry-is-too-large-region-157021-entry-size-10309778">raft entry is too large, region 157021, entry size 10309778</a></li>
+    <li><a href="#referencing-column-table-and-referenced-column-id-in-foreign-key-constraint-fk_1-are-incompatible">Referencing column &rsquo;table&rsquo; and referenced column &lsquo;id&rsquo; in foreign key constraint &lsquo;fk_1&rsquo; are incompatible</a></li>
   </ul>
 </nav>
     <nav>
@@ -187,7 +188,14 @@ window.addEventListener('resize', adjustForScrollbar);
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tiup cluster reload &lt;cluster-name&gt; -R tikv
 </span></span></code></pre></div><p>检查修改是否生效：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#66d9ef">show</span> config <span style="color:#66d9ef">where</span> type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;tikv&#39;</span> <span style="color:#66d9ef">and</span> name <span style="color:#66d9ef">like</span> <span style="color:#e6db74">&#39;%entry-max-size&#39;</span>;
-</span></span></code></pre></div>
+</span></span></code></pre></div><h2 id="referencing-column-table-and-referenced-column-id-in-foreign-key-constraint-fk_1-are-incompatible">Referencing column &rsquo;table&rsquo; and referenced column &lsquo;id&rsquo; in foreign key constraint &lsquo;fk_1&rsquo; are incompatible</h2>
+<blockquote>
+<p>外键约束错误</p>
+</blockquote>
+<p>查找引用 <code>table</code> 的表</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> information_schema.KEY_COLUMN_USAGE <span style="color:#66d9ef">WHERE</span> REFERENCED_TABLE_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;table&#39;</span>;
+</span></span></code></pre></div><p>删除引用 <code>table</code> 的表，先导入 <code>table</code>，再导入引用 <code>table</code> 的表。</p>
+
       </div>
     </article>
 
@@ -221,6 +229,7 @@ window.addEventListener('resize', adjustForScrollbar);
   <ul>
     <li><a href="#entry-too-large-the-max-entry-size-is-6291456-the-size-of-data-is-7254170">entry too large, the max entry size is 6291456, the size of data is 7254170</a></li>
     <li><a href="#raft-entry-is-too-large-region-157021-entry-size-10309778">raft entry is too large, region 157021, entry size 10309778</a></li>
+    <li><a href="#referencing-column-table-and-referenced-column-id-in-foreign-key-constraint-fk_1-are-incompatible">Referencing column &rsquo;table&rsquo; and referenced column &lsquo;id&rsquo; in foreign key constraint &lsquo;fk_1&rsquo; are incompatible</a></li>
   </ul>
 </nav>
     </div>

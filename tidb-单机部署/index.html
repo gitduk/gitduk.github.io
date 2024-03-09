@@ -20,7 +20,7 @@
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta property="og:title" content="TiDB 单机部署" />
-<meta property="og:description" content="机器配置 OS: Ubuntu 23.04 CPU: 20 核 Mem: 32 G 安装 tiup 组件 # 安装 tiup 命令 curl --proto &#39;=https&#39; --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh # 升级 cluster 组件 tiup update --self &amp;&amp; tiup update cluster # 验证 tiup 版本信息 tiup --binary cluster 准备集群拓扑文件 topo.yaml # # Global variables are" />
+<meta property="og:description" content="机器配置 OS: Ubuntu 23.04 CPU: 20 核 Mem: 32 G 安装 tiup 组件 # 安装 tiup 命令 curl --proto &#39;=https&#39; --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh # 升级 cluster 组件 tiup update --self &amp;&amp; tiup update cluster # 验证 tiup 版本信息 tiup --binary cluster 准备集群拓扑文件 topo.yaml # 拓扑文件" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.wukaige.com/tidb-%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-10-23T00:00:00+00:00" />
@@ -29,7 +29,7 @@
 
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="TiDB 单机部署"/>
-<meta name="twitter:description" content="机器配置 OS: Ubuntu 23.04 CPU: 20 核 Mem: 32 G 安装 tiup 组件 # 安装 tiup 命令 curl --proto &#39;=https&#39; --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh # 升级 cluster 组件 tiup update --self &amp;&amp; tiup update cluster # 验证 tiup 版本信息 tiup --binary cluster 准备集群拓扑文件 topo.yaml # # Global variables are"/>
+<meta name="twitter:description" content="机器配置 OS: Ubuntu 23.04 CPU: 20 核 Mem: 32 G 安装 tiup 组件 # 安装 tiup 命令 curl --proto &#39;=https&#39; --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh # 升级 cluster 组件 tiup update --self &amp;&amp; tiup update cluster # 验证 tiup 版本信息 tiup --binary cluster 准备集群拓扑文件 topo.yaml # 拓扑文件"/>
 
   
   
@@ -178,8 +178,9 @@ window.addEventListener('resize', adjustForScrollbar);
 </span></span><span style="display:flex;"><span>tiup --binary cluster
 </span></span></code></pre></div><h2 id="准备集群拓扑文件">准备集群拓扑文件</h2>
 <p><!-- raw HTML omitted -->topo.yaml<!-- raw HTML omitted --></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># # Global variables are applied to all deployments and used as the default value of</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># # the deployments if a specific deployment value is missing.</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># 拓扑文件配置: https://docs.pingcap.com/zh/tidb/stable/tiup-cluster-topology-reference</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 配置文件详情: https://docs.pingcap.com/zh/tidb/stable/tidb-configuration-file</span>
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">global</span>:
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">user</span>: <span style="color:#e6db74">&#34;tidb&#34;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">ssh_port</span>: <span style="color:#ae81ff">22</span>
@@ -193,57 +194,131 @@ window.addEventListener('resize', adjustForScrollbar);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">server_configs</span>:
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">tidb</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">instance.tidb_slow_log_threshold</span>: <span style="color:#ae81ff">300</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">performance.txn-entry-size-limit</span>: <span style="color:#ae81ff">62914560</span>      <span style="color:#75715e"># 60M</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">performance.txn-total-size-limit</span>: <span style="color:#ae81ff">1073741824</span>    <span style="color:#75715e"># 1G</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">instance.tidb_slow_log_threshold</span>: <span style="color:#ae81ff">1000</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tikv</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">storage.block-cache.shared</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">readpool.storage.use-unified-pool</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">readpool.coprocessor.use-unified-pool</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">readpool.unified.max-thread-count</span>: <span style="color:#ae81ff">10</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">raftstore.raft-entry-max-siz</span>: <span style="color:#e6db74">&#34;10MB&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># TiDB 单行数据的大小限制, 默认值：6291456</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 最大值不超过 125829120（表示 120MB）</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">performance.txn-entry-size-limit</span>: <span style="color:#ae81ff">125829120</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># TiDB 单个事务大小限制, 默认值：104857600</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 最大值不超过 1099511627776（表示 1TB）</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">performance.txn-total-size-limit</span>: <span style="color:#ae81ff">1099511627776</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">pd</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">replication.enable-placement-rules</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">replication.max-replicas</span>: <span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">replication.location-labels</span>: [<span style="color:#e6db74">&#34;host&#34;</span>]
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tiflash</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">logger.level</span>: <span style="color:#e6db74">&#34;info&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 同时进行 leader 调度的任务个数, 默认值：4</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 如果集群的 TiKV 节点有足够资源, 可设置为 CPU 核数的 1/4 左右</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">schedule.leader-schedule-limit</span>: <span style="color:#ae81ff">4</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">pd_servers</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">192.168.70.45</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 同时进行 Region 调度的任务个数, 默认值：2048</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">schedule.region-schedule-limit</span>: <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 同时进行 replica 调度的任务个数, 默认值：64</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">schedule.replica-schedule-limit</span>: <span style="color:#ae81ff">64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tikv</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 建议为cpu核数的1/4</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">server.grpc-concurrency</span>: <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 总内存的 30%-50%</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">storage.block-cache.capacity</span>: <span style="color:#e6db74">&#34;64G&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">storage.block-cache.shared</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># MEM_TOTAL * 0.5 / TiKV 实例数量</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">storage.block-cache.capacity</span>: <span style="color:#e6db74">&#34;3G&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># readpool</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">readpool.storage.use-unified-pool</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">readpool.coprocessor.use-unified-pool</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 处理高优先级读请求的线程池线程数量</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 当 8 ≤ cpu num ≤ 16 时，默认值为 cpu_num * 0.5；</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 当 cpu num 小于 8 时，默认值为 4；</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 当 cpu num 大于 16 时，默认值为 8</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">readpool.storage.high-concurrency</span>: <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># cores * 0.8 / TiKV 数量</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">readpool.unified.max-thread-count</span>: <span style="color:#ae81ff">13</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 单个日志最大大小，硬限制, 默认值：8MB</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">raftstore.raft-entry-max-size</span>: <span style="color:#e6db74">&#34;128MB&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 磁盘总容量 / TiKV 实例数量</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">raftstore.capacity</span>: <span style="color:#e6db74">&#34;80GB&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># duration	副本允许的最长未响应时间, 默认值: &#34;10m&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">raftstore.max-peer-down-duration</span>: <span style="color:#e6db74">&#34;1m&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 单个 log 文件最大大小，超过设定的参数值后，系统自动切分成多个文件, 默认值：300M</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">log.file.max-size</span>: <span style="color:#e6db74">&#34;300M&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 保留 log 文件的最长天数, 默认值：0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">log.file.max-days</span>: <span style="color:#ae81ff">7</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">tidb_servers</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">192.168.70.45</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">4000</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">status_port</span>: <span style="color:#ae81ff">10080</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">numa_node</span>: <span style="color:#e6db74">&#34;0&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">4001</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">status_port</span>: <span style="color:#ae81ff">10081</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">numa_node</span>: <span style="color:#e6db74">&#34;0&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">4002</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">status_port</span>: <span style="color:#ae81ff">10082</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">numa_node</span>: <span style="color:#e6db74">&#34;0&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">pd_servers</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">client_port</span>: <span style="color:#ae81ff">2379</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">peer_port</span>: <span style="color:#ae81ff">2380</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">client_port</span>: <span style="color:#ae81ff">2381</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">peer_port</span>: <span style="color:#ae81ff">2382</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">client_port</span>: <span style="color:#ae81ff">2383</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">peer_port</span>: <span style="color:#ae81ff">2384</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">tikv_servers</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">192.168.70.45</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">20160</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">status_port</span>: <span style="color:#ae81ff">20180</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">numa_node</span>: <span style="color:#e6db74">&#34;1&#34;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">config</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">server.labels</span>: { <span style="color:#f92672">host</span>: <span style="color:#e6db74">&#34;logic-host-1&#34;</span> }
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">server.labels</span>: { <span style="color:#f92672">host</span>: <span style="color:#e6db74">&#34;tikv-01&#34;</span> }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">192.168.70.45</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">20161</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">status_port</span>: <span style="color:#ae81ff">20181</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">numa_node</span>: <span style="color:#e6db74">&#34;1&#34;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">config</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">server.labels</span>: { <span style="color:#f92672">host</span>: <span style="color:#e6db74">&#34;logic-host-2&#34;</span> }
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">server.labels</span>: { <span style="color:#f92672">host</span>: <span style="color:#e6db74">&#34;tikv-02&#34;</span> }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">192.168.70.45</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">20162</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">status_port</span>: <span style="color:#ae81ff">20182</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">numa_node</span>: <span style="color:#e6db74">&#34;1&#34;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">config</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">server.labels</span>: { <span style="color:#f92672">host</span>: <span style="color:#e6db74">&#34;logic-host-3&#34;</span> }
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">server.labels</span>: { <span style="color:#f92672">host</span>: <span style="color:#e6db74">&#34;tikv-03&#34;</span> }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">tiflash_servers</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">192.168.70.45</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">monitoring_servers</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">192.168.70.45</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">9090</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">grafana_servers</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">192.168.70.45</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">3000</span>
 </span></span></code></pre></div><h2 id="配置系统环境">配置系统环境</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 关闭系统 SWAP</span>
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;vm.swappiness = 0&#34;</span> | sudo tee -a /etc/sysctl.conf
@@ -381,7 +456,7 @@ The generated password can NOT be get and shown again.
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&name=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2&description=%e6%9c%ba%e5%99%a8%e9%85%8d%e7%bd%ae%20OS%3a%20Ubuntu%2023.04%20CPU%3a%2020%20%e6%a0%b8%20Mem%3a%2032%20G%20%e5%ae%89%e8%a3%85%20tiup%20%e7%bb%84%e4%bb%b6%20%23%20%e5%ae%89%e8%a3%85%20tiup%20%e5%91%bd%e4%bb%a4%20curl%20--proto%20%26%2339%3b%3dhttps%26%2339%3b%20--tlsv1.2%20-sSf%20https%3a%2f%2ftiup-mirrors.pingcap.com%2finstall.sh%20%7c%20sh%20%23%20%e5%8d%87%e7%ba%a7%20cluster%20%e7%bb%84%e4%bb%b6%20tiup%20update%20--self%20%26amp%3b%26amp%3b%20tiup%20update%20cluster%20%23%20%e9%aa%8c%e8%af%81%20tiup%20%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af%20tiup%20--binary%20cluster%20%e5%87%86%e5%a4%87%e9%9b%86%e7%be%a4%e6%8b%93%e6%89%91%e6%96%87%e4%bb%b6%20topo.yaml%20%23%20%23%20Global%20variables%20are" aria-label="Tumblr">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.wukaige.com%2ftidb-%25E5%258D%2595%25E6%259C%25BA%25E9%2583%25A8%25E7%25BD%25B2%2f&name=TiDB%20%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2&description=%e6%9c%ba%e5%99%a8%e9%85%8d%e7%bd%ae%20OS%3a%20Ubuntu%2023.04%20CPU%3a%2020%20%e6%a0%b8%20Mem%3a%2032%20G%20%e5%ae%89%e8%a3%85%20tiup%20%e7%bb%84%e4%bb%b6%20%23%20%e5%ae%89%e8%a3%85%20tiup%20%e5%91%bd%e4%bb%a4%20curl%20--proto%20%26%2339%3b%3dhttps%26%2339%3b%20--tlsv1.2%20-sSf%20https%3a%2f%2ftiup-mirrors.pingcap.com%2finstall.sh%20%7c%20sh%20%23%20%e5%8d%87%e7%ba%a7%20cluster%20%e7%bb%84%e4%bb%b6%20tiup%20update%20--self%20%26amp%3b%26amp%3b%20tiup%20update%20cluster%20%23%20%e9%aa%8c%e8%af%81%20tiup%20%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af%20tiup%20--binary%20cluster%20%e5%87%86%e5%a4%87%e9%9b%86%e7%be%a4%e6%8b%93%e6%89%91%e6%96%87%e4%bb%b6%20topo.yaml%20%23%20%e6%8b%93%e6%89%91%e6%96%87%e4%bb%b6" aria-label="Tumblr">
       <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
     </a>
   </li>
