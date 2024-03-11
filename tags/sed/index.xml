@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sed on Hugo</title>
+    <link>https://blog.wukaige.com/tags/sed/</link>
+    <description>Recent content in sed on Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 11 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.wukaige.com/tags/sed/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>sed 命令使用笔记</title>
+      <link>https://blog.wukaige.com/sed-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Mon, 11 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.wukaige.com/sed-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/</guid>
+      <description>平时会使用到一些常用的 sed 操作，但是时间久了会忘记，记录一下。 正则替换 示例文本(file.txt)： title = &amp;#34;sed 命令使用笔记&amp;#34; date = &amp;#34;2024-03-11&amp;#34; tags = [ &amp;#34;sed&amp;#34;</description>
+    </item>
+  </channel>
+</rss>

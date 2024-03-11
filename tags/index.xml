@@ -6,8 +6,15 @@
     <description>Recent content in Tags on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 25 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 Mar 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>sed</title>
+      <link>https://blog.wukaige.com/tags/sed/</link>
+      <pubDate>Mon, 11 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.wukaige.com/tags/sed/</guid>
+      <description></description>
+    </item>
     <item>
       <title>rust</title>
       <link>https://blog.wukaige.com/tags/rust/</link>
@@ -69,13 +76,6 @@
       <link>https://blog.wukaige.com/tags/esrally/</link>
       <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tags/esrally/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>hugo</title>
-      <link>https://blog.wukaige.com/tags/hugo/</link>
-      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>https://blog.wukaige.com/tags/hugo/</guid>
       <description></description>
     </item>
   </channel>
