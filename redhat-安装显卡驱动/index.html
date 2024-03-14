@@ -13,13 +13,13 @@
   <link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> redhat-安装显卡驱动 | Hugo</title>
+  <title> redhat 安装显卡驱动 | Hugo</title>
   <link rel='canonical' href='https://blog.wukaige.com/redhat-%E5%AE%89%E8%A3%85%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/'>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="redhat-安装显卡驱动" />
+  <meta property="og:title" content="redhat 安装显卡驱动" />
 <meta property="og:description" content="公司购买了一张 4090 显卡，需要安装到服务器上。 服务器 OS 版本：redhat9 安装前的配置工作 重启到文本模式 sudo systemctl set-default multi-user.target reboot 查看显卡是否被识别 lspci | egrep &#39;VGA|3D&#39; 禁用" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.wukaige.com/redhat-%E5%AE%89%E8%A3%85%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/" /><meta property="article:section" content="posts" />
@@ -28,7 +28,7 @@
 
 
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="redhat-安装显卡驱动"/>
+<meta name="twitter:title" content="redhat 安装显卡驱动"/>
 <meta name="twitter:description" content="公司购买了一张 4090 显卡，需要安装到服务器上。 服务器 OS 版本：redhat9 安装前的配置工作 重启到文本模式 sudo systemctl set-default multi-user.target reboot 查看显卡是否被识别 lspci | egrep &#39;VGA|3D&#39; 禁用"/>
 
   
@@ -120,7 +120,7 @@ window.addEventListener('resize', adjustForScrollbar);
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
         <h1 class="posttitle" itemprop="name headline">
-          redhat-安装显卡驱动
+          redhat 安装显卡驱动
         </h1>
         <div class="meta">
           
@@ -158,8 +158,8 @@ window.addEventListener('resize', adjustForScrollbar);
       
       
       <div class="content" itemprop="articleBody">
-        <p>公司购买了一张 4090 显卡，需要安装到服务器上。</p>
-<p>服务器 OS 版本：redhat9</p>
+        <p>公司购买了一张 4090 显卡，需要安装到服务器上。
+服务器 OS 版本：redhat9</p>
 <h4 id="安装前的配置工作">安装前的配置工作</h4>
 <p>重启到文本模式</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl set-default multi-user.target
@@ -174,7 +174,7 @@ window.addEventListener('resize', adjustForScrollbar);
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">alias lbm-nouveau off
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">options nouveau modeset=0
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span> | sudo tee /etc/modprobe.d/blacklist-nvidia-nouveau.conf
-</span></span><span style="display:flex;"><span>sudo update-initramfs -u
+</span></span><span style="display:flex;"><span>sudo dracut --force
 </span></span></code></pre></div><h4 id="开始安装">开始安装</h4>
 <p>更新储存库缓存</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf makecache
@@ -253,42 +253,42 @@ window.addEventListener('resize', adjustForScrollbar);
     </a>
   </li>
   <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&text=redhat-%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8" aria-label="Twitter">
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&text=redhat%20%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8" aria-label="Twitter">
       <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&title=redhat-%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8" aria-label="Linkedin">
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&title=redhat%20%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8" aria-label="Linkedin">
       <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&is_video=false&description=redhat-%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8" aria-label="Pinterest">
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&is_video=false&description=redhat%20%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8" aria-label="Pinterest">
       <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="mailto:?subject=redhat-%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8&body=Check out this article: https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f" aria-label="Email">
+    <a class="icon" href="mailto:?subject=redhat%20%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8&body=Check out this article: https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f" aria-label="Email">
       <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&title=redhat-%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8" aria-label="Pocket">
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&title=redhat%20%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8" aria-label="Pocket">
       <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&title=redhat-%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8" aria-label="reddit">
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&title=redhat%20%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8" aria-label="reddit">
       <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&name=redhat-%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8&description=%e5%85%ac%e5%8f%b8%e8%b4%ad%e4%b9%b0%e4%ba%86%e4%b8%80%e5%bc%a0%204090%20%e6%98%be%e5%8d%a1%ef%bc%8c%e9%9c%80%e8%a6%81%e5%ae%89%e8%a3%85%e5%88%b0%e6%9c%8d%e5%8a%a1%e5%99%a8%e4%b8%8a%e3%80%82%20%e6%9c%8d%e5%8a%a1%e5%99%a8%20OS%20%e7%89%88%e6%9c%ac%ef%bc%9aredhat9%20%e5%ae%89%e8%a3%85%e5%89%8d%e7%9a%84%e9%85%8d%e7%bd%ae%e5%b7%a5%e4%bd%9c%20%e9%87%8d%e5%90%af%e5%88%b0%e6%96%87%e6%9c%ac%e6%a8%a1%e5%bc%8f%20sudo%20systemctl%20set-default%20multi-user.target%20reboot%20%e6%9f%a5%e7%9c%8b%e6%98%be%e5%8d%a1%e6%98%af%e5%90%a6%e8%a2%ab%e8%af%86%e5%88%ab%20lspci%20%7c%20egrep%20%26%2339%3bVGA%7c3D%26%2339%3b%20%e7%a6%81%e7%94%a8" aria-label="Tumblr">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&name=redhat%20%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8&description=%e5%85%ac%e5%8f%b8%e8%b4%ad%e4%b9%b0%e4%ba%86%e4%b8%80%e5%bc%a0%204090%20%e6%98%be%e5%8d%a1%ef%bc%8c%e9%9c%80%e8%a6%81%e5%ae%89%e8%a3%85%e5%88%b0%e6%9c%8d%e5%8a%a1%e5%99%a8%e4%b8%8a%e3%80%82%20%e6%9c%8d%e5%8a%a1%e5%99%a8%20OS%20%e7%89%88%e6%9c%ac%ef%bc%9aredhat9%20%e5%ae%89%e8%a3%85%e5%89%8d%e7%9a%84%e9%85%8d%e7%bd%ae%e5%b7%a5%e4%bd%9c%20%e9%87%8d%e5%90%af%e5%88%b0%e6%96%87%e6%9c%ac%e6%a8%a1%e5%bc%8f%20sudo%20systemctl%20set-default%20multi-user.target%20reboot%20%e6%9f%a5%e7%9c%8b%e6%98%be%e5%8d%a1%e6%98%af%e5%90%a6%e8%a2%ab%e8%af%86%e5%88%ab%20lspci%20%7c%20egrep%20%26%2339%3bVGA%7c3D%26%2339%3b%20%e7%a6%81%e7%94%a8" aria-label="Tumblr">
       <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&t=redhat-%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8" aria-label="Hacker News">
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.wukaige.com%2fredhat-%25E5%25AE%2589%25E8%25A3%2585%25E6%2598%25BE%25E5%258D%25A1%25E9%25A9%25B1%25E5%258A%25A8%2f&t=redhat%20%e5%ae%89%e8%a3%85%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8" aria-label="Hacker News">
       <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
     </a>
   </li>
