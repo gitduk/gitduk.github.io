@@ -26,9 +26,7 @@
 <meta property="article:published_time" content="2023-10-13T00:00:00+00:00" />
 <meta property="article:modified_time" content="2023-10-13T00:00:00+00:00" />
 
-
-  <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="rust &amp; sqlserver"/>
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="rust &amp; sqlserver"/>
 <meta name="twitter:description" content="Rust 操作 sqlserver 数据库代码示例 下载所需要的依赖 cargo add tiberius cargo add tokio cargo add tokio_util --features=compat cargo add futures Rust Code: use futures::TryStreamExt; use tiberius::{AuthMethod, Client, Config, Query, QueryItem}; use tokio::net::TcpStream; use tokio_util::compat::{Compat, TokioAsyncWriteCompatExt}; struct Conn { host: String, port: u16, user: String, password: String, } #[derive(Debug)] struct Data { id: Option&lt;i32&gt;, title: Option&lt;String&gt;, } async fn"/>
 
   

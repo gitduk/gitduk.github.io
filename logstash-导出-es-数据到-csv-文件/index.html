@@ -26,9 +26,7 @@
 <meta property="article:published_time" content="2023-08-15T00:00:00+00:00" />
 <meta property="article:modified_time" content="2023-08-15T00:00:00+00:00" />
 
-
-  <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="logstash 导出 ES 数据到 csv 文件"/>
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="logstash 导出 ES 数据到 csv 文件"/>
 <meta name="twitter:description" content="有一个需求，把 ES 索引里面的某个字段导入 csv 文件里面。 logstash 配置文件 input { elasticsearch { hosts =&gt; [ &#39;http://127.0.0.1:9200&#39; ] index =&gt; &#39;[index]&#39; user =&gt; &#34;[user]&#34; password =&gt; &#34;[password]&#34; query =&gt; &#39;{ &#34;query&#34;: { &#34;range&#34;: { &#34;id&#34;: { &#34;gte&#34;:0, &#34;lte&#34;:100 } } }, &#34;_source&#34;: [&#34;content&#34;] }&#39; } } output { csv"/>
 
   

@@ -26,9 +26,7 @@
 <meta property="article:published_time" content="2023-10-17T00:00:00+00:00" />
 <meta property="article:modified_time" content="2023-10-17T00:00:00+00:00" />
 
-
-  <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Rust 操作 mysql 数据库"/>
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Rust 操作 mysql 数据库"/>
 <meta name="twitter:description" content="安装所需要的包 cargo add mysql 连接数据库 use mysql::{prelude::Queryable, *}; use std::fs; fn my_conn(url: &amp;str) -&gt; Result&lt;PooledConn, mysql::Error&gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &#34;mysql://user:password@127.0.0.1:3306/DB&#34;; let mut conn = my_conn(url).unwrap(); } 建表 use mysql::{prelude::Queryable, *}; fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; { let url = &#34;mysql://user:password@127.0.0.1:3306/DB&#34;; let mut conn ="/>
 
   

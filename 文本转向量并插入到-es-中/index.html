@@ -26,9 +26,7 @@
 <meta property="article:published_time" content="2023-07-03T00:00:00+00:00" />
 <meta property="article:modified_time" content="2023-07-03T00:00:00+00:00" />
 
-
-  <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="文本转向量并插入到 ES 中"/>
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="文本转向量并插入到 ES 中"/>
 <meta name="twitter:description" content="ES 中创建索引 PUT vector-index { &#34;mappings&#34;: { &#34;properties&#34;: { &#34;title&#34;: { &#34;type&#34;: &#34;text&#34; }, &#34;content_vector&#34;: { &#34;type&#34;: &#34;dense_vector&#34;, &#34;dims&#34;: 768, &#34;index&#34;: true, &#34;similarity&#34;: &#34;l2_norm&#34; } } } } 导入一些数据 使用 logstash 工具从 mysql 数据库导入数据 input { jdbc { jdbc_driver_library =&gt; &#39;path/to/mysql-connector-java-8.0.21.jar&#39; jdbc_driver_class =&gt; &#39;com.mysql.cj.jdbc.Driver&#39; jdbc_connection_string =&gt; &#39;jdbc:mysql://[IP ADDR]:[POST]/[DATABASE]?useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true&amp;autoReconnect=true&#39; jdbc_user =&gt; &#39;root&#39; jdbc_password"/>
 
   
