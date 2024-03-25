@@ -6,8 +6,15 @@
     <description>Recent content in ES on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 01 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 Mar 2024 16:55:31 +0800</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/tags/es/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Es 单字段搜索相关度排序</title>
+      <link>https://blog.wukaige.com/es-%E5%8D%95%E5%AD%97%E6%AE%B5%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E5%BA%A6%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Fri, 22 Mar 2024 16:55:31 +0800</pubDate>
+      <guid>https://blog.wukaige.com/es-%E5%8D%95%E5%AD%97%E6%AE%B5%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E5%BA%A6%E6%8E%92%E5%BA%8F/</guid>
+      <description>前因 使用 Es 搜索，发现搜索结果关键词命中数 3 的文档排在关键词命中数 20 的前面，想让 Es 搜索结果安装关键词命中数排序。 Es 默认相关性算法 Es 5.0 之前，默认</description>
+    </item>
     <item>
       <title>ES 集群恢复</title>
       <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/</link>

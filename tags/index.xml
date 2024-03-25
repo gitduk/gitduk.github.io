@@ -6,8 +6,36 @@
     <description>Recent content in Tags on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 11 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 Mar 2024 16:55:31 +0800</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>BM25</title>
+      <link>https://blog.wukaige.com/tags/bm25/</link>
+      <pubDate>Fri, 22 Mar 2024 16:55:31 +0800</pubDate>
+      <guid>https://blog.wukaige.com/tags/bm25/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ES</title>
+      <link>https://blog.wukaige.com/tags/es/</link>
+      <pubDate>Fri, 22 Mar 2024 16:55:31 +0800</pubDate>
+      <guid>https://blog.wukaige.com/tags/es/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Idf</title>
+      <link>https://blog.wukaige.com/tags/idf/</link>
+      <pubDate>Fri, 22 Mar 2024 16:55:31 +0800</pubDate>
+      <guid>https://blog.wukaige.com/tags/idf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tf</title>
+      <link>https://blog.wukaige.com/tags/tf/</link>
+      <pubDate>Fri, 22 Mar 2024 16:55:31 +0800</pubDate>
+      <guid>https://blog.wukaige.com/tags/tf/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Sed</title>
       <link>https://blog.wukaige.com/tags/sed/</link>
@@ -48,34 +76,6 @@
       <link>https://blog.wukaige.com/tags/milvus/</link>
       <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tags/milvus/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>ES</title>
-      <link>https://blog.wukaige.com/tags/es/</link>
-      <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate>
-      <guid>https://blog.wukaige.com/tags/es/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Lightning</title>
-      <link>https://blog.wukaige.com/tags/lightning/</link>
-      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>https://blog.wukaige.com/tags/lightning/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>TiDB</title>
-      <link>https://blog.wukaige.com/tags/tidb/</link>
-      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>https://blog.wukaige.com/tags/tidb/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Esrally</title>
-      <link>https://blog.wukaige.com/tags/esrally/</link>
-      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>https://blog.wukaige.com/tags/esrally/</guid>
       <description></description>
     </item>
   </channel>

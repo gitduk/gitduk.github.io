@@ -6,8 +6,15 @@
     <description>Recent content on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 11 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 Mar 2024 16:55:31 +0800</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Es 单字段搜索相关度排序</title>
+      <link>https://blog.wukaige.com/es-%E5%8D%95%E5%AD%97%E6%AE%B5%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E5%BA%A6%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Fri, 22 Mar 2024 16:55:31 +0800</pubDate>
+      <guid>https://blog.wukaige.com/es-%E5%8D%95%E5%AD%97%E6%AE%B5%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E5%BA%A6%E6%8E%92%E5%BA%8F/</guid>
+      <description>前因 使用 Es 搜索，发现搜索结果关键词命中数 3 的文档排在关键词命中数 20 的前面，想让 Es 搜索结果安装关键词命中数排序。 Es 默认相关性算法 Es 5.0 之前，默认</description>
+    </item>
     <item>
       <title>sed 命令使用笔记</title>
       <link>https://blog.wukaige.com/sed-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/</link>
@@ -70,13 +77,6 @@
       <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%89%A9%E5%AE%B9/</guid>
       <description>想通过增加 ES 节点达到提高 ES 吞吐量的目的。 Es 版本： 8.5.3 在同一台机器上扩展节点 在 ES 某个节点的目录运行: bin/elasticsearch-create-enrollment-token -s node # 得到一个 token eyJ2ZXIiOiI4LjUuMyIsImFkciI6WyIxOTIuMTY4LjcwLjM0OjkyMDAiXSwiZmdyIjoiNjMzODIyZDE3NTEzMGRhNDI5NDNlZTkxMGU4NTQ2OTg4MWY5M2VlMjQ3ZmYyMmVkN2QyZjg1Nzk3MTcxYTYzYyIsImtleSI6IkZQTDgtWXNCMDhPMkVOcUFqcEtaOkJPUnhuYnNtU3kyRURtZDc3YnQ0VWcifQ== 在新的 ES 节点目录下运行:</description>
-    </item>
-    <item>
-      <title>TiDB-Lightning 基础使用</title>
-      <link>https://blog.wukaige.com/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</link>
-      <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>https://blog.wukaige.com/tidb-lightning-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</guid>
-      <description>前提是已经用 Dumpling 将数据从上游数据库导出。 创建配置文件 tidb-lightning.toml tidb-lightning.toml [lightning] # 日志 level = &amp;#34;info&amp;#34; file = &amp;#34;log/tidb-lightning.log&amp;#34; [tikv-importer] # 选择使用的导入模式 backend = &amp;#34;tidb&amp;#34; # 设置排序的键值对的临时存放地址，目标</description>
     </item>
   </channel>
 </rss>
