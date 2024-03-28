@@ -16,6 +16,13 @@
       <description>前因 使用 Es 搜索，发现搜索结果关键词命中数 3 的文档排在关键词命中数 20 的前面，想让 Es 搜索结果安装关键词命中数排序。 Es 默认相关性算法 Es 5.0 之前，默认</description>
     </item>
     <item>
+      <title>ES 索引备份</title>
+      <link>https://blog.wukaige.com/es-%E7%B4%A2%E5%BC%95%E5%A4%87%E4%BB%BD/</link>
+      <pubDate>Tue, 12 Mar 2024 16:40:30 +0800</pubDate>
+      <guid>https://blog.wukaige.com/es-%E7%B4%A2%E5%BC%95%E5%A4%87%E4%BB%BD/</guid>
+      <description>前情提要 服务器空间不够，要买几个硬盘重组 raid0，需要把 ES 数据提前导出。 工具：elasticsearch-dump 安装 npm install elasticdump -g 导出 假设有 index1-6</description>
+    </item>
+    <item>
       <title>ES 集群恢复</title>
       <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/</link>
       <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate>
@@ -70,13 +77,6 @@
       <pubDate>Fri, 14 Jul 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/es-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E4%B9%8B-logstash/</guid>
       <description>Logstash 是免费且开放的服务器端数据处理管道，能够从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。 前情提要 新建了一个 ES 索引，需</description>
-    </item>
-    <item>
-      <title>文本转向量并插入到 ES 中</title>
-      <link>https://blog.wukaige.com/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/</link>
-      <pubDate>Mon, 03 Jul 2023 00:00:00 +0000</pubDate>
-      <guid>https://blog.wukaige.com/%E6%96%87%E6%9C%AC%E8%BD%AC%E5%90%91%E9%87%8F%E5%B9%B6%E6%8F%92%E5%85%A5%E5%88%B0-es-%E4%B8%AD/</guid>
-      <description>ES 中创建索引 PUT vector-index { &amp;#34;mappings&amp;#34;: { &amp;#34;properties&amp;#34;: { &amp;#34;title&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;text&amp;#34; }, &amp;#34;content_vector&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;dense_vector&amp;#34;, &amp;#34;dims&amp;#34;: 768, &amp;#34;index&amp;#34;: true, &amp;#34;similarity&amp;#34;: &amp;#34;l2_norm&amp;#34; } } } } 导入一些数据 使用 logstash 工具从 mysql 数据库导入数据 input { jdbc { jdbc_driver_library =&amp;gt; &amp;#39;path/to/mysql-connector-java-8.0.21.jar&amp;#39; jdbc_driver_class =&amp;gt; &amp;#39;com.mysql.cj.jdbc.Driver&amp;#39; jdbc_connection_string =&amp;gt; &amp;#39;jdbc:mysql://[IP ADDR]:[POST]/[DATABASE]?useSSL=false&amp;amp;serverTimezone=UTC&amp;amp;rewriteBatchedStatements=true&amp;amp;autoReconnect=true&amp;#39; jdbc_user =&amp;gt; &amp;#39;root&amp;#39; jdbc_password</description>
     </item>
   </channel>
 </rss>

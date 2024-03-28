@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Elasticsearch-Dump on Hugo</title>
+    <link>https://blog.wukaige.com/tags/elasticsearch-dump/</link>
+    <description>Recent content in Elasticsearch-Dump on Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 12 Mar 2024 16:40:30 +0800</lastBuildDate>
+    <atom:link href="https://blog.wukaige.com/tags/elasticsearch-dump/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ES 索引备份</title>
+      <link>https://blog.wukaige.com/es-%E7%B4%A2%E5%BC%95%E5%A4%87%E4%BB%BD/</link>
+      <pubDate>Tue, 12 Mar 2024 16:40:30 +0800</pubDate>
+      <guid>https://blog.wukaige.com/es-%E7%B4%A2%E5%BC%95%E5%A4%87%E4%BB%BD/</guid>
+      <description>前情提要 服务器空间不够，要买几个硬盘重组 raid0，需要把 ES 数据提前导出。 工具：elasticsearch-dump 安装 npm install elasticdump -g 导出 假设有 index1-6</description>
+    </item>
+  </channel>
+</rss>
