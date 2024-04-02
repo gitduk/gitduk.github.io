@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 22 Mar 2024 16:55:31 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 01 Apr 2024 11:44:02 +0800</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux 系统防黑客实践</title>
+      <link>https://blog.wukaige.com/linux-%E7%B3%BB%E7%BB%9F%E9%98%B2%E9%BB%91%E5%AE%A2%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Mon, 01 Apr 2024 11:44:02 +0800</pubDate>
+      <guid>https://blog.wukaige.com/linux-%E7%B3%BB%E7%BB%9F%E9%98%B2%E9%BB%91%E5%AE%A2%E5%AE%9E%E8%B7%B5/</guid>
+      <description>服务器系统为 Redhat 9 本地机器为 Ubuntu 23.04 修改默认的 ssh 端口 修改配置文件 /etc/ssh/sshd_config 的 Port 配置 Port 2222 ssh 用密钥登录 在服务器端配置 修改配置文件 /etc/ssh/sshd_config 配置 PubkeyAuthentication yes AuthorizedKeysFile .ssh/authorized_keys 重启 sshd 服务 sudo systemctl restart</description>
+    </item>
     <item>
       <title>Es 单字段搜索相关度排序</title>
       <link>https://blog.wukaige.com/es-%E5%8D%95%E5%AD%97%E6%AE%B5%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E5%BA%A6%E6%8E%92%E5%BA%8F/</link>
@@ -70,13 +77,6 @@
       <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E6%81%A2%E5%A4%8D/</guid>
       <description>强制关机导致 ES 集群丢失 .security-7 索引，无法进行安全验证，尝试恢复的过程中，导致 ES 集群彻底不可用。 配置新集群 策略：复制 ES 根目录下的 data 目录到新集群，让新</description>
-    </item>
-    <item>
-      <title>ES 集群缩容</title>
-      <link>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E7%BC%A9%E5%AE%B9/</link>
-      <pubDate>Fri, 24 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>https://blog.wukaige.com/es-%E9%9B%86%E7%BE%A4%E7%BC%A9%E5%AE%B9/</guid>
-      <description>想通过增加 ES 节点达到提高 ES 吞吐量的目的，但是发现效果并不好。 Es 版本： 8.5.3 在 kibana 的 Dev Tools &amp;gt; Console 里运行： PUT /_cluster/settings { &amp;#34;transient&amp;#34;: { &amp;#34;cluster.routing.allocation.exclude._name&amp;#34;: &amp;#34;node-04&amp;#34; } } #! [xpack.monitoring.collection.enabled] setting was deprecated in Elasticsearch and will be removed in a future release.</description>
     </item>
   </channel>
 </rss>
