@@ -100,6 +100,7 @@ window.addEventListener('resize', adjustForScrollbar);
   <ul>
     <li><a href="#修改默认的-ssh-端口">修改默认的 ssh 端口</a></li>
     <li><a href="#ssh-用密钥登录">ssh 用密钥登录</a></li>
+    <li><a href="#fail2ban-防止暴力破解">fail2ban 防止暴力破解</a></li>
   </ul>
 </nav>
     <nav>
@@ -181,6 +182,40 @@ Authentication refused: bad ownership or modes for directory /home/user/.ssh
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod go-w /home/user
 </span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">700</span> /home/user/.ssh
 </span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">600</span> /home/user/.ssh/authorized_keys
+</span></span></code></pre></div><h2 id="fail2ban-防止暴力破解">fail2ban 防止暴力破解</h2>
+<p>安装</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install fail2ban
+</span></span></code></pre></div><p>配置</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+</span></span><span style="display:flex;"><span>sudo vim /etc/fail2ban/jail.local
+</span></span></code></pre></div><p><em>/etc/fail2ban/jail.local</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>[sshd]
+</span></span><span style="display:flex;"><span># To use more aggressive sshd modes set filter parameter &#34;mode&#34; in jail.local:
+</span></span><span style="display:flex;"><span># normal (default), ddos, extra or aggressive (combines all).
+</span></span><span style="display:flex;"><span># See &#34;tests/files/logs/sshd&#34; or &#34;filter.d/sshd.conf&#34; for usage example and details.
+</span></span><span style="display:flex;"><span>#mode   = normal
+</span></span><span style="display:flex;"><span>enabled = true
+</span></span><span style="display:flex;"><span>port    = 22
+</span></span><span style="display:flex;"><span>logpath = %(sshd_log)s
+</span></span><span style="display:flex;"><span>backend = %(sshd_backend)s
+</span></span><span style="display:flex;"><span>maxretry = 3
+</span></span></code></pre></div><ul>
+<li>
+<p><code>logpath = %(sshd_log)s</code> 指定 SSH 服务的日志文件路径,这里使用了变量,真实路径在其他地方定义。</p>
+</li>
+<li>
+<p><code>backend = %(sshd_backend)s</code> 同上,指定了该 jail 使用的后端,但具体内容在别处定义为变量。</p>
+</li>
+</ul>
+<p>重启服务应用配置</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart fail2ban
+</span></span></code></pre></div><p>查看状态</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 列出所有被封禁的 IP 及其原因</span>
+</span></span><span style="display:flex;"><span>sudo fail2ban-client status
+</span></span><span style="display:flex;"><span>sudo fail2ban-client status sshd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看 fail2ban 日志文件</span>
+</span></span><span style="display:flex;"><span>sudo tail -n <span style="color:#ae81ff">100</span> /var/log/fail2ban.log
 </span></span></code></pre></div>
       </div>
     </article>
@@ -215,6 +250,7 @@ Authentication refused: bad ownership or modes for directory /home/user/.ssh
   <ul>
     <li><a href="#修改默认的-ssh-端口">修改默认的 ssh 端口</a></li>
     <li><a href="#ssh-用密钥登录">ssh 用密钥登录</a></li>
+    <li><a href="#fail2ban-防止暴力破解">fail2ban 防止暴力破解</a></li>
   </ul>
 </nav>
     </div>
