@@ -4,77 +4,77 @@
     <title>Tags on Hugo</title>
     <link>https://blog.wukaige.com/tags/</link>
     <description>Recent content in Tags on Hugo</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo 0.125.2</generator>
     <language>en</language>
     <lastBuildDate>Fri, 22 Mar 2024 16:55:31 +0800</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>BM25</title>
       <link>https://blog.wukaige.com/tags/bm25/</link>
-      <pubDate>Fri, 22 Mar 2024 16:55:31 +0800</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tags/bm25/</guid>
       <description></description>
     </item>
     <item>
       <title>ES</title>
       <link>https://blog.wukaige.com/tags/es/</link>
-      <pubDate>Fri, 22 Mar 2024 16:55:31 +0800</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tags/es/</guid>
       <description></description>
     </item>
     <item>
       <title>Idf</title>
       <link>https://blog.wukaige.com/tags/idf/</link>
-      <pubDate>Fri, 22 Mar 2024 16:55:31 +0800</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tags/idf/</guid>
       <description></description>
     </item>
     <item>
       <title>Tf</title>
       <link>https://blog.wukaige.com/tags/tf/</link>
-      <pubDate>Fri, 22 Mar 2024 16:55:31 +0800</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tags/tf/</guid>
       <description></description>
     </item>
     <item>
       <title>Elasticsearch-Dump</title>
       <link>https://blog.wukaige.com/tags/elasticsearch-dump/</link>
-      <pubDate>Tue, 12 Mar 2024 16:40:30 +0800</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tags/elasticsearch-dump/</guid>
       <description></description>
     </item>
     <item>
       <title>Sed</title>
       <link>https://blog.wukaige.com/tags/sed/</link>
-      <pubDate>Mon, 11 Mar 2024 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tags/sed/</guid>
       <description></description>
     </item>
     <item>
       <title>Rust</title>
       <link>https://blog.wukaige.com/tags/rust/</link>
-      <pubDate>Thu, 25 Jan 2024 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tags/rust/</guid>
       <description></description>
     </item>
     <item>
       <title>Health</title>
       <link>https://blog.wukaige.com/tags/health/</link>
-      <pubDate>Fri, 12 Jan 2024 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tags/health/</guid>
       <description></description>
     </item>
     <item>
       <title>Leetcode</title>
       <link>https://blog.wukaige.com/tags/leetcode/</link>
-      <pubDate>Wed, 27 Dec 2023 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tags/leetcode/</guid>
       <description></description>
     </item>
     <item>
       <title>Docker</title>
       <link>https://blog.wukaige.com/tags/docker/</link>
-      <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/tags/docker/</guid>
       <description></description>
     </item>

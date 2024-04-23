@@ -19,15 +19,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="Nginx 代理 openai api" />
-<meta property="og:description" content="安装 Nginx ubuntu: sudo apt install nginx 配置 Openai 反向代理 在目录 /etc/nginx/conf.d 下创建文件 openai.conf /etc/nginx/conf.d/openai.conf server { listen 8000; location /v1/ { proxy_pass https://api.openai.com/v1/; # OpenAI API URL proxy_ssl_server_name on; # 避免出现反代https域名出现502错误 proxy_buffering off; # 关闭缓存实" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.wukaige.com/nginx-%E4%BB%A3%E7%90%86-openai-api/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-07-04T00:00:00+00:00" />
-<meta property="article:modified_time" content="2023-07-04T00:00:00+00:00" />
+  <meta property="og:url" content="https://blog.wukaige.com/nginx-%E4%BB%A3%E7%90%86-openai-api/">
+  <meta property="og:site_name" content="Hugo">
+  <meta property="og:title" content="Nginx 代理 openai api">
+  <meta property="og:description" content="安装 Nginx ubuntu: sudo apt install nginx 配置 Openai 反向代理 在目录 /etc/nginx/conf.d 下创建文件 openai.conf /etc/nginx/conf.d/openai.conf server { listen 8000; location /v1/ { proxy_pass https://api.openai.com/v1/; # OpenAI API URL proxy_ssl_server_name on; # 避免出现反代https域名出现502错误 proxy_buffering off; # 关闭缓存实">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-07-04T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-07-04T00:00:00+00:00">
+    <meta property="article:tag" content="Nginx">
+    <meta property="article:tag" content="Openai">
 
-  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Nginx 代理 openai api"/>
-<meta name="twitter:description" content="安装 Nginx ubuntu: sudo apt install nginx 配置 Openai 反向代理 在目录 /etc/nginx/conf.d 下创建文件 openai.conf /etc/nginx/conf.d/openai.conf server { listen 8000; location /v1/ { proxy_pass https://api.openai.com/v1/; # OpenAI API URL proxy_ssl_server_name on; # 避免出现反代https域名出现502错误 proxy_buffering off; # 关闭缓存实"/>
+  <meta name="twitter:card" content="summary"><meta name="twitter:title" content="Nginx 代理 openai api">
+<meta name="twitter:description" content="安装 Nginx ubuntu: sudo apt install nginx 配置 Openai 反向代理 在目录 /etc/nginx/conf.d 下创建文件 openai.conf /etc/nginx/conf.d/openai.conf server { listen 8000; location /v1/ { proxy_pass https://api.openai.com/v1/; # OpenAI API URL proxy_ssl_server_name on; # 避免出现反代https域名出现502错误 proxy_buffering off; # 关闭缓存实">
 
   
   

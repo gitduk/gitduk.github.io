@@ -4,7 +4,7 @@
     <title>Hexo on Hugo</title>
     <link>https://blog.wukaige.com/tags/hexo/</link>
     <description>Recent content in Hexo on Hugo</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo 0.125.2</generator>
     <language>en</language>
     <lastBuildDate>Tue, 04 Jul 2023 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.wukaige.com/tags/hexo/index.xml" rel="self" type="application/rss+xml" />

@@ -19,15 +19,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="Rust 代码片段" />
-<meta property="og:description" content="mysql https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html use mysql::{Pool, PooledConn, from_row}; fn my_conn(url: &amp;str) -&gt; Result&lt;PooledConn, mysql::Error&gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &#34;mysql://xxx:xxx@127.0.0.1:3306/DB&#34;; let conn = my_conn(url).unwrap(); let sql = &#34;select title from table;&#34;; // query map let _books = conn.query_map(sql, |title: String| { title })?; // query iter let sql = &#34;select id,title,date from table2;&#34;; conn.query_iter(query)?.for_each(|row| { let r: (i32, String, String)" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.wukaige.com/rust-%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-09-22T00:00:00+00:00" />
-<meta property="article:modified_time" content="2023-09-22T00:00:00+00:00" />
+  <meta property="og:url" content="https://blog.wukaige.com/rust-%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/">
+  <meta property="og:site_name" content="Hugo">
+  <meta property="og:title" content="Rust 代码片段">
+  <meta property="og:description" content="mysql https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html use mysql::{Pool, PooledConn, from_row}; fn my_conn(url: &amp;amp;str) -&amp;gt; Result&amp;lt;PooledConn, mysql::Error&amp;gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &amp;#34;mysql://xxx:xxx@127.0.0.1:3306/DB&amp;#34;; let conn = my_conn(url).unwrap(); let sql = &amp;#34;select title from table;&amp;#34;; // query map let _books = conn.query_map(sql, |title: String| { title })?; // query iter let sql = &amp;#34;select id,title,date from table2;&amp;#34;; conn.query_iter(query)?.for_each(|row| { let r: (i32, String, String)">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-09-22T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-09-22T00:00:00+00:00">
+    <meta property="article:tag" content="Rust">
 
-  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Rust 代码片段"/>
-<meta name="twitter:description" content="mysql https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html use mysql::{Pool, PooledConn, from_row}; fn my_conn(url: &amp;str) -&gt; Result&lt;PooledConn, mysql::Error&gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &#34;mysql://xxx:xxx@127.0.0.1:3306/DB&#34;; let conn = my_conn(url).unwrap(); let sql = &#34;select title from table;&#34;; // query map let _books = conn.query_map(sql, |title: String| { title })?; // query iter let sql = &#34;select id,title,date from table2;&#34;; conn.query_iter(query)?.for_each(|row| { let r: (i32, String, String)"/>
+  <meta name="twitter:card" content="summary"><meta name="twitter:title" content="Rust 代码片段">
+<meta name="twitter:description" content="mysql https://rustmagazine.github.io/rust_magazine_2021/chapter_3/rust-mysql.html use mysql::{Pool, PooledConn, from_row}; fn my_conn(url: &amp;str) -&gt; Result&lt;PooledConn, mysql::Error&gt; { let pool = Pool::new(url)?; let conn = pool.get_conn()?; Ok(conn) } fn main() { let url = &#34;mysql://xxx:xxx@127.0.0.1:3306/DB&#34;; let conn = my_conn(url).unwrap(); let sql = &#34;select title from table;&#34;; // query map let _books = conn.query_map(sql, |title: String| { title })?; // query iter let sql = &#34;select id,title,date from table2;&#34;; conn.query_iter(query)?.for_each(|row| { let r: (i32, String, String)">
 
   
   
