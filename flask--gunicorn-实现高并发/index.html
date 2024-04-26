@@ -22,10 +22,10 @@
   <meta property="og:url" content="https://blog.wukaige.com/flask--gunicorn-%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%B9%B6%E5%8F%91/">
   <meta property="og:site_name" content="Hugo">
   <meta property="og:title" content="flask &#43; gunicorn 实现高并发">
-  <meta property="og:description" content="基于 flask 写了一个 hanlp 分词 api，想提高 api 的并发量。 分词 api 编写 app.py import os import hanlp import json import logging from flask import Flask, request, jsonify, current_app as app, Response app = Flask(__name__) os.environ[&amp;#34;CUDA_VISIBLE_DEVICES&amp;#34;] = &amp;#34;0,1&amp;#34; tokenizer = hanlp.load(hanlp.pretrained.tok.COARSE_ELECTRA_SMALL_ZH) tok_fine = hanlp.load(hanlp.pretrained.tok.FINE_ELECTRA_SMALL_ZH) @app.route(&amp;#34;/hanlp&amp;#34;, methods=[&amp;#34;GET&amp;#34;, &amp;#34;POST&amp;#34;]) def hlp(): if request.method == &amp;#34;GET&amp;#34;: return jsonify({">
+  <meta property="og:description" content="基于 flask 写了一个 hanlp 分词 api，想提高 api 的并发量。 分词 api 编写 app.py import os import hanlp import json import logging from flask import Flask, request, jsonify, current_app as app, Response app = Flask(__name__) os.environ[&#34;CUDA_VISIBLE_DEVICES&#34;] = &#34;0,1&#34; tokenizer = hanlp.load(hanlp.pretrained.tok.COARSE_ELECTRA_SMALL_ZH) tok_fine = hanlp.load(hanlp.pretrained.tok.FINE_ELECTRA_SMALL_ZH) @app.route(&#34;/hanlp&#34;, methods=[&#34;GET&#34;, &#34;POST&#34;]) def hlp(): if request.method == &#34;GET&#34;: return jsonify({">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
-  <meta property="article:section" content="posts">
+    <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2023-07-24T00:00:00+00:00">
     <meta property="article:modified_time" content="2023-07-24T00:00:00+00:00">
     <meta property="article:tag" content="Flask">

@@ -20,7 +20,7 @@
       <link>https://blog.wukaige.com/ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Thu, 29 Jun 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wukaige.com/ubuntu-%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE/</guid>
-      <description>系统环境 系统: Ubuntu 22.04 内核: 5.19.0-32-generic 显卡: AD102 [GeForce RTX 4090] 前期准备 # 查看显卡设备 lshw -numeric -C display # 查看显卡 lsmod | grep -E &amp;#34;nvidia|nouveau&amp;#34; # 添加显卡 ppa sudo add-apt-repository ppa:graphics-drivers sudo apt update # 禁用 nouveau echo &amp;#34; blacklist nouveau blacklist lbm-nouveau alias nouveau off</description>
+      <description>系统环境 系统: Ubuntu 22.04 内核: 5.19.0-32-generic 显卡: AD102 [GeForce RTX 4090] 前期准备 # 查看显卡设备 lshw -numeric -C display # 查看显卡 lsmod | grep -E &amp;#34;nvidia|nouveau&amp;#34; # 添加显卡 ppa sudo add-apt-repository ppa:graphics-drivers sudo apt update # 禁用 nouveau echo &amp;#34; blacklist nouveau blacklist lbm-nouve alias nouveau off</description>
     </item>
   </channel>
 </rss>
